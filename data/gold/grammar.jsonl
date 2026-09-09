@@ -1,0 +1,115 @@
+{"id":"grammar-001","family":"now-relative-day","text":"now","schedule":{"clauses":[{"date":{"kind":"now"}}]}}
+{"id":"grammar-002","family":"now-relative-day","text":"today","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
+{"id":"grammar-003","family":"now-relative-day","text":"tonight","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":0}}]}}
+{"id":"grammar-004","family":"now-relative-day","text":"tomorrow","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"grammar-005","family":"now-relative-day","text":"yesterday","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":-1}}]}}
+{"id":"grammar-006","family":"now-relative-day","text":"the day after tomorrow","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":2}}]}}
+{"id":"grammar-007","family":"relative-quantity","text":"1 day before","schedule":{"clauses":[{"shift":{"amount":1,"unit":"day","direction":"before"}}]}}
+{"id":"grammar-008","family":"relative-quantity","text":"10 days after","schedule":{"clauses":[{"shift":{"amount":10,"unit":"day","direction":"after"}}]}}
+{"id":"grammar-009","family":"relative-quantity","text":"in 90 minutes","schedule":{"clauses":[{"shift":{"amount":90,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-010","family":"relative-quantity","text":"3 weeks from now","schedule":{"clauses":[{"shift":{"amount":3,"unit":"week","direction":"after"},"date":{"kind":"now"}}]}}
+{"id":"grammar-011","family":"relative-quantity","text":"two months later","schedule":{"clauses":[{"shift":{"amount":2,"unit":"month","direction":"after"}}]}}
+{"id":"grammar-012","family":"relative-quantity","text":"5 days ago","schedule":{"clauses":[{"shift":{"amount":5,"unit":"day","direction":"before"}}]}}
+{"id":"grammar-013","family":"anchored-relative","text":"2 days before Friday","schedule":{"clauses":[{"shift":{"amount":2,"unit":"day","direction":"before"},"date":{"kind":"weekday","days":["FR"]}}]}}
+{"id":"grammar-014","family":"anchored-relative","text":"two hours before tomorrow at noon","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"before"},"date":{"kind":"relativeDay","offset":1},"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-015","family":"anchored-relative","text":"3 days after October 1","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"after"},"date":{"kind":"calendar","month":10,"day":1}}]}}
+{"id":"grammar-016","family":"anchored-relative","text":"a week before Christmas","schedule":{"clauses":[{"shift":{"amount":1,"unit":"week","direction":"before"},"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"grammar-017","family":"relative-unit","text":"next week","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"grammar-018","family":"relative-unit","text":"last month","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"last"}}]}}
+{"id":"grammar-019","family":"relative-unit","text":"this weekend","schedule":{"clauses":[{"date":{"kind":"dayGroup","group":"weekend","modifier":"this"}}]}}
+{"id":"grammar-020","family":"relative-unit","text":"in one year","schedule":{"clauses":[{"shift":{"amount":1,"unit":"year","direction":"after"}}]}}
+{"id":"grammar-021","family":"relative-unit","text":"end of next month","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"month","modifier":"next","edge":"end"}}]}}
+{"id":"grammar-022","family":"weekday","text":"Monday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
+{"id":"grammar-023","family":"weekday","text":"Mon","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]}}]}}
+{"id":"grammar-024","family":"weekday","text":"next Friday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"],"modifier":"next"}}]}}
+{"id":"grammar-025","family":"weekday","text":"this Monday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"this"}}]}}
+{"id":"grammar-026","family":"weekday","text":"last Tuesday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TU"],"modifier":"last"}}]}}
+{"id":"grammar-027","family":"weekday","text":"Monday and Wednesday","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO","WE"]}}]}}
+{"id":"grammar-028","family":"day-group","text":"weekdays","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-029","family":"day-group","text":"weekends","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA","SU"]}}]}}
+{"id":"grammar-030","family":"day-group","text":"every weekday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-031","family":"day-group","text":"Mon-Fri","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-032","family":"day-group","text":"Monday through Friday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]}}
+{"id":"grammar-033","family":"clock","text":"2pm","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-034","family":"clock","text":"2 p.m.","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-035","family":"clock","text":"14:00","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-036","family":"clock","text":"2:30pm","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":30}}}]}}
+{"id":"grammar-037","family":"clock","text":"noon","schedule":{"clauses":[{"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-038","family":"clock","text":"midnight","schedule":{"clauses":[{"time":{"start":{"named":"midnight"}}}]}}
+{"id":"grammar-039","family":"day-part","text":"morning","schedule":{"clauses":[{"time":{"start":{"part":"morning"}}}]}}
+{"id":"grammar-040","family":"day-part","text":"afternoon","schedule":{"clauses":[{"time":{"start":{"part":"afternoon"}}}]}}
+{"id":"grammar-041","family":"day-part","text":"evening","schedule":{"clauses":[{"time":{"start":{"part":"evening"}}}]}}
+{"id":"grammar-042","family":"day-part","text":"night","schedule":{"clauses":[{"time":{"start":{"part":"night"}}}]}}
+{"id":"grammar-043","family":"day-part","text":"Monday evening","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"part":"evening"}}}]}}
+{"id":"grammar-044","family":"day-part","text":"tomorrow morning","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"part":"morning"}}}]}}
+{"id":"grammar-045","family":"explicit-date","text":"October 1","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
+{"id":"grammar-046","family":"explicit-date","text":"Oct 1st","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
+{"id":"grammar-047","family":"explicit-date","text":"1 October","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
+{"id":"grammar-048","family":"explicit-date","text":"10/01","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1}}]}}
+{"id":"grammar-049","family":"explicit-date","text":"2026-10-01","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1,"year":2026}}]}}
+{"id":"grammar-050","family":"explicit-date","text":"October 1, 2027 at noon","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":1,"year":2027},"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-051","family":"time-window","text":"10pm-12am","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-052","family":"time-window","text":"from 8 to 10pm","schedule":{"clauses":[{"time":{"start":{"hour":20,"minute":0},"end":{"hour":22,"minute":0}}}]}}
+{"id":"grammar-053","family":"time-window","text":"between 9am and noon","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"named":"noon"}}}]}}
+{"id":"grammar-054","family":"time-window","text":"Monday 1pm-8pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-055","family":"time-window","text":"9 to 5","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-056","family":"date-range","text":"June 11-16","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":6,"day":11},"to":{"month":6,"day":16}}}]}}
+{"id":"grammar-057","family":"date-range","text":"26 July - 22 August","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":7,"day":26},"to":{"month":8,"day":22}}}]}}
+{"id":"grammar-058","family":"date-range","text":"from Monday to Wednesday","schedule":{"clauses":[{"date":{"kind":"weekdayRange","from":"MO","to":"WE"}}]}}
+{"id":"grammar-059","family":"duration","text":"for 2 hours","schedule":{"clauses":[{"duration":{"amount":2,"unit":"hour"}}]}}
+{"id":"grammar-060","family":"duration","text":"for 90 minutes","schedule":{"clauses":[{"duration":{"amount":90,"unit":"minute"}}]}}
+{"id":"grammar-061","family":"duration","text":"for the next 10 days","schedule":{"clauses":[{"duration":{"amount":10,"unit":"day"}}]}}
+{"id":"grammar-062","family":"multi-clause","text":"Monday 10pm-12am and Saturday Sunday 1pm-8pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}},{"date":{"kind":"weekday","days":["SA","SU"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-063","family":"multi-clause","text":"Mon at 9, Wed at 10, Fri at 11","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":9,"minute":0}}},{"date":{"kind":"weekday","days":["WE"]},"time":{"start":{"hour":10,"minute":0}}},{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"grammar-064","family":"recurrence","text":"every Monday at 8pm","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":20,"minute":0}}}]}}
+{"id":"grammar-065","family":"recurrence","text":"each Tuesday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["TU"]}}]}}
+{"id":"grammar-066","family":"recurrence","text":"daily at noon","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1},"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-067","family":"recurrence","text":"weekly","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1}}]}}
+{"id":"grammar-068","family":"recurrence","text":"every 2 weeks on Tuesday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"]}}]}}
+{"id":"grammar-069","family":"recurrence","text":"every other Friday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["FR"]}}]}}
+{"id":"grammar-070","family":"recurrence","text":"twice a week","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":2}}]}}
+{"id":"grammar-071","family":"recurrence","text":"3 times a day","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"timesPer":3}}]}}
+{"id":"grammar-072","family":"monthly-yearly","text":"every month on the 31st","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[31]}}]}}
+{"id":"grammar-073","family":"monthly-yearly","text":"the first Monday of every month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byDay":["MO"],"bySetPos":[1]}}]}}
+{"id":"grammar-074","family":"monthly-yearly","text":"last Friday of the month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byDay":["FR"],"bySetPos":[-1]}}]}}
+{"id":"grammar-075","family":"monthly-yearly","text":"1st and 15th of each month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[1,15]}}]}}
+{"id":"grammar-076","family":"monthly-yearly","text":"every year on March 26","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1,"byMonth":[3],"byMonthDay":[26]}}]}}
+{"id":"grammar-077","family":"monthly-yearly","text":"annually","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":1}}]}}
+{"id":"grammar-078","family":"bounds","text":"every Monday starting October 1","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"start":{"kind":"calendar","month":10,"day":1}}}]}}
+{"id":"grammar-079","family":"bounds","text":"every week from next week","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"start":{"kind":"relativeUnit","unit":"week","modifier":"next"}}}]}}
+{"id":"grammar-080","family":"bounds","text":"every Monday until December 31","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"until":{"kind":"calendar","month":12,"day":31}}}]}}
+{"id":"grammar-081","family":"bounds","text":"every Tuesday until Dec","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["TU"],"until":{"kind":"calendar","month":12}}}]}}
+{"id":"grammar-082","family":"bounds","text":"every day through Friday","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"until":{"kind":"weekday","days":["FR"]}}}]}}
+{"id":"grammar-083","family":"bounds","text":"every Monday for 6 times","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"count":6}}]}}
+{"id":"grammar-084","family":"bounds","text":"every Monday for 10 weeks","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"span":{"amount":10,"unit":"week"}}}]}}
+{"id":"grammar-085","family":"exceptions","text":"every weekday except Friday","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"],"except":[{"kind":"weekday","days":["FR"]}]}}]}}
+{"id":"grammar-086","family":"exceptions","text":"every day except Sundays","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"weekday","days":["SU"]}]}}]}}
+{"id":"grammar-087","family":"prose","text":"remind me to call Sam on Monday at 2pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-088","family":"prose","text":"the meeting is every other Tuesday until Dec","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"],"until":{"kind":"calendar","month":12}}}]}}
+{"id":"grammar-089","family":"prose","text":"deadline: 3 days before Christmas","schedule":{"clauses":[{"shift":{"amount":3,"unit":"day","direction":"before"},"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"grammar-090","family":"holiday","text":"Christmas","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"grammar-091","family":"holiday","text":"Christmas Eve","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas-eve"}}]}}
+{"id":"grammar-092","family":"holiday","text":"New Year's Day","schedule":{"clauses":[{"date":{"kind":"holiday","name":"new-year"}}]}}
+{"id":"grammar-093","family":"holiday","text":"Halloween","schedule":{"clauses":[{"date":{"kind":"holiday","name":"halloween"}}]}}
+{"id":"grammar-094","family":"holiday","text":"Valentine's Day","schedule":{"clauses":[{"date":{"kind":"holiday","name":"valentines"}}]}}
+{"id":"grammar-095","family":"explicit-date","text":"October sixth","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":6}}]}}
+{"id":"grammar-096","family":"explicit-date","text":"twelfth of October","schedule":{"clauses":[{"date":{"kind":"calendar","month":10,"day":12}}]}}
+{"id":"grammar-097","family":"explicit-date","text":"February ninth, 2028","schedule":{"clauses":[{"date":{"kind":"calendar","month":2,"day":9,"year":2028}}]}}
+{"id":"grammar-098","family":"clock","text":"twelve pm","schedule":{"clauses":[{"time":{"start":{"hour":12,"minute":0}}}]}}
+{"id":"grammar-099","family":"clock","text":"eleven am","schedule":{"clauses":[{"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"grammar-100","family":"time-window","text":"9am to 5","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"grammar-101","family":"time-window","text":"10 to 2am","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"hour":2,"minute":0}}}]}}
+{"id":"grammar-102","family":"time-window","text":"8 to midnight","schedule":{"clauses":[{"time":{"start":{"hour":20,"minute":0},"end":{"named":"midnight"}}}]}}
+{"id":"grammar-103","family":"relative-quantity","text":"twelve minutes after","schedule":{"clauses":[{"shift":{"amount":12,"unit":"minute","direction":"after"}}]}}
+{"id":"grammar-104","family":"monthly-yearly","text":"every month on the seventh","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[7]}}]}}
+{"id":"grammar-105","family":"holiday","text":"Christmas Eve at noon","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas-eve"},"time":{"start":{"named":"noon"}}}]}}
+{"id":"grammar-106","family":"clock-period","text":"two in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"grammar-107","family":"clock-period","text":"five in the morning","schedule":{"clauses":[{"time":{"start":{"hour":5,"minute":0}}}]}}
+{"id":"grammar-108","family":"clock-period","text":"seven in the evening","schedule":{"clauses":[{"time":{"start":{"hour":19,"minute":0}}}]}}
+{"id":"grammar-109","family":"clock-period","text":"twelve in the morning","schedule":{"clauses":[{"time":{"start":{"hour":0,"minute":0}}}]}}
+{"id":"grammar-110","family":"clock-period","text":"twelve in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":12,"minute":0}}}]}}
+{"id":"grammar-111","family":"clock-period","text":"2:30 in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":14,"minute":30}}}]}}
+{"id":"grammar-112","family":"clock-period","text":"tomorrow at eight in the morning","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"grammar-113","family":"clock-period","text":"every Monday at six in the evening","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":18,"minute":0}}}]}}
+{"id":"grammar-114","family":"clock-period","text":"from 5 to 7 in the evening","schedule":{"clauses":[{"time":{"start":{"hour":17,"minute":0},"end":{"hour":19,"minute":0}}}]}}
+{"id":"grammar-115","family":"clock-period","text":"from 9 in the morning to 5 in the afternoon","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}

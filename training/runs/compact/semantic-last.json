@@ -1,0 +1,264 @@
+{
+  "model": "dce5bf338c50bb37878690382d1d3320d887b54174c7a1cb1b66974260cb2441",
+  "source": "data/synth/semantic-checks.jsonl",
+  "total": 5000,
+  "correct": 4999,
+  "families": {
+    "relative": {
+      "total": 1261,
+      "correct": 1261
+    },
+    "weekday-windows": {
+      "total": 1257,
+      "correct": 1256
+    },
+    "calendar": {
+      "total": 1277,
+      "correct": 1277
+    },
+    "monthly-days": {
+      "total": 1205,
+      "correct": 1205
+    }
+  },
+  "failures": [
+    {
+      "id": "semantic-271828-444",
+      "family": "weekday-windows",
+      "text": "Saturday\tand Wednesday , Thursday 10:30pm - 6:30am Tuesday,Saturday  ,Monday9:15pm -  5:15am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 12,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 22,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 33,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 36,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 39,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 41,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 48,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 58,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 58,
+          "end": 59,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 67,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 70,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 76,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 77,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 78,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 80,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 80,
+          "end": 82,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 84,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 87,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 87,
+          "end": 88,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 90,
+          "end": 92,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 22,
+                "minute": 30
+              },
+              "end": {
+                "hour": 6,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "WE",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 21,
+                "minute": 15
+              },
+              "end": {
+                "hour": 5,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "SA",
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 92,
+          "text": "Saturday\tand Wednesday , Thursday 10:30pm - 6:30am Tuesday,Saturday  ,Monday9:15pm -  5:15am",
+          "confidence": 0.9401830434799194,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 76,
+              "end": 77,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Exact AST equality from neural predictions against independently sampled specifications. Fresh values use the same rendering families as part of training; this is a synthetic development check, not unseen-language accuracy."
+}

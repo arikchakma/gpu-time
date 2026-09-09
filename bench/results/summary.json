@@ -1,0 +1,363 @@
+{
+  "status": "development",
+  "model": "19f74a77e7f3197da23ff74c2caf04975c4a9f10fbf4147e6698e26ce0943698",
+  "environment": {
+    "browser": "152.0.7977.83",
+    "cpu": "Apple M4 Max",
+    "platform": "darwin",
+    "osRelease": "25.6.0",
+    "reference": "2026-09-09T12:00:00+06:00",
+    "timeZone": "Asia/Dhaka"
+  },
+  "method": "Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover native parsing (AST for gpu-time), excluding normalization, recurrence expansion, worker messaging and DOM. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.",
+  "limitations": [
+    "Native outputs differ: gpu-time returns resolved dates, ranges and recurrence rules; other libraries return components, dates, TIMEX or recurrence constraints. Speed is not feature equivalence.",
+    "The four-input batch workload includes unsupported inputs. Reported thrown-error counts do not include silent partial parses or abstentions.",
+    "Internal interpretation checks and direct-result fixtures are development checks. Sets overlap and are not a final independent accuracy benchmark.",
+    "Cross-library resolved-date correctness, remaining external corpora, a broader gold set and Python batch throughput remain incomplete. Microsoft development agreement is reported separately; its test split remains reserved.",
+    "The complete gpu-time library exceeds its 30,000-byte Brotli budget."
+  ],
+  "performance": [
+    {
+      "library": "gpu-time-cpu",
+      "name": "gpu-time CPU",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.16999998688697815,
+        "p95Ms": 0.21000000834465027
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 180.50499999523163,
+          "p95Ms": 181.41999998688698,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 5540.012742175656
+        },
+        {
+          "size": 10000,
+          "ms": 1773.4399999976158,
+          "p95Ms": 1778.6850000023842,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 5638.758570920609
+        }
+      ],
+      "initializationMs": 16.020000010728836,
+      "firstParseMs": 8.474999994039536
+    },
+    {
+      "library": "gpu-time-webgpu",
+      "name": "gpu-time WebGPU",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.614999994635582,
+        "p95Ms": 0.7299999892711639
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 108.67499999701977,
+          "p95Ms": 109.89499999582767,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 9201.748332435458
+        },
+        {
+          "size": 10000,
+          "ms": 1061.1749999970198,
+          "p95Ms": 1063.1950000077486,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 9423.51638516558
+        }
+      ],
+      "initializationMs": 8.42000000178814,
+      "firstParseMs": 5.375
+    },
+    {
+      "library": "chrono",
+      "name": "Chrono (English)",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.01000000536441803,
+        "p95Ms": 0.025000005960464478
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 9.99499998986721,
+          "p95Ms": 12.305000007152557,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 100050.02511393555
+        },
+        {
+          "size": 10000,
+          "ms": 90.17000000178814,
+          "p95Ms": 91.07999999821186,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 110901.63025176547
+        }
+      ],
+      "initializationMs": 162.77500000596046,
+      "firstParseMs": 9.894999995827675
+    },
+    {
+      "library": "compromise",
+      "name": "Compromise + dates",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 1.3700000047683716,
+        "p95Ms": 1.8200000077486038
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 603.109999999404,
+          "p95Ms": 620.7900000065565,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 1658.0723251164602
+        },
+        {
+          "size": 10000,
+          "ms": 6115.434999987483,
+          "p95Ms": 6271.324999988079,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 1635.2066533321781
+        }
+      ],
+      "initializationMs": 229.3149999976158,
+      "firstParseMs": 17.390000000596046
+    },
+    {
+      "library": "rrule",
+      "name": "rrule",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0,
+        "p95Ms": 0.005000010132789612
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 1.510000005364418,
+          "p95Ms": 1.5349999964237213,
+          "samples": 3,
+          "failures": 250,
+          "inputsPerSecond": 662251.6532764273
+        },
+        {
+          "size": 10000,
+          "ms": 13.54500000178814,
+          "p95Ms": 14.480000004172325,
+          "samples": 3,
+          "failures": 2500,
+          "inputsPerSecond": 738279.8079497861
+        }
+      ],
+      "initializationMs": 184.04999999701977,
+      "firstParseMs": 0.23999999463558197
+    },
+    {
+      "library": "recognizers",
+      "name": "Microsoft Recognizers",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.5849999934434891,
+        "p95Ms": 0.7299999892711639
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 587.7699999958277,
+          "p95Ms": 592.4350000023842,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 1701.3457645117965
+        },
+        {
+          "size": 10000,
+          "ms": 5880.7750000059605,
+          "p95Ms": 5895.364999994636,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 1700.4561473598064
+        }
+      ],
+      "initializationMs": 309.80500000715256,
+      "firstParseMs": 63.435000002384186
+    },
+    {
+      "library": "later",
+      "name": "Later",
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0,
+        "p95Ms": 0.005000010132789612
+      },
+      "batches": [
+        {
+          "size": 1000,
+          "ms": 0.8999999910593033,
+          "p95Ms": 0.9000000059604645,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 1111111.1221490086
+        },
+        {
+          "size": 10000,
+          "ms": 7.054999992251396,
+          "p95Ms": 7.115000009536743,
+          "samples": 3,
+          "failures": 0,
+          "inputsPerSecond": 1417434.4452137686
+        }
+      ],
+      "initializationMs": 250.01999999582767,
+      "firstParseMs": 0.2900000065565109
+    }
+  ],
+  "sizes": [
+    {
+      "library": "gpu-time",
+      "bytes": 80618,
+      "gzipBytes": 38720,
+      "brotliBytes": 33106,
+      "name": "gpu-time"
+    },
+    {
+      "library": "chrono",
+      "bytes": 45491,
+      "gzipBytes": 13258,
+      "brotliBytes": 11848,
+      "name": "Chrono (English)"
+    },
+    {
+      "library": "compromise",
+      "bytes": 487957,
+      "gzipBytes": 179679,
+      "brotliBytes": 156071,
+      "name": "Compromise + dates"
+    },
+    {
+      "library": "rrule",
+      "bytes": 45944,
+      "gzipBytes": 13663,
+      "brotliBytes": 12380,
+      "name": "rrule"
+    },
+    {
+      "library": "recognizers",
+      "bytes": 1371105,
+      "gzipBytes": 337137,
+      "brotliBytes": 203114,
+      "name": "Microsoft Recognizers"
+    },
+    {
+      "library": "later",
+      "bytes": 29698,
+      "gzipBytes": 10110,
+      "brotliBytes": 9027,
+      "name": "Later"
+    }
+  ],
+  "structure": [
+    {
+      "name": "adversarial",
+      "total": 25,
+      "correct": 25,
+      "accuracy": 1
+    },
+    {
+      "name": "user-cases",
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1
+    },
+    {
+      "name": "labels",
+      "total": 26,
+      "correct": 26,
+      "accuracy": 1
+    },
+    {
+      "name": "grammar",
+      "total": 115,
+      "correct": 115,
+      "accuracy": 1
+    },
+    {
+      "name": "negatives",
+      "total": 32,
+      "correct": 32,
+      "accuracy": 1
+    },
+    {
+      "name": "grammar-variations",
+      "total": 314,
+      "correct": 314,
+      "accuracy": 1
+    },
+    {
+      "name": "prose",
+      "total": 72,
+      "correct": 72,
+      "accuracy": 1
+    }
+  ],
+  "parity": {
+    "model": "19f74a77e7f3197da23ff74c2caf04975c4a9f10fbf4147e6698e26ce0943698",
+    "browser": "152.0.7977.83",
+    "lifecycle": {
+      "concurrent": true,
+      "inFlightRecovery": true,
+      "secondLossRejected": true,
+      "disposalRejected": true,
+      "compilationCleanup": true
+    },
+    "packaged": {
+      "sequences": 1000,
+      "tokenMismatches": 0,
+      "scheduleMismatches": 0
+    },
+    "sequences": 10000,
+    "pythonSequences": 512,
+    "tokensCompared": 71630,
+    "maxError": 0.000011444091796875,
+    "pythonMaxError": 0.000008106231689453125,
+    "labelMismatches": 0,
+    "boundaryMismatches": 0,
+    "pythonLabelMismatches": 0,
+    "pythonBoundaryMismatches": 0,
+    "recoveryCorrect": true,
+    "recoveries": 1
+  },
+  "directResults": {
+    "total": 18,
+    "correct": 18
+  },
+  "external": {
+    "name": "Microsoft Recognizers development",
+    "total": 563,
+    "correct": 121,
+    "accuracy": 0.21492007104795738,
+    "reservedTestCases": 134
+  },
+  "semantic": {
+    "total": 5000,
+    "correct": 4993,
+    "accuracy": 0.9986
+  }
+}

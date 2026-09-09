@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-09-09T13:28:05.315Z",
+  "page": "https://gpu-lexer.vercel.app/",
+  "package": "https://registry.npmjs.org/gpu-lexer/-/gpu-lexer-0.0.2.tgz",
+  "license": "MIT (declared in the published package)",
+  "liveModelBundle": "https://gpu-lexer.vercel.app/_next/static/immutable/chunks/2g5zb00xvgvvb.js",
+  "liveBundleBytes": 59066,
+  "liveBundleSha256": "1a63a6a70b2f3fa48248fb0cb4cd20e0ccc81c2c5eabc0820ebbd81ab56ef112",
+  "npmRuntimeBytes": 59421,
+  "npmRuntimeSha256": "4d75642aada90f8100032c453d3d34d95ef43828ecf55b69a67a7b1ef7eed1ae",
+  "encodedWeightsSha256": "64882be831182f408745fd9e06c630144789838b8b4f03fad176418a3ff99896",
+  "decodedWeightsSha256": "2fa19c66179ca262ce16361241872be2bc4a0a1e3c98d7ba3475373b26b69330",
+  "parameters": 41321,
+  "decodedBytes": 165284,
+  "tensors": 30,
+  "liveAndNpmEncodedWeightsMatch": true,
+  "scope": "Observed initial demo load in Chrome. No separate model file or inference API request appeared. The model is embedded in the JavaScript bundle. Training source was not included in the published package; the expected GitHub repository returned 404.",
+  "observedGpuUploads": [
+    {
+      "bytes": 165284,
+      "sha256": "2fa19c66179ca262ce16361241872be2bc4a0a1e3c98d7ba3475373b26b69330"
+    }
+  ],
+  "decodedWeightsMatchActualGpuUpload": true
+}

@@ -1,0 +1,8 @@
+{
+  "prefix": "training/parity",
+  "sequences": 512,
+  "tokens": 6002,
+  "rowsPerToken": 17,
+  "rolesPerToken": 40,
+  "boundaryThreshold": 5.0
+}

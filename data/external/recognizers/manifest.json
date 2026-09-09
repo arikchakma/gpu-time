@@ -1,0 +1,55 @@
+{
+  "repository": "microsoft/Recognizers-Text",
+  "commit": "da7edcff59f669b2a460ab9d400e36298f0d658e",
+  "license": "MIT",
+  "sources": [
+    {
+      "file": "DateParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/DateParser.json",
+      "sha256": "fe9c4828e187eea81e868d03faf1896afabb792f435364f4e27c4a12e827f688",
+      "cases": 137
+    },
+    {
+      "file": "TimeParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/TimeParser.json",
+      "sha256": "a1d16f38b936082db3fcae2b01b3781db0c542d631d9110c3f37bc678f80725d",
+      "cases": 92
+    },
+    {
+      "file": "TimePeriodParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/TimePeriodParser.json",
+      "sha256": "bdcf216e6c36cf8ce85d63cc169970475ab2678e36cc094d93cceaefaab37568",
+      "cases": 71
+    },
+    {
+      "file": "DateTimeParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/DateTimeParser.json",
+      "sha256": "4e6be5b6c67900cc093e4725b20cf3f5e0db63cdc25d4ae61f3fbd83447c2d64",
+      "cases": 64
+    },
+    {
+      "file": "DatePeriodParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/DatePeriodParser.json",
+      "sha256": "b1e9e7eca3ced3e6a4d59fde66e78816bde9f145a2b4432e63c7c5ab1aca36b6",
+      "cases": 252
+    },
+    {
+      "file": "DateTimePeriodParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/DateTimePeriodParser.json",
+      "sha256": "59748973176b5a0ea7e6a1e22491f2a94c5ae68c2f4c533c36154f8934cb8659",
+      "cases": 99
+    },
+    {
+      "file": "SetParser",
+      "url": "https://raw.githubusercontent.com/microsoft/Recognizers-Text/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English/SetParser.json",
+      "sha256": "c42a9b21aa02aace76175616eca3ae59377980033a79f84b1932dc6dd4b0522c",
+      "cases": 32
+    }
+  ],
+  "total": 747,
+  "eligible": 697,
+  "skipped": 50,
+  "development": 563,
+  "test": 134,
+  "policy": "Use upstream FutureResolution as the expected civil value. UTC supplies a fixed timezone for timezone-free source contexts. Time-only results compare exact clocks and interval duration, without asserting a source date; absent contexts use 2016-11-07T00:00:00 UTC. Datetime comparisons are exact to the second. No policy differences are excluded. Split by hashed surface frame after masking numbers, weekdays and months; identical frames remain together. The test split is reserved from development evaluation."
+}

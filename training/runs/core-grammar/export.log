@@ -1,0 +1,482 @@
+{
+  "checkpoint": "training/runs/core-grammar/best.pt",
+  "checkpointSha256": "32e745c07f07bd55fe36f562d73e7516ee69bce2b33a09935fc25fac4834e615",
+  "artifactSha256": "18f1d018bca5606cb2d092e083b1439343d118eaab838aded5e6d8ab49a6fc2c",
+  "boundaryThreshold": 5.0,
+  "calibration": {
+    "threshold": 5.0,
+    "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
+    "grid": [
+      {
+        "threshold": 0.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9955343852337005,
+            "truePositive": 1672,
+            "falsePositive": 12,
+            "falseNegative": 3
+          },
+          "heldoutDevelopment": {
+            "f1": 0.6951286261631089,
+            "truePositive": 1270,
+            "falsePositive": 1114,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 0.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9961274947870122,
+            "truePositive": 1672,
+            "falsePositive": 10,
+            "falseNegative": 3
+          },
+          "heldoutDevelopment": {
+            "f1": 0.6970362239297475,
+            "truePositive": 1270,
+            "falsePositive": 1104,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 0.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9964243146603099,
+            "truePositive": 1672,
+            "falsePositive": 9,
+            "falseNegative": 3
+          },
+          "heldoutDevelopment": {
+            "f1": 0.6989543203082004,
+            "truePositive": 1270,
+            "falsePositive": 1094,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9967213114754099,
+            "truePositive": 1672,
+            "falsePositive": 8,
+            "falseNegative": 3
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7026279391424619,
+            "truePositive": 1270,
+            "falsePositive": 1075,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.997016706443914,
+            "truePositive": 1671,
+            "falsePositive": 6,
+            "falseNegative": 4
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7083100948131623,
+            "truePositive": 1270,
+            "falsePositive": 1046,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9970149253731343,
+            "truePositive": 1670,
+            "falsePositive": 5,
+            "falseNegative": 5
+          },
+          "heldoutDevelopment": {
+            "f1": 0.714084903008153,
+            "truePositive": 1270,
+            "falsePositive": 1017,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9973110247983269,
+            "truePositive": 1669,
+            "falsePositive": 3,
+            "falseNegative": 6
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7211811470755253,
+            "truePositive": 1270,
+            "falsePositive": 982,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9970113568439928,
+            "truePositive": 1668,
+            "falsePositive": 3,
+            "falseNegative": 7
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7324106113033448,
+            "truePositive": 1270,
+            "falsePositive": 928,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9964114832535885,
+            "truePositive": 1666,
+            "falsePositive": 3,
+            "falseNegative": 9
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7396622015142691,
+            "truePositive": 1270,
+            "falsePositive": 894,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9964114832535885,
+            "truePositive": 1666,
+            "falsePositive": 3,
+            "falseNegative": 9
+          },
+          "heldoutDevelopment": {
+            "f1": 0.75125702454895,
+            "truePositive": 1270,
+            "falsePositive": 841,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9964093357271095,
+            "truePositive": 1665,
+            "falsePositive": 2,
+            "falseNegative": 10
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7641395908543923,
+            "truePositive": 1270,
+            "falsePositive": 784,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9958083832335329,
+            "truePositive": 1663,
+            "falsePositive": 2,
+            "falseNegative": 12
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7812980621347277,
+            "truePositive": 1270,
+            "falsePositive": 711,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9952067106051528,
+            "truePositive": 1661,
+            "falsePositive": 2,
+            "falseNegative": 14
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8027812895069533,
+            "truePositive": 1270,
+            "falsePositive": 624,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9946043165467626,
+            "truePositive": 1659,
+            "falsePositive": 2,
+            "falseNegative": 16
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8244076598506979,
+            "truePositive": 1270,
+            "falsePositive": 541,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9946043165467626,
+            "truePositive": 1659,
+            "falsePositive": 2,
+            "falseNegative": 16
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8469489829943314,
+            "truePositive": 1270,
+            "falsePositive": 459,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9946043165467626,
+            "truePositive": 1659,
+            "falsePositive": 2,
+            "falseNegative": 16
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8701610140459062,
+            "truePositive": 1270,
+            "falsePositive": 379,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9943028485757122,
+            "truePositive": 1658,
+            "falsePositive": 2,
+            "falseNegative": 17
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8943661971830986,
+            "truePositive": 1270,
+            "falsePositive": 300,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9936993699369937,
+            "truePositive": 1656,
+            "falsePositive": 2,
+            "falseNegative": 19
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9179616913624864,
+            "truePositive": 1270,
+            "falsePositive": 227,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.992490237308501,
+            "truePositive": 1652,
+            "falsePositive": 2,
+            "falseNegative": 23
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9396966333703293,
+            "truePositive": 1270,
+            "falsePositive": 163,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9915764139590855,
+            "truePositive": 1648,
+            "falsePositive": 1,
+            "falseNegative": 27
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9588523971309928,
+            "truePositive": 1270,
+            "falsePositive": 109,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 5.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9900572461584815,
+            "truePositive": 1643,
+            "falsePositive": 1,
+            "falseNegative": 32
+          },
+          "heldoutDevelopment": {
+            "f1": 0.96983581519664,
+            "truePositive": 1270,
+            "falsePositive": 79,
+            "falseNegative": 0
+          }
+        }
+      }
+    ]
+  },
+  "epoch": 3,
+  "tokensSeenAtCheckpoint": 113913130,
+  "lineage": [
+    {
+      "checkpoint": "training/runs/core-grammar/best.pt",
+      "sha256": "32e745c07f07bd55fe36f562d73e7516ee69bce2b33a09935fc25fac4834e615",
+      "epoch": 3,
+      "trainingTokens": 12536650
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/grammar-coverage/best.pt",
+      "sha256": "ae743a161809e9ceae976d118acf28d7bcc8972e37e4a19dcfb017c4a8614e75",
+      "epoch": 3,
+      "trainingTokens": 13221729
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/compact/last.pt",
+      "sha256": "128022aa97bfda180c0d4fb77f450b8ae6f1881bbc835bfd14e54c27572ba75b",
+      "epoch": 20,
+      "trainingTokens": 88154751
+    }
+  ],
+  "parameters": 24761,
+  "quantizationBits": 6,
+  "logicalPackedBytes": 18571,
+  "encodedCharacters": 24761,
+  "moduleBytes": 27051,
+  "moduleGzipBytes": 17161,
+  "moduleBrotliBytes": 15295,
+  "labels": [
+    "O",
+    "NUM",
+    "ORD",
+    "UNIT",
+    "DIR_BEFORE",
+    "DIR_AFTER",
+    "NOW",
+    "REL_DAY",
+    "DEICTIC",
+    "WEEKDAY",
+    "DAYGROUP",
+    "MONTH",
+    "DOM",
+    "YEAR",
+    "HOUR",
+    "MINUTE",
+    "SECOND",
+    "MERIDIEM",
+    "TIME_NAMED",
+    "DAYPART",
+    "RANGE_START",
+    "RANGE_END",
+    "RECUR",
+    "FREQ",
+    "TIMES",
+    "BOUND_START",
+    "BOUND_END",
+    "COUNT",
+    "DUR",
+    "EXCEPT",
+    "TZ",
+    "HOLIDAY",
+    "JOIN",
+    "GLUE",
+    "EDGE"
+  ],
+  "metrics": {
+    "validation": {
+      "tokens": 87208,
+      "sequences": 10000,
+      "tokenAccuracy": 0.9994610586184753,
+      "exactLabelAndBoundarySequence": 0.9923,
+      "boundaryPrecision": 0.9993917274939172,
+      "boundaryRecall": 0.9808955223880597,
+      "boundaryF1": 0.9900572461584813,
+      "boundaryCounts": {
+        "truePositive": 1643,
+        "falsePositive": 1,
+        "falseNegative": 32
+      }
+    },
+    "heldout": {
+      "tokens": 71821,
+      "sequences": 10000,
+      "tokenAccuracy": 0.9629217081355036,
+      "exactLabelAndBoundarySequence": 0.8422,
+      "boundaryPrecision": 0.9414381022979985,
+      "boundaryRecall": 1.0,
+      "boundaryF1": 0.96983581519664,
+      "boundaryCounts": {
+        "truePositive": 1270,
+        "falsePositive": 79,
+        "falseNegative": 0
+      }
+    }
+  },
+  "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Browser parity and end-to-end schedule accuracy are separate gates.",
+  "parity": {
+    "prefix": "training/parity",
+    "sequences": 512,
+    "tokens": 6048,
+    "rowsPerToken": 17,
+    "rolesPerToken": 40,
+    "boundaryThreshold": 5.0
+  },
+  "exportSourceDirectory": "training/exports/18f1d018bca5606cb2d092e083b1439343d118eaab838aded5e6d8ab49a6fc2c/source",
+  "exportSourceHashes": {
+    "training/export.py": "c24a6453e3c1304bc3d5cf25258b4149ea8a6bab2d01d7611051377d35f47aa1",
+    "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
+    "training/model.py": "2d293439c4b256bf424ed09cc0523121752c5a455cd0640f308ab3730bd7cc43",
+    "training/train.py": "236bdc60f1730abae59eb3d41f702ba13e90bbdf3136f8de1529f7add0116746",
+    "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
+  }
+}

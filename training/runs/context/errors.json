@@ -1,0 +1,4945 @@
+{
+  "checkpoint": "training/runs/context/best.pt",
+  "epoch": 2,
+  "families": {
+    "family-00": {
+      "tokens": 8724,
+      "correct": 8723,
+      "semanticTokens": 4863,
+      "semanticCorrect": 4863,
+      "sequences": 1223,
+      "exact": 1222,
+      "boundaryErrors": 0
+    },
+    "family-01": {
+      "tokens": 2456,
+      "correct": 1842,
+      "semanticTokens": 1842,
+      "semanticCorrect": 1842,
+      "sequences": 614,
+      "exact": 0,
+      "boundaryErrors": 97
+    },
+    "family-02": {
+      "tokens": 3307,
+      "correct": 2758,
+      "semanticTokens": 2758,
+      "semanticCorrect": 2758,
+      "sequences": 549,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-03": {
+      "tokens": 9169,
+      "correct": 9169,
+      "semanticTokens": 5975,
+      "semanticCorrect": 5975,
+      "sequences": 995,
+      "exact": 995,
+      "boundaryErrors": 0
+    },
+    "family-04": {
+      "tokens": 3465,
+      "correct": 2847,
+      "semanticTokens": 2079,
+      "semanticCorrect": 1461,
+      "sequences": 693,
+      "exact": 75,
+      "boundaryErrors": 0
+    },
+    "family-05": {
+      "tokens": 13877,
+      "correct": 13877,
+      "semanticTokens": 9503,
+      "semanticCorrect": 9503,
+      "sequences": 844,
+      "exact": 844,
+      "boundaryErrors": 0
+    },
+    "family-06": {
+      "tokens": 2522,
+      "correct": 2094,
+      "semanticTokens": 1544,
+      "semanticCorrect": 1502,
+      "sequences": 386,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-07": {
+      "tokens": 2184,
+      "correct": 2015,
+      "semanticTokens": 819,
+      "semanticCorrect": 819,
+      "sequences": 273,
+      "exact": 104,
+      "boundaryErrors": 0
+    },
+    "family-08": {
+      "tokens": 1000,
+      "correct": 773,
+      "semanticTokens": 750,
+      "semanticCorrect": 523,
+      "sequences": 250,
+      "exact": 23,
+      "boundaryErrors": 0
+    },
+    "family-09": {
+      "tokens": 2165,
+      "correct": 2165,
+      "semanticTokens": 1434,
+      "semanticCorrect": 1434,
+      "sequences": 418,
+      "exact": 418,
+      "boundaryErrors": 0
+    },
+    "family-10": {
+      "tokens": 1278,
+      "correct": 1278,
+      "semanticTokens": 1278,
+      "semanticCorrect": 1278,
+      "sequences": 426,
+      "exact": 426,
+      "boundaryErrors": 0
+    },
+    "family-11": {
+      "tokens": 2286,
+      "correct": 1143,
+      "semanticTokens": 1905,
+      "semanticCorrect": 1143,
+      "sequences": 381,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-12": {
+      "tokens": 2075,
+      "correct": 1801,
+      "semanticTokens": 1564,
+      "semanticCorrect": 1290,
+      "sequences": 282,
+      "exact": 8,
+      "boundaryErrors": 0
+    },
+    "family-13": {
+      "tokens": 2186,
+      "correct": 2186,
+      "semanticTokens": 1653,
+      "semanticCorrect": 1653,
+      "sequences": 290,
+      "exact": 290,
+      "boundaryErrors": 0
+    },
+    "family-14": {
+      "tokens": 693,
+      "correct": 231,
+      "semanticTokens": 693,
+      "semanticCorrect": 231,
+      "sequences": 231,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-15": {
+      "tokens": 1305,
+      "correct": 780,
+      "semanticTokens": 1305,
+      "semanticCorrect": 780,
+      "sequences": 261,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-16": {
+      "tokens": 3321,
+      "correct": 3319,
+      "semanticTokens": 2906,
+      "semanticCorrect": 2904,
+      "sequences": 297,
+      "exact": 6,
+      "boundaryErrors": 290
+    },
+    "family-17": {
+      "tokens": 923,
+      "correct": 891,
+      "semanticTokens": 775,
+      "semanticCorrect": 743,
+      "sequences": 148,
+      "exact": 116,
+      "boundaryErrors": 0
+    },
+    "family-18": {
+      "tokens": 2077,
+      "correct": 2077,
+      "semanticTokens": 2077,
+      "semanticCorrect": 2077,
+      "sequences": 347,
+      "exact": 347,
+      "boundaryErrors": 0
+    },
+    "family-19": {
+      "tokens": 1055,
+      "correct": 920,
+      "semanticTokens": 1055,
+      "semanticCorrect": 920,
+      "sequences": 211,
+      "exact": 76,
+      "boundaryErrors": 0
+    },
+    "family-20": {
+      "tokens": 138,
+      "correct": 69,
+      "semanticTokens": 69,
+      "semanticCorrect": 69,
+      "sequences": 69,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-21": {
+      "tokens": 1105,
+      "correct": 442,
+      "semanticTokens": 442,
+      "semanticCorrect": 442,
+      "sequences": 221,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-22": {
+      "tokens": 1204,
+      "correct": 1204,
+      "semanticTokens": 649,
+      "semanticCorrect": 649,
+      "sequences": 149,
+      "exact": 149,
+      "boundaryErrors": 0
+    },
+    "family-23": {
+      "tokens": 3306,
+      "correct": 2217,
+      "semanticTokens": 0,
+      "semanticCorrect": 0,
+      "sequences": 442,
+      "exact": 70,
+      "boundaryErrors": 0
+    }
+  },
+  "confusions": [
+    {
+      "expected": "GLUE",
+      "predicted": "O",
+      "count": 1531
+    },
+    {
+      "expected": "YEAR",
+      "predicted": "O",
+      "count": 584
+    },
+    {
+      "expected": "DOM",
+      "predicted": "HOUR",
+      "count": 517
+    },
+    {
+      "expected": "NUM",
+      "predicted": "HOUR",
+      "count": 413
+    },
+    {
+      "expected": "O",
+      "predicted": "GLUE",
+      "count": 410
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "FREQ",
+      "count": 386
+    },
+    {
+      "expected": "BOUND_START",
+      "predicted": "O",
+      "count": 381
+    },
+    {
+      "expected": "RECUR",
+      "predicted": "O",
+      "count": 381
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "DIR_AFTER",
+      "count": 322
+    },
+    {
+      "expected": "TIMES",
+      "predicted": "WEEKDAY",
+      "count": 231
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "RANGE_END",
+      "count": 211
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "RECUR",
+      "count": 208
+    },
+    {
+      "expected": "DAYGROUP",
+      "predicted": "DAYPART",
+      "count": 198
+    },
+    {
+      "expected": "O",
+      "predicted": "HOUR",
+      "count": 176
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "BOUND_START",
+      "count": 160
+    },
+    {
+      "expected": "O",
+      "predicted": "WEEKDAY",
+      "count": 133
+    },
+    {
+      "expected": "NUM",
+      "predicted": "ORD",
+      "count": 103
+    },
+    {
+      "expected": "O",
+      "predicted": "RANGE_START",
+      "count": 88
+    },
+    {
+      "expected": "O",
+      "predicted": "MONTH",
+      "count": 79
+    },
+    {
+      "expected": "RECUR",
+      "predicted": "DEICTIC",
+      "count": 77
+    },
+    {
+      "expected": "DAYGROUP",
+      "predicted": "WEEKDAY",
+      "count": 76
+    },
+    {
+      "expected": "O",
+      "predicted": "UNIT",
+      "count": 70
+    },
+    {
+      "expected": "O",
+      "predicted": "DOM",
+      "count": 70
+    },
+    {
+      "expected": "O",
+      "predicted": "TIMES",
+      "count": 63
+    },
+    {
+      "expected": "ORD",
+      "predicted": "DEICTIC",
+      "count": 42
+    },
+    {
+      "expected": "YEAR",
+      "predicted": "DOM",
+      "count": 34
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "DIR_BEFORE",
+      "count": 13
+    },
+    {
+      "expected": "TZ",
+      "predicted": "NUM",
+      "count": 13
+    },
+    {
+      "expected": "TZ",
+      "predicted": "DOM",
+      "count": 12
+    },
+    {
+      "expected": "RANGE_START",
+      "predicted": "O",
+      "count": 8
+    }
+  ],
+  "failures": [
+    {
+      "text": "January from 8 to 25",
+      "family": "family-15",
+      "tokens": [
+        {
+          "text": "January",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "RANGE_START",
+          "predicted": "RANGE_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "8",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "25",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in the early morning tomorrow",
+      "family": "family-21",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "early",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "morning",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding Thursday weekdays at 7 pm",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Thursday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "7",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "pm",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in another 24 hours",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "another",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "hours",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "18:44 to 3 PM every wednesday through Wednesdays.",
+      "family": "family-16",
+      "tokens": [
+        {
+          "text": "18",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "44",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "PM",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "every",
+          "expected": "RECUR",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "wednesday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "through",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Wednesdays",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in precisely 10 years",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "precisely",
+          "expected": "GLUE",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "10",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "years",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in precisely 15 minutes",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "precisely",
+          "expected": "GLUE",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "15",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "10th of September 2029",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "10",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "September",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2029",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 2nd and 21st monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "nd",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "21",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "st",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "nine more occurrences starting tomorrow weekly",
+      "family": "family-11",
+      "tokens": [
+        {
+          "text": "nine",
+          "expected": "NUM",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "more",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "occurrences",
+          "expected": "COUNT",
+          "predicted": "COUNT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "starting",
+          "expected": "BOUND_START",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 10th and 24th monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "10",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "each October 21st",
+      "family": "family-08",
+      "tokens": [
+        {
+          "text": "each",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "October",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "21",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "st",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "next month on its second Sat",
+      "family": "family-06",
+      "tokens": [
+        {
+          "text": "next",
+          "expected": "DEICTIC",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "month",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "its",
+          "expected": "GLUE",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "second",
+          "expected": "ORD",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Sat",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "4 to 9 minutes later",
+      "family": "family-19",
+      "tokens": [
+        {
+          "text": "4",
+          "expected": "NUM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "9",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "later",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in precisely ten weeks",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "precisely",
+          "expected": "GLUE",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "ten",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weeks",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week once",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "once",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 9th and 10th monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "9",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "10",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "6th of January 2026",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "6",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "January",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2026",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "nine more occurrences starting tomorrow weekly",
+      "family": "family-11",
+      "tokens": [
+        {
+          "text": "nine",
+          "expected": "NUM",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "more",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "occurrences",
+          "expected": "COUNT",
+          "predicted": "COUNT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "starting",
+          "expected": "BOUND_START",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 14th and 15th monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "14",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "15",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding Thu. weekdays at evening",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Thu",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "evening",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 15th and 30th monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "15",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "30",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "5:02 AM- 3:59AM every thu through Monday",
+      "family": "family-16",
+      "tokens": [
+        {
+          "text": "5",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "02",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "AM",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "-",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "59",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "AM",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "every",
+          "expected": "RECUR",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "thu",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "through",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Monday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week thrice",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "thrice",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in the early morning tomorrow",
+      "family": "family-21",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "early",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "morning",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Halloween by 24 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Halloween",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in exactly 30 days",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "exactly",
+          "expected": "GLUE",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "30",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "Choose option 2 from section 3.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "Choose",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "option",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2",
+          "expected": "O",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "O",
+          "predicted": "RANGE_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "section",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "O",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "15th of August 2033",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "15",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "August",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2033",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in the early morning tomorrow",
+      "family": "family-21",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "early",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "morning",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in exactly 24 hours",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "exactly",
+          "expected": "GLUE",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "hours",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "9:36:02 through 8 p.m. every Saturday through sunday",
+      "family": "family-16",
+      "tokens": [
+        {
+          "text": "9",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "36",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "02",
+          "expected": "SECOND",
+          "predicted": "SECOND",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "through",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "8",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "p",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "m",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "every",
+          "expected": "RECUR",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "Saturday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "through",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "sunday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in another 6 days",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "another",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "6",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in the early morning tomorrow",
+      "family": "family-21",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "early",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "morning",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "next month on its second Monday",
+      "family": "family-06",
+      "tokens": [
+        {
+          "text": "next",
+          "expected": "DEICTIC",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "month",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "its",
+          "expected": "GLUE",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "second",
+          "expected": "ORD",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Monday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding thu weekdays at 1:31:17 AM",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "thu",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "1",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "31",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "17",
+          "expected": "SECOND",
+          "predicted": "SECOND",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "AM",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Halloween by 12 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Halloween",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "12",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Valentine's Day by 1 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Valentine's",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Day",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "BOUND_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "1",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "1 to eight minutes later",
+      "family": "family-19",
+      "tokens": [
+        {
+          "text": "1",
+          "expected": "NUM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "eight",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "later",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "right now",
+      "family": "family-20",
+      "tokens": [
+        {
+          "text": "right",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "now",
+          "expected": "NOW",
+          "predicted": "NOW",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week thrice",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "thrice",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "The timestamp column is empty.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "The",
+          "expected": "O",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "timestamp",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "column",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "is",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "empty",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding sunday weekdays at 12p.m.",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "sunday",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "12",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "p",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "m",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "28th of December 2026",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "28",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "December",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2026",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding Fri weekdays at 21:04",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Fri",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "21",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "04",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "each May 28th",
+      "family": "family-08",
+      "tokens": [
+        {
+          "text": "each",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "May",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "28",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "right now",
+      "family": "family-20",
+      "tokens": [
+        {
+          "text": "right",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "now",
+          "expected": "NOW",
+          "predicted": "NOW",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "each October 3rd",
+      "family": "family-08",
+      "tokens": [
+        {
+          "text": "each",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "October",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "rd",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "11:59:15- 10 am every Fri through Mon",
+      "family": "family-16",
+      "tokens": [
+        {
+          "text": "11",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "59",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "15",
+          "expected": "SECOND",
+          "predicted": "SECOND",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "-",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "10",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "am",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "every",
+          "expected": "RECUR",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "Fri",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "through",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Mon",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week once",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "once",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Halloween by 4 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Halloween",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "4",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding Thursdays weekdays at 13:13:58",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Thursdays",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "13",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "13",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "58",
+          "expected": "SECOND",
+          "predicted": "SECOND",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Christmas by 5 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Christmas",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "5",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "1 more occurrences starting tomorrow weekly",
+      "family": "family-11",
+      "tokens": [
+        {
+          "text": "1",
+          "expected": "NUM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "more",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "occurrences",
+          "expected": "COUNT",
+          "predicted": "COUNT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "starting",
+          "expected": "BOUND_START",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "11:54 PM to 2:12 every mon. through Tuesdays",
+      "family": "family-16",
+      "tokens": [
+        {
+          "text": "11",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "54",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "PM",
+          "expected": "MERIDIEM",
+          "predicted": "MERIDIEM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "12",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "every",
+          "expected": "RECUR",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "mon",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "through",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Tuesdays",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "25th of July 2029",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "25",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "July",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2029",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "2 to 7 minutes later",
+      "family": "family-19",
+      "tokens": [
+        {
+          "text": "2",
+          "expected": "NUM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "7",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "later",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "each March 7th",
+      "family": "family-08",
+      "tokens": [
+        {
+          "text": "each",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "March",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "7",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week once",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "once",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "March is a family name on the document.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "March",
+          "expected": "O",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "is",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "a",
+          "expected": "O",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "family",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "name",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "document",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "August from 2 to 17",
+      "family": "family-15",
+      "tokens": [
+        {
+          "text": "August",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "RANGE_START",
+          "predicted": "RANGE_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "17",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 2nd and 18th monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "nd",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "18",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before New Year's Eve by 24 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "New",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Year's",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Eve",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before New Year's Day by 12 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "New",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Year's",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Day",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "BOUND_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "12",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in the early morning tomorrow",
+      "family": "family-21",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "early",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "morning",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "October from 3 to 16",
+      "family": "family-15",
+      "tokens": [
+        {
+          "text": "October",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "RANGE_START",
+          "predicted": "RANGE_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "16",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "1 to eleven minutes later",
+      "family": "family-19",
+      "tokens": [
+        {
+          "text": "1",
+          "expected": "NUM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "eleven",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "later",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in precisely seven minutes",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "precisely",
+          "expected": "GLUE",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": true
+        },
+        {
+          "text": "seven",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "31st of December 2030",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "31",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "st",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "December",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2030",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week once",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "once",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in another 4 minutes",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "another",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "4",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in precisely 10 weeks",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "precisely",
+          "expected": "GLUE",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "10",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weeks",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "next month on its fifth Fri",
+      "family": "family-06",
+      "tokens": [
+        {
+          "text": "next",
+          "expected": "DEICTIC",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "month",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "its",
+          "expected": "GLUE",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "fifth",
+          "expected": "ORD",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Fri",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week twice",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "twice",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "The last draft contains 31 examples.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "The",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "last",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "draft",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "contains",
+          "expected": "O",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "31",
+          "expected": "O",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "examples",
+          "expected": "O",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in exactly 4 hours",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "exactly",
+          "expected": "GLUE",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "4",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "hours",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in the early morning tomorrow",
+      "family": "family-21",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "early",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "morning",
+          "expected": "DAYPART",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "tomorrow",
+          "expected": "REL_DAY",
+          "predicted": "REL_DAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "The timestamp column is empty.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "The",
+          "expected": "O",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "timestamp",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "column",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "is",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "empty",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "2nd of July 2025",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "2",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "nd",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "July",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2025",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "next month on its first Tue",
+      "family": "family-06",
+      "tokens": [
+        {
+          "text": "next",
+          "expected": "DEICTIC",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "month",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "its",
+          "expected": "GLUE",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "first",
+          "expected": "ORD",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Tue",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "per week once",
+      "family": "family-14",
+      "tokens": [
+        {
+          "text": "per",
+          "expected": "RECUR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "week",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "once",
+          "expected": "TIMES",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before New Year's Day by 10 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "New",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Year's",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Day",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "BOUND_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "10",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "Choose option 2 from section 3.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "Choose",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "option",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2",
+          "expected": "O",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "O",
+          "predicted": "RANGE_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "section",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "O",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in precisely 10 minutes",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "precisely",
+          "expected": "GLUE",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "10",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "minutes",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "August from 4 to 15",
+      "family": "family-15",
+      "tokens": [
+        {
+          "text": "August",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "RANGE_START",
+          "predicted": "RANGE_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "4",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "15",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "11th of August 2028",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "11",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "August",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2028",
+          "expected": "YEAR",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "6th of February 2028",
+      "family": "family-04",
+      "tokens": [
+        {
+          "text": "6",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "of",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "February",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "2028",
+          "expected": "YEAR",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "next month on its first sat",
+      "family": "family-06",
+      "tokens": [
+        {
+          "text": "next",
+          "expected": "DEICTIC",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "month",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "its",
+          "expected": "GLUE",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "first",
+          "expected": "ORD",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "sat",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in exactly four hours",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "exactly",
+          "expected": "GLUE",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "four",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "hours",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "The timestamp column is empty.",
+      "family": "family-23",
+      "tokens": [
+        {
+          "text": "The",
+          "expected": "O",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "timestamp",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "column",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "is",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "empty",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ".",
+          "expected": "O",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Halloween by four days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Halloween",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "four",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "July from one to 17",
+      "family": "family-15",
+      "tokens": [
+        {
+          "text": "July",
+          "expected": "MONTH",
+          "predicted": "MONTH",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "from",
+          "expected": "RANGE_START",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "one",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "to",
+          "expected": "RANGE_END",
+          "predicted": "RANGE_END",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "17",
+          "expected": "DOM",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Valentine's Day by 7 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Valentine's",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Day",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "BOUND_START",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "7",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "excluding Tue weekdays at 11:48",
+      "family": "family-12",
+      "tokens": [
+        {
+          "text": "excluding",
+          "expected": "EXCEPT",
+          "predicted": "EXCEPT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Tue",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weekdays",
+          "expected": "DAYGROUP",
+          "predicted": "DAYPART",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "at",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "11",
+          "expected": "HOUR",
+          "predicted": "HOUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": ":",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "48",
+          "expected": "MINUTE",
+          "predicted": "MINUTE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "in exactly 24 weeks",
+      "family": "family-01",
+      "tokens": [
+        {
+          "text": "in",
+          "expected": "DIR_AFTER",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "exactly",
+          "expected": "GLUE",
+          "predicted": "RECUR",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "weeks",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Christmas by 3 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Christmas",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "3",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "before Christmas by 12 days",
+      "family": "family-02",
+      "tokens": [
+        {
+          "text": "before",
+          "expected": "DIR_BEFORE",
+          "predicted": "DIR_BEFORE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Christmas",
+          "expected": "HOLIDAY",
+          "predicted": "HOLIDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "by",
+          "expected": "GLUE",
+          "predicted": "DIR_AFTER",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "12",
+          "expected": "NUM",
+          "predicted": "NUM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "days",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "next month on its 1st Mon",
+      "family": "family-06",
+      "tokens": [
+        {
+          "text": "next",
+          "expected": "DEICTIC",
+          "predicted": "DEICTIC",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "month",
+          "expected": "UNIT",
+          "predicted": "UNIT",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "its",
+          "expected": "GLUE",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "1",
+          "expected": "ORD",
+          "predicted": "ORD",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "st",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "Mon",
+          "expected": "WEEKDAY",
+          "predicted": "WEEKDAY",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "on the 24th and 5th monthly",
+      "family": "family-07",
+      "tokens": [
+        {
+          "text": "on",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "the",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "24",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "and",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "5",
+          "expected": "DOM",
+          "predicted": "DOM",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "th",
+          "expected": "GLUE",
+          "predicted": "GLUE",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "monthly",
+          "expected": "FREQ",
+          "predicted": "FREQ",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    },
+    {
+      "text": "right now",
+      "family": "family-20",
+      "tokens": [
+        {
+          "text": "right",
+          "expected": "GLUE",
+          "predicted": "O",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        },
+        {
+          "text": "now",
+          "expected": "NOW",
+          "predicted": "NOW",
+          "expectedBoundary": false,
+          "predictedBoundary": false
+        }
+      ]
+    }
+  ]
+}

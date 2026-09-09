@@ -1,0 +1,8575 @@
+{
+  "model": "986640d821f70a0959ebc73fa05742455f14e17c9ca140a2596c112b2d9db577",
+  "source": "data/synth/clock-period-checks.jsonl",
+  "sourceSha256": "90f55ae9233b6c4ee8d0b70a2d8ad933e1018bf5db2bb9aa05522f7b51e2d455",
+  "total": 20000,
+  "correct": 19960,
+  "families": {
+    "yearly": {
+      "total": 779,
+      "correct": 779
+    },
+    "day-group": {
+      "total": 787,
+      "correct": 787
+    },
+    "duration": {
+      "total": 756,
+      "correct": 750
+    },
+    "recurrence-bounds": {
+      "total": 791,
+      "correct": 790
+    },
+    "relative": {
+      "total": 771,
+      "correct": 770
+    },
+    "date-range": {
+      "total": 777,
+      "correct": 777
+    },
+    "holiday": {
+      "total": 767,
+      "correct": 767
+    },
+    "exceptions": {
+      "total": 816,
+      "correct": 816
+    },
+    "time-window": {
+      "total": 784,
+      "correct": 782
+    },
+    "recurrence": {
+      "total": 748,
+      "correct": 747
+    },
+    "modified-group": {
+      "total": 746,
+      "correct": 746
+    },
+    "now": {
+      "total": 780,
+      "correct": 780
+    },
+    "frequency-count": {
+      "total": 765,
+      "correct": 765
+    },
+    "weekday-windows": {
+      "total": 726,
+      "correct": 701
+    },
+    "monthly-days": {
+      "total": 747,
+      "correct": 747
+    },
+    "monthly-ordinal": {
+      "total": 750,
+      "correct": 750
+    },
+    "weekday-range": {
+      "total": 769,
+      "correct": 768
+    },
+    "day-part": {
+      "total": 764,
+      "correct": 764
+    },
+    "calendar": {
+      "total": 779,
+      "correct": 779
+    },
+    "bounded-weekday": {
+      "total": 745,
+      "correct": 745
+    },
+    "relative-unit": {
+      "total": 749,
+      "correct": 749
+    },
+    "anchored-relative": {
+      "total": 787,
+      "correct": 786
+    },
+    "weekday": {
+      "total": 768,
+      "correct": 767
+    },
+    "weekday-points": {
+      "total": 793,
+      "correct": 792
+    },
+    "relative-day": {
+      "total": 768,
+      "correct": 768
+    },
+    "clock": {
+      "total": 788,
+      "correct": 788
+    }
+  },
+  "failures": [
+    {
+      "id": "semantic-271828-791",
+      "family": "weekday-windows",
+      "text": "Thursday  MONDAY\tfrom 4:30 In the morning\tto9:30am  every 4weeks on Tuesday  Monday\tFrom 4:30am\tto 6:30am  every FOUR  weeks on WEDNESDAY Tuesday Saturday  from 7:15am  TO 10:15 in the morning",
+      "spans": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 16,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 21,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 23,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 26,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 41,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 48,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 57,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 58,
+          "end": 59,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 64,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 75,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 83,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 88,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 89,
+          "end": 90,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 90,
+          "end": 91,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 93,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 95,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 96,
+          "end": 98,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 100,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 100,
+          "end": 101,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 101,
+          "end": 103,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 103,
+          "end": 105,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 107,
+          "end": 112,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 113,
+          "end": 117,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 119,
+          "end": 124,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 125,
+          "end": 127,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 128,
+          "end": 137,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 138,
+          "end": 145,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 146,
+          "end": 154,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 156,
+          "end": 160,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 161,
+          "end": 162,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 162,
+          "end": 163,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 163,
+          "end": 165,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 165,
+          "end": 167,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 169,
+          "end": 171,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 172,
+          "end": 174,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 174,
+          "end": 175,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 175,
+          "end": 177,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 178,
+          "end": 192,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 30
+              },
+              "end": {
+                "hour": 9,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 30
+              },
+              "end": {
+                "hour": 6,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TU",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 7,
+                "minute": 15
+              },
+              "end": {
+                "hour": 10,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE",
+                "TU",
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 192,
+          "text": "Thursday  MONDAY\tfrom 4:30 In the morning\tto9:30am  every 4weeks on Tuesday  Monday\tFrom 4:30am\tto 6:30am  every FOUR  weeks on WEDNESDAY Tuesday Saturday  from 7:15am  TO 10:15 in the morning",
+          "confidence": 0.9049617648124695,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 161,
+              "end": 162,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-1195",
+      "family": "weekday-windows",
+      "text": "the lesson starts Wednesday and\tSunday\tand friday 11:30  in morning-  9:30pm every3weeks  on  tuesday  , Sunday , Monday  2:30 in the afternoon -5:30pm Monday  5:15 in the morning  - 12:15pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 17,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 18,
+          "end": 27,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 31,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 38,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 42,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 49,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 52,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 53,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 55,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 67,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 67,
+          "end": 68,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 71,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 72,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 74,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 76,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 82,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 82,
+          "end": 83,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 88,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 90,
+          "end": 92,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 101,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 103,
+          "end": 104,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 111,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 112,
+          "end": 113,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 114,
+          "end": 120,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 123,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 124,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 124,
+          "end": 126,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 143,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 144,
+          "end": 145,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 146,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 146,
+          "end": 147,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 147,
+          "end": 149,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 149,
+          "end": 151,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 152,
+          "end": 158,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 160,
+          "end": 161,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 161,
+          "end": 162,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 162,
+          "end": 164,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 165,
+          "end": 179,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 181,
+          "end": 182,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 183,
+          "end": 185,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 185,
+          "end": 186,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 186,
+          "end": 188,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 188,
+          "end": 190,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 30
+              },
+              "end": {
+                "hour": 21,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE",
+                "SU",
+                "FR"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "TU",
+                "SU",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 5,
+                "minute": 15
+              },
+              "end": {
+                "hour": 12,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 18,
+          "end": 190,
+          "text": "Wednesday and\tSunday\tand friday 11:30  in morning-  9:30pm every3weeks  on  tuesday  , Sunday , Monday  2:30 in the afternoon -5:30pm Monday  5:15 in the morning  - 12:15pm",
+          "confidence": 0.8607004880905151,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 122,
+              "end": 123,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2017",
+      "family": "weekday-windows",
+      "text": "Tuesday, Sunday &SATURDAY  Five\tpm -twelve  in morning\tThursday  and Sunday  and  Tuesday  5:45Pm  -  10:45Pm  Monday&  Sunday 12:30pm -  2:30  in the afternoon",
+      "spans": [
+        {
+          "start": 0,
+          "end": 7,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 15,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 17,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 25,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 31,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 34,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 42,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 54,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 63,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 65,
+          "end": 68,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 75,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 80,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 82,
+          "end": 89,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 92,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 93,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 95,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 100,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 102,
+          "end": 104,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 105,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 107,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 107,
+          "end": 109,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 111,
+          "end": 117,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 117,
+          "end": 118,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 120,
+          "end": 126,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 129,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 129,
+          "end": 130,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 130,
+          "end": 132,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 132,
+          "end": 134,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 135,
+          "end": 136,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 138,
+          "end": 139,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 139,
+          "end": 140,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 140,
+          "end": 142,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 144,
+          "end": 160,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0
+              },
+              "end": {
+                "hour": 0,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "SU",
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 45
+              },
+              "end": {
+                "hour": 22,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "SU",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 12,
+                "minute": 30
+              },
+              "end": {
+                "hour": 14,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 160,
+          "text": "Tuesday, Sunday &SATURDAY  Five\tpm -twelve  in morning\tThursday  and Sunday  and  Tuesday  5:45Pm  -  10:45Pm  Monday&  Sunday 12:30pm -  2:30  in the afternoon",
+          "confidence": 0.5991028547286987,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 91,
+              "end": 92,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2346",
+      "family": "weekday-windows",
+      "text": "you'll go back\tevery  4weeks on  sunday 2:30am  - 4:30am every two  weeks on\tSaturday  9:15pm -7:15in the morning Thursday ,  Friday,Wednesday 11:30in the morning -10:30pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 23,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 28,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 31,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 39,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 42,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 49,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 51,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 52,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 54,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 54,
+          "end": 56,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 62,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 63,
+          "end": 66,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 73,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 76,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 85,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 87,
+          "end": 88,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 89,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 89,
+          "end": 91,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 93,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 95,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 96,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 96,
+          "end": 97,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 113,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 114,
+          "end": 122,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 123,
+          "end": 124,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 126,
+          "end": 132,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 132,
+          "end": 133,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 133,
+          "end": 142,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 143,
+          "end": 145,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 146,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 146,
+          "end": 148,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 148,
+          "end": 162,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 163,
+          "end": 164,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 164,
+          "end": 166,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 166,
+          "end": 167,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 167,
+          "end": 169,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 169,
+          "end": 171,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 30
+              },
+              "end": {
+                "hour": 4,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 21,
+                "minute": 15
+              },
+              "end": {
+                "hour": 7,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 30
+              },
+              "end": {
+                "hour": 22,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "FR",
+                "WE"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 15,
+          "end": 171,
+          "text": "every  4weeks on  sunday 2:30am  - 4:30am every two  weeks on\tSaturday  9:15pm -7:15in the morning Thursday ,  Friday,Wednesday 11:30in the morning -10:30pm",
+          "confidence": 0.9312226176261902,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 143,
+              "end": 145,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2840",
+      "family": "weekday-windows",
+      "text": "WEDNESDAY9:45pm-12:45 in morning every\tfour weeks  On WEDNESDAY9:30 in morning - 5:30Pm every two weeks\ton  Sunday &Monday 7:15am - 11:15in the morning",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 11,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 13,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 15,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 18,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 18,
+          "end": 19,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 21,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 32,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 38,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 39,
+          "end": 43,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 49,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 53,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 54,
+          "end": 63,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 64,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 65,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 78,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 80,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 81,
+          "end": 82,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 82,
+          "end": 83,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 85,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 85,
+          "end": 87,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 93,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 94,
+          "end": 97,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 98,
+          "end": 103,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 106,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 108,
+          "end": 114,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 115,
+          "end": 116,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 116,
+          "end": 122,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 124,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 124,
+          "end": 125,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 125,
+          "end": 127,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 129,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 130,
+          "end": 131,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 132,
+          "end": 134,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 134,
+          "end": 135,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 135,
+          "end": 137,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 137,
+          "end": 151,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 21,
+                "minute": 45
+              },
+              "end": {
+                "hour": 0,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 7,
+                "minute": 15
+              },
+              "end": {
+                "hour": 11,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SU",
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 151,
+          "text": "WEDNESDAY9:45pm-12:45 in morning every\tfour weeks  On WEDNESDAY9:30 in morning - 5:30Pm every two weeks\ton  Sunday &Monday 7:15am - 11:15in the morning",
+          "confidence": 0.6808968782424927,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 63,
+              "end": 64,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2914",
+      "family": "weekday-windows",
+      "text": "the library is open  every three  weeks Sunday from one pm To Seven pm  saturday Monday from11:30am to 2:30  in afternoon  friday Sunday from  5:30pm to 12:30am for our team",
+      "spans": [
+        {
+          "start": 0,
+          "end": 19,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 32,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 39,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 46,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 51,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 55,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 58,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 61,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 62,
+          "end": 67,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 70,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 80,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 81,
+          "end": 87,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 92,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 94,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 95,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 100,
+          "end": 102,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 103,
+          "end": 104,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 105,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 107,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 109,
+          "end": 121,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 129,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 130,
+          "end": 136,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 137,
+          "end": 141,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 143,
+          "end": 144,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 144,
+          "end": 145,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 147,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 147,
+          "end": 149,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 150,
+          "end": 152,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 153,
+          "end": 155,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 155,
+          "end": 156,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 156,
+          "end": 158,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 158,
+          "end": 160,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 161,
+          "end": 173,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              },
+              "end": {
+                "hour": 19,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 30
+              },
+              "end": {
+                "hour": 14,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 160,
+          "text": "every three  weeks Sunday from one pm To Seven pm  saturday Monday from11:30am to 2:30  in afternoon  friday Sunday from  5:30pm to 12:30am",
+          "confidence": 0.5379214882850647,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 143,
+              "end": 144,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-3354",
+      "family": "duration",
+      "text": "Deadline: for  next  A  day  PLEASE",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 13,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 19,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 27,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 35,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 1,
+              "unit": "day"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 15,
+          "end": 27,
+          "text": "next  A  day",
+          "confidence": 0.7633614540100098,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 15,
+              "end": 19,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-3801",
+      "family": "duration",
+      "text": "can you schedule a call  for\tthe Next  10minutes\tFOR OUR TEAM",
+      "spans": [
+        {
+          "start": 0,
+          "end": 23,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 28,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 37,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 41,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 48,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 61,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 10,
+              "unit": "minute"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 48,
+          "text": "Next  10minutes",
+          "confidence": 0.9472196698188782,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 33,
+              "end": 37,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-4613",
+      "family": "weekday-windows",
+      "text": "each SUNDAY  ,  Friday,Thursday3:15am -4:15am every3weeks on FRIDAY two am  - eleven Am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 5,
+          "end": 11,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 22,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 23,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 31,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 35,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 37,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 40,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 43,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 45,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 51,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 51,
+          "end": 52,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 57,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 58,
+          "end": 60,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 67,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 71,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 74,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 77,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 84,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 85,
+          "end": 87,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 15
+              },
+              "end": {
+                "hour": 4,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "SU",
+                "FR",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 0
+              },
+              "end": {
+                "hour": 11,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 87,
+          "text": "each SUNDAY  ,  Friday,Thursday3:15am -4:15am every3weeks on FRIDAY two am  - eleven Am",
+          "confidence": 0.9267045855522156,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 68,
+              "end": 71,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7023",
+      "family": "weekday-windows",
+      "text": "Wednesday  from\tsix  am\tto ten  am\tevery\tfour\tweeks on\ttuesday\tFrom  five PM  to eleven\tpm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 15,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 19,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 23,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 26,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 30,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 34,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 40,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 41,
+          "end": 45,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 51,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 54,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 62,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 67,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 73,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 76,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 80,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 81,
+          "end": 87,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 6,
+                "minute": 0
+              },
+              "end": {
+                "hour": 10,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0
+              },
+              "end": {
+                "hour": 23,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 90,
+          "text": "Wednesday  from\tsix  am\tto ten  am\tevery\tfour\tweeks on\ttuesday\tFrom  five PM  to eleven\tpm",
+          "confidence": 0.9161615371704102,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 69,
+              "end": 73,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7409",
+      "family": "weekday-windows",
+      "text": "WEDNESDAY\ttwo  in the morning-ten am Thursday 6:45in the evening-  5:45  in morning SATURDAY  &  Sunday 10:45 in morning - 4:45pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 13,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 29,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 33,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 36,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 45,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 46,
+          "end": 47,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 48,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 64,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 65,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 67,
+          "end": 68,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 69,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 71,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 83,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 92,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 94,
+          "end": 95,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 103,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 106,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 106,
+          "end": 107,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 107,
+          "end": 109,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 110,
+          "end": 120,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 121,
+          "end": 122,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 124,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 124,
+          "end": 125,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 125,
+          "end": 127,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 129,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 0
+              },
+              "end": {
+                "hour": 10,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 45
+              },
+              "end": {
+                "hour": 5,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 45
+              },
+              "end": {
+                "hour": 16,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 129,
+          "text": "WEDNESDAY\ttwo  in the morning-ten am Thursday 6:45in the evening-  5:45  in morning SATURDAY  &  Sunday 10:45 in morning - 4:45pm",
+          "confidence": 0.7497139573097229,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 104,
+              "end": 106,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7844",
+      "family": "anchored-relative",
+      "text": "the library is closed  a\tDay after\tEighth of  January",
+      "spans": [
+        {
+          "start": 0,
+          "end": 21,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 28,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 34,
+          "label": "DIR_AFTER",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 41,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 53,
+          "label": "MONTH",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "calendar",
+              "month": 1,
+              "day": 8
+            },
+            "shift": {
+              "amount": 1,
+              "unit": "day",
+              "direction": "after"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 23,
+          "end": 53,
+          "text": "a\tDay after\tEighth of  January",
+          "confidence": 0.020448731258511543,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unknown relative day.",
+              "start": 29,
+              "end": 34,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 23,
+              "end": 24,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7895",
+      "family": "weekday-windows",
+      "text": "they'll be back\tSunday thursday from  3:30am  to 8:30am Saturday  FROM  eleven am To six pm  every four  weeks\ton Monday  Sunday Saturday from11:15 in the morning  to 2:15pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 15,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 22,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 31,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 36,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 40,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 42,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 48,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 50,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 51,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 53,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 55,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 64,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 66,
+          "end": 70,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 78,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 81,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 82,
+          "end": 84,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 85,
+          "end": 88,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 89,
+          "end": 91,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 98,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 99,
+          "end": 103,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 110,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 111,
+          "end": 113,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 114,
+          "end": 120,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 128,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 129,
+          "end": 137,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 138,
+          "end": 142,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 142,
+          "end": 144,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 144,
+          "end": 145,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 147,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 148,
+          "end": 162,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 164,
+          "end": 166,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 167,
+          "end": 168,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 168,
+          "end": 169,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 169,
+          "end": 171,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 171,
+          "end": 173,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 30
+              },
+              "end": {
+                "hour": 8,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 0
+              },
+              "end": {
+                "hour": 18,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 15
+              },
+              "end": {
+                "hour": 14,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "MO",
+                "SU",
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 16,
+          "end": 173,
+          "text": "Sunday thursday from  3:30am  to 8:30am Saturday  FROM  eleven am To six pm  every four  weeks\ton Monday  Sunday Saturday from11:15 in the morning  to 2:15pm",
+          "confidence": 0.9214131236076355,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 142,
+              "end": 144,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-9460",
+      "family": "weekday-windows",
+      "text": "Sunday & Wednesday  6:30am- 11:30 in the morning  saturday , wednesday  AND Friday  6:30pm  -3:30am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 18,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 20,
+          "end": 21,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 22,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 24,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 26,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 26,
+          "end": 27,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 30,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 33,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 48,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 58,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 59,
+          "end": 60,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 70,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 75,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 82,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 85,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 85,
+          "end": 86,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 88,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 93,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 94,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 95,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 6,
+                "minute": 30
+              },
+              "end": {
+                "hour": 11,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 30
+              },
+              "end": {
+                "hour": 3,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "WE",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 99,
+          "text": "Sunday & Wednesday  6:30am- 11:30 in the morning  saturday , wednesday  AND Friday  6:30pm  -3:30am",
+          "confidence": 0.9288505911827087,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 84,
+              "end": 85,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-9629",
+      "family": "relative",
+      "text": "before  A Year  works for me",
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "DIR_BEFORE",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 9,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 14,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 28,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "shift": {
+              "amount": 1,
+              "unit": "year",
+              "direction": "before"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 14,
+          "text": "before  A Year",
+          "confidence": 0.4071158766746521,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role DIR_BEFORE.",
+              "start": 0,
+              "end": 6,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 0,
+              "end": 6,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-9953",
+      "family": "weekday-windows",
+      "text": "Monday 11:30pm- 11:30  in the morning\tevery\tfour\tweeks THURSDAY,  SUNDAY 2:30am - 3:30AM Every three weeks Saturday& Thursday two AM  - six am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 7,
+          "end": 9,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 12,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 12,
+          "end": 14,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 14,
+          "end": 15,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 18,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 18,
+          "end": 19,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 21,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 37,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 43,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 44,
+          "end": 48,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 54,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 63,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 64,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 72,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 74,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 75,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 75,
+          "end": 77,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 79,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 80,
+          "end": 81,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 82,
+          "end": 83,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 84,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 86,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 88,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 89,
+          "end": 94,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 95,
+          "end": 100,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 101,
+          "end": 106,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 107,
+          "end": 115,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 115,
+          "end": 116,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 117,
+          "end": 125,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 126,
+          "end": 129,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 130,
+          "end": 132,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 134,
+          "end": 135,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 136,
+          "end": 139,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 140,
+          "end": 142,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 30
+              },
+              "end": {
+                "hour": 11,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 30
+              },
+              "end": {
+                "hour": 3,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TH",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 0
+              },
+              "end": {
+                "hour": 6,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "SA",
+                "TH"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 142,
+          "text": "Monday 11:30pm- 11:30  in the morning\tevery\tfour\tweeks THURSDAY,  SUNDAY 2:30am - 3:30AM Every three weeks Saturday& Thursday two AM  - six am",
+          "confidence": 0.9305413365364075,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 73,
+              "end": 74,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-10778",
+      "family": "time-window",
+      "text": "at  5:00:23Pm-10in the evening",
+      "spans": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 4,
+          "end": 5,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 5,
+          "end": 6,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 6,
+          "end": 8,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 9,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 11,
+          "label": "SECOND",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 13,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 14,
+          "end": 16,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 30,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0,
+                "second": 23
+              },
+              "end": {
+                "hour": 22,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 4,
+          "end": 30,
+          "text": "5:00:23Pm-10in the evening",
+          "confidence": 0.5377258658409119,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unlinked-times",
+              "message": "Two clocks need a range separator or separate clauses.",
+              "start": 14,
+              "end": 16,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-11261",
+      "family": "weekday-windows",
+      "text": "Can you set an alarm for  Wednesday from 5:15 in the afternoon to  8:15in the evening  every  Four\tweeks on Wednesday  Saturday from 4:15pm\tto 2:15 In morning  every  4 weeks  ON\tThursday  Sunday from  7:15pm to 1:15am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 24,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 26,
+          "end": 35,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 40,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 42,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 45,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 62,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 65,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 67,
+          "end": 68,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 69,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 71,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 85,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 87,
+          "end": 92,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 94,
+          "end": 98,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 104,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 107,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 108,
+          "end": 117,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 119,
+          "end": 127,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 128,
+          "end": 132,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 133,
+          "end": 134,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 134,
+          "end": 135,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 135,
+          "end": 137,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 137,
+          "end": 139,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 140,
+          "end": 142,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 143,
+          "end": 144,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 144,
+          "end": 145,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 147,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 148,
+          "end": 158,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 160,
+          "end": 165,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 167,
+          "end": 168,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 169,
+          "end": 174,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 176,
+          "end": 178,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 179,
+          "end": 187,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 189,
+          "end": 195,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 196,
+          "end": 200,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 202,
+          "end": 203,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 203,
+          "end": 204,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 204,
+          "end": 206,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 206,
+          "end": 208,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 209,
+          "end": 211,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 212,
+          "end": 213,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 213,
+          "end": 214,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 214,
+          "end": 216,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 216,
+          "end": 218,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 15
+              },
+              "end": {
+                "hour": 20,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 15
+              },
+              "end": {
+                "hour": 2,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE",
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 15
+              },
+              "end": {
+                "hour": 1,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TH",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 26,
+          "end": 218,
+          "text": "Wednesday from 5:15 in the afternoon to  8:15in the evening  every  Four\tweeks on Wednesday  Saturday from 4:15pm\tto 2:15 In morning  every  4 weeks  ON\tThursday  Sunday from  7:15pm to 1:15am",
+          "confidence": 0.5345811247825623,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 133,
+              "end": 134,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-11734",
+      "family": "weekday-windows",
+      "text": "Wednesday 4:45Am -2:45in the afternoon Tuesday&WEDNESDAY & Saturday  1:45pm  - 7:45pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 11,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 12,
+          "end": 14,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 14,
+          "end": 16,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 18,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 18,
+          "end": 19,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 20,
+          "end": 22,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 38,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 46,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 46,
+          "end": 47,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 56,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 58,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 67,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 70,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 71,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 73,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 75,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 78,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 80,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 80,
+          "end": 81,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 81,
+          "end": 83,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 85,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 45
+              },
+              "end": {
+                "hour": 14,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 45
+              },
+              "end": {
+                "hour": 19,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "WE",
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 85,
+          "text": "Wednesday 4:45Am -2:45in the afternoon Tuesday&WEDNESDAY & Saturday  1:45pm  - 7:45pm",
+          "confidence": 0.9338716864585876,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 69,
+              "end": 70,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-11978",
+      "family": "duration",
+      "text": "could you book room 22 FOR the next 6  hours\tplease",
+      "spans": [
+        {
+          "start": 0,
+          "end": 22,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 26,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 30,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 35,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 44,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 51,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 6,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 31,
+          "end": 44,
+          "text": "next 6  hours",
+          "confidence": 0.9470707178115845,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 31,
+              "end": 35,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-12046",
+      "family": "duration",
+      "text": "I'D LIKE TO BOOK ROOM 27 for The next1week",
+      "spans": [
+        {
+          "start": 0,
+          "end": 24,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 28,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 37,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 42,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 1,
+              "unit": "week"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 42,
+          "text": "next1week",
+          "confidence": 0.9343535900115967,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 33,
+              "end": 37,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-12372",
+      "family": "weekday-windows",
+      "text": "every  4  weeks  SUNDAY from  twelve  Am  to three  am  every3 weeks  Saturday\tSunday  from  5:30am  to9:30am EVERY four weeks\ton THURSDAY\tMonday from nine\tAm to six  pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 5,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 23,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 28,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 36,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 40,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 50,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 54,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 61,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 61,
+          "end": 62,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 68,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 78,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 85,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 87,
+          "end": 91,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 94,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 95,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 101,
+          "end": 103,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 103,
+          "end": 104,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 105,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 107,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 107,
+          "end": 109,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 110,
+          "end": 115,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 116,
+          "end": 120,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 121,
+          "end": 126,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 129,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 130,
+          "end": 138,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 139,
+          "end": 145,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 146,
+          "end": 150,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 151,
+          "end": 155,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 156,
+          "end": 158,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 159,
+          "end": 161,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 162,
+          "end": 165,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 167,
+          "end": 169,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 0
+              },
+              "end": {
+                "hour": 3,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 5,
+                "minute": 30
+              },
+              "end": {
+                "hour": 9,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "SA",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 0
+              },
+              "end": {
+                "hour": 18,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TH",
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 169,
+          "text": "every  4  weeks  SUNDAY from  twelve  Am  to three  am  every3 weeks  Saturday\tSunday  from  5:30am  to9:30am EVERY four weeks\ton THURSDAY\tMonday from nine\tAm to six  pm",
+          "confidence": 0.8484970331192017,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 93,
+              "end": 94,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-12653",
+      "family": "time-window",
+      "text": "WE SHOULD MEET from1  in the afternoon -  5 In the afternoon",
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 19,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 38,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 40,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 60,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              },
+              "end": {
+                "hour": 17,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 15,
+          "end": 60,
+          "text": "from1  in the afternoon -  5 In the afternoon",
+          "confidence": 0.4835207462310791,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role MERIDIEM.",
+              "start": 44,
+              "end": 46,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 15,
+              "end": 19,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-13989",
+      "family": "weekday-windows",
+      "text": "the office is open  Friday & Monday, Wednesday 7:30  in the morning -5:30  in the afternoon every2weeks  Saturday  8:30pm -  12:30AM  every\tFour  weeks  on Saturday ,tuesday &Friday8:45pm-4:45am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 18,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 20,
+          "end": 26,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 28,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 35,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 46,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 48,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 49,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 51,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 67,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 69,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 70,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 71,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 73,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 75,
+          "end": 91,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 97,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 97,
+          "end": 98,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 98,
+          "end": 103,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 113,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 115,
+          "end": 116,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 116,
+          "end": 117,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 117,
+          "end": 119,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 119,
+          "end": 121,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 123,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 125,
+          "end": 127,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 128,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 128,
+          "end": 130,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 130,
+          "end": 132,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 134,
+          "end": 139,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 140,
+          "end": 144,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 146,
+          "end": 151,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 153,
+          "end": 155,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 156,
+          "end": 164,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 165,
+          "end": 166,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 166,
+          "end": 173,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 174,
+          "end": 175,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 175,
+          "end": 181,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 181,
+          "end": 182,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 182,
+          "end": 183,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 183,
+          "end": 185,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 185,
+          "end": 187,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 187,
+          "end": 188,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 188,
+          "end": 189,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 189,
+          "end": 190,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 190,
+          "end": 192,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 192,
+          "end": 194,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 7,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "MO",
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 45
+              },
+              "end": {
+                "hour": 4,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SA",
+                "TU",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 20,
+          "end": 194,
+          "text": "Friday & Monday, Wednesday 7:30  in the morning -5:30  in the afternoon every2weeks  Saturday  8:30pm -  12:30AM  every\tFour  weeks  on Saturday ,tuesday &Friday8:45pm-4:45am",
+          "confidence": 0.8683359026908875,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 181,
+              "end": 182,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-14006",
+      "family": "weekday",
+      "text": "last Friday\tAnd Sunday  at  EIGHT in evening  please",
+      "spans": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 5,
+          "end": 11,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 12,
+          "end": 15,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 22,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 26,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 33,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 44,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 52,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "SU"
+              ],
+              "modifier": "last"
+            },
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 44,
+          "text": "last Friday\tAnd Sunday  at  EIGHT in evening",
+          "confidence": 0.10026812553405762,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-time",
+              "message": "Clock components are out of range.",
+              "start": 28,
+              "end": 33,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 0,
+              "end": 4,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-14545",
+      "family": "recurrence-bounds",
+      "text": "our clinic opens every\tyear\tat10:45:08until1/8please",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 22,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 27,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 30,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 32,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 35,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "SECOND",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 43,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 44,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 45,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 46,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 52,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "yearly",
+              "interval": 1,
+              "until": {
+                "kind": "calendar",
+                "month": 1,
+                "day": 8
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 45,
+                "second": 8
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 17,
+          "end": 46,
+          "text": "every\tyear\tat10:45:08until1/8",
+          "confidence": 0.838833212852478,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-date",
+              "message": "Multiple dates need a range or recurrence.",
+              "start": 45,
+              "end": 46,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15197",
+      "family": "weekday-windows",
+      "text": "deadline:  every  2WEEKS  on  Saturday and\tMonday\tand\tFriday 12:45AM -  1:45  in the morning  Tuesday & thursday\tAND Sunday FOUR\tam  - eleven am for our team",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 16,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 18,
+          "end": 19,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 24,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 26,
+          "end": 28,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 38,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 42,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 49,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 53,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 54,
+          "end": 60,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 63,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 64,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 66,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 68,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 70,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 73,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 74,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 76,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 92,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 101,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 102,
+          "end": 103,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 112,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 113,
+          "end": 116,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 117,
+          "end": 123,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 124,
+          "end": 128,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 129,
+          "end": 131,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 133,
+          "end": 134,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 135,
+          "end": 141,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 142,
+          "end": 144,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 157,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 45
+              },
+              "end": {
+                "hour": 1,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SA",
+                "MO",
+                "FR"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 0
+              },
+              "end": {
+                "hour": 11,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "TH",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 11,
+          "end": 144,
+          "text": "every  2WEEKS  on  Saturday and\tMonday\tand\tFriday 12:45AM -  1:45  in the morning  Tuesday & thursday\tAND Sunday FOUR\tam  - eleven am",
+          "confidence": 0.940914511680603,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 124,
+              "end": 128,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15213",
+      "family": "weekday-windows",
+      "text": "I'D LIKE TO REMIND ME ABOUT\tFriday & Thursday 11:15 in the evening  -11:15  in the morning friday  and  Monday ,Sunday 1:45AM  - 8:45am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 27,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 34,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 36,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 45,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 48,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 49,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 51,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 66,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 69,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 71,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 72,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 74,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 90,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 97,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 99,
+          "end": 102,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 110,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 111,
+          "end": 112,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 112,
+          "end": 118,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 119,
+          "end": 120,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 120,
+          "end": 121,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 121,
+          "end": 123,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 125,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 128,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 129,
+          "end": 130,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 130,
+          "end": 131,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 131,
+          "end": 133,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 133,
+          "end": 135,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 15
+              },
+              "end": {
+                "hour": 11,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 1,
+                "minute": 45
+              },
+              "end": {
+                "hour": 8,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "MO",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 28,
+          "end": 135,
+          "text": "Friday & Thursday 11:15 in the evening  -11:15  in the morning friday  and  Monday ,Sunday 1:45AM  - 8:45am",
+          "confidence": 0.9178399443626404,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 119,
+              "end": 120,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15672",
+      "family": "weekday-windows",
+      "text": "Sunday  Saturday from 3:30PM  to10:30pm\tFriday  MONDAY\tthursday from 10:45  in the morning\tTO3:45PM\tevery\tfour weeks\ton  Friday Thursday  Tuesday  from 8:45am TO 6:45Pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 16,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 21,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 23,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 26,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 26,
+          "end": 28,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 32,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 34,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 37,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 39,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 46,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 48,
+          "end": 54,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 63,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 68,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 71,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 72,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 74,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 90,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 93,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 94,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 95,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 100,
+          "end": 105,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 106,
+          "end": 110,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 111,
+          "end": 116,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 117,
+          "end": 119,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 121,
+          "end": 127,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 128,
+          "end": 136,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 138,
+          "end": 145,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 147,
+          "end": 151,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 152,
+          "end": 153,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 153,
+          "end": 154,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 154,
+          "end": 156,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 156,
+          "end": 158,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 159,
+          "end": 161,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 162,
+          "end": 163,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 163,
+          "end": 164,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 164,
+          "end": 166,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 166,
+          "end": 168,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 15,
+                "minute": 30
+              },
+              "end": {
+                "hour": 22,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 45
+              },
+              "end": {
+                "hour": 15,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "MO",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 8,
+                "minute": 45
+              },
+              "end": {
+                "hour": 18,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "FR",
+                "TH",
+                "TU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 168,
+          "text": "Sunday  Saturday from 3:30PM  to10:30pm\tFriday  MONDAY\tthursday from 10:45  in the morning\tTO3:45PM\tevery\tfour weeks\ton  Friday Thursday  Tuesday  from 8:45am TO 6:45Pm",
+          "confidence": 0.929418683052063,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 152,
+              "end": 153,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15791",
+      "family": "weekday-windows",
+      "text": "Wednesday and  Saturday and Tuesday 7:45  in the evening- 12:45 in the morning Sunday\tand\tSaturday  & Wednesday3:15am  -  3:15pm wednesday and Tuesday 11:15am - 10:15pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 13,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 23,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 27,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 35,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 37,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 40,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 56,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 57,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 58,
+          "end": 60,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 60,
+          "end": 61,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 63,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 78,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 85,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 86,
+          "end": 89,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 90,
+          "end": 98,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 100,
+          "end": 101,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 102,
+          "end": 111,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 111,
+          "end": 112,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 112,
+          "end": 113,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 113,
+          "end": 115,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 115,
+          "end": 117,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 119,
+          "end": 120,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 123,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 124,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 124,
+          "end": 126,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 126,
+          "end": 128,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 129,
+          "end": 138,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 139,
+          "end": 142,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 143,
+          "end": 150,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 151,
+          "end": 153,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 153,
+          "end": 154,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 154,
+          "end": 156,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 156,
+          "end": 158,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 159,
+          "end": 160,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 161,
+          "end": 163,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 163,
+          "end": 164,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 164,
+          "end": 166,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 166,
+          "end": 168,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 45
+              },
+              "end": {
+                "hour": 0,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE",
+                "SA",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 15
+              },
+              "end": {
+                "hour": 15,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "SA",
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 15
+              },
+              "end": {
+                "hour": 22,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE",
+                "TU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 168,
+          "text": "Wednesday and  Saturday and Tuesday 7:45  in the evening- 12:45 in the morning Sunday\tand\tSaturday  & Wednesday3:15am  -  3:15pm wednesday and Tuesday 11:15am - 10:15pm",
+          "confidence": 0.8980746269226074,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 111,
+              "end": 112,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-16207",
+      "family": "duration",
+      "text": "the interview is scheduled\tfor\tthe  next90  weeks works for me",
+      "spans": [
+        {
+          "start": 0,
+          "end": 26,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 30,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 34,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 40,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 42,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 49,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 62,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 90,
+              "unit": "week"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 36,
+          "end": 49,
+          "text": "next90  weeks",
+          "confidence": 0.9130174517631531,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 36,
+              "end": 40,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-16356",
+      "family": "weekday-windows",
+      "text": "Sunday  from1:30 in the afternoon\tTO12:30am each  Sunday  FROM 12am to 6am\tevery\tfour weeks SATURDAY  from5:30AM\tto  12:30pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 12,
+          "end": 13,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 14,
+          "end": 16,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 33,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 36,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 39,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 41,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 43,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 48,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 50,
+          "end": 56,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 58,
+          "end": 62,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 65,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 70,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 72,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 74,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 75,
+          "end": 80,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 81,
+          "end": 85,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 91,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 100,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 102,
+          "end": 106,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 106,
+          "end": 107,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 107,
+          "end": 108,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 108,
+          "end": 110,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 110,
+          "end": 112,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 113,
+          "end": 115,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 117,
+          "end": 119,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 119,
+          "end": 120,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 120,
+          "end": 122,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 124,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 0
+              },
+              "end": {
+                "hour": 6,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 5,
+                "minute": 30
+              },
+              "end": {
+                "hour": 12,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 124,
+          "text": "Sunday  from1:30 in the afternoon\tTO12:30am each  Sunday  FROM 12am to 6am\tevery\tfour weeks SATURDAY  from5:30AM\tto  12:30pm",
+          "confidence": 0.9040336608886719,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 106,
+              "end": 107,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-17910",
+      "family": "weekday-windows",
+      "text": "SUNDAY , Wednesday\tand  Friday2:45am - 3:45 in the morning\tFriday and Tuesday\tAND Wednesday 3:15PM - 8:15in evening  please",
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 18,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 22,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 30,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 31,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 32,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 34,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 36,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 40,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 41,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 43,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 58,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 65,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 66,
+          "end": 69,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 77,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 81,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 82,
+          "end": 91,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 93,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 94,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 96,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 96,
+          "end": 98,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 100,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 101,
+          "end": 102,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 102,
+          "end": 103,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 103,
+          "end": 105,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 105,
+          "end": 115,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 117,
+          "end": 123,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 45
+              },
+              "end": {
+                "hour": 3,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "WE",
+                "FR"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 15,
+                "minute": 15
+              },
+              "end": {
+                "hour": 20,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "TU",
+                "WE"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 115,
+          "text": "SUNDAY , Wednesday\tand  Friday2:45am - 3:45 in the morning\tFriday and Tuesday\tAND Wednesday 3:15PM - 8:15in evening",
+          "confidence": 0.6751859784126282,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 92,
+              "end": 93,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-18860",
+      "family": "duration",
+      "text": "THE OFFICE IS CLOSED  for  next a MINUTE",
+      "spans": [
+        {
+          "start": 0,
+          "end": 20,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 25,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 31,
+          "label": "DEICTIC",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 33,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 40,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 1,
+              "unit": "minute"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 27,
+          "end": 40,
+          "text": "next a MINUTE",
+          "confidence": 0.9150865077972412,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 27,
+              "end": 31,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-18978",
+      "family": "weekday-windows",
+      "text": "Thursday Wednesday  Tuesday  FROM\tfour am\tTo six  am  Monday  Friday  tuesday\tFROM  2:15pm  to 7:15pm each saturday from 7:45pm\tto 9:45pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 18,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 20,
+          "end": 27,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 33,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 38,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 41,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 48,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 52,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 54,
+          "end": 60,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 62,
+          "end": 68,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 77,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 82,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 85,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 85,
+          "end": 86,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 88,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 92,
+          "end": 94,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 95,
+          "end": 96,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 96,
+          "end": 97,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 101,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 102,
+          "end": 106,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 107,
+          "end": 115,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 116,
+          "end": 120,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 121,
+          "end": 122,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 123,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 123,
+          "end": 125,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 125,
+          "end": 127,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 128,
+          "end": 130,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 131,
+          "end": 132,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 132,
+          "end": 133,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 133,
+          "end": 135,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 135,
+          "end": 137,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 0
+              },
+              "end": {
+                "hour": 6,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "WE",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 15
+              },
+              "end": {
+                "hour": 19,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO",
+                "FR",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 45
+              },
+              "end": {
+                "hour": 21,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 137,
+          "text": "Thursday Wednesday  Tuesday  FROM\tfour am\tTo six  am  Monday  Friday  tuesday\tFROM  2:15pm  to 7:15pm each saturday from 7:45pm\tto 9:45pm",
+          "confidence": 0.9203426837921143,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 121,
+              "end": 122,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19052",
+      "family": "weekday-windows",
+      "text": "Thursday from10:30am\tTo 5:30PM  every four\tweeks ON\tSaturday  Wednesday\tSUNDAY  from6:30pm to 12:30am Monday  From eleven\tpm\tto one am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 13,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 15,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 16,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 18,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 18,
+          "end": 20,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 23,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 26,
+          "end": 28,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 30,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "label": "RECUR",
+          "clauseStart": true
+        },
+        {
+          "start": 38,
+          "end": 42,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 48,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 51,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 60,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 62,
+          "end": 71,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 78,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 80,
+          "end": 84,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 85,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 85,
+          "end": 86,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 88,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 93,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 96,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 96,
+          "end": 97,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 99,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 99,
+          "end": 101,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 102,
+          "end": 108,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 110,
+          "end": 114,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 115,
+          "end": 121,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 122,
+          "end": 124,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 125,
+          "end": 127,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 128,
+          "end": 131,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 132,
+          "end": 134,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SA",
+                "WE",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 0
+              },
+              "end": {
+                "hour": 1,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 134,
+          "text": "Thursday from10:30am\tTo 5:30PM  every four\tweeks ON\tSaturday  Wednesday\tSUNDAY  from6:30pm to 12:30am Monday  From eleven\tpm\tto one am",
+          "confidence": 0.9258690476417542,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 84,
+              "end": 85,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19562",
+      "family": "weekday-range",
+      "text": "Please schedule a interview From Sun To  Sat",
+      "spans": [
+        {
+          "start": 0,
+          "end": 27,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 32,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 36,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 39,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 44,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekdayRange",
+              "from": "SU",
+              "to": "SA"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 44,
+          "text": "Sun To  Sat",
+          "confidence": 0.9407395720481873,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "byDay": [
+                    "SU",
+                    "MO",
+                    "TU",
+                    "WE",
+                    "TH",
+                    "FR",
+                    "SA"
+                  ]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19595",
+      "family": "recurrence",
+      "text": "every day at 4 In afternoon",
+      "spans": [
+        {
+          "start": 0,
+          "end": 5,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 6,
+          "end": 9,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 10,
+          "end": 12,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 15,
+          "end": 27,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "daily",
+              "interval": 1
+            },
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 27,
+          "text": "every day at 4 In afternoon",
+          "confidence": 0.12074185907840729,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-time",
+              "message": "Clock components are out of range.",
+              "start": 13,
+              "end": 14,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 0,
+              "end": 5,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19792",
+      "family": "weekday-windows",
+      "text": "our clinic opens every  4weeks Wednesday & Monday  and SUNDAY12:45In afternoon -  4:45in the afternoon  Sunday ,  friday three in the morning -  four am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 22,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 25,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 40,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 42,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 49,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 54,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 61,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 63,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 64,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 66,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 78,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 80,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 82,
+          "end": 83,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 84,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 86,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 102,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 104,
+          "end": 110,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 111,
+          "end": 112,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 114,
+          "end": 120,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 121,
+          "end": 126,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 127,
+          "end": 141,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 142,
+          "end": 143,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 145,
+          "end": 149,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 150,
+          "end": 152,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 12,
+                "minute": 45
+              },
+              "end": {
+                "hour": 16,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE",
+                "MO",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 0
+              },
+              "end": {
+                "hour": 4,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 17,
+          "end": 152,
+          "text": "every  4weeks Wednesday & Monday  and SUNDAY12:45In afternoon -  4:45in the afternoon  Sunday ,  friday three in the morning -  four am",
+          "confidence": 0.9197565913200378,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 121,
+              "end": 126,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19797",
+      "family": "weekday-points",
+      "text": "remind me to call Sam on Sunday at3  SATURDAY8works for me",
+      "spans": [
+        {
+          "start": 0,
+          "end": 24,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 31,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 34,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 35,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 45,
+          "label": "WEEKDAY",
+          "clauseStart": true
+        },
+        {
+          "start": 45,
+          "end": 46,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 58,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 0
+              }
+            }
+          },
+          {
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 8,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 25,
+          "end": 46,
+          "text": "Sunday at3  SATURDAY8",
+          "confidence": 0.9253590703010559,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unlinked-times",
+              "message": "Two clocks need a range separator or separate clauses.",
+              "start": 45,
+              "end": 46,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Exact AST equality from neural predictions against independently sampled specifications. Fresh values use the same rendering families as part of training; this is a synthetic development check, not unseen-language accuracy."
+}

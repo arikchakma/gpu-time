@@ -1,0 +1,52 @@
+{
+  "name": "gpu-time",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A compact neural parser for English schedules",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite playground --host 127.0.0.1 --port 5174",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:grammar": "vitest run tests/grammar-model.test.ts",
+    "build": "bun scripts/build.ts",
+    "build:playground": "vite build playground --config playground/vite.config.ts",
+    "schema": "bun scripts/schema.ts",
+    "format": "prettier --write .",
+    "gen": "uv run --project training python training/generate.py",
+    "evaluate": "bun scripts/evaluate-model.ts",
+    "train": "uv run --project training python training/train.py",
+    "test:browser": "bun scripts/build.ts --report-only && bun tests/browser.ts",
+    "bench": "bun bench/run.ts",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@breejs/later": "4.2.0",
+    "@js-temporal/polyfill": "0.5.1",
+    "@microsoft/recognizers-text-date-time": "1.3.2",
+    "@types/node": "24.13.3",
+    "@webgpu/types": "0.1.72",
+    "ajv": "8.20.0",
+    "chrono-node": "2.10.1",
+    "compromise": "14.16.0",
+    "compromise-dates": "3.8.1",
+    "esbuild": "0.28.2",
+    "playwright": "1.63.0",
+    "prettier": "3.9.6",
+    "rrule": "2.8.1",
+    "ts-json-schema-generator": "2.9.0",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "4.1.11",
+    "wgslender": "1.4.1"
+  }
+}

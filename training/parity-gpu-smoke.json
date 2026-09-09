@@ -1,0 +1,15 @@
+{
+  "texts": [
+    "Sat Sun 1pm-8pm Mon 10pm-12am",
+    "last Friday",
+    "last Friday of every month",
+    "from 9 to 5",
+    "every Monday from October",
+    "May I have your second opinion?"
+  ],
+  "gpuMs": 2.2000000029802322,
+  "submissions": 1,
+  "maxError": 0.000001430511474609375,
+  "labelMismatches": 0,
+  "boundaryMismatches": 0
+}

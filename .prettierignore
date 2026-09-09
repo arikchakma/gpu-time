@@ -1,0 +1,13 @@
+plan/
+node_modules/
+dist/
+data/synth/
+training/.venv/
+bench/.venv/
+training/runs/
+training/exports/
+training/checkpoints/
+package-lock.json
+src/model/weights.gen.ts
+research/gpu-lexer/runtime.js
+research/gpu-lexer/runtime.d.ts

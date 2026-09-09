@@ -1,0 +1,500 @@
+{
+  "checkpoint": "training/runs/modifier-context/best.pt",
+  "checkpointSha256": "7dbc03c567769b7caeff76e8023c61c1e1c9dd18c8f553f55858dd5a2f9d5ac6",
+  "artifactSha256": "802054f2acc43a074fc547addeebe8375425bbb39c2aaff3d838979ea6849d3c",
+  "boundaryThreshold": 5.0,
+  "calibration": {
+    "threshold": 5.0,
+    "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
+    "grid": [
+      {
+        "threshold": 0.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9972789115646259,
+            "truePositive": 1466,
+            "falsePositive": 7,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7134831460674157,
+            "truePositive": 1270,
+            "falsePositive": 1020,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 0.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9976182374957469,
+            "truePositive": 1466,
+            "falsePositive": 6,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7183257918552036,
+            "truePositive": 1270,
+            "falsePositive": 996,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 0.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9979577944179714,
+            "truePositive": 1466,
+            "falsePositive": 5,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7263368601658564,
+            "truePositive": 1270,
+            "falsePositive": 957,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9979577944179714,
+            "truePositive": 1466,
+            "falsePositive": 5,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7336799537839399,
+            "truePositive": 1270,
+            "falsePositive": 922,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9982975825672454,
+            "truePositive": 1466,
+            "falsePositive": 4,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7444314185228605,
+            "truePositive": 1270,
+            "falsePositive": 872,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9982975825672454,
+            "truePositive": 1466,
+            "falsePositive": 4,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7532621589561092,
+            "truePositive": 1270,
+            "falsePositive": 832,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9986376021798365,
+            "truePositive": 1466,
+            "falsePositive": 3,
+            "falseNegative": 1
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7678355501813785,
+            "truePositive": 1270,
+            "falsePositive": 768,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 1.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9982964224872232,
+            "truePositive": 1465,
+            "falsePositive": 3,
+            "falseNegative": 2
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7812980621347277,
+            "truePositive": 1270,
+            "falsePositive": 711,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9982964224872232,
+            "truePositive": 1465,
+            "falsePositive": 3,
+            "falseNegative": 2
+          },
+          "heldoutDevelopment": {
+            "f1": 0.7989933941491035,
+            "truePositive": 1270,
+            "falsePositive": 639,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9976133651551312,
+            "truePositive": 1463,
+            "falsePositive": 3,
+            "falseNegative": 4
+          },
+          "heldoutDevelopment": {
+            "f1": 0.821209182023925,
+            "truePositive": 1270,
+            "falsePositive": 553,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9972714870395635,
+            "truePositive": 1462,
+            "falsePositive": 3,
+            "falseNegative": 5
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8427339084273391,
+            "truePositive": 1270,
+            "falsePositive": 474,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 2.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9965870307167235,
+            "truePositive": 1460,
+            "falsePositive": 3,
+            "falseNegative": 7
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8648280558392918,
+            "truePositive": 1270,
+            "falsePositive": 397,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.99624445203141,
+            "truePositive": 1459,
+            "falsePositive": 3,
+            "falseNegative": 8
+          },
+          "heldoutDevelopment": {
+            "f1": 0.8871812783793224,
+            "truePositive": 1270,
+            "falsePositive": 323,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9952120383036935,
+            "truePositive": 1455,
+            "falsePositive": 2,
+            "falseNegative": 12
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9094163981382026,
+            "truePositive": 1270,
+            "falsePositive": 253,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9952120383036935,
+            "truePositive": 1455,
+            "falsePositive": 2,
+            "falseNegative": 12
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9287020109689214,
+            "truePositive": 1270,
+            "falsePositive": 195,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 3.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9952087611225188,
+            "truePositive": 1454,
+            "falsePositive": 1,
+            "falseNegative": 13
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9449404761904762,
+            "truePositive": 1270,
+            "falsePositive": 148,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9945205479452055,
+            "truePositive": 1452,
+            "falsePositive": 1,
+            "falseNegative": 15
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9570459683496609,
+            "truePositive": 1270,
+            "falsePositive": 114,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.25,
+        "metrics": {
+          "validation": {
+            "f1": 0.9934864586904354,
+            "truePositive": 1449,
+            "falsePositive": 1,
+            "falseNegative": 18
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9694656488549618,
+            "truePositive": 1270,
+            "falsePositive": 80,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.5,
+        "metrics": {
+          "validation": {
+            "f1": 0.9914118859498454,
+            "truePositive": 1443,
+            "falsePositive": 1,
+            "falseNegative": 24
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9769230769230769,
+            "truePositive": 1270,
+            "falsePositive": 60,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 4.75,
+        "metrics": {
+          "validation": {
+            "f1": 0.9879351947604275,
+            "truePositive": 1433,
+            "falsePositive": 1,
+            "falseNegative": 34
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9852598913886734,
+            "truePositive": 1270,
+            "falsePositive": 38,
+            "falseNegative": 0
+          }
+        }
+      },
+      {
+        "threshold": 5.0,
+        "metrics": {
+          "validation": {
+            "f1": 0.9865377977217812,
+            "truePositive": 1429,
+            "falsePositive": 1,
+            "falseNegative": 38
+          },
+          "heldoutDevelopment": {
+            "f1": 0.9902534113060428,
+            "truePositive": 1270,
+            "falsePositive": 25,
+            "falseNegative": 0
+          }
+        }
+      }
+    ]
+  },
+  "epoch": 1,
+  "tokensSeenAtCheckpoint": 130628557,
+  "lineage": [
+    {
+      "checkpoint": "training/runs/modifier-context/best.pt",
+      "sha256": "7dbc03c567769b7caeff76e8023c61c1e1c9dd18c8f553f55858dd5a2f9d5ac6",
+      "epoch": 1,
+      "trainingTokens": 4210121
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/grammar-contrasts/best.pt",
+      "sha256": "3ff0d3caa9c6d65fc5f3d3eed3b1ffb22fa7cdd1e2726326112369322c0afbdf",
+      "epoch": 1,
+      "trainingTokens": 4199340
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/grammar-context/best.pt",
+      "sha256": "4663a3c890f380eee299611b0ea25158969051982bea9cd941d28b913bd2c8d0",
+      "epoch": 2,
+      "trainingTokens": 8305966
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/core-grammar/best.pt",
+      "sha256": "32e745c07f07bd55fe36f562d73e7516ee69bce2b33a09935fc25fac4834e615",
+      "epoch": 3,
+      "trainingTokens": 12536650
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/grammar-coverage/best.pt",
+      "sha256": "ae743a161809e9ceae976d118acf28d7bcc8972e37e4a19dcfb017c4a8614e75",
+      "epoch": 3,
+      "trainingTokens": 13221729
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/compact/last.pt",
+      "sha256": "128022aa97bfda180c0d4fb77f450b8ae6f1881bbc835bfd14e54c27572ba75b",
+      "epoch": 20,
+      "trainingTokens": 88154751
+    }
+  ],
+  "parameters": 24761,
+  "quantizationBits": 6,
+  "logicalPackedBytes": 18571,
+  "encodedCharacters": 24761,
+  "moduleBytes": 27055,
+  "moduleGzipBytes": 17148,
+  "moduleBrotliBytes": 15265,
+  "labels": [
+    "O",
+    "NUM",
+    "ORD",
+    "UNIT",
+    "DIR_BEFORE",
+    "DIR_AFTER",
+    "NOW",
+    "REL_DAY",
+    "DEICTIC",
+    "WEEKDAY",
+    "DAYGROUP",
+    "MONTH",
+    "DOM",
+    "YEAR",
+    "HOUR",
+    "MINUTE",
+    "SECOND",
+    "MERIDIEM",
+    "TIME_NAMED",
+    "DAYPART",
+    "RANGE_START",
+    "RANGE_END",
+    "RECUR",
+    "FREQ",
+    "TIMES",
+    "BOUND_START",
+    "BOUND_END",
+    "COUNT",
+    "DUR",
+    "EXCEPT",
+    "TZ",
+    "HOLIDAY",
+    "JOIN",
+    "GLUE",
+    "EDGE"
+  ],
+  "metrics": {
+    "validation": {
+      "tokens": 86069,
+      "sequences": 10000,
+      "tokenAccuracy": 0.9994306893306533,
+      "exactLabelAndBoundarySequence": 0.9915,
+      "boundaryPrecision": 0.9993006993006993,
+      "boundaryRecall": 0.9740967961826857,
+      "boundaryF1": 0.9865377977217812,
+      "boundaryCounts": {
+        "truePositive": 1429,
+        "falsePositive": 1,
+        "falseNegative": 38
+      }
+    },
+    "heldout": {
+      "tokens": 71821,
+      "sequences": 10000,
+      "tokenAccuracy": 0.9731694072764233,
+      "exactLabelAndBoundarySequence": 0.8536,
+      "boundaryPrecision": 0.9806949806949807,
+      "boundaryRecall": 1.0,
+      "boundaryF1": 0.9902534113060429,
+      "boundaryCounts": {
+        "truePositive": 1270,
+        "falsePositive": 25,
+        "falseNegative": 0
+      }
+    }
+  },
+  "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Browser parity and end-to-end schedule accuracy are separate gates.",
+  "parity": {
+    "prefix": "training/parity",
+    "sequences": 512,
+    "tokens": 6048,
+    "rowsPerToken": 17,
+    "rolesPerToken": 40,
+    "boundaryThreshold": 5.0
+  },
+  "exportSourceDirectory": "training/exports/802054f2acc43a074fc547addeebe8375425bbb39c2aaff3d838979ea6849d3c/source",
+  "exportSourceHashes": {
+    "training/export.py": "c24a6453e3c1304bc3d5cf25258b4149ea8a6bab2d01d7611051377d35f47aa1",
+    "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
+    "training/model.py": "2d293439c4b256bf424ed09cc0523121752c5a455cd0640f308ab3730bd7cc43",
+    "training/train.py": "265a263b18bea692265bd42b8a3839b2e59d713ae134c18f7ac20d8951da6bc3",
+    "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
+  }
+}

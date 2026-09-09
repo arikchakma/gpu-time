@@ -1,0 +1,716 @@
+{
+  "environment": {
+    "python": "3.13.5",
+    "reference": "2026-09-09T12:00:00+06:00",
+    "timeZone": "Asia/Dhaka"
+  },
+  "method": "In-process native parsing, ten warmups and 100 samples. Exceptions are captured, not silently dropped. Native return values are retained; naive datetimes remain naive. Browser and Python timings use different runtimes.",
+  "results": [
+    {
+      "library": "dateparser",
+      "version": "1.4.3",
+      "initializationMs": 109.47900000610389,
+      "firstParseMs": 662.1786670002621,
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 3.644978998636361,
+        "p95Ms": 4.037457998492755
+      },
+      "outputs": [
+        {
+          "id": "adversarial-01",
+          "text": "Monday 10pm-12am and Saturday Sunday 1pm-8pm",
+          "raw": null
+        },
+        {
+          "id": "adversarial-02",
+          "text": "every other Tuesday until Dec",
+          "raw": null
+        },
+        {
+          "id": "adversarial-03",
+          "text": "Tuesday and Thursday at 3pm",
+          "raw": null
+        },
+        {
+          "id": "adversarial-04",
+          "text": "3 days before Christmas",
+          "raw": null
+        },
+        {
+          "id": "adversarial-05",
+          "text": "1 day before",
+          "raw": "2026-09-08T12:00:00+06:00"
+        },
+        {
+          "id": "adversarial-06",
+          "text": "twice a week",
+          "raw": null
+        },
+        {
+          "id": "adversarial-07",
+          "text": "every day except Sundays",
+          "raw": null
+        },
+        {
+          "id": "adversarial-08",
+          "text": "10pm-12pm",
+          "raw": null
+        },
+        {
+          "id": "adversarial-09",
+          "text": "10pm-12am",
+          "raw": null
+        },
+        {
+          "id": "adversarial-10",
+          "text": "from 9 to 5 Mon-Fri",
+          "raw": null
+        },
+        {
+          "id": "adversarial-11",
+          "text": "from 9am to noon",
+          "raw": null
+        },
+        {
+          "id": "adversarial-12",
+          "text": "26 July - 22 August",
+          "raw": null
+        },
+        {
+          "id": "adversarial-13",
+          "text": "in 5 to 10 minutes",
+          "raw": null
+        },
+        {
+          "id": "adversarial-14",
+          "text": "sunday morning",
+          "raw": null
+        },
+        {
+          "id": "adversarial-15",
+          "text": "starting from tomorrow for the next 10 days",
+          "raw": null
+        },
+        {
+          "id": "adversarial-16",
+          "text": "next Monday at 2pm",
+          "raw": null
+        },
+        {
+          "id": "adversarial-17",
+          "text": "1st Friday of next month",
+          "raw": null
+        },
+        {
+          "id": "adversarial-18",
+          "text": "this week",
+          "raw": "2026-09-09T12:00:00+06:00"
+        },
+        {
+          "id": "adversarial-19",
+          "text": "every Monday at 9am",
+          "raw": null
+        },
+        {
+          "id": "adversarial-20",
+          "text": "every other year on the 26th of March",
+          "raw": null
+        },
+        {
+          "id": "adversarial-21",
+          "text": "every 3 days until the end of the month",
+          "raw": null
+        },
+        {
+          "id": "adversarial-22",
+          "text": "every week starting next week",
+          "raw": null
+        },
+        {
+          "id": "adversarial-23",
+          "text": "every Monday until december 31",
+          "raw": null
+        },
+        {
+          "id": "adversarial-24",
+          "text": "1st and 15th of each month",
+          "raw": null
+        },
+        {
+          "id": "adversarial-25",
+          "text": "June 11-16, 2026",
+          "raw": "2026-06-11T00:00:00+06:00"
+        }
+      ]
+    },
+    {
+      "library": "parsedatetime",
+      "version": "2.6",
+      "initializationMs": 3.2511669996893033,
+      "firstParseMs": 1.5905839973129332,
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.018979000742547214,
+        "p95Ms": 0.02300000051036477
+      },
+      "outputs": [
+        {
+          "id": "adversarial-01",
+          "text": "Monday 10pm-12am and Saturday Sunday 1pm-8pm",
+          "raw": [
+            "2026-09-14T20:00:00+06:00",
+            3
+          ]
+        },
+        {
+          "id": "adversarial-02",
+          "text": "every other Tuesday until Dec",
+          "raw": [
+            "2026-12-01T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-03",
+          "text": "Tuesday and Thursday at 3pm",
+          "raw": [
+            "2026-09-15T15:00:00+06:00",
+            3
+          ]
+        },
+        {
+          "id": "adversarial-04",
+          "text": "3 days before Christmas",
+          "raw": [
+            "2026-09-06T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-05",
+          "text": "1 day before",
+          "raw": [
+            "2026-09-08T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-06",
+          "text": "twice a week",
+          "raw": [
+            "2026-09-16T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-07",
+          "text": "every day except Sundays",
+          "raw": [
+            "2026-09-09T12:00:00+06:00",
+            0
+          ]
+        },
+        {
+          "id": "adversarial-08",
+          "text": "10pm-12pm",
+          "raw": [
+            "2026-09-09T12:00:00+06:00",
+            2
+          ]
+        },
+        {
+          "id": "adversarial-09",
+          "text": "10pm-12am",
+          "raw": [
+            "2026-09-09T00:00:00+06:00",
+            2
+          ]
+        },
+        {
+          "id": "adversarial-10",
+          "text": "from 9 to 5 Mon-Fri",
+          "raw": [
+            "2026-09-14T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-11",
+          "text": "from 9am to noon",
+          "raw": [
+            "2026-09-09T09:00:00+06:00",
+            2
+          ]
+        },
+        {
+          "id": "adversarial-12",
+          "text": "26 July - 22 August",
+          "raw": [
+            "2027-08-22T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-13",
+          "text": "in 5 to 10 minutes",
+          "raw": [
+            "2026-09-09T12:10:00+06:00",
+            2
+          ]
+        },
+        {
+          "id": "adversarial-14",
+          "text": "sunday morning",
+          "raw": [
+            "2026-09-13T06:00:00+06:00",
+            3
+          ]
+        },
+        {
+          "id": "adversarial-15",
+          "text": "starting from tomorrow for the next 10 days",
+          "raw": [
+            "2026-09-20T09:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-16",
+          "text": "next Monday at 2pm",
+          "raw": [
+            "2026-09-14T14:00:00+06:00",
+            3
+          ]
+        },
+        {
+          "id": "adversarial-17",
+          "text": "1st Friday of next month",
+          "raw": [
+            "2026-10-01T09:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-18",
+          "text": "this week",
+          "raw": [
+            "2026-09-11T17:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-19",
+          "text": "every Monday at 9am",
+          "raw": [
+            "2026-09-14T09:00:00+06:00",
+            3
+          ]
+        },
+        {
+          "id": "adversarial-20",
+          "text": "every other year on the 26th of March",
+          "raw": [
+            "2027-03-01T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-21",
+          "text": "every 3 days until the end of the month",
+          "raw": [
+            "2026-09-09T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-22",
+          "text": "every week starting next week",
+          "raw": [
+            "2026-09-16T09:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-23",
+          "text": "every Monday until december 31",
+          "raw": [
+            "2026-12-31T12:00:00+06:00",
+            1
+          ]
+        },
+        {
+          "id": "adversarial-24",
+          "text": "1st and 15th of each month",
+          "raw": [
+            "2026-09-09T12:00:00+06:00",
+            0
+          ]
+        },
+        {
+          "id": "adversarial-25",
+          "text": "June 11-16, 2026",
+          "raw": [
+            "2027-06-11T20:26:00+06:00",
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "library": "recurrent",
+      "version": "0.4.1",
+      "initializationMs": 4.493417000048794,
+      "firstParseMs": 0.33604099007789046,
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.15429149789270014,
+        "p95Ms": 0.17029199807439
+      },
+      "outputs": [
+        {
+          "id": "adversarial-01",
+          "text": "Monday 10pm-12am and Saturday Sunday 1pm-8pm",
+          "raw": "2026-09-14T20:00:00"
+        },
+        {
+          "id": "adversarial-02",
+          "text": "every other Tuesday until Dec",
+          "raw": "RRULE:BYDAY=TU;INTERVAL=2;FREQ=WEEKLY;UNTIL=20261201"
+        },
+        {
+          "id": "adversarial-03",
+          "text": "Tuesday and Thursday at 3pm",
+          "raw": "2026-09-15T15:00:00"
+        },
+        {
+          "id": "adversarial-04",
+          "text": "3 days before Christmas",
+          "raw": "2026-09-06T12:00:00"
+        },
+        {
+          "id": "adversarial-05",
+          "text": "1 day before",
+          "raw": "2026-09-08T12:00:00"
+        },
+        {
+          "id": "adversarial-06",
+          "text": "twice a week",
+          "raw": null
+        },
+        {
+          "id": "adversarial-07",
+          "text": "every day except Sundays",
+          "raw": "RRULE:INTERVAL=1;FREQ=DAILY\nEXRULE:BYDAY=SU;INTERVAL=1;FREQ=WEEKLY"
+        },
+        {
+          "id": "adversarial-08",
+          "text": "10pm-12pm",
+          "raw": "2026-09-09T22:00:00"
+        },
+        {
+          "id": "adversarial-09",
+          "text": "10pm-12am",
+          "raw": "2026-09-09T22:00:00"
+        },
+        {
+          "id": "adversarial-10",
+          "text": "from 9 to 5 Mon-Fri",
+          "error": "TypeError: '<' not supported between instances of 'datetime.datetime' and 'NoneType'"
+        },
+        {
+          "id": "adversarial-11",
+          "text": "from 9am to noon",
+          "raw": null
+        },
+        {
+          "id": "adversarial-12",
+          "text": "26 July - 22 August",
+          "raw": "2027-08-22T12:00:00"
+        },
+        {
+          "id": "adversarial-13",
+          "text": "in 5 to 10 minutes",
+          "raw": "2026-09-09T12:10:00"
+        },
+        {
+          "id": "adversarial-14",
+          "text": "sunday morning",
+          "raw": "2026-09-13T06:00:00"
+        },
+        {
+          "id": "adversarial-15",
+          "text": "starting from tomorrow for the next 10 days",
+          "raw": "2026-09-20T09:00:00"
+        },
+        {
+          "id": "adversarial-16",
+          "text": "next Monday at 2pm",
+          "raw": "2026-09-14T14:00:00"
+        },
+        {
+          "id": "adversarial-17",
+          "text": "1st Friday of next month",
+          "raw": "2026-10-02T12:00:00"
+        },
+        {
+          "id": "adversarial-18",
+          "text": "this week",
+          "raw": "2026-09-11T17:00:00"
+        },
+        {
+          "id": "adversarial-19",
+          "text": "every Monday at 9am",
+          "raw": "RRULE:BYDAY=MO;BYHOUR=9;BYMINUTE=0;INTERVAL=1;FREQ=WEEKLY"
+        },
+        {
+          "id": "adversarial-20",
+          "text": "every other year on the 26th of March",
+          "raw": "RRULE:BYMONTHDAY=26;BYMONTH=3;INTERVAL=2;FREQ=YEARLY"
+        },
+        {
+          "id": "adversarial-21",
+          "text": "every 3 days until the end of the month",
+          "raw": "RRULE:INTERVAL=3;FREQ=DAILY;UNTIL=20260930"
+        },
+        {
+          "id": "adversarial-22",
+          "text": "every week starting next week",
+          "raw": "DTSTART:20260916\nRRULE:INTERVAL=1;FREQ=WEEKLY"
+        },
+        {
+          "id": "adversarial-23",
+          "text": "every Monday until december 31",
+          "raw": "RRULE:BYDAY=MO;INTERVAL=1;FREQ=WEEKLY;UNTIL=20261231"
+        },
+        {
+          "id": "adversarial-24",
+          "text": "1st and 15th of each month",
+          "raw": "RRULE:BYMONTHDAY=1,15;INTERVAL=1;FREQ=MONTHLY"
+        },
+        {
+          "id": "adversarial-25",
+          "text": "June 11-16, 2026",
+          "raw": "2027-06-11T20:26:00"
+        }
+      ]
+    },
+    {
+      "library": "timefhuman",
+      "version": "0.1.5",
+      "initializationMs": 103.0286249879282,
+      "firstParseMs": 0.14537500101141632,
+      "single": {
+        "text": "next Monday at 2pm",
+        "samples": 100,
+        "p50Ms": 0.005354500899557024,
+        "p95Ms": 0.006750007742084563
+      },
+      "outputs": [
+        {
+          "id": "adversarial-01",
+          "text": "Monday 10pm-12am and Saturday Sunday 1pm-8pm",
+          "raw": [
+            [
+              "2026-09-14T22:00:00",
+              "2026-09-14T00:00:00"
+            ],
+            "2026-09-12T00:00:00",
+            [
+              "2026-09-13T13:00:00",
+              "2026-09-13T20:00:00"
+            ]
+          ]
+        },
+        {
+          "id": "adversarial-02",
+          "text": "every other Tuesday until Dec",
+          "raw": [
+            "2026-09-15T00:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-03",
+          "text": "Tuesday and Thursday at 3pm",
+          "raw": [
+            "2026-09-15T00:00:00",
+            "2026-09-10T15:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-04",
+          "text": "3 days before Christmas",
+          "raw": [
+            "2026-09-12T12:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-05",
+          "text": "1 day before",
+          "raw": [
+            "2026-09-10T12:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-06",
+          "text": "twice a week",
+          "raw": [
+            "2026-09-16T12:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-07",
+          "text": "every day except Sundays",
+          "raw": []
+        },
+        {
+          "id": "adversarial-08",
+          "text": "10pm-12pm",
+          "raw": [
+            [
+              "2026-09-09T22:00:00",
+              "2026-09-10T12:00:00"
+            ]
+          ]
+        },
+        {
+          "id": "adversarial-09",
+          "text": "10pm-12am",
+          "raw": [
+            [
+              "2026-09-09T22:00:00",
+              "2026-09-10T00:00:00"
+            ]
+          ]
+        },
+        {
+          "id": "adversarial-10",
+          "text": "from 9 to 5 Mon-Fri",
+          "raw": [
+            [
+              "2026-09-14T05:00:00",
+              "2026-09-11T05:00:00"
+            ]
+          ]
+        },
+        {
+          "id": "adversarial-11",
+          "text": "from 9am to noon",
+          "raw": [
+            [
+              "2026-09-10T09:00:00",
+              "2026-09-10T12:00:00"
+            ]
+          ]
+        },
+        {
+          "id": "adversarial-12",
+          "text": "26 July - 22 August",
+          "raw": [
+            [
+              "2026-07-26T00:00:00",
+              "2026-08-22T00:00:00"
+            ]
+          ]
+        },
+        {
+          "id": "adversarial-13",
+          "text": "in 5 to 10 minutes",
+          "raw": [
+            "2026-09-09T12:10:00"
+          ]
+        },
+        {
+          "id": "adversarial-14",
+          "text": "sunday morning",
+          "raw": [
+            "2026-09-13T06:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-15",
+          "text": "starting from tomorrow for the next 10 days",
+          "raw": [
+            "2026-09-10T00:00:00",
+            "2026-09-19T12:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-16",
+          "text": "next Monday at 2pm",
+          "raw": [
+            "2026-09-14T14:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-17",
+          "text": "1st Friday of next month",
+          "raw": [
+            "2026-09-01T00:00:00",
+            "2026-09-11T00:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-18",
+          "text": "this week",
+          "raw": []
+        },
+        {
+          "id": "adversarial-19",
+          "text": "every Monday at 9am",
+          "raw": [
+            "2026-09-14T09:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-20",
+          "text": "every other year on the 26th of March",
+          "raw": [
+            "2026-03-26T00:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-21",
+          "text": "every 3 days until the end of the month",
+          "raw": [
+            "2026-09-12T12:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-22",
+          "text": "every week starting next week",
+          "raw": []
+        },
+        {
+          "id": "adversarial-23",
+          "text": "every Monday until december 31",
+          "raw": [
+            "2026-09-14T00:00:00",
+            "2026-12-31T00:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-24",
+          "text": "1st and 15th of each month",
+          "raw": [
+            "2026-09-01T00:00:00",
+            "2026-09-15T00:00:00"
+          ]
+        },
+        {
+          "id": "adversarial-25",
+          "text": "June 11-16, 2026",
+          "raw": [
+            [
+              "2026-06-11T00:00:00",
+              "2026-06-16T00:00:00"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

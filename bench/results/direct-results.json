@@ -1,0 +1,649 @@
+{
+  "model": "19f74a77e7f3197da23ff74c2caf04975c4a9f10fbf4147e6698e26ce0943698",
+  "sourceSha256": "560e2762d900aef72fefd60f15e5aa62e6b5c50208e6c6d59f18c23a3c788b5b",
+  "total": 18,
+  "correct": 18,
+  "cases": [
+    {
+      "id": "result-001",
+      "text": "one day after",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-10T12:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-10T12:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.8903329999999983,
+          "inferMs": 1.5567080000000004,
+          "resolveMs": 1.017125
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-002",
+      "text": "today",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-09T00:00:00+06:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-09T00:00:00+06:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.02745800000000287,
+          "inferMs": 0.16370799999999974,
+          "resolveMs": 0.42350099999999813
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-003",
+      "text": "tomorrow at 3pm",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-10T15:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-10T15:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.0676249999999996,
+          "inferMs": 0.5707920000000009,
+          "resolveMs": 0.2412920000000014
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-004",
+      "text": "the day after tomorrow at noon",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-11T12:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-11T12:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.06558299999999662,
+          "inferMs": 0.4162910000000011,
+          "resolveMs": 0.08279200000000131
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-005",
+      "text": "two hours",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-09T12:00:00+06:00",
+          "allDay": false,
+          "end": "2026-09-09T14:00:00+06:00"
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-09T12:00:00+06:00",
+            "allDay": false,
+            "end": "2026-09-09T14:00:00+06:00"
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.028541000000000594,
+          "inferMs": 0.08824999999999861,
+          "resolveMs": 0.06637500000000074
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-006",
+      "text": "next week",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-14T00:00:00+06:00",
+          "allDay": true,
+          "end": "2026-09-21T00:00:00+06:00"
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-14T00:00:00+06:00",
+            "allDay": true,
+            "end": "2026-09-21T00:00:00+06:00"
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.019165999999998462,
+          "inferMs": 0.08516700000000199,
+          "resolveMs": 0.1530830000000023
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-007",
+      "text": "2 hours before tomorrow at noon",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-10T10:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-10T10:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.024501000000000772,
+          "inferMs": 0.1957500000000003,
+          "resolveMs": 0.10916600000000187
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-008",
+      "text": "Sat Sun 1pm-8pm Mon 10pm-12am",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-12T13:00:00+06:00",
+          "allDay": false,
+          "end": "2026-09-12T20:00:00+06:00"
+        },
+        {
+          "start": "2026-09-13T13:00:00+06:00",
+          "allDay": false,
+          "end": "2026-09-13T20:00:00+06:00"
+        },
+        {
+          "start": "2026-09-14T22:00:00+06:00",
+          "allDay": false,
+          "end": "2026-09-15T00:00:00+06:00"
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-12T13:00:00+06:00",
+            "allDay": false,
+            "end": "2026-09-12T20:00:00+06:00"
+          },
+          {
+            "start": "2026-09-13T13:00:00+06:00",
+            "allDay": false,
+            "end": "2026-09-13T20:00:00+06:00"
+          },
+          {
+            "start": "2026-09-14T22:00:00+06:00",
+            "allDay": false,
+            "end": "2026-09-15T00:00:00+06:00"
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.07087499999999736,
+          "inferMs": 0.38058300000000145,
+          "resolveMs": 0.36379100000000264
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-009",
+      "text": "every Monday at 8pm",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka",
+        "limit": 3
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-14T20:00:00+06:00",
+          "allDay": false
+        },
+        {
+          "start": "2026-09-21T20:00:00+06:00",
+          "allDay": false
+        },
+        {
+          "start": "2026-09-28T20:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-14T20:00:00+06:00",
+            "allDay": false
+          },
+          {
+            "start": "2026-09-21T20:00:00+06:00",
+            "allDay": false
+          },
+          {
+            "start": "2026-09-28T20:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [
+          "DTSTART;TZID=Asia/Dhaka:20260914T200000\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO"
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.027583000000003466,
+          "inferMs": 0.14741599999999977,
+          "resolveMs": 0.6541670000000046
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-010",
+      "text": "every month on the 31st",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka",
+        "limit": 3
+      },
+      "occurrences": [
+        {
+          "start": "2026-10-31T00:00:00+06:00",
+          "allDay": true
+        },
+        {
+          "start": "2026-12-31T00:00:00+06:00",
+          "allDay": true
+        },
+        {
+          "start": "2027-01-31T00:00:00+06:00",
+          "allDay": true
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-10-31T00:00:00+06:00",
+            "allDay": true
+          },
+          {
+            "start": "2026-12-31T00:00:00+06:00",
+            "allDay": true
+          },
+          {
+            "start": "2027-01-31T00:00:00+06:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20261031\nRRULE:FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=31"
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.02633300000000105,
+          "inferMs": 0.1387500000000017,
+          "resolveMs": 0.4193750000000023
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-011",
+      "text": "next Friday at 9am",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T09:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-18T09:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.01908300000000196,
+          "inferMs": 0.11520799999999909,
+          "resolveMs": 0.07062499999999972
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-012",
+      "text": "next Friday at 9am",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka",
+        "nextWeekday": "immediate"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-11T09:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-11T09:00:00+06:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.023542000000002616,
+          "inferMs": 0.12720799999999954,
+          "resolveMs": 0.05237500000000139
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-013",
+      "text": "tomorrow at 3pm",
+      "context": {
+        "reference": "2026-09-09T00:30:00+06:00",
+        "timeZone": "America/New_York"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-09T15:00:00-04:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-09-09T15:00:00-04:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.01625100000000046,
+          "inferMs": 0.08983299999999872,
+          "resolveMs": 0.051459000000001254
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-014",
+      "text": "tomorrow at 1:30am",
+      "context": {
+        "reference": "2026-10-31T12:00:00-04:00",
+        "timeZone": "America/New_York"
+      },
+      "occurrences": [
+        {
+          "start": "2026-11-01T01:30:00-04:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-11-01T01:30:00-04:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.02529299999999779,
+          "inferMs": 0.14304199999999767,
+          "resolveMs": 0.055165999999999826
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-015",
+      "text": "tomorrow at 2:30am",
+      "context": {
+        "reference": "2026-03-07T12:00:00-05:00",
+        "timeZone": "America/New_York"
+      },
+      "occurrences": [],
+      "error": "resolution-error",
+      "actual": {
+        "occurrences": [],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "resolution-error",
+            "severity": "error",
+            "message": "The requested local time does not exist in America/New_York.",
+            "start": 0,
+            "end": 18
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.009999000000000535,
+          "inferMs": 0.12733300000000014,
+          "resolveMs": 0.2296660000000017
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-016",
+      "text": "every day at 2:30am",
+      "context": {
+        "reference": "2026-03-07T12:00:00-05:00",
+        "timeZone": "America/New_York",
+        "limit": 2
+      },
+      "occurrences": [
+        {
+          "start": "2026-03-09T02:30:00-04:00",
+          "allDay": false
+        },
+        {
+          "start": "2026-03-10T02:30:00-04:00",
+          "allDay": false
+        }
+      ],
+      "actual": {
+        "occurrences": [
+          {
+            "start": "2026-03-09T02:30:00-04:00",
+            "allDay": false
+          },
+          {
+            "start": "2026-03-10T02:30:00-04:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [
+          "DTSTART;TZID=America/New_York:20260309T023000\nRRULE:FREQ=DAILY;INTERVAL=1"
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.014666000000001844,
+          "inferMs": 0.19824999999999804,
+          "resolveMs": 0.2190829999999977
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-017",
+      "text": "27pm",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [],
+      "error": "invalid-time",
+      "actual": {
+        "occurrences": [],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "invalid-time",
+            "message": "Clock components are out of range.",
+            "start": 0,
+            "end": 2,
+            "severity": "error"
+          }
+        ],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.007417000000000229,
+          "inferMs": 0.056750000000000966,
+          "resolveMs": 0.05541700000000205
+        }
+      },
+      "correct": true
+    },
+    {
+      "id": "result-018",
+      "text": "May I have your second opinion?",
+      "context": {
+        "reference": "2026-09-09T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [],
+      "actual": {
+        "occurrences": [],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.022165999999998576,
+          "inferMs": 0.18445900000000037,
+          "resolveMs": 0.009333999999999065
+        }
+      },
+      "correct": true
+    }
+  ],
+  "scope": "Hand-authored final date/range expectations through the packaged public API, including recurrence and DST. A development gate, not a general-language accuracy claim."
+}

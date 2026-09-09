@@ -1,0 +1,15 @@
+node_modules/
+dist/
+playground/dist/
+data/synth/
+data/external/raw/
+data/external/*/raw/
+training/.venv/
+training/checkpoints/
+training/*.npz
+.training/
+test-results/
+training/runs/**/*.pt
+training/__pycache__/
+bench/.venv/
+bench/__pycache__/

@@ -1,0 +1,27 @@
+{
+  "model": "19f74a77e7f3197da23ff74c2caf04975c4a9f10fbf4147e6698e26ce0943698",
+  "browser": "152.0.7977.83",
+  "lifecycle": {
+    "concurrent": true,
+    "inFlightRecovery": true,
+    "secondLossRejected": true,
+    "disposalRejected": true,
+    "compilationCleanup": true
+  },
+  "packaged": {
+    "sequences": 1000,
+    "tokenMismatches": 0,
+    "scheduleMismatches": 0
+  },
+  "sequences": 10000,
+  "pythonSequences": 512,
+  "tokensCompared": 71630,
+  "maxError": 0.000011444091796875,
+  "pythonMaxError": 0.000008106231689453125,
+  "labelMismatches": 0,
+  "boundaryMismatches": 0,
+  "pythonLabelMismatches": 0,
+  "pythonBoundaryMismatches": 0,
+  "recoveryCorrect": true,
+  "recoveries": 1
+}

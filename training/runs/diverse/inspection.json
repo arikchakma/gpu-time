@@ -1,0 +1,434 @@
+{
+  "checkpoint": "training/runs/diverse/best.pt",
+  "epoch": 11,
+  "quantized": true,
+  "results": [
+    {
+      "text": "Sat Sun 1pm-8pm Mon 10pm-12am",
+      "tokens": [
+        {
+          "text": "Sat",
+          "start": 0,
+          "end": 3,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9518
+        },
+        {
+          "text": "Sun",
+          "start": 4,
+          "end": 7,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.95
+        },
+        {
+          "text": "1",
+          "start": 8,
+          "end": 9,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0006,
+          "margin": 0.9444
+        },
+        {
+          "text": "pm",
+          "start": 9,
+          "end": 11,
+          "label": "MERIDIEM",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.9333
+        },
+        {
+          "text": "-",
+          "start": 11,
+          "end": 12,
+          "label": "RANGE_END",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9506
+        },
+        {
+          "text": "8",
+          "start": 12,
+          "end": 13,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0003,
+          "margin": 0.9519
+        },
+        {
+          "text": "pm",
+          "start": 13,
+          "end": 15,
+          "label": "MERIDIEM",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.9393
+        },
+        {
+          "text": "Mon",
+          "start": 16,
+          "end": 19,
+          "label": "WEEKDAY",
+          "clauseStart": true,
+          "boundaryScore": 0.9999,
+          "margin": 0.9374
+        },
+        {
+          "text": "10",
+          "start": 20,
+          "end": 22,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0008,
+          "margin": 0.9445
+        },
+        {
+          "text": "pm",
+          "start": 22,
+          "end": 24,
+          "label": "MERIDIEM",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.9335
+        },
+        {
+          "text": "-",
+          "start": 24,
+          "end": 25,
+          "label": "RANGE_END",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.945
+        },
+        {
+          "text": "12",
+          "start": 25,
+          "end": 27,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0002,
+          "margin": 0.9534
+        },
+        {
+          "text": "am",
+          "start": 27,
+          "end": 29,
+          "label": "MERIDIEM",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9366
+        }
+      ]
+    },
+    {
+      "text": "10 days before Friday",
+      "tokens": [
+        {
+          "text": "10",
+          "start": 0,
+          "end": 2,
+          "label": "NUM",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9422
+        },
+        {
+          "text": "days",
+          "start": 3,
+          "end": 7,
+          "label": "UNIT",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9546
+        },
+        {
+          "text": "before",
+          "start": 8,
+          "end": 14,
+          "label": "DIR_BEFORE",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9395
+        },
+        {
+          "text": "Friday",
+          "start": 15,
+          "end": 21,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.947
+        }
+      ]
+    },
+    {
+      "text": "Monday at 10pm",
+      "tokens": [
+        {
+          "text": "Monday",
+          "start": 0,
+          "end": 6,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9491
+        },
+        {
+          "text": "at",
+          "start": 7,
+          "end": 9,
+          "label": "GLUE",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9567
+        },
+        {
+          "text": "10",
+          "start": 10,
+          "end": 12,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0002,
+          "margin": 0.9537
+        },
+        {
+          "text": "pm",
+          "start": 12,
+          "end": 14,
+          "label": "MERIDIEM",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9372
+        }
+      ]
+    },
+    {
+      "text": "last Friday",
+      "tokens": [
+        {
+          "text": "last",
+          "start": 0,
+          "end": 4,
+          "label": "ORD",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.0662
+        },
+        {
+          "text": "Friday",
+          "start": 5,
+          "end": 11,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9472
+        }
+      ]
+    },
+    {
+      "text": "last Friday of every month",
+      "tokens": [
+        {
+          "text": "last",
+          "start": 0,
+          "end": 4,
+          "label": "ORD",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.7994
+        },
+        {
+          "text": "Friday",
+          "start": 5,
+          "end": 11,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9484
+        },
+        {
+          "text": "of",
+          "start": 12,
+          "end": 14,
+          "label": "GLUE",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.955
+        },
+        {
+          "text": "every",
+          "start": 15,
+          "end": 20,
+          "label": "RECUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9242
+        },
+        {
+          "text": "month",
+          "start": 21,
+          "end": 26,
+          "label": "UNIT",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9513
+        }
+      ]
+    },
+    {
+      "text": "from 9 to 5",
+      "tokens": [
+        {
+          "text": "from",
+          "start": 0,
+          "end": 4,
+          "label": "RANGE_START",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.8743
+        },
+        {
+          "text": "9",
+          "start": 5,
+          "end": 6,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.9516
+        },
+        {
+          "text": "to",
+          "start": 7,
+          "end": 9,
+          "label": "RANGE_END",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.9459
+        },
+        {
+          "text": "5",
+          "start": 10,
+          "end": 11,
+          "label": "HOUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0001,
+          "margin": 0.9554
+        }
+      ]
+    },
+    {
+      "text": "every Monday from October",
+      "tokens": [
+        {
+          "text": "every",
+          "start": 0,
+          "end": 5,
+          "label": "RECUR",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9505
+        },
+        {
+          "text": "Monday",
+          "start": 6,
+          "end": 12,
+          "label": "WEEKDAY",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.949
+        },
+        {
+          "text": "from",
+          "start": 13,
+          "end": 17,
+          "label": "BOUND_START",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.852
+        },
+        {
+          "text": "October",
+          "start": 18,
+          "end": 25,
+          "label": "MONTH",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9389
+        }
+      ]
+    },
+    {
+      "text": "May I have your second opinion?",
+      "tokens": [
+        {
+          "text": "May",
+          "start": 0,
+          "end": 3,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9449
+        },
+        {
+          "text": "I",
+          "start": 4,
+          "end": 5,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9512
+        },
+        {
+          "text": "have",
+          "start": 6,
+          "end": 10,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9469
+        },
+        {
+          "text": "your",
+          "start": 11,
+          "end": 15,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9467
+        },
+        {
+          "text": "second",
+          "start": 16,
+          "end": 22,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9468
+        },
+        {
+          "text": "opinion",
+          "start": 23,
+          "end": 30,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9493
+        },
+        {
+          "text": "?",
+          "start": 30,
+          "end": 31,
+          "label": "O",
+          "clauseStart": false,
+          "boundaryScore": 0.0,
+          "margin": 0.9497
+        }
+      ]
+    }
+  ]
+}

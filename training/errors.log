@@ -1,0 +1,373 @@
+{
+  "epoch": 2,
+  "families": {
+    "family-00": {
+      "tokens": 8724,
+      "correct": 8723,
+      "semanticTokens": 4863,
+      "semanticCorrect": 4863,
+      "sequences": 1223,
+      "exact": 1222,
+      "boundaryErrors": 0
+    },
+    "family-01": {
+      "tokens": 2456,
+      "correct": 1842,
+      "semanticTokens": 1842,
+      "semanticCorrect": 1842,
+      "sequences": 614,
+      "exact": 0,
+      "boundaryErrors": 97
+    },
+    "family-02": {
+      "tokens": 3307,
+      "correct": 2758,
+      "semanticTokens": 2758,
+      "semanticCorrect": 2758,
+      "sequences": 549,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-03": {
+      "tokens": 9169,
+      "correct": 9169,
+      "semanticTokens": 5975,
+      "semanticCorrect": 5975,
+      "sequences": 995,
+      "exact": 995,
+      "boundaryErrors": 0
+    },
+    "family-04": {
+      "tokens": 3465,
+      "correct": 2847,
+      "semanticTokens": 2079,
+      "semanticCorrect": 1461,
+      "sequences": 693,
+      "exact": 75,
+      "boundaryErrors": 0
+    },
+    "family-05": {
+      "tokens": 13877,
+      "correct": 13877,
+      "semanticTokens": 9503,
+      "semanticCorrect": 9503,
+      "sequences": 844,
+      "exact": 844,
+      "boundaryErrors": 0
+    },
+    "family-06": {
+      "tokens": 2522,
+      "correct": 2094,
+      "semanticTokens": 1544,
+      "semanticCorrect": 1502,
+      "sequences": 386,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-07": {
+      "tokens": 2184,
+      "correct": 2015,
+      "semanticTokens": 819,
+      "semanticCorrect": 819,
+      "sequences": 273,
+      "exact": 104,
+      "boundaryErrors": 0
+    },
+    "family-08": {
+      "tokens": 1000,
+      "correct": 773,
+      "semanticTokens": 750,
+      "semanticCorrect": 523,
+      "sequences": 250,
+      "exact": 23,
+      "boundaryErrors": 0
+    },
+    "family-09": {
+      "tokens": 2165,
+      "correct": 2165,
+      "semanticTokens": 1434,
+      "semanticCorrect": 1434,
+      "sequences": 418,
+      "exact": 418,
+      "boundaryErrors": 0
+    },
+    "family-10": {
+      "tokens": 1278,
+      "correct": 1278,
+      "semanticTokens": 1278,
+      "semanticCorrect": 1278,
+      "sequences": 426,
+      "exact": 426,
+      "boundaryErrors": 0
+    },
+    "family-11": {
+      "tokens": 2286,
+      "correct": 1143,
+      "semanticTokens": 1905,
+      "semanticCorrect": 1143,
+      "sequences": 381,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-12": {
+      "tokens": 2075,
+      "correct": 1801,
+      "semanticTokens": 1564,
+      "semanticCorrect": 1290,
+      "sequences": 282,
+      "exact": 8,
+      "boundaryErrors": 0
+    },
+    "family-13": {
+      "tokens": 2186,
+      "correct": 2186,
+      "semanticTokens": 1653,
+      "semanticCorrect": 1653,
+      "sequences": 290,
+      "exact": 290,
+      "boundaryErrors": 0
+    },
+    "family-14": {
+      "tokens": 693,
+      "correct": 231,
+      "semanticTokens": 693,
+      "semanticCorrect": 231,
+      "sequences": 231,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-15": {
+      "tokens": 1305,
+      "correct": 780,
+      "semanticTokens": 1305,
+      "semanticCorrect": 780,
+      "sequences": 261,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-16": {
+      "tokens": 3321,
+      "correct": 3319,
+      "semanticTokens": 2906,
+      "semanticCorrect": 2904,
+      "sequences": 297,
+      "exact": 6,
+      "boundaryErrors": 290
+    },
+    "family-17": {
+      "tokens": 923,
+      "correct": 891,
+      "semanticTokens": 775,
+      "semanticCorrect": 743,
+      "sequences": 148,
+      "exact": 116,
+      "boundaryErrors": 0
+    },
+    "family-18": {
+      "tokens": 2077,
+      "correct": 2077,
+      "semanticTokens": 2077,
+      "semanticCorrect": 2077,
+      "sequences": 347,
+      "exact": 347,
+      "boundaryErrors": 0
+    },
+    "family-19": {
+      "tokens": 1055,
+      "correct": 920,
+      "semanticTokens": 1055,
+      "semanticCorrect": 920,
+      "sequences": 211,
+      "exact": 76,
+      "boundaryErrors": 0
+    },
+    "family-20": {
+      "tokens": 138,
+      "correct": 69,
+      "semanticTokens": 69,
+      "semanticCorrect": 69,
+      "sequences": 69,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-21": {
+      "tokens": 1105,
+      "correct": 442,
+      "semanticTokens": 442,
+      "semanticCorrect": 442,
+      "sequences": 221,
+      "exact": 0,
+      "boundaryErrors": 0
+    },
+    "family-22": {
+      "tokens": 1204,
+      "correct": 1204,
+      "semanticTokens": 649,
+      "semanticCorrect": 649,
+      "sequences": 149,
+      "exact": 149,
+      "boundaryErrors": 0
+    },
+    "family-23": {
+      "tokens": 3306,
+      "correct": 2217,
+      "semanticTokens": 0,
+      "semanticCorrect": 0,
+      "sequences": 442,
+      "exact": 70,
+      "boundaryErrors": 0
+    }
+  },
+  "confusions": [
+    {
+      "expected": "GLUE",
+      "predicted": "O",
+      "count": 1531
+    },
+    {
+      "expected": "YEAR",
+      "predicted": "O",
+      "count": 584
+    },
+    {
+      "expected": "DOM",
+      "predicted": "HOUR",
+      "count": 517
+    },
+    {
+      "expected": "NUM",
+      "predicted": "HOUR",
+      "count": 413
+    },
+    {
+      "expected": "O",
+      "predicted": "GLUE",
+      "count": 410
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "FREQ",
+      "count": 386
+    },
+    {
+      "expected": "BOUND_START",
+      "predicted": "O",
+      "count": 381
+    },
+    {
+      "expected": "RECUR",
+      "predicted": "O",
+      "count": 381
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "DIR_AFTER",
+      "count": 322
+    },
+    {
+      "expected": "TIMES",
+      "predicted": "WEEKDAY",
+      "count": 231
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "RANGE_END",
+      "count": 211
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "RECUR",
+      "count": 208
+    },
+    {
+      "expected": "DAYGROUP",
+      "predicted": "DAYPART",
+      "count": 198
+    },
+    {
+      "expected": "O",
+      "predicted": "HOUR",
+      "count": 176
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "BOUND_START",
+      "count": 160
+    },
+    {
+      "expected": "O",
+      "predicted": "WEEKDAY",
+      "count": 133
+    },
+    {
+      "expected": "NUM",
+      "predicted": "ORD",
+      "count": 103
+    },
+    {
+      "expected": "O",
+      "predicted": "RANGE_START",
+      "count": 88
+    },
+    {
+      "expected": "O",
+      "predicted": "MONTH",
+      "count": 79
+    },
+    {
+      "expected": "RECUR",
+      "predicted": "DEICTIC",
+      "count": 77
+    },
+    {
+      "expected": "DAYGROUP",
+      "predicted": "WEEKDAY",
+      "count": 76
+    },
+    {
+      "expected": "O",
+      "predicted": "UNIT",
+      "count": 70
+    },
+    {
+      "expected": "O",
+      "predicted": "DOM",
+      "count": 70
+    },
+    {
+      "expected": "O",
+      "predicted": "TIMES",
+      "count": 63
+    },
+    {
+      "expected": "ORD",
+      "predicted": "DEICTIC",
+      "count": 42
+    },
+    {
+      "expected": "YEAR",
+      "predicted": "DOM",
+      "count": 34
+    },
+    {
+      "expected": "GLUE",
+      "predicted": "DIR_BEFORE",
+      "count": 13
+    },
+    {
+      "expected": "TZ",
+      "predicted": "NUM",
+      "count": 13
+    },
+    {
+      "expected": "TZ",
+      "predicted": "DOM",
+      "count": 12
+    },
+    {
+      "expected": "RANGE_START",
+      "predicted": "O",
+      "count": 8
+    }
+  ]
+}
