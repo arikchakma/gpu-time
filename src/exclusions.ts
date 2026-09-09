@@ -23,8 +23,13 @@ export function exclusionFilter(
   const reference = civil(context.reference, context.options.timeZone);
   const patterns = new Set<Weekday>();
   const periods: { start: number; end: number }[] = [];
+  const monthly: Extract<DateSpec, { kind: "ordinalWeekday" }>[] = [];
 
   for (const exception of exceptions) {
+    if (exception.kind === "ordinalWeekday" && exception.recurring) {
+      monthly.push(exception);
+      continue;
+    }
     const days = excludedWeekdays(exception);
     if (days) {
       for (const day of days) patterns.add(day);
@@ -41,6 +46,19 @@ export function exclusionFilter(
 
   return (date) => {
     if (patterns.has(weekdays[dayOfWeek(date)])) return true;
+    if (
+      monthly.some((pattern) => {
+        if (weekdays[dayOfWeek(date)] !== pattern.day) return false;
+        const ordinal = Math.floor((date.day - 1) / 7) + 1;
+        if (pattern.ordinal > 0) return ordinal === pattern.ordinal;
+        return (
+          addDays(date, 7 * -pattern.ordinal).month !== date.month &&
+          (pattern.ordinal === -1 ||
+            addDays(date, 7 * (-pattern.ordinal - 1)).month === date.month)
+        );
+      })
+    )
+      return true;
     const day = dayNumber(date);
     return periods.some((period) => day >= period.start && day < period.end);
   };

@@ -10,6 +10,7 @@ const schema = createGenerator({
 const numericBounds: Record<string, [number, number]> = {
   year: [1, 9999],
   month: [1, 12],
+  week: [1, 5],
   day: [1, 31],
   hour: [0, 24],
   minute: [0, 59],
@@ -23,8 +24,8 @@ const numericBounds: Record<string, [number, number]> = {
   timesPer: [1, 24],
 };
 
-function constrain(node: Schema): void {
-  if (node.type === "number") node.type = "integer";
+function constrain(node: Schema, field?: string): void {
+  if (node.type === "number" && field !== "amount") node.type = "integer";
 
   for (const [name, property] of Object.entries(node.properties ?? {})) {
     if (typeof property !== "object") continue;
@@ -53,12 +54,12 @@ function constrain(node: Schema): void {
     }
   }
 
-  for (const value of Object.values(node)) {
+  for (const [name, value] of Object.entries(node)) {
     if (Array.isArray(value)) {
       for (const child of value)
         if (child && typeof child === "object") constrain(child);
     } else if (value && typeof value === "object") {
-      constrain(value);
+      constrain(value, name);
     }
   }
 }

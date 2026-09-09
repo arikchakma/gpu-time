@@ -1,5 +1,6 @@
 # 002 — Scope and JSON schema
 
+> Scope update (2026-09-09): the user approved spoken clocks, compound number words for times, combined/fractional clock durations, date ranges, whole-month periods, and recurrence phrasing. These supersede the exclusions below. See README.md for the current public API and interpretation policies.
 **User correction, 2026-09-09:** timezone is caller-supplied resolver context.
 The model and `Schedule` AST contain no timezone role or field. Any timezone
 recognition, per-clause timezone, or timezone training requirements below or in

@@ -18,6 +18,37 @@ run("uv", [
   "--project",
   "training",
   "python",
+  "training/check-natural.py",
+]);
+run("bun", [
+  "training/check-semantic.ts",
+  "data/synth/natural-evaluation.jsonl",
+]);
+run("bun", [
+  "training/evaluate-semantic.ts",
+  "training/natural-evaluation.json",
+  "data/synth/natural-evaluation.jsonl",
+]);
+run("uv", [
+  "run",
+  "--project",
+  "training",
+  "python",
+  "training/check-natural.py",
+  "--reserved",
+  "--out",
+  "data/synth/natural-reserved.jsonl",
+]);
+run("bun", [
+  "training/evaluate-semantic.ts",
+  "training/natural-reserved-evaluation.json",
+  "data/synth/natural-reserved.jsonl",
+]);
+run("uv", [
+  "run",
+  "--project",
+  "training",
+  "python",
   "training/generate-semantic.py",
 ]);
 run("bun", ["training/check-semantic.ts"]);

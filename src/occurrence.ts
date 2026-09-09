@@ -1,5 +1,5 @@
 import type { Clause, Duration, ResolveOptions, Shift } from "./types.js";
-import type { LocalPeriod } from "./calendar.js";
+import { resolveDates, type LocalPeriod } from "./calendar.js";
 import { resolveTime } from "./clock.js";
 import {
   addDays,
@@ -33,6 +33,16 @@ export function addDuration(
   duration: Duration,
   timeZone: string,
 ): number {
+  if (duration.components) {
+    let result = addDuration(
+      epoch,
+      { amount: duration.amount, unit: duration.unit },
+      timeZone,
+    );
+    for (const component of duration.components)
+      result = addDuration(result, component, timeZone);
+    return result;
+  }
   const { amount, unit } = duration;
   if (unit === "minute") return epoch + amount * 60_000;
   if (unit === "hour") return epoch + amount * 3_600_000;
@@ -53,7 +63,22 @@ function applyShift(
 ): number {
   if (!shift) return epoch;
   const amount = shift.amount * (shift.direction === "before" ? -1 : 1);
-  return addDuration(epoch, { amount, unit: shift.unit }, timeZone);
+  return addDuration(
+    epoch,
+    {
+      amount,
+      unit: shift.unit,
+      ...(shift.components
+        ? {
+            components: shift.components.map((value) => ({
+              ...value,
+              amount: value.amount * (shift.direction === "before" ? -1 : 1),
+            })),
+          }
+        : {}),
+    },
+    timeZone,
+  );
 }
 
 function atTime(date: Civil, seconds: number, timeZone: string): number {
@@ -139,7 +164,11 @@ export function resolveOccurrence(
 
   if (endSeconds !== undefined) {
     const crossesMidnight = endSeconds < startSeconds;
-    const endDate = crossesMidnight ? addDays(date, 1) : date;
+    const endDate = clause.endDate
+      ? resolveDates(clause.endDate, date, options)[0].start
+      : crossesMidnight
+        ? addDays(date, 1)
+        : date;
     const end = atTime(endDate, endSeconds, options.timeZone);
     occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }

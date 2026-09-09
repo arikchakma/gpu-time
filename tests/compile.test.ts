@@ -374,3 +374,65 @@ it("assembles the uncovered core forms from explicit semantic labels", () => {
       clauses: [clause],
     });
 });
+
+it("composes model-labeled spoken minutes and fractional clocks", () => {
+  const examples: [string, Label[], number, number][] = [
+    ["eight forty", ["HOUR", "MINUTE"], 8, 40],
+    [
+      "ten thirty-five pm",
+      ["HOUR", "MINUTE", "MINUTE", "MINUTE", "MERIDIEM"],
+      22,
+      35,
+    ],
+    [
+      "quarter to twelve am",
+      ["CLOCK_OFFSET", "GLUE", "HOUR", "MERIDIEM"],
+      23,
+      45,
+    ],
+  ];
+  for (const [text, labels, hour, minute] of examples)
+    expect(compile(text, oracle(text, labels))[0].schedule).toEqual({
+      clauses: [{ time: { start: { hour, minute } } }],
+    });
+});
+
+it("keeps a combined shift distinct from an occurrence duration", () => {
+  const text = "in two days and six hours for half an hour";
+  const result = compile(
+    text,
+    oracle(text, [
+      "DIR_AFTER",
+      "NUM",
+      "UNIT",
+      "GLUE",
+      "NUM",
+      "UNIT",
+      "DUR",
+      "NUM",
+      "NUM",
+      "UNIT",
+    ]),
+  );
+  expect(result[0].schedule).toEqual({
+    clauses: [
+      {
+        shift: {
+          amount: 2,
+          unit: "day",
+          direction: "after",
+          components: [{ amount: 6, unit: "hour" }],
+        },
+        duration: { amount: 0.5, unit: "hour" },
+      },
+    ],
+  });
+});
+
+it("does not invent fractional calendar durations", () => {
+  const text = "for 1.5 months";
+  expect(
+    compile(text, oracle(text, ["DUR", "NUM", "NUM", "NUM", "UNIT"]))[0]
+      .schedule,
+  ).toBeNull();
+});

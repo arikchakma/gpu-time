@@ -1,5 +1,6 @@
 # gpu-time — plan overview
 
+> Scope update (2026-09-09): the user approved spoken clocks, compound number words for times, combined/fractional clock durations, date ranges, whole-month periods, and recurrence phrasing. These supersede the exclusions below. See README.md for the current public API and interpretation policies.
 **One sentence:** a tiny trained model (target ≈ 30K parameters, ≈ 15 KB compressed) that runs in the browser on WebGPU, reads English time expressions such as `1 day before`, `Monday at 2pm`, or `Monday 10pm-12am and Saturday Sunday 1pm-8pm`, and returns JSON: a typed schedule tree, resolved ISO dates, and RFC 5545 `RRULE` strings.
 
 The design copies gpu-lexer's shape (Vercel Labs, 27.5 KB, Sept 2026): cheap rule-based tokenizer → hand-packed token features → small neural sequence tagger on the GPU → deterministic post-processing on the CPU. The neural part decides *what each token means in context*. Plain code turns those labels into dates. Calendar math is never learned; it is computed.

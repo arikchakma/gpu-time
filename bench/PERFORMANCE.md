@@ -1,5 +1,8 @@
 # Date-resolution performance
 
+These measurements document the performance work committed in `8507cfe`, before
+the natural-language model expansion. See `results/REPORT.md` for current timings.
+
 The 10,000-input chart workload originally spent about 938 ms in calendar
 resolution and called `Intl.DateTimeFormat.formatToParts` 552,500 times.
 

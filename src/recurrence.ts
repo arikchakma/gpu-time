@@ -157,6 +157,10 @@ function candidate(
       if (clause.time) {
         const window = resolveTime(clause.time, context.options);
         if (window.end !== undefined) {
+          if (window.end === window.start)
+            throw new RangeError(
+              "An hourly recurrence window needs distinct clock boundaries.",
+            );
           const length =
             window.end > window.start
               ? window.end - window.start

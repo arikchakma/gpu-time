@@ -23,6 +23,9 @@
     "Clause": {
       "type": "object",
       "properties": {
+        "endDate": {
+          "$ref": "#/$defs/DateSpec"
+        },
         "date": {
           "$ref": "#/$defs/DateSpec"
         },
@@ -242,6 +245,38 @@
           "properties": {
             "kind": {
               "type": "string",
+              "const": "calendarPeriod"
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999
+            },
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            },
+            "week": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          "required": [
+            "kind",
+            "month"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
               "const": "relativeUnit"
             },
             "unit": {
@@ -285,6 +320,9 @@
             },
             "of": {
               "$ref": "#/$defs/MonthRef"
+            },
+            "recurring": {
+              "type": "boolean"
             }
           },
           "required": [
@@ -510,8 +548,14 @@
     "Shift": {
       "type": "object",
       "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Quantity"
+          }
+        },
         "amount": {
-          "type": "integer",
+          "type": "number",
           "minimum": 0,
           "maximum": 10000
         },
@@ -541,11 +585,35 @@
       ],
       "additionalProperties": false
     },
-    "Duration": {
+    "Quantity": {
       "type": "object",
       "properties": {
         "amount": {
-          "type": "integer",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        }
+      },
+      "required": [
+        "amount",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "Duration": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Quantity"
+          }
+        },
+        "amount": {
+          "type": "number",
           "minimum": 0,
           "maximum": 10000
         },

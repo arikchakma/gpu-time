@@ -7,6 +7,10 @@ const cases = (await readFile("data/gold/adversarial.jsonl", "utf8"))
   .trim()
   .split("\n")
   .map((line) => JSON.parse(line));
+const naturalCases = (await readFile("data/gold/natural-browser.jsonl", "utf8"))
+  .trim()
+  .split("\n")
+  .map((line) => JSON.parse(line));
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const errors: string[] = [];
 try {
@@ -45,7 +49,7 @@ try {
   const sendBox = await send.boundingBox();
   assert.equal(sendBox?.width, 32);
   assert.equal(sendBox?.height, 32);
-  for (const example of cases) {
+  for (const example of [...cases, ...naturalCases]) {
     await page
       .getByLabel("Time expression", { exact: true })
       .fill(example.text);
@@ -229,6 +233,7 @@ try {
   const result = {
     theme: "dark",
     liveAdversarialSchedules: cases.length,
+    liveNaturalSchedules: naturalCases.length,
     backend: await page.locator("#engine").innerText(),
     compare: "gpu-time, Chrono, rrule",
     keyboardTabs: true,

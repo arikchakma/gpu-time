@@ -821,3 +821,22 @@ it("resolves standalone clocks in the future and retains clock precision for rel
     clause: 0,
   });
 });
+
+it("still rejects an empty hourly recurrence clock window", () => {
+  expect(() =>
+    resolve(
+      {
+        clauses: [
+          {
+            recurrence: { freq: "hourly", interval: 1 },
+            time: {
+              start: { hour: 14, minute: 0 },
+              end: { hour: 14, minute: 0 },
+            },
+          },
+        ],
+      },
+      options,
+    ),
+  ).toThrow();
+});

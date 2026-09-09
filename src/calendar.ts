@@ -180,6 +180,29 @@ export function resolveDates(
     case "calendar":
       return [{ start: calendarDate(spec, reference) }];
 
+    case "calendarPeriod": {
+      let year = spec.year ?? reference.year;
+      if (spec.year === undefined && spec.modifier === "next")
+        year += spec.month <= reference.month ? 1 : 0;
+      if (spec.year === undefined && spec.modifier === "last")
+        year -= spec.month >= reference.month ? 1 : 0;
+      const beginning = calendarDate(
+        { year, month: spec.month, day: 1 },
+        reference,
+      );
+      const end = addMonths(beginning, 1);
+      if (spec.week !== undefined) {
+        const start = addDays(beginning, (spec.week - 1) * 7);
+        if (spec.week < 1 || spec.week > 5 || start.month !== beginning.month)
+          throw new RangeError(
+            "The requested week does not exist in that month.",
+          );
+        const next = addDays(start, 7);
+        return [{ start, end: utc(next) < utc(end) ? next : end }];
+      }
+      return [{ start: beginning, end }];
+    }
+
     case "relativeUnit":
       return [relativePeriod(spec, reference, options)];
 

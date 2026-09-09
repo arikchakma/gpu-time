@@ -8,12 +8,12 @@ const benchmarkMatches = benchmark.model === report.artifactSha256;
 
 const examples = [
   "Sat Sun 1pm-8pm Mon 10pm-12am",
-  "last Friday",
+  "set an alarm for eight forty",
   "last Friday of every month",
-  "from 9 to 5",
+  "for three hours and thirty minutes",
   "10 days before Friday",
-  "Monday at 10pm",
-  "every Monday from October",
+  "Friday at 10pm until Saturday at 2am",
+  "every weekday at nine am and five pm",
   "May I have your second opinion?",
 ];
 

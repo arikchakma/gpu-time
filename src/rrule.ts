@@ -48,10 +48,7 @@ export function recurrenceRule(
   context: ResolutionContext,
 ): string {
   const first = series.first!;
-  const rule = normalizeRecurrence(
-    clause.recurrence!,
-    context.options.weekStart,
-  );
+  let rule = normalizeRecurrence(clause.recurrence!, context.options.weekStart);
   const timeZone = context.options.timeZone;
   const anchor = civil(first.start, timeZone);
   const property = (name: string, epoch: number) =>
@@ -64,10 +61,37 @@ export function recurrenceRule(
       "Shifted recurrences need an explicit calendar transformation before RRULE export.",
     );
 
+  const monthlyException =
+    rule.except?.length === 1 ? rule.except[0] : undefined;
+  if (
+    monthlyException?.kind === "ordinalWeekday" &&
+    monthlyException.recurring &&
+    rule.freq === "weekly" &&
+    rule.interval === 1 &&
+    rule.byDay?.length === 1 &&
+    rule.byDay[0] === monthlyException.day &&
+    !rule.byMonthDay &&
+    !rule.bySetPos
+  ) {
+    // All Mondays except the first is exactly the remaining Mondays each month.
+    const positions =
+      monthlyException.ordinal > 0 ? [1, 2, 3, 4, 5] : [-1, -2, -3, -4, -5];
+    rule = {
+      ...rule,
+      freq: "monthly",
+      bySetPos: positions.filter((value) => value !== monthlyException.ordinal),
+      except: [],
+    };
+  }
+
   let byDay = rule.byDay;
   const excluded = new Set<string>();
   const dateExceptions: DateSpec[] = [];
   for (const exception of rule.except ?? []) {
+    if (exception.kind === "ordinalWeekday" && exception.recurring)
+      throw new RecurrenceExportError(
+        "Repeating monthly exceptions cannot be represented by a single RRULE; occurrence previews still apply them.",
+      );
     const days = excludedWeekdays(exception);
     if (!days) {
       dateExceptions.push(exception);

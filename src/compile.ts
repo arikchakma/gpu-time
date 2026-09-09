@@ -25,6 +25,8 @@ import {
   weekdays,
 } from "./lexicon.js";
 
+import { readDuration, readNumber } from "./quantity.js";
+
 const filler = new Set([
   "at",
   "on",
@@ -138,6 +140,8 @@ const clockPeriods = new Map([
   ["intheafternoon", "pm"],
   ["inevening", "pm"],
   ["intheevening", "pm"],
+  ["atnight", "pm"],
+  ["inthenight", "pm"],
 ]);
 
 function readClock(
@@ -158,6 +162,13 @@ function readClock(
     next += 2;
   }
 
+  if (tokens[next]?.label === "MINUTE") {
+    const spoken = readNumber(tokens, next, "MINUTE");
+    minute = spoken.value;
+    next = spoken.next;
+    hasMinutes = true;
+  }
+
   if (tokens[next]?.text === ":" && tokens[next + 1]?.label === "SECOND") {
     second = number(tokens[next + 1].text);
     next += 2;
@@ -168,7 +179,14 @@ function readClock(
     meridiem = (meridiem ?? "") + part;
     next++;
   }
-  if (meridiem) meridiem = clockPeriods.get(meridiem) ?? meridiem;
+  if (meridiem) {
+    meridiem = meridiem.replace(/[’]/g, "'").replace(/^oclock/, "o'clock");
+    if (meridiem.startsWith("o'clock") && meridiem.length > 7)
+      meridiem = meridiem.slice(7);
+    if (hour === 12 && ["atnight", "inthenight"].includes(meridiem))
+      meridiem = "am";
+    meridiem = clockPeriods.get(meridiem) ?? meridiem;
+  }
 
   const invalidHour = !Number.isInteger(hour) || hour < 0 || hour > 23;
   const invalidMinute = !Number.isInteger(minute) || minute < 0 || minute > 59;
@@ -330,6 +348,7 @@ function compileDateAndTime(
     switch (token.label) {
       case "O":
       case "RANGE_START":
+      case "RECUR":
         break;
 
       case "RANGE_END":
@@ -379,6 +398,13 @@ function compileDateAndTime(
           (tokens.some((part) => part.text.toLowerCase() === "end")
             ? "end"
             : undefined);
+        if (ordinal !== undefined && value === "week") {
+          clause.date = { kind: "calendarPeriod", month: 0, week: ordinal };
+          break;
+        }
+        if (ordinal !== undefined && value === "month" && !modifier) {
+          break;
+        }
         if (!modifier && !boundary)
           fail(
             token,
@@ -416,6 +442,33 @@ function compileDateAndTime(
           group,
           ...(modifier ? { modifier } : {}),
         };
+        break;
+      }
+
+      case "CLOCK_OFFSET": {
+        const offset = word === "half" ? 30 : word === "quarter" ? 15 : NaN;
+        let target = index + 1;
+        const direction = tokens[target]?.text.toLowerCase();
+        if (!["past", "to"].includes(direction) || !Number.isFinite(offset))
+          fail(
+            token,
+            "invalid-time",
+            "A fractional clock needs past or to and an hour.",
+          );
+        target++;
+        if (tokens[target]?.label !== "HOUR")
+          fail(token, "invalid-time", "A fractional clock needs an hour.");
+        const { clock, next } = readClock(tokens, target);
+        if (!("hour" in clock.value) || clock.value.minute !== 0)
+          fail(token, "invalid-time", "A fractional clock needs a whole hour.");
+        const total =
+          (clock.value.hour * 60 +
+            (direction === "to" ? -offset : offset) +
+            1440) %
+          1440;
+        clock.value = { hour: Math.floor(total / 60), minute: total % 60 };
+        clocks.push(clock);
+        index = next - 1;
         break;
       }
 
@@ -505,6 +558,11 @@ function compileDateAndTime(
         break;
       }
 
+      case "MERIDIEM":
+        // "at" introduces a following clock; it is also part of "at night".
+        if (word === "at" && tokens[index + 1]?.label === "HOUR") break;
+        fail(token, "invalid-time", "A time-of-day qualifier needs a clock.");
+
       case "HOUR": {
         const { clock, next } = readClock(tokens, index);
         clocks.push(clock);
@@ -517,6 +575,17 @@ function compileDateAndTime(
     }
   }
 
+  if (clause.date?.kind === "calendarPeriod") {
+    if (!calendar?.month)
+      fail(tokens[0], "invalid-date", "A week of a month needs a named month.");
+    clause.date = {
+      ...clause.date,
+      month: calendar.month,
+      ...(calendar.year ? { year: calendar.year } : {}),
+    };
+    calendar = undefined;
+    ordinal = undefined;
+  }
   if (ordinal !== undefined) {
     if (days.length !== 1)
       fail(tokens[0], "invalid-ordinal", "An ordinal needs one weekday.");
@@ -533,7 +602,19 @@ function compileDateAndTime(
             ...(calendar?.month ? { month: calendar.month } : {}),
             ...(calendar?.year ? { year: calendar.year } : {}),
           };
-    clause.date = { kind: "ordinalWeekday", ordinal, day: days[0], of };
+    clause.date = {
+      kind: "ordinalWeekday",
+      ordinal,
+      day: days[0],
+      of,
+      ...(tokens.some(
+        (value) =>
+          value.label === "RECUR" ||
+          (value.label === "UNIT" && unit(value.text) === "month"),
+      ) && !modifier
+        ? { recurring: true }
+        : {}),
+    };
     calendar = undefined;
   } else if (days.length) {
     const selected = [...new Set(days)];
@@ -560,7 +641,14 @@ function compileDateAndTime(
       };
   }
   if (calendar) {
-    if (days.length || clause.date)
+    delete clause.recurrence;
+    if (
+      (clause.date?.kind === "weekday" ||
+        clause.date?.kind === "weekdayRange") &&
+      calendar.day !== undefined
+    )
+      delete clause.date;
+    if (clause.date)
       fail(
         tokens[0],
         "invalid-date",
@@ -575,11 +663,21 @@ function compileDateAndTime(
         );
       const from = { ...calendar };
       const to = { ...calendar, ...calendarEnd };
-      if (from.month === undefined) from.month = to.month;
-      if (from.month === undefined || to.month === undefined)
-        fail(tokens[0], "invalid-date", "A calendar range needs a month.");
+      if (from.month === undefined && to.month !== undefined)
+        from.month = to.month;
       clause.date = { kind: "calendarRange", from, to };
-    } else clause.date = { kind: "calendar", ...calendar };
+    } else if (
+      calendar.month !== undefined &&
+      calendar.day === undefined &&
+      modifier
+    )
+      clause.date = {
+        kind: "calendarPeriod",
+        month: calendar.month,
+        ...(calendar.year ? { year: calendar.year } : {}),
+        modifier,
+      };
+    else clause.date = { kind: "calendar", ...calendar };
   }
 
   if (
@@ -617,14 +715,22 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
   if (amountIndex < 0 || unitIndex < 0) return { tokens };
 
   const amountToken = tokens[amountIndex];
-  const amount = number(amountToken.text);
-  const durationUnit = unit(tokens[unitIndex].text);
+  const quantity = readDuration(tokens, amountIndex);
+  const amount = quantity?.duration.amount ?? number(amountToken.text);
+  const durationUnit = quantity?.duration.unit ?? unit(tokens[unitIndex].text);
 
-  if (!durationUnit || !Number.isInteger(amount) || amount < 0) {
+  if (
+    !durationUnit ||
+    !Number.isFinite(amount) ||
+    amount < 0 ||
+    (!Number.isInteger(amount) && !["minute", "hour"].includes(durationUnit))
+  ) {
     fail(amountToken, "invalid-shift", "Invalid relative quantity.");
   }
 
   const consumed = new Set([amountIndex, unitIndex, directionIndex]);
+  if (quantity)
+    for (let i = amountIndex; i < quantity.next; i++) consumed.add(i);
   let endAmount: number | undefined;
   const rangeIndex = tokens.findIndex(
     (token, index) =>
@@ -646,6 +752,9 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
     tokens: tokens.filter((_, index) => !consumed.has(index)),
     shift: {
       amount,
+      ...(quantity?.duration.components
+        ? { components: quantity.duration.components }
+        : {}),
       ...(endAmount === undefined ? {} : { endAmount }),
       unit: durationUnit,
       direction:
@@ -671,15 +780,22 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
     );
   const { tokens, shift } = extractShift(input);
   const body: Token[] = [];
+  const boundIndex = tokens.findIndex((token) =>
+    recurrenceBounds.has(token.label),
+  );
+  const selectors = boundIndex < 0 ? tokens : tokens.slice(0, boundIndex);
   const implicitOrdinal =
-    tokens.some((token) => token.label === "ORD") &&
-    tokens.some((token) => token.label === "WEEKDAY") &&
-    tokens.some(
+    selectors.some((token) => token.label === "ORD") &&
+    selectors.some((token) => token.label === "WEEKDAY") &&
+    selectors.some(
       (token) => token.label === "UNIT" && unit(token.text) === "month",
     ) &&
-    !tokens.some((token) => token.label === "DEICTIC");
+    !selectors.some((token) => token.label === "DEICTIC");
   let recurrence: Recurrence | undefined =
-    tokens.some((token) => token.label === "RECUR") || implicitOrdinal
+    selectors.some((token) => token.label === "RECUR") ||
+    implicitOrdinal ||
+    (selectors.some((token) => token.label === "DAYGROUP") &&
+      !selectors.some((token) => token.label === "DEICTIC"))
       ? { freq: implicitOrdinal ? "monthly" : "weekly", interval: 1 }
       : undefined;
   let duration: Duration | undefined;
@@ -785,19 +901,15 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       )
         amountIndex++;
       const amountToken = tokens[amountIndex];
-      const unitToken = tokens[amountIndex + 1];
-      const amount =
-        amountToken?.label === "NUM" ? number(amountToken.text) : NaN;
-      const durationUnit =
-        unitToken?.label === "UNIT" ? unit(unitToken.text) : undefined;
-      if (!Number.isInteger(amount) || amount <= 0 || !durationUnit)
+      const quantity = readDuration(tokens, amountIndex);
+      if (!quantity)
         fail(
           token,
           "invalid-duration",
-          "A duration needs a positive number and a time unit.",
+          "A duration needs a positive quantity and a time unit.",
         );
-
-      const value = { amount, unit: durationUnit };
+      const value = quantity.duration;
+      const durationUnit = value.unit;
       if (
         recurrence &&
         !["minute", "hour"].includes(durationUnit) &&
@@ -819,7 +931,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
           );
         duration = value;
       }
-      index = amountIndex + 1;
+      index = quantity.next - 1;
       continue;
     }
 
@@ -959,6 +1071,79 @@ function splitClauses(tokens: Token[]): Token[][] {
   return clauses;
 }
 
+function compileGroup(tokens: Token[], diagnostics: Diagnostic[]): Clause[] {
+  let clocks = 0;
+  for (const token of tokens) {
+    if (
+      ["HOUR", "TIME_NAMED", "DAYPART"].includes(token.label) &&
+      ++clocks === 2
+    )
+      break;
+  }
+  if (clocks < 2) return [compileClause(tokens, diagnostics)];
+  const hasRecurrence = tokens.some((token) =>
+    ["RECUR", "FREQ", "DAYGROUP"].includes(token.label),
+  );
+  const separator = tokens.findIndex(
+    (token) => token.label === "RANGE_END" || token.label === "BOUND_END",
+  );
+  const isDate = (token: Token) =>
+    ["REL_DAY", "WEEKDAY", "MONTH", "DOM", "YEAR"].includes(token.label);
+  const isClock = (token: Token) =>
+    ["HOUR", "TIME_NAMED", "CLOCK_OFFSET"].includes(token.label);
+  if (!hasRecurrence && separator > 0) {
+    const left = tokens.slice(0, separator);
+    const right = tokens.slice(separator + 1);
+    if (
+      left.some(isDate) &&
+      right.some(isDate) &&
+      left.some(isClock) &&
+      right.some(isClock)
+    ) {
+      const start = compileDateAndTime(left, diagnostics);
+      const end = compileDateAndTime(right, diagnostics);
+      if (!start.date || !end.date || !start.time || !end.time)
+        fail(
+          tokens[separator],
+          "incomplete-range",
+          "Both endpoints need a date and clock.",
+        );
+      return [
+        {
+          date: start.date,
+          endDate: end.date,
+          time: { start: start.time.start, end: end.time.start },
+        },
+      ];
+    }
+  }
+  // Conjoined clock points inherit the date and recurrence preceding the first clock.
+  if (separator < 0) {
+    const groups: Token[][] = [[]];
+    for (let index = 0; index < tokens.length; index++) {
+      const token = tokens[index];
+      if (
+        ["and", ",", "&"].includes(token.text.toLowerCase()) &&
+        groups.at(-1)!.some(isClock) &&
+        isClock(tokens[index + 1] ?? token)
+      ) {
+        groups.push([]);
+      } else groups.at(-1)!.push(token);
+    }
+    if (groups.length > 1) {
+      const first = compileClause(groups[0], diagnostics);
+      return [
+        first,
+        ...groups.slice(1).map((group) => {
+          const next = compileClause(group, diagnostics);
+          return { ...structuredClone(first), ...next };
+        }),
+      ];
+    }
+  }
+  return [compileClause(tokens, diagnostics)];
+}
+
 function compileExpression(text: string, tokens: Token[]): Expression {
   const start = tokens[0].start;
   const end = tokens.at(-1)!.end;
@@ -966,10 +1151,17 @@ function compileExpression(text: string, tokens: Token[]): Expression {
   let schedule: Expression["schedule"] = null;
 
   try {
-    const clauses = splitClauses(tokens).map((clause) =>
-      compileClause(
+    const clauses = splitClauses(tokens).flatMap((clause) =>
+      compileGroup(
         clause
-          .filter((token) => token.label !== "GLUE" || token.kind === 2)
+          .filter(
+            (token) =>
+              token.label !== "GLUE" ||
+              token.kind === 2 ||
+              ["past", "to", "and", "a", "an"].includes(
+                token.text.toLowerCase(),
+              ),
+          )
           .map((token) =>
             token.label === "GLUE" || token.label === "JOIN"
               ? { ...token, label: "O" }
@@ -1019,8 +1211,8 @@ function numericDateOrder(tokens: Token[], order: "MDY" | "DMY"): Token[] {
     const first = tokens[index];
     const second = tokens[index + 2];
     const datePair =
-      (first.label === "MONTH" && second.label === "DOM") ||
-      (first.label === "DOM" && second.label === "MONTH");
+      ["MONTH", "DOM"].includes(first.label) &&
+      ["MONTH", "DOM"].includes(second.label);
     if (!datePair || !separator(tokens[index + 1]) || second.clauseStart)
       continue;
     const yearFirst =
@@ -1030,9 +1222,13 @@ function numericDateOrder(tokens: Token[], order: "MDY" | "DMY"): Token[] {
       continue;
     const a = Number(first.text);
     const b = Number(second.text);
-    if (a < 1 || a > 12 || b < 1 || b > 12) continue;
-    result[index] = { ...first, label: order === "MDY" ? "MONTH" : "DOM" };
-    result[index + 2] = { ...second, label: order === "MDY" ? "DOM" : "MONTH" };
+    if (a < 1 || a > 31 || b < 1 || b > 31 || (a > 12 && b > 12)) continue;
+    const selected = a > 12 ? "DMY" : b > 12 ? "MDY" : order;
+    result[index] = { ...first, label: selected === "MDY" ? "MONTH" : "DOM" };
+    result[index + 2] = {
+      ...second,
+      label: selected === "MDY" ? "DOM" : "MONTH",
+    };
   }
   return result;
 }

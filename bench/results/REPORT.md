@@ -14,43 +14,43 @@ Each batch size has one warmup and three measurements. The table reports median 
 
 | Library | Single p50 (µs) | Single p95 (µs) | 1,000 inputs (ms) | 10,000 inputs (ms) | Throws / 10,000 | Single returned output |
 |---|---:|---:|---:|---:|---:|---|
-| gpu-time CPU | 145.0 | 175.0 | 84.16 | 813.42 | 0 | Yes |
-| gpu-time WebGPU | 315.0 | 665.0 | 11.64 | 86.66 | 0 | Yes |
-| Chrono (English) | 15.0 | 25.0 | 9.48 | 86.47 | 0 | Yes |
-| Compromise + dates | 1405.0 | 1850.0 | 597.57 | 6260.70 | 0 | Yes |
-| rrule | <5 | 5.0 | 1.55 | 13.53 | 2500 | No |
-| Microsoft Recognizers | 560.0 | 770.0 | 602.78 | 5974.81 | 0 | Yes |
-| Later | <5 | 5.0 | 0.88 | 7.11 | 0 | No |
+| gpu-time CPU | 140.0 | 170.0 | 84.56 | 821.64 | 0 | Yes |
+| gpu-time WebGPU | 315.0 | 695.0 | 10.87 | 96.18 | 0 | Yes |
+| Chrono (English) | 10.0 | 25.0 | 9.81 | 88.49 | 0 | Yes |
+| Compromise + dates | 1385.0 | 1780.0 | 593.33 | 5988.09 | 0 | Yes |
+| rrule | <5 | 5.0 | 1.53 | 13.49 | 2500 | No |
+| Microsoft Recognizers | 565.0 | 735.0 | 593.31 | 5895.89 | 0 | Yes |
+| Later | <5 | 5.0 | 0.84 | 6.89 | 0 | No |
 
 A zero-duration sample is below the isolated browser timer's 5 µs resolution, displayed as <5. Native caches remain enabled. Returning output does not imply correctness.
 
 ## Independent source cases
 
-Microsoft Recognizers development: **121/563 (21.49%)** strict agreement with upstream future civil dates and intervals. These expected values come from upstream specifications, not gpu-time.
+Microsoft Recognizers development: **156/563 (27.71%)** strict agreement with upstream future civil dates and intervals. These expected values come from upstream specifications, not gpu-time.
 
 The corpus is pinned to [da7edcff59f6](https://github.com/microsoft/Recognizers-Text/tree/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English). 134 grouped cases remain reserved and are not evaluated here. No mismatches are removed as policy differences. Component-specific empty results are not treated as global negative sentences. Symbolic SET/duration values without concrete dates are listed among exclusions.
 
 | Source component | Exact resolved results |
 |---|---:|
-| DateParser | 36/113 |
-| TimeParser | 13/73 |
+| DateParser | 46/113 |
+| TimeParser | 30/73 |
 | TimePeriodParser | 34/60 |
-| DateTimeParser | 7/53 |
-| DatePeriodParser | 18/190 |
-| DateTimePeriodParser | 13/74 |
+| DateTimeParser | 15/53 |
+| DatePeriodParser | 21/190 |
+| DateTimePeriodParser | 10/74 |
 
 | Failure stage | Cases |
 |---|---:|
-| value-mismatch | 128 |
-| matches-upstream-past | 19 |
-| correct | 121 |
-| interpretation-failed | 272 |
+| correct | 156 |
+| matches-upstream-past | 23 |
+| interpretation-failed | 250 |
+| value-mismatch | 112 |
 | no-result | 19 |
-| resolution-error | 4 |
+| resolution-error | 3 |
 
 Matches to an upstream past interpretation remain failures in the strict future score. Assembly failures can come from incorrect model roles or missing assembler support; the stage alone does not attribute the cause.
 
-The separate synthetic AST check scores **4993/5000**. Its expected ASTs are sampled before rendering, and all 5000 renderer/oracle pairs pass compiler equality. Fresh values share training rendering families, so this is a development check rather than independent language accuracy.
+The separate synthetic AST check scores **4996/5000**. Its expected ASTs are sampled before rendering, and all 5000 renderer/oracle pairs pass compiler equality. Fresh values share training rendering families, so this is a development check rather than independent language accuracy.
 
 
 ## Python parsing time
@@ -59,10 +59,10 @@ In-process native parsing, ten warmups and 100 samples. Exceptions are captured,
 
 | Library | Version | Single p50 (µs) | Single p95 (µs) |
 |---|---|---:|---:|
-| dateparser | 1.4.3 | 3793.0 | 4130.3 |
-| parsedatetime | 2.6 | 18.2 | 18.8 |
-| recurrent | 0.4.1 | 150.2 | 155.6 |
-| timefhuman | 0.1.5 | 5.1 | 5.4 |
+| dateparser | 1.4.3 | 3739.5 | 3986.7 |
+| parsedatetime | 2.6 | 18.7 | 19.4 |
+| recurrent | 0.4.1 | 151.6 | 163.3 |
+| timefhuman | 0.1.5 | 5.3 | 5.6 |
 
 ## Browser bundle size
 
@@ -72,7 +72,7 @@ All gpu-time runtime exports, its resolver and trained weights are included. Dif
 
 | Library | Minified bytes | Gzip bytes | Brotli bytes |
 |---|---:|---:|---:|
-| gpu-time | 82205 | 39367 | 33734 |
+| gpu-time | 87619 | 41229 | 35419 |
 | Chrono (English) | 45491 | 13258 | 11848 |
 | Compromise + dates | 487957 | 179679 | 156071 |
 | rrule | 45944 | 13663 | 12380 |
@@ -93,7 +93,7 @@ Exact AST equality from the shipped CPU model, without oracle labels. These fixt
 | grammar-variations | 314 / 314 |
 | prose | 72 / 72 |
 
-WebGPU matches CPU labels and clause boundaries on 10,000 sequences (71,630 non-space tokens), with 0 role mismatches and 0 boundary mismatches. Direct PyTorch comparison covers 512 sequences. Maximum GPU/PyTorch logit error: 0.000008106231689453125. Real device destruction and recovery also passed.
+WebGPU matches CPU labels and clause boundaries on 10,000 sequences (71,630 non-space tokens), with 0 role mismatches and 0 boundary mismatches. Direct PyTorch comparison covers 512 sequences. Maximum GPU/PyTorch logit error: 0.0000095367431640625. Real device destruction and recovery also passed.
 
 ## Actual adversarial outputs
 
@@ -266,7 +266,7 @@ Normalized occurrences/rules are shown when the adapter can represent them. Othe
 | gpu-time CPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | gpu-time WebGPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | Chrono (English) | `{"occurrences":[{"start":"2026-09-09T06:00:00.000Z","end":"2026-09-10T03:00:00.000Z"}],"rrules":null}` |
-| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:58:10.035+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":58},"unit":"time"}],"rrules":null}` |
+| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:30:00.337+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":30},"unit":"time"}],"rrules":null}` |
 | rrule | `"Error: expected every but found friday"` |
 | Microsoft Recognizers | `[{"start":0,"end":15,"resolution":{"values":[{"timex":"(T09,T12,PT3H)","type":"timerange","start":"09:00:00","end":"12:00:00"}]},"text":"from 9am to noon","typeName":"datetimeV2.timerange"}]` |
 | Later | `{"schedules":[],"exceptions":[],"error":0}` |

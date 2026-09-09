@@ -52,7 +52,43 @@ The playground runs at port 5174 and displays dates and the returned result.
 - Optional context policies control bare weekdays, next weekdays and week starts.
   `dateOrder` is a parser option for ambiguous numeric dates.
 
-The current stage is correctness. Efficiency, speed and size come afterward.
+## Natural wording
+
+The parser supports these concrete forms, including spoken numbers:
+
+| Form                   | Examples                                                                                  |
+| ---------------------- | ----------------------------------------------------------------------------------------- |
+| Clocks                 | `eight forty`, `ten thirty-five pm`, `seven o'clock`                                      |
+| Clock offsets          | `half past seven`, `quarter to six`                                                       |
+| Day-part qualifiers    | `eight in the morning`, `ten at night`                                                    |
+| Combined quantities    | `for three hours and thirty minutes`, `in two days and six hours`                         |
+| Fractional durations   | `in half an hour`, `for an hour and a half`, `for 2.5 hours`                              |
+| Dates in sentences     | `I'll be back on the 15th`, `book dinner for October 2 at eight pm`                       |
+| Date ranges            | `from September 4 through September 8`                                                    |
+| Cross-date time ranges | `Friday at 10pm until Saturday at 2am`                                                    |
+| Calendar periods       | `this September`, `next month`, `the first week of October`                               |
+| Recurrence             | `every other Friday`, `the last Friday of each month`                                     |
+| Bounds and exceptions  | `weekdays at nine until December 20`, `every Monday except the first Monday of the month` |
+| Shared times           | `every weekday at nine am and five pm`                                                    |
+
+A clock without AM/PM uses the existing 24-hour interpretation. `twelve at night` means midnight. `03/04/2027`
+uses the parser's `dateOrder` (`MDY` by default); unambiguous dates such as
+`21/04/2016` retain their meaning. Yearless named dates retain the reference year.
+
+Date-only ranges include both named days and return an exclusive end at midnight
+after the final day. Explicit clock endpoints return the stated end instant.
+`this September` covers the whole month. Numbered weeks of a named month are
+seven-day blocks beginning on its first day; the final block ends at month end.
+Combined quantities apply in spoken order: calendar days preserve local wall
+clock time across DST, then hours/minutes add elapsed time. Fractional calendar
+days, months and years are not assigned an implicit duration.
+
+Each shared clock produces its own recurrence rule. A weekly weekday with a
+monthly ordinal exception can be exported as the remaining ordinal weekdays
+of each month. More complex recurring exception combinations return previews
+and an `unsupported-export` diagnostic when a single rule cannot represent them.
+Vague expressions such as `ASAP` and `after work` have no invented clock value.
+
 The model is trained, but broader accuracy and release requirements remain open.
 
 ## Results
@@ -112,6 +148,6 @@ npm run evaluate
 ```
 
 Training uses generated labeled spans, not labels from the runtime parser.
-Current semantic generation covers 26 phrase families. Run folders contain checkpoints,
+The original semantic generator covers 26 phrase families; `training/natural.py` adds 16 natural-phrasing families. Run folders contain checkpoints,
 measured reports, and source snapshots. Large training data and checkpoints are
 kept outside the distribution bundle.

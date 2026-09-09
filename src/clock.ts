@@ -51,6 +51,6 @@ export function resolveTime(
   if (time.end) end = clockSeconds(time.end, options, true);
   else if ("part" in time.start) end = clockSeconds(time.start, options, true);
 
-  if (end === start) throw new RangeError("Start and end times are equal.");
+  // Ordering is validated after the endpoint dates and timezone are resolved.
   return { start, end };
 }

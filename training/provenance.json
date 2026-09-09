@@ -1,10 +1,20 @@
 {
-  "model": "19f74a77e7f3197da23ff74c2caf04975c4a9f10fbf4147e6698e26ce0943698",
+  "model": "0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
     {
-      "checkpoint": "training/runs/direct-results/best.pt",
+      "checkpoint": "training/runs/natural-language-final/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/natural-language-v2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/runs/direct-results/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 9
     },

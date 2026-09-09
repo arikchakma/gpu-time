@@ -20,12 +20,25 @@ export type DateSpec =
   | ({ kind: "calendar" } & CalendarDate)
   | { kind: "calendarRange"; from: CalendarDate; to: CalendarDate }
   | {
+      kind: "calendarPeriod";
+      month: number;
+      year?: number;
+      modifier?: Modifier;
+      week?: number;
+    }
+  | {
       kind: "relativeUnit";
       unit: Unit;
       modifier: Modifier;
       edge?: "start" | "end";
     }
-  | { kind: "ordinalWeekday"; ordinal: number; day: Weekday; of: MonthRef }
+  | {
+      kind: "ordinalWeekday";
+      ordinal: number;
+      day: Weekday;
+      of: MonthRef;
+      recurring?: boolean;
+    }
   | {
       kind: "holiday";
       name:
@@ -45,7 +58,12 @@ export interface TimeSpec {
   start: ClockTime;
   end?: ClockTime;
 }
+export interface Quantity {
+  amount: number;
+  unit: Unit;
+}
 export interface Shift {
+  components?: Quantity[];
   amount: number;
   unit: Unit;
   direction: "before" | "after";
@@ -53,6 +71,7 @@ export interface Shift {
   approximate?: boolean;
 }
 export interface Duration {
+  components?: Quantity[];
   amount: number;
   unit: Unit;
 }
@@ -72,6 +91,7 @@ export interface Recurrence {
   span?: Duration;
 }
 export interface Clause {
+  endDate?: DateSpec;
   date?: DateSpec;
   time?: TimeSpec;
   shift?: Shift;
