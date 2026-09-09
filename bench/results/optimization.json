@@ -1,0 +1,67 @@
+{
+  "baselineCommit": "649e5e9bb7bc782cd45b729879266ef137339cb3",
+  "sameWorkload": true,
+  "batch10000": [
+    {
+      "library": "gpu-time-cpu",
+      "beforeMs": 1773.4399999976158,
+      "afterMs": 813.4150000065565,
+      "speedup": 2.180240098822029,
+      "previousAfterMs": 916.6049999892712
+    },
+    {
+      "library": "gpu-time-webgpu",
+      "beforeMs": 1061.1749999970198,
+      "afterMs": 86.65999999642372,
+      "speedup": 12.245268867306857,
+      "previousAfterMs": 188.1550000011921
+    }
+  ],
+  "distinctInputs": {
+    "count": 1000,
+    "before": {
+      "cpu": 142.09999999403954,
+      "webgpu": 36.599999994039536,
+      "recognition": 115.29999999701977,
+      "resolution": 22.799999997019768
+    },
+    "after": {
+      "cpu": 115.79999999701977,
+      "webgpu": 8.200000002980232,
+      "recognition": 111.8999999910593,
+      "resolution": 1.2000000029802322
+    },
+    "identicalOutputs": true,
+    "outputSha256": "a4f15f39dcfff7faf7421b3a4dee8390670a538a2cdefbb2fc2ef1c7058499fd"
+  },
+  "weeklyRecurrenceParity": {
+    "cases": 192,
+    "identical": 192
+  },
+  "sourceSha256": {
+    "src/index.ts": "e8bdce878cb0bd1ab1a44ef771134a3e21d38a81fdef55a7f09ced3dde5c0a77",
+    "src/schedule.ts": "f3df55dc4e8d29ac8b1c3e274e347d5b54d58cffff3d3e82ad52e9a6151bce83",
+    "src/tagger.ts": "d0e6478665a9924f15c156a89d1893803489e92e935a470bf486ce524ce830c3",
+    "src/tokenizer.ts": "a09e84eee48bac44f1184bd78075a19687c5ed360c79bc6f6f8a71c0acc226df",
+    "src/zoned.ts": "43fa2baca8e5a6c8421b425ab2c2539c25c1209937cb3b3625bad9bf252ce8a3",
+    "src/resolve.ts": "d94dc8f0afeeb965cb6e8315dd0b5e28a48cd3f81895905a1c944f8dc6e88375",
+    "src/occurrence.ts": "b8fef8973fc39131417c30a28a104cdb9398a62fc2319b5bdc8e002713958a14",
+    "src/recurrence.ts": "8c2581e280df960fae09aacbbcf01e4ffa83ca10fdc584e07490fcb35c1e530d",
+    "src/rrule.ts": "ef92fa62a87c563a14cd5157308779e15f4ce80d9fcb61c010cd1e7de2b0028a"
+  },
+  "changes": [
+    "Bounded exact timezone conversion caches with independent returned objects",
+    "Reuse local fields when formatting ISO timestamps",
+    "Reuse tokenization when whitespace is already canonical",
+    "Step between eligible weeks for single-weekday recurrence",
+    "One promise and one resolution context per batch",
+    "Cache immutable token spelling features while recomputing positional context",
+    "Precompute weekly anchors and avoid duplicate sorting",
+    "Keep occurrence timestamps numeric until public serialization",
+    "Use Date.UTC with a correct Gregorian correction for years 0 through 99",
+    "Bounded ISO formatting cache"
+  ],
+  "scope": "Warm browser benchmarks with unchanged model weights and public output. No complete parse-result cache. Other libraries return different outputs.",
+  "chronoBatch10000Ms": 86.47499999403954,
+  "testsPassed": 710
+}

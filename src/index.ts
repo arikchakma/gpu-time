@@ -1,11 +1,12 @@
 import { createParser as createScheduleParser } from "./schedule.js";
-import { resolve } from "./resolve.js";
+import { createResolver } from "./resolve.js";
 import { civil, instant } from "./zoned.js";
 import type {
   Diagnostic,
   Occurrence,
   ParserOptions as ModelOptions,
   ResolveOptions,
+  ParseResult as ScheduleResult,
 } from "./types.js";
 
 export type ParseContext = ResolveOptions;
@@ -26,10 +27,7 @@ export interface ParseResult {
 export async function createParser(options: ParserOptions = {}) {
   const parser = await createScheduleParser(options);
 
-  async function parse(
-    text: string,
-    context: ParseContext,
-  ): Promise<ParseResult> {
+  function validate(context: ParseContext): number {
     // Context belongs to calendar resolution and never enters the model.
     if (
       !context ||
@@ -41,7 +39,14 @@ export async function createParser(options: ParserOptions = {}) {
     const limit = context.limit ?? 30;
     if (!Number.isInteger(limit) || limit < 1 || limit > 1000)
       throw new RangeError("limit must be an integer from 1 through 1000.");
-    const parsed = await parser.parse(text);
+    return limit;
+  }
+
+  function finish(
+    parsed: ScheduleResult,
+    resolveSchedule: ReturnType<typeof createResolver>,
+    limit: number,
+  ): ParseResult {
     const started = performance.now();
     const occurrences: TimeRange[] = [];
     const rrules: string[] = [];
@@ -52,7 +57,7 @@ export async function createParser(options: ParserOptions = {}) {
     for (const expression of parsed.expressions) {
       if (!expression.schedule) continue;
       try {
-        const result = resolve(expression.schedule, context);
+        const result = resolveSchedule(expression.schedule);
         occurrences.push(
           ...result.occurrences.map(({ clause, ...range }) => range),
         );
@@ -75,7 +80,8 @@ export async function createParser(options: ParserOptions = {}) {
         });
       }
     }
-    occurrences.sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
+    if (parsed.expressions.length > 1)
+      occurrences.sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
     return {
       occurrences: occurrences.slice(0, limit),
       rrules,
@@ -94,9 +100,19 @@ export async function createParser(options: ParserOptions = {}) {
   }
 
   return {
-    parse,
-    parseMany(texts: string[], context: ParseContext): Promise<ParseResult[]> {
-      return Promise.all(texts.map((text) => parse(text, context)));
+    async parse(text: string, context: ParseContext): Promise<ParseResult> {
+      const limit = validate(context);
+      return finish(await parser.parse(text), createResolver(context), limit);
+    },
+    async parseMany(
+      texts: string[],
+      context: ParseContext,
+    ): Promise<ParseResult[]> {
+      if (!texts.length) return [];
+      const limit = validate(context);
+      const parsed = await parser.parseMany(texts);
+      const resolveSchedule = createResolver(context);
+      return parsed.map((result) => finish(result, resolveSchedule, limit));
     },
     dispose: parser.dispose,
   };

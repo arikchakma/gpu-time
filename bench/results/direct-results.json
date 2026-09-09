@@ -29,9 +29,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.8903329999999983,
-          "inferMs": 1.5567080000000004,
-          "resolveMs": 1.017125
+          "tokenizeMs": 0.6531239999999947,
+          "inferMs": 1.4876670000000018,
+          "resolveMs": 1.1260000000000012
         }
       },
       "correct": true
@@ -61,9 +61,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.02745800000000287,
-          "inferMs": 0.16370799999999974,
-          "resolveMs": 0.42350099999999813
+          "tokenizeMs": 0.01683299999999832,
+          "inferMs": 0.13558399999999793,
+          "resolveMs": 0.31300099999999986
         }
       },
       "correct": true
@@ -93,9 +93,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0676249999999996,
-          "inferMs": 0.5707920000000009,
-          "resolveMs": 0.2412920000000014
+          "tokenizeMs": 0.02404200000000145,
+          "inferMs": 0.5670840000000013,
+          "resolveMs": 0.18279199999999918
         }
       },
       "correct": true
@@ -125,9 +125,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.06558299999999662,
-          "inferMs": 0.4162910000000011,
-          "resolveMs": 0.08279200000000131
+          "tokenizeMs": 0.019041999999998893,
+          "inferMs": 0.473749999999999,
+          "resolveMs": 0.05304199999999781
         }
       },
       "correct": true
@@ -159,9 +159,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.028541000000000594,
-          "inferMs": 0.08824999999999861,
-          "resolveMs": 0.06637500000000074
+          "tokenizeMs": 0.015166999999998154,
+          "inferMs": 0.06979199999999963,
+          "resolveMs": 0.043082999999999316
         }
       },
       "correct": true
@@ -193,9 +193,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.019165999999998462,
-          "inferMs": 0.08516700000000199,
-          "resolveMs": 0.1530830000000023
+          "tokenizeMs": 0.01316800000000029,
+          "inferMs": 0.06408400000000114,
+          "resolveMs": 0.12670899999999818
         }
       },
       "correct": true
@@ -225,9 +225,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.024501000000000772,
-          "inferMs": 0.1957500000000003,
-          "resolveMs": 0.10916600000000187
+          "tokenizeMs": 0.028666000000004743,
+          "inferMs": 0.18195800000000162,
+          "resolveMs": 0.034625000000001904
         }
       },
       "correct": true
@@ -279,9 +279,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.07087499999999736,
-          "inferMs": 0.38058300000000145,
-          "resolveMs": 0.36379100000000264
+          "tokenizeMs": 0.05887600000000148,
+          "inferMs": 0.3252500000000005,
+          "resolveMs": 0.26704199999999645
         }
       },
       "correct": true
@@ -330,9 +330,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.027583000000003466,
-          "inferMs": 0.14741599999999977,
-          "resolveMs": 0.6541670000000046
+          "tokenizeMs": 0.014208000000003551,
+          "inferMs": 0.11625000000000085,
+          "resolveMs": 0.5471660000000007
         }
       },
       "correct": true
@@ -381,9 +381,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.02633300000000105,
-          "inferMs": 0.1387500000000017,
-          "resolveMs": 0.4193750000000023
+          "tokenizeMs": 0.011791999999999803,
+          "inferMs": 0.12837499999999835,
+          "resolveMs": 0.35066600000000037
         }
       },
       "correct": true
@@ -413,9 +413,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.01908300000000196,
-          "inferMs": 0.11520799999999909,
-          "resolveMs": 0.07062499999999972
+          "tokenizeMs": 0.010083000000005171,
+          "inferMs": 0.11812499999999915,
+          "resolveMs": 0.05029199999999889
         }
       },
       "correct": true
@@ -446,9 +446,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.023542000000002616,
-          "inferMs": 0.12720799999999954,
-          "resolveMs": 0.05237500000000139
+          "tokenizeMs": 0.006876000000001881,
+          "inferMs": 0.10725000000000051,
+          "resolveMs": 0.04083400000000026
         }
       },
       "correct": true
@@ -478,9 +478,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.01625100000000046,
-          "inferMs": 0.08983299999999872,
-          "resolveMs": 0.051459000000001254
+          "tokenizeMs": 0.004249999999998977,
+          "inferMs": 0.0899169999999998,
+          "resolveMs": 0.04879100000000136
         }
       },
       "correct": true
@@ -510,9 +510,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.02529299999999779,
-          "inferMs": 0.14304199999999767,
-          "resolveMs": 0.055165999999999826
+          "tokenizeMs": 0.01274999999999693,
+          "inferMs": 0.1277089999999994,
+          "resolveMs": 0.06329200000000057
         }
       },
       "correct": true
@@ -541,9 +541,9 @@
         ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.009999000000000535,
-          "inferMs": 0.12733300000000014,
-          "resolveMs": 0.2296660000000017
+          "tokenizeMs": 0.009457999999995081,
+          "inferMs": 0.12083299999999753,
+          "resolveMs": 0.25233400000000117
         }
       },
       "correct": true
@@ -584,9 +584,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.014666000000001844,
-          "inferMs": 0.19824999999999804,
-          "resolveMs": 0.2190829999999977
+          "tokenizeMs": 0.010875000000002188,
+          "inferMs": 0.15191599999999994,
+          "resolveMs": 0.16483300000000156
         }
       },
       "correct": true
@@ -615,9 +615,9 @@
         ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.007417000000000229,
-          "inferMs": 0.056750000000000966,
-          "resolveMs": 0.05541700000000205
+          "tokenizeMs": 0.011167000000000371,
+          "inferMs": 0.0445840000000004,
+          "resolveMs": 0.06450000000000244
         }
       },
       "correct": true
@@ -637,9 +637,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.022165999999998576,
-          "inferMs": 0.18445900000000037,
-          "resolveMs": 0.009333999999999065
+          "tokenizeMs": 0.05904199999999804,
+          "inferMs": 0.16841600000000057,
+          "resolveMs": 0.005958999999997161
         }
       },
       "correct": true

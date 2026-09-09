@@ -1,4 +1,4 @@
-import type { Clause, Occurrence, Recurrence } from "./types.js";
+import type { Clause, Recurrence } from "./types.js";
 import { addCivil, resolveDates, weekBeginning } from "./calendar.js";
 import { resolveTime } from "./clock.js";
 import {
@@ -6,6 +6,7 @@ import {
   addDuration,
   resolveOccurrence,
   type ResolutionContext,
+  type NumericOccurrence,
 } from "./occurrence.js";
 import { weekdays } from "./lexicon.js";
 import { excludedWeekdays, exclusionFilter } from "./exclusions.js";
@@ -22,13 +23,13 @@ import {
 } from "./zoned.js";
 
 export interface RecurrenceExpansion {
-  occurrences: Occurrence[];
-  first?: Occurrence;
+  occurrences: NumericOccurrence[];
+  first?: NumericOccurrence;
   truncated: boolean;
   /** Exclusive end of the actual rule, independent of the preview horizon. */
   until?: number;
-  excluded?: Occurrence[];
-  dateExcluded?: Occurrence[];
+  excluded?: NumericOccurrence[];
+  dateExcluded?: NumericOccurrence[];
 }
 
 export function hoursForRule(rule: Recurrence): number[] | undefined {
@@ -99,7 +100,7 @@ function matches(
   date: Civil,
   anchor: Civil,
   rule: Recurrence,
-  context: ResolutionContext,
+  anchorWeek: number,
 ): boolean {
   const day = weekdays[dayOfWeek(date)];
   if (rule.byDay && !rule.byDay.includes(day)) return false;
@@ -116,8 +117,7 @@ function matches(
   if (rule.freq === "daily")
     return (dayNumber(date) - dayNumber(anchor)) % rule.interval === 0;
   if (rule.freq === "weekly") {
-    const week = weekBeginning(anchor, context.options.weekStart);
-    const distance = Math.floor((dayNumber(date) - dayNumber(week)) / 7);
+    const distance = Math.floor((dayNumber(date) - anchorWeek) / 7);
     return (
       distance % rule.interval === 0 &&
       (rule.byDay !== undefined || dayOfWeek(date) === dayOfWeek(anchor))
@@ -144,7 +144,7 @@ function candidate(
   date: Civil,
   context: ResolutionContext,
   generatedClock = false,
-): Occurrence | undefined {
+): NumericOccurrence | undefined {
   try {
     let event = clause;
     if (generatedClock) {
@@ -257,16 +257,19 @@ export function expandRecurrence(
     );
   }
   const seedRule = { ...rule, interval: 1 };
-  let first: Occurrence | undefined;
+  let first: NumericOccurrence | undefined;
   let anchor: Civil | undefined;
+  const beginningWeek =
+    rule.freq === "weekly"
+      ? dayNumber(weekBeginning(beginning, options.weekStart))
+      : 0;
 
   for (let offset = 0; offset < 366 * 8 * stepsPerDay; offset++) {
     const date = addCivil(beginning, offset, generatedClock ? "hour" : "day");
-    if (!matches(date, beginning, seedRule, context) || isExcluded(date))
+    if (!matches(date, beginning, seedRule, beginningWeek) || isExcluded(date))
       continue;
     const occurrence = candidate(clause, date, context, generatedClock);
-    if (!occurrence || Date.parse(occurrence.start) < requestedInstant)
-      continue;
+    if (!occurrence || occurrence.start < requestedInstant) continue;
     first = occurrence;
     anchor = date;
     break;
@@ -274,27 +277,37 @@ export function expandRecurrence(
   if (!anchor || !first)
     throw new RangeError("No eligible recurrence start within eight years.");
 
-  if (Date.parse(first.start) >= until)
-    return { occurrences: [], truncated: false };
+  if (first.start >= until) return { occurrences: [], truncated: false };
   const lastDay = dayNumber(civil(Math.min(horizon, until), options.timeZone));
-  const occurrences: Occurrence[] = [];
-  const excluded: Occurrence[] = [];
-  const dateExcluded: Occurrence[] = [];
+  const occurrences: NumericOccurrence[] = [];
+  const excluded: NumericOccurrence[] = [];
+  const dateExcluded: NumericOccurrence[] = [];
   const cutoff = first.allDay
     ? zonedToEpoch(startOfDay(localReference), options.timeZone).epochMs
     : reference;
   let count = 0;
+  const anchorWeek =
+    rule.freq === "weekly"
+      ? dayNumber(weekBeginning(anchor, options.weekStart))
+      : 0;
 
   const scanLimit = 100_000 * stepsPerDay;
+  // With one weekday, the intervening days cannot satisfy the rule.
+  const step =
+    !generatedClock &&
+    rule.freq === "weekly" &&
+    (!rule.byDay || rule.byDay.length === 1)
+      ? 7 * rule.interval
+      : 1;
   let offset = 0;
-  for (; offset < scanLimit; offset++) {
+  for (; offset < scanLimit; offset += step) {
     const date = addCivil(anchor, offset, generatedClock ? "hour" : "day");
     if (dayNumber(date) > lastDay) break;
-    if (!matches(date, anchor, rule, context)) continue;
+    if (!matches(date, anchor, rule, anchorWeek)) continue;
 
     const occurrence = candidate(clause, date, context, generatedClock);
     if (!occurrence) continue;
-    const start = Date.parse(occurrence.start);
+    const start = occurrence.start;
     if (
       start >= Math.min(horizon, until) ||
       (rule.count !== undefined && count >= rule.count)
@@ -319,7 +332,11 @@ export function expandRecurrence(
     if (rule.count !== undefined && count >= rule.count) break;
   }
 
-  if (offset === scanLimit)
+  if (
+    offset >= scanLimit &&
+    dayNumber(addCivil(anchor, offset, generatedClock ? "hour" : "day")) <=
+      lastDay
+  )
     throw new RangeError(
       "The recurrence exceeded the 100000-day search limit. Use a narrower horizon or a later start.",
     );

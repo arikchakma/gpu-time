@@ -12,12 +12,19 @@ export interface TagResult {
   fallbackReason?: string;
 }
 
+interface Batch {
+  results: TagResult[];
+  remaining: number;
+  resolve: (results: TagResult[]) => void;
+  reject: (reason: unknown) => void;
+}
+
 interface Job {
   text: string;
   tokens: RawToken[];
   tokenizeMs: number;
-  resolve: (result: TagResult) => void;
-  reject: (reason: unknown) => void;
+  batch: Batch;
+  index: number;
 }
 
 interface Window {
@@ -32,7 +39,9 @@ function windowsFor(job: Job, jobIndex: number): Window[] {
   // Whitespace width has no temporal meaning. Use canonical model features
   // while retaining the original tokens and offsets in the public result.
   const started = performance.now();
-  const canonical = tokenize(job.text.trim().replace(/\s+/g, " "));
+  const canonicalText = job.text.trim().replace(/\s+/g, " ");
+  const canonical =
+    canonicalText === job.text ? job.tokens : tokenize(canonicalText);
   job.tokenizeMs += performance.now() - started;
   const sourceStart = job.tokens[0]?.kind === 3 ? 1 : 0;
   const windows: Window[] = [];
@@ -158,23 +167,21 @@ export async function createTagger(
       for (let token = window.keepStart; token < window.keepEnd; token++) {
         const label = LABELS[prediction.labels[token]];
         if (!label) invalid.add(window.job);
-        const original = jobs[window.job].tokens[window.start + token];
-        labeled[window.job][window.start + token] = {
-          ...original,
-          label: label ?? "O",
-          clauseStart: Boolean(prediction.clauseStarts[token]),
-          score: prediction.scores[token],
-        };
+        const result = labeled[window.job][window.start + token];
+        result.label = label ?? "O";
+        result.clauseStart = Boolean(prediction.clauseStarts[token]);
+        result.score = prediction.scores[token];
       }
     });
     jobs.forEach((job, index) => {
-      job.resolve({
+      job.batch.results[job.index] = {
         tokens: labeled[index],
         unknownLabels: invalid.has(index),
         backend: job.text.trim().length ? backend : "cpu",
         timings: { tokenizeMs: job.tokenizeMs, inferMs },
         ...(gpuUnavailable ? { fallbackReason: gpuUnavailable } : {}),
-      });
+      };
+      if (--job.batch.remaining === 0) job.batch.resolve(job.batch.results);
     });
   }
 
@@ -189,7 +196,7 @@ export async function createTagger(
           if (disposed) throw new Error("The parser is disposed.");
           await process(active);
         } catch (error) {
-          active.forEach((job) => job.reject(error));
+          active.forEach((job) => job.batch.reject(error));
         } finally {
           active = [];
         }
@@ -206,35 +213,51 @@ export async function createTagger(
     queueMicrotask(() => void flush());
   }
 
-  function tag(text: string): Promise<TagResult> {
+  function tagMany(texts: string[]): Promise<TagResult[]> {
+    if (!texts.length) return Promise.resolve([]);
     if (disposed) return Promise.reject(new Error("The parser is disposed."));
-    if (text.length > 1_000_000)
-      return Promise.reject(
-        new RangeError("An input supports at most one million characters."),
-      );
-    const started = performance.now();
-    const tokens = tokenize(text);
+    for (const text of texts) {
+      if (typeof text !== "string")
+        return Promise.reject(new TypeError("Input must be a string."));
+      if (text.length > 1_000_000)
+        return Promise.reject(
+          new RangeError("An input supports at most one million characters."),
+        );
+    }
     return new Promise((resolve, reject) => {
-      pending.push({
-        text,
-        tokens,
-        tokenizeMs: performance.now() - started,
+      const batch: Batch = {
+        results: new Array(texts.length),
+        remaining: texts.length,
         resolve,
         reject,
+      };
+      texts.forEach((text, index) => {
+        const started = performance.now();
+        const tokens = tokenize(text);
+        pending.push({
+          text,
+          tokens,
+          tokenizeMs: performance.now() - started,
+          batch,
+          index,
+        });
       });
       schedule();
     });
   }
 
   return {
-    tag,
+    tag(text: string): Promise<TagResult> {
+      return tagMany([text]).then((results) => results[0]);
+    },
+    tagMany,
     dispose(): void {
       if (disposed) return;
       disposed = true;
       gpu?.dispose();
       gpu = undefined;
       for (const job of [...pending.splice(0), ...active])
-        job.reject(new Error("The parser is disposed."));
+        job.batch.reject(new Error("The parser is disposed."));
     },
   };
 }

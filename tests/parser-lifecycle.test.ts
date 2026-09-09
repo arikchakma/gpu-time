@@ -29,6 +29,52 @@ beforeEach(() => {
   createGPU.mockReset();
 });
 
+it("keeps mixed single and batch requests separate in one submission", async () => {
+  const gpu = runtime();
+  createGPU.mockResolvedValue(gpu);
+  const parser = await createParser({ backend: "webgpu" });
+  try {
+    const [first, batch, last] = await Promise.all([
+      parser.parse("today"),
+      parser.parseMany(["tomorrow", "yesterday"]),
+      parser.parse("now"),
+    ]);
+    const dates = [first, ...batch, last].map(
+      (result) => result.expressions[0].schedule?.clauses[0].date,
+    );
+    expect(dates).toEqual([
+      { kind: "relativeDay", offset: 0 },
+      { kind: "relativeDay", offset: 1 },
+      { kind: "relativeDay", offset: -1 },
+      { kind: "now" },
+    ]);
+    expect(gpu.inferMany).toHaveBeenCalledTimes(1);
+  } finally {
+    parser.dispose();
+  }
+});
+
+it("rejects an entire active batch on disposal before GPU work completes", async () => {
+  const gpu = runtime();
+  const started = deferred<void>();
+  const completed = deferred<Predictions[]>();
+  gpu.inferMany.mockImplementationOnce(() => {
+    started.resolve();
+    return completed.promise;
+  });
+  createGPU.mockResolvedValue(gpu);
+  const parser = await createParser({ backend: "webgpu" });
+  const batch = parser.parseMany(["today", "tomorrow", "yesterday"]);
+  const rejected = expect(batch).rejects.toThrow("disposed");
+  await started.promise;
+  parser.dispose();
+  try {
+    await rejected;
+  } finally {
+    completed.resolve([]);
+  }
+});
+
 it("coalesces same-turn calls while preserving each input's predictions", async () => {
   const gpu = runtime();
   createGPU.mockResolvedValue(gpu);

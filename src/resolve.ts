@@ -1,13 +1,7 @@
-import type {
-  Occurrence,
-  ResolveOptions,
-  Resolved,
-  Schedule,
-  Clause,
-} from "./types.js";
+import type { ResolveOptions, Resolved, Schedule, Clause } from "./types.js";
 import { resolveDates } from "./calendar.js";
-import { resolveOccurrence } from "./occurrence.js";
-import { addMonths, civil, instant, zonedToEpoch } from "./zoned.js";
+import { resolveOccurrence, type NumericOccurrence } from "./occurrence.js";
+import { addMonths, civil, instant, zonedToEpoch, iso } from "./zoned.js";
 import { expandRecurrence } from "./recurrence.js";
 import { recurrenceRule, RecurrenceExportError } from "./rrule.js";
 
@@ -50,12 +44,9 @@ function weekdayPolicy(clause: Clause, options: ResolveOptions): Clause {
   };
 }
 
-export function resolve(schedule: Schedule, options: ResolveOptions): Resolved {
+function prepare(options: ResolveOptions) {
   const reference = instant(options.reference);
   const localReference = civil(reference, options.timeZone);
-  const occurrences: Occurrence[] = [];
-  const rrules: string[] = [];
-  const diagnostics: Resolved["diagnostics"] = [];
   const limit = options.limit ?? 30;
   if (!Number.isInteger(limit) || limit < 1 || limit > 1000)
     throw new RangeError("limit must be an integer from 1 through 1000.");
@@ -64,6 +55,31 @@ export function resolve(schedule: Schedule, options: ResolveOptions): Resolved {
     throw new RangeError(
       "The preview horizon must be after the reference instant.",
     );
+  return { reference, localReference, limit, horizon };
+}
+
+/** Share calendar context across a batch, without caching any schedule results. */
+export function createResolver(options: ResolveOptions) {
+  let prepared: ReturnType<typeof prepare> | undefined;
+  return (schedule: Schedule): Resolved => {
+    prepared ??= prepare(options);
+    return resolvePrepared(schedule, options, prepared);
+  };
+}
+
+export function resolve(schedule: Schedule, options: ResolveOptions): Resolved {
+  return resolvePrepared(schedule, options, prepare(options));
+}
+
+function resolvePrepared(
+  schedule: Schedule,
+  options: ResolveOptions,
+  prepared: ReturnType<typeof prepare>,
+): Resolved {
+  const { reference, localReference, limit, horizon } = prepared;
+  const occurrences: NumericOccurrence[] = [];
+  const rrules: string[] = [];
+  const diagnostics: Resolved["diagnostics"] = [];
   let truncated = false;
 
   for (const [clauseIndex, original] of schedule.clauses.entries()) {
@@ -116,16 +132,22 @@ export function resolve(schedule: Schedule, options: ResolveOptions): Resolved {
     const periods = resolveDates(clause.date, localReference, options);
     for (const period of periods) {
       const occurrence = resolveOccurrence(clause, period, context);
-      if (!options.until || Date.parse(occurrence.start) < horizon)
+      if (!options.until || occurrence.start < horizon)
         occurrences.push(occurrence);
     }
   }
 
-  occurrences.sort(
-    (left, right) => Date.parse(left.start) - Date.parse(right.start),
-  );
+  if (schedule.clauses.length !== 1 || !schedule.clauses[0].recurrence)
+    occurrences.sort((left, right) => left.start - right.start);
   return {
-    occurrences: occurrences.slice(0, limit),
+    occurrences: occurrences.slice(0, limit).map((value) => ({
+      start: iso(value.start, options.timeZone),
+      allDay: value.allDay,
+      clause: value.clause,
+      ...(value.end === undefined
+        ? {}
+        : { end: iso(value.end, options.timeZone) }),
+    })),
     rrules,
     truncated: truncated || occurrences.length > limit,
     diagnostics,

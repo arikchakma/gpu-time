@@ -77,62 +77,78 @@ function numberBucket(text: string, kind: RawToken["kind"]): number {
   return numberBuckets.findIndex((upperBound) => value <= upperBound);
 }
 
-function tokenFlags(parts: RegExpMatchArray[], index: number): number {
-  const text = parts[index][0];
-  const previous = parts[index - 1]?.[0] ?? "";
-  const next = parts[index + 1]?.[0] ?? "";
-  const hasUppercase = /[A-Z]/.test(text);
-  const isOrdinalSuffix =
-    /^(st|nd|rd|th)$/.test(text.toLowerCase()) && /^\d+$/.test(previous);
-
-  let flags = 0;
-  if (hasUppercase) flags |= 1 << 0;
-  if (hasUppercase && text === text.toUpperCase()) flags |= 1 << 1;
-  if (/\d/.test(text)) flags |= 1 << 2;
-  if (index === 0) flags |= 1 << 3;
-  if (index === parts.length - 1) flags |= 1 << 4;
-  if (/\s/.test(previous)) flags |= 1 << 5;
-  if (/\s/.test(next)) flags |= 1 << 6;
-  if (isOrdinalSuffix) flags |= 1 << 7;
-  return flags;
+interface TokenShape {
+  kind: RawToken["kind"];
+  identity: number;
+  hash: number;
+  flags: number;
+  punctuation: number;
+  ordinal: boolean;
 }
 
-export function tokenize(text: string): RawToken[] {
-  const parts = [...text.matchAll(tokenPattern)];
+const shapes = new Map<string, TokenShape>();
 
-  return parts.map((match, index) => {
-    const word = match[0];
-    const folded = word.toLowerCase();
-    const kind = tokenKind(word);
-    const lengthBucket = lengthBuckets.findIndex(
-      (upperBound) => word.length <= upperBound,
-    );
-    const previousPunctuation = punctuationClass(parts[index - 1]?.[0]);
-    const nextPunctuation = punctuationClass(parts[index + 1]?.[0]);
-
-    // Bit positions are the shared training/runtime contract in plan/004.
-    const identity =
+function shape(word: string): TokenShape {
+  const cached = shapes.get(word);
+  if (cached) return cached;
+  const folded = word.toLowerCase();
+  const kind = tokenKind(word);
+  const lengthBucket = lengthBuckets.findIndex(
+    (upperBound) => word.length <= upperBound,
+  );
+  const hasUppercase = /[A-Z]/.test(word);
+  const result: TokenShape = {
+    kind,
+    identity:
       (kind |
         (lengthBucket << 2) |
         (characterClass(word[0]) << 5) |
         (characterClass(word.at(-1)!) << 11) |
         ((hash(folded) & 255) << 17) |
         (numberBucket(word, kind) << 25)) >>>
-      0;
+      0,
+    hash: hash(folded.replace(/[aeiou]/g, "")) & 127,
+    flags:
+      Number(hasUppercase) |
+      (Number(hasUppercase && word === word.toUpperCase()) << 1) |
+      (Number(/\d/.test(word)) << 2),
+    punctuation: punctuationClass(word),
+    ordinal: /^(st|nd|rd|th)$/.test(folded),
+  };
+  // Bound both the entry count and retained word length. Context and predictions
+  // are never cached: the same word can mean something different elsewhere.
+  if (word.length <= 64) {
+    if (shapes.size >= 2048) shapes.delete(shapes.keys().next().value!);
+    shapes.set(word, result);
+  }
+  return result;
+}
 
+export function tokenize(text: string): RawToken[] {
+  const parts = [...text.matchAll(tokenPattern)];
+  const facts = parts.map((part) => shape(part[0]));
+  return parts.map((match, index) => {
+    const current = facts[index];
+    const previous = facts[index - 1];
+    const next = facts[index + 1];
+    let flags = current.flags;
+    if (index === 0) flags |= 1 << 3;
+    if (index === parts.length - 1) flags |= 1 << 4;
+    if (previous?.kind === 3) flags |= 1 << 5;
+    if (next?.kind === 3) flags |= 1 << 6;
+    if (current.ordinal && previous?.kind === 1) flags |= 1 << 7;
     const context =
-      ((hash(folded.replace(/[aeiou]/g, "")) & 127) |
-        (tokenFlags(parts, index) << 7) |
-        (previousPunctuation << 15) |
-        (nextPunctuation << 19)) >>>
+      (current.hash |
+        (flags << 7) |
+        ((previous?.punctuation ?? 0) << 15) |
+        ((next?.punctuation ?? 0) << 19)) >>>
       0;
-
     return {
       start: match.index!,
-      end: match.index! + word.length,
-      text: word,
-      kind,
-      features: [identity, context],
+      end: match.index! + match[0].length,
+      text: match[0],
+      kind: current.kind,
+      features: [current.identity, context],
     };
   });
 }

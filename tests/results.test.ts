@@ -11,6 +11,37 @@ beforeAll(async () => {
 });
 afterAll(() => parser.dispose());
 
+it("keeps batch results equivalent to individual calls and independently mutable", async () => {
+  const texts = [
+    "every Friday",
+    "tomorrow at noon",
+    "27pm",
+    "tomorrow at noon",
+  ];
+  const batch = await parser.parseMany(texts, context);
+  const single = await Promise.all(
+    texts.map((text) => parser.parse(text, context)),
+  );
+  for (let index = 0; index < texts.length; index++) {
+    expect(batch[index].occurrences).toEqual(single[index].occurrences);
+    expect(batch[index].rrules).toEqual(single[index].rrules);
+    expect(batch[index].diagnostics).toEqual(single[index].diagnostics);
+  }
+  batch[1].occurrences[0].start = "changed";
+  expect(batch[3].occurrences[0].start).toBe(single[3].occurrences[0].start);
+});
+
+it("keeps resolution failures local to expressions when sharing a context", async () => {
+  const results = await parser.parseMany(
+    ["May I have your second opinion?", "tomorrow"],
+    { ...context, until: "2020-01-01" },
+  );
+  expect(results[0].diagnostics).toEqual([]);
+  expect(
+    results[1].diagnostics.some((value) => value.code === "resolution-error"),
+  ).toBe(true);
+});
+
 it("requires an explicit timezone from JavaScript callers too", async () => {
   await expect(
     Reflect.apply(parser.parse, null, [

@@ -6,6 +6,35 @@ const options = {
   timeZone: "Asia/Dhaka",
 };
 
+it("preserves a range ending at the Unix epoch", () => {
+  const result = resolve(
+    {
+      clauses: [
+        {
+          date: { kind: "calendar", year: 1969, month: 12, day: 31 },
+          time: { start: { hour: 22, minute: 0 }, end: { hour: 0, minute: 0 } },
+        },
+      ],
+    },
+    { reference: "1969-12-30T12:00:00Z", timeZone: "UTC" },
+  );
+  expect(result.occurrences[0]).toMatchObject({
+    start: "1969-12-31T22:00:00+00:00",
+    end: "1970-01-01T00:00:00+00:00",
+  });
+});
+
+it("retains second-precision duration behavior for fractional references", () => {
+  const result = resolve(
+    { clauses: [{ duration: { amount: 2, unit: "hour" } }] },
+    { reference: "2026-09-09T12:00:00.500Z", timeZone: "UTC" },
+  );
+  expect(result.occurrences[0]).toMatchObject({
+    start: "2026-09-09T12:00:00+00:00",
+    end: "2026-09-09T14:00:00+00:00",
+  });
+});
+
 it("reports a recurrence search limit instead of returning a silently incomplete series", () => {
   const schedule: Schedule = {
     clauses: [{ recurrence: { freq: "yearly", interval: 100 } }],

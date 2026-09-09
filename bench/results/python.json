@@ -9,13 +9,13 @@
     {
       "library": "dateparser",
       "version": "1.4.3",
-      "initializationMs": 109.47900000610389,
-      "firstParseMs": 662.1786670002621,
+      "initializationMs": 109.75754199898802,
+      "firstParseMs": 668.232458003331,
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 3.644978998636361,
-        "p95Ms": 4.037457998492755
+        "p50Ms": 3.793042000324931,
+        "p95Ms": 4.130250003072433
       },
       "outputs": [
         {
@@ -148,13 +148,13 @@
     {
       "library": "parsedatetime",
       "version": "2.6",
-      "initializationMs": 3.2511669996893033,
-      "firstParseMs": 1.5905839973129332,
+      "initializationMs": 4.077125006006099,
+      "firstParseMs": 1.4822920056758448,
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.018979000742547214,
-        "p95Ms": 0.02300000051036477
+        "p50Ms": 0.0181875002454035,
+        "p95Ms": 0.018790989997796714
       },
       "outputs": [
         {
@@ -362,13 +362,13 @@
     {
       "library": "recurrent",
       "version": "0.4.1",
-      "initializationMs": 4.493417000048794,
-      "firstParseMs": 0.33604099007789046,
+      "initializationMs": 4.430083004990593,
+      "firstParseMs": 0.33495800744276494,
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.15429149789270014,
-        "p95Ms": 0.17029199807439
+        "p50Ms": 0.15018749400041997,
+        "p95Ms": 0.15562500630039722
       },
       "outputs": [
         {
@@ -501,13 +501,13 @@
     {
       "library": "timefhuman",
       "version": "0.1.5",
-      "initializationMs": 103.0286249879282,
-      "firstParseMs": 0.14537500101141632,
+      "initializationMs": 95.48429200367536,
+      "firstParseMs": 0.1345000055152923,
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.005354500899557024,
-        "p95Ms": 0.006750007742084563
+        "p50Ms": 0.0051249953685328364,
+        "p95Ms": 0.005374997272156179
       },
       "outputs": [
         {

@@ -1,5 +1,5 @@
 import { compile } from "./compile.js";
-import { createTagger } from "./tagger.js";
+import { createTagger, type TagResult } from "./tagger.js";
 import type { ParseResult, ParserOptions } from "./types.js";
 
 export * from "./types.js";
@@ -9,8 +9,7 @@ export { resolve } from "./resolve.js";
 export async function createParser(options: ParserOptions = {}) {
   const tagger = await createTagger({ backend: options.backend });
 
-  async function parse(text: string): Promise<ParseResult> {
-    const result = await tagger.tag(text);
+  function assemble(text: string, result: TagResult): ParseResult {
     const started = performance.now();
     const expressions = !result.unknownLabels
       ? compile(text, result.tokens, options)
@@ -44,9 +43,12 @@ export async function createParser(options: ParserOptions = {}) {
   }
 
   return {
-    parse,
-    parseMany(texts: string[]): Promise<ParseResult[]> {
-      return Promise.all(texts.map(parse));
+    async parse(text: string): Promise<ParseResult> {
+      return assemble(text, await tagger.tag(text));
+    },
+    async parseMany(texts: string[]): Promise<ParseResult[]> {
+      const predictions = await tagger.tagMany(texts);
+      return predictions.map((result, index) => assemble(texts[index], result));
     },
     dispose: tagger.dispose,
   };

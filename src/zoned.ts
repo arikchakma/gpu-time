@@ -16,12 +16,27 @@ interface ZonedInstant {
 
 const millisecondsPerDay = 86_400_000;
 const formatters = new Map<string, Intl.DateTimeFormat>();
+// Exact-second lookups only: never assume that an offset stays constant for a day.
+const civilCache = new Map<string, Civil>();
+const instantCache = new Map<string, ZonedInstant>();
+const isoCache = new Map<string, string>();
+const civilCacheLimit = 2048;
 
 export function utc(fields: CivilDate & Partial<Civil>): number {
-  const date = new Date(0);
-  date.setUTCFullYear(fields.year, fields.month - 1, fields.day);
-  date.setUTCHours(fields.hour ?? 0, fields.minute ?? 0, fields.second ?? 0, 0);
-  return date.getTime();
+  const year = Math.trunc(fields.year);
+  // Date.UTC interprets years 0–99 as 1900–1999. A Gregorian 400-year cycle
+  // avoids that special case while retaining month/day overflow behavior.
+  const earlyYear = year >= 0 && year < 100;
+  return (
+    Date.UTC(
+      earlyYear ? year + 400 : year,
+      fields.month - 1,
+      fields.day,
+      fields.hour ?? 0,
+      fields.minute ?? 0,
+      fields.second ?? 0,
+    ) - (earlyYear ? 146097 * millisecondsPerDay : 0)
+  );
 }
 
 export function fromUTC(epoch: number): Civil {
@@ -57,6 +72,9 @@ function getFormatter(timeZone: string): Intl.DateTimeFormat {
 }
 
 export function civil(epoch: number, timeZone: string): Civil {
+  const key = `${timeZone}:${Math.floor(Math.trunc(epoch) / 1000)}`;
+  const cached = civilCache.get(key);
+  if (cached) return { ...cached };
   const fields: Civil = {
     year: 0,
     month: 0,
@@ -79,6 +97,9 @@ export function civil(epoch: number, timeZone: string): Civil {
     }
   }
 
+  if (civilCache.size >= civilCacheLimit)
+    civilCache.delete(civilCache.keys().next().value!);
+  civilCache.set(key, { ...fields });
   return fields;
 }
 
@@ -90,6 +111,9 @@ export function offsetAt(epoch: number, timeZone: string): number {
 
 export function zonedToEpoch(fields: Civil, timeZone: string): ZonedInstant {
   const local = utc(fields);
+  const key = `${timeZone}:${local}`;
+  const cached = instantCache.get(key);
+  if (cached) return { ...cached };
   const offsets = new Set<number>();
 
   // Both sides of a transition matter, including half-hour and skipped-day changes.
@@ -104,17 +128,22 @@ export function zonedToEpoch(fields: Civil, timeZone: string): ZonedInstant {
     (epoch) => utc(civil(epoch, timeZone)) === local,
   );
 
+  let result: ZonedInstant;
   if (matches.length > 0) {
-    return {
+    result = {
       epochMs: matches[0],
       kind: matches.length > 1 ? "overlap" : "exact",
     };
+  } else {
+    const afterGap = candidates.find(
+      (epoch) => utc(civil(epoch, timeZone)) > local,
+    );
+    result = { epochMs: afterGap ?? candidates.at(-1)!, kind: "gap" };
   }
-
-  const afterGap = candidates.find(
-    (epoch) => utc(civil(epoch, timeZone)) > local,
-  );
-  return { epochMs: afterGap ?? candidates.at(-1)!, kind: "gap" };
+  if (instantCache.size >= civilCacheLimit)
+    instantCache.delete(instantCache.keys().next().value!);
+  instantCache.set(key, result);
+  return { ...result };
 }
 
 export function dayNumber(date: CivilDate): number {
@@ -124,7 +153,7 @@ export function dayNumber(date: CivilDate): number {
 }
 
 export function dayOfWeek(date: CivilDate): number {
-  return (new Date(utc(date)).getUTCDay() + 6) % 7;
+  return (((dayNumber(date) + 3) % 7) + 7) % 7;
 }
 
 export function daysInMonth(year: number, month: number): number {
@@ -167,8 +196,11 @@ function twoDigits(value: number): string {
 }
 
 export function iso(epoch: number, timeZone: string): string {
+  const key = `${timeZone}:${epoch}`;
+  const cached = isoCache.get(key);
+  if (cached !== undefined) return cached;
   const local = civil(epoch, timeZone);
-  const offsetMinutes = offsetAt(epoch, timeZone) / 60_000;
+  const offsetMinutes = (utc(local) - Math.floor(epoch / 1000) * 1000) / 60_000;
   const offsetSign = offsetMinutes < 0 ? "-" : "+";
   const offsetHours = twoDigits(Math.floor(Math.abs(offsetMinutes) / 60));
   const offsetRemainder = twoDigits(Math.abs(offsetMinutes) % 60);
@@ -178,7 +210,11 @@ export function iso(epoch: number, timeZone: string): string {
     .map(twoDigits)
     .join(":");
 
-  return `${date}T${time}${offsetSign}${offsetHours}:${offsetRemainder}`;
+  const result = `${date}T${time}${offsetSign}${offsetHours}:${offsetRemainder}`;
+  if (isoCache.size >= civilCacheLimit)
+    isoCache.delete(isoCache.keys().next().value!);
+  isoCache.set(key, result);
+  return result;
 }
 
 export function instant(text: string): number {

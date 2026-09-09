@@ -94,7 +94,7 @@ try {
           timeZone,
         },
         method:
-          "Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover native parsing (AST for gpu-time), excluding normalization, recurrence expansion, worker messaging and DOM. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.",
+          "Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover public parse calls, including gpu-time date resolution and recurrence previews, excluding worker messaging and DOM. No complete parse-result cache is used. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.",
         results,
       },
       null,

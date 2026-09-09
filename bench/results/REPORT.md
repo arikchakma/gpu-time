@@ -8,19 +8,19 @@ Browser: 152.0.7977.83. Hardware: Apple M4 Max. Reference: 2026-09-09T12:00:00+0
 
 ## Browser parsing time
 
-Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover native parsing (AST for gpu-time), excluding normalization, recurrence expansion, worker messaging and DOM. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.
+Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover public parse calls, including gpu-time date resolution and recurrence previews, excluding worker messaging and DOM. No complete parse-result cache is used. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.
 
 Each batch size has one warmup and three measurements. The table reports median duration. Failures count thrown exceptions in one trial; partial parses and empty native results can still be fast.
 
 | Library | Single p50 (µs) | Single p95 (µs) | 1,000 inputs (ms) | 10,000 inputs (ms) | Throws / 10,000 | Single returned output |
 |---|---:|---:|---:|---:|---:|---|
-| gpu-time CPU | 170.0 | 210.0 | 180.50 | 1773.44 | 0 | Yes |
-| gpu-time WebGPU | 615.0 | 730.0 | 108.67 | 1061.17 | 0 | Yes |
-| Chrono (English) | 10.0 | 25.0 | 9.99 | 90.17 | 0 | Yes |
-| Compromise + dates | 1370.0 | 1820.0 | 603.11 | 6115.43 | 0 | Yes |
-| rrule | <5 | 5.0 | 1.51 | 13.55 | 2500 | No |
-| Microsoft Recognizers | 585.0 | 730.0 | 587.77 | 5880.78 | 0 | Yes |
-| Later | <5 | 5.0 | 0.90 | 7.05 | 0 | No |
+| gpu-time CPU | 145.0 | 175.0 | 84.16 | 813.42 | 0 | Yes |
+| gpu-time WebGPU | 315.0 | 665.0 | 11.64 | 86.66 | 0 | Yes |
+| Chrono (English) | 15.0 | 25.0 | 9.48 | 86.47 | 0 | Yes |
+| Compromise + dates | 1405.0 | 1850.0 | 597.57 | 6260.70 | 0 | Yes |
+| rrule | <5 | 5.0 | 1.55 | 13.53 | 2500 | No |
+| Microsoft Recognizers | 560.0 | 770.0 | 602.78 | 5974.81 | 0 | Yes |
+| Later | <5 | 5.0 | 0.88 | 7.11 | 0 | No |
 
 A zero-duration sample is below the isolated browser timer's 5 µs resolution, displayed as <5. Native caches remain enabled. Returning output does not imply correctness.
 
@@ -59,10 +59,10 @@ In-process native parsing, ten warmups and 100 samples. Exceptions are captured,
 
 | Library | Version | Single p50 (µs) | Single p95 (µs) |
 |---|---|---:|---:|
-| dateparser | 1.4.3 | 3645.0 | 4037.5 |
-| parsedatetime | 2.6 | 19.0 | 23.0 |
-| recurrent | 0.4.1 | 154.3 | 170.3 |
-| timefhuman | 0.1.5 | 5.4 | 6.8 |
+| dateparser | 1.4.3 | 3793.0 | 4130.3 |
+| parsedatetime | 2.6 | 18.2 | 18.8 |
+| recurrent | 0.4.1 | 150.2 | 155.6 |
+| timefhuman | 0.1.5 | 5.1 | 5.4 |
 
 ## Browser bundle size
 
@@ -72,7 +72,7 @@ All gpu-time runtime exports, its resolver and trained weights are included. Dif
 
 | Library | Minified bytes | Gzip bytes | Brotli bytes |
 |---|---:|---:|---:|
-| gpu-time | 80618 | 38720 | 33106 |
+| gpu-time | 82205 | 39367 | 33734 |
 | Chrono (English) | 45491 | 13258 | 11848 |
 | Compromise + dates | 487957 | 179679 | 156071 |
 | rrule | 45944 | 13663 | 12380 |
@@ -266,7 +266,7 @@ Normalized occurrences/rules are shown when the adapter can represent them. Othe
 | gpu-time CPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | gpu-time WebGPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | Chrono (English) | `{"occurrences":[{"start":"2026-09-09T06:00:00.000Z","end":"2026-09-10T03:00:00.000Z"}],"rrules":null}` |
-| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:47:17.989+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":47},"unit":"time"}],"rrules":null}` |
+| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:58:10.035+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":58},"unit":"time"}],"rrules":null}` |
 | rrule | `"Error: expected every but found friday"` |
 | Microsoft Recognizers | `[{"start":0,"end":15,"resolution":{"values":[{"timex":"(T09,T12,PT3H)","type":"timerange","start":"09:00:00","end":"12:00:00"}]},"text":"from 9am to noon","typeName":"datetimeV2.timerange"}]` |
 | Later | `{"schedules":[],"exceptions":[],"error":0}` |

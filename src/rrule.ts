@@ -1,5 +1,5 @@
-import type { Clause, DateSpec, Occurrence } from "./types.js";
-import type { ResolutionContext } from "./occurrence.js";
+import type { Clause, DateSpec } from "./types.js";
+import type { ResolutionContext, NumericOccurrence } from "./occurrence.js";
 import {
   hoursForRule,
   expandRecurrence,
@@ -21,7 +21,7 @@ function exceptionOccurrences(
   clause: Clause,
   exceptions: DateSpec[],
   context: ResolutionContext,
-): Occurrence[] {
+): NumericOccurrence[] {
   if (!exceptions.length) return [];
   const reference = civil(context.reference, context.options.timeZone);
   let horizon = -Infinity;
@@ -53,11 +53,11 @@ export function recurrenceRule(
     context.options.weekStart,
   );
   const timeZone = context.options.timeZone;
-  const anchor = civil(Date.parse(first.start), timeZone);
-  const property = (name: string, value: string) =>
+  const anchor = civil(first.start, timeZone);
+  const property = (name: string, epoch: number) =>
     first.allDay
-      ? `${name};VALUE=DATE:${localValue(value, true)}`
-      : `${name};TZID=${timeZone}:${localValue(value, false)}`;
+      ? `${name};VALUE=DATE:${localValue(iso(epoch, timeZone), true)}`
+      : `${name};TZID=${timeZone}:${localValue(iso(epoch, timeZone), false)}`;
 
   if (clause.shift)
     throw new RecurrenceExportError(
@@ -120,11 +120,13 @@ export function recurrenceRule(
   }
 
   const lines = [property("DTSTART", first.start)];
-  if (first.end) lines.push(property("DTEND", first.end));
+  if (first.end !== undefined) lines.push(property("DTEND", first.end));
   lines.push(`RRULE:${parts.join(";")}`);
   if (exceptions.length) {
     const values = exceptions
-      .map((occurrence) => localValue(occurrence.start, first.allDay))
+      .map((occurrence) =>
+        localValue(iso(occurrence.start, timeZone), first.allDay),
+      )
       .join(",");
     const type = first.allDay ? "VALUE=DATE" : `TZID=${timeZone}`;
     lines.push(`EXDATE;${type}:${values}`);

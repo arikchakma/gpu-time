@@ -1,4 +1,5 @@
 import { expect, it } from "vitest";
+import { createHash } from "node:crypto";
 import { tokenize, featureRows } from "../src/tokenizer.js";
 it("preserves every character and splits attached clock components", () => {
   const text = "Sat Sun 1pm-8pm Mon 10pm-12am";
@@ -58,6 +59,7 @@ it("round-trips 10,000 varied Unicode strings with contiguous source offsets", (
     return seed / 2 ** 32;
   }
 
+  const hash = createHash("sha256");
   for (let sample = 0; sample < 10_000; sample++) {
     const length = Math.floor(random() * 40);
     const text = Array.from(
@@ -65,6 +67,7 @@ it("round-trips 10,000 varied Unicode strings with contiguous source offsets", (
       () => alphabet[Math.floor(random() * alphabet.length)],
     ).join("");
     const tokens = tokenize(text);
+    hash.update(JSON.stringify(tokens));
     expect(tokens.map((token) => token.text).join("")).toBe(text);
     let offset = 0;
     for (const token of tokens) {
@@ -77,4 +80,8 @@ it("round-trips 10,000 varied Unicode strings with contiguous source offsets", (
     }
     expect(offset).toBe(text.length);
   }
+  // Captured from the original tokenizer before the performance refactor.
+  expect(hash.digest("hex")).toBe(
+    "26ba3e2881c34406cd23ccd095b55e06c1fe34987fb720e417afc65adcde2e7a",
+  );
 });

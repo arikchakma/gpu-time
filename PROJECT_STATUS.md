@@ -2,6 +2,14 @@
 
 The approved direct-results flow is implemented and trained. The broader release is not complete.
 
+## Current performance work
+
+The requested sub-100 ms WebGPU batch target is met: **86.7 ms for 10,000 inputs**, down from 188.2 ms in the first optimization and 1,061.2 ms originally. Chrono measures 86.5 ms on the same run and workload. CPU fallback measures 813.4 ms and remains slower. These are warm benchmark medians, with different native output contracts across libraries.
+
+The model is unchanged. The runtime uses real batch processing, shared calendar context, bounded exact conversion/format caches, cached word-level features with fresh positional context, numeric occurrence timestamps until serialization, and precomputed weekly anchors. No complete parse-result cache is used. The larger-GPU-batch and output-plane experiments were discarded rather than retained without evidence.
+
+All 710 tests pass, as do CPU/WebGPU and installed-package checks. A 10,000-string Unicode hash preserves the exact feature encoding. The 192-case recurrence differential remains identical, and 1,000 distinct inputs retain their output hash (8.2 ms WebGPU in that focused profile). Benchmark tables and the playground have been refreshed. See `bench/PERFORMANCE.md` and `bench/results/optimization.json`.
+
 ## Approved direction
 
 The user approved: text -> small model -> normalize temporal values -> resolve with caller reference/timezone -> dates, ranges and recurrence results. The public API is `parse(text, { reference, timeZone, ... })`. It returns `occurrences`, `rrules`, diagnostics and preview metadata; no public AST or token-label output. Reusable parsers and batch calls use the same context argument. This supersedes the earlier AST-focused public API and the pending spans-versus-dates question.
@@ -33,7 +41,7 @@ Before changing weights, distinguish data errors, composition errors, resolver p
 - Complete public entry: 33,114 bytes Brotli. The 30,000-byte size gate remains unmet and optimization is deferred. Weight module: 14,913 bytes Brotli.
 - Benchmark REPORT.md and summary.json now use the selected model and direct-results public API. All five JavaScript and four Python baselines were rerun; native output contracts still differ.
 
-- The full suite has 695 passing tests, and TypeScript checking passes. CPU/WebGPU checks from the selected export cover 10,000 sequences and the minified package shader matches source inference on 1,000 sequences.
+- The full suite has 710 passing tests, and TypeScript checking passes. CPU/WebGPU checks from the selected export cover 10,000 sequences and the minified package shader matches source inference on 1,000 sequences.
 - Recurrence expansion now raises an explicit error when its 100,000-day search is exhausted, rather than returning a silently incomplete series. A finite count completed on the final scan step still succeeds; both behaviors have regression tests.
 - The fixed prose corpus improved from 16,662/20,000 to 19,977/20,000 with matching source SHA-256. See `training/prose-before.json` and `training/prose-after.json`. The model had missed ordinary background prose and its casing; augmentation now covers both temporal and background tokens. Duration renderings also include 'for the next N units'.
 - A new semantic test checks that all 40 clauses survive parsing across multiple inference windows.

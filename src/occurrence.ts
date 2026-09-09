@@ -1,20 +1,23 @@
-import type {
-  Clause,
-  Duration,
-  Occurrence,
-  ResolveOptions,
-  Shift,
-} from "./types.js";
+import type { Clause, Duration, ResolveOptions, Shift } from "./types.js";
 import type { LocalPeriod } from "./calendar.js";
 import { resolveTime } from "./clock.js";
 import {
   addDays,
   addMonths,
   civil,
-  iso,
   zonedToEpoch,
   type Civil,
 } from "./zoned.js";
+
+export interface NumericOccurrence {
+  start: number;
+  end?: number;
+  allDay: boolean;
+  clause: number;
+}
+
+// Public timestamps have second precision. Keep the same precision internally.
+const seconds = (epoch: number) => Math.floor(epoch / 1000) * 1000;
 
 export interface ResolutionContext {
   reference: number;
@@ -96,7 +99,7 @@ export function resolveOccurrence(
   clause: Clause,
   period: LocalPeriod,
   context: ResolutionContext,
-): Occurrence {
+): NumericOccurrence {
   const { reference, options, clauseIndex } = context;
   const usesReferenceClock =
     !clause.time &&
@@ -128,11 +131,8 @@ export function resolveOccurrence(
     ? { date: period.start, start: reference }
     : futureStart(period.start, startSeconds, step, context);
 
-  const occurrence: Occurrence = {
-    start: iso(
-      applyShift(start, clause.shift, options.timeZone),
-      options.timeZone,
-    ),
+  const occurrence: NumericOccurrence = {
+    start: seconds(applyShift(start, clause.shift, options.timeZone)),
     allDay: !clause.time && !usesReferenceClock && !impliedClock,
     clause: clauseIndex,
   };
@@ -141,18 +141,12 @@ export function resolveOccurrence(
     const crossesMidnight = endSeconds < startSeconds;
     const endDate = crossesMidnight ? addDays(date, 1) : date;
     const end = atTime(endDate, endSeconds, options.timeZone);
-    occurrence.end = iso(
-      applyShift(end, clause.shift, options.timeZone),
-      options.timeZone,
-    );
+    occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }
 
   if (endSeconds === undefined && period.end) {
     const end = atTime(period.end, secondsOfDay(period.end), options.timeZone);
-    occurrence.end = iso(
-      applyShift(end, clause.shift, options.timeZone),
-      options.timeZone,
-    );
+    occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }
 
   if (clause.shift?.endAmount !== undefined) {
@@ -161,29 +155,23 @@ export function resolveOccurrence(
       { ...clause.shift, amount: clause.shift.endAmount },
       options.timeZone,
     );
-    const shiftedStart = Date.parse(occurrence.start);
-    occurrence.start = iso(
-      Math.min(shiftedStart, shiftedEnd),
-      options.timeZone,
-    );
-    occurrence.end = iso(Math.max(shiftedStart, shiftedEnd), options.timeZone);
+    const shiftedStart = occurrence.start;
+    occurrence.start = seconds(Math.min(shiftedStart, shiftedEnd));
+    occurrence.end = seconds(Math.max(shiftedStart, shiftedEnd));
   }
 
   if (clause.duration) {
-    if (occurrence.end)
+    if (occurrence.end !== undefined)
       throw new RangeError("Use a duration or an explicit end, not both.");
     const end = addDuration(
-      Date.parse(occurrence.start),
+      occurrence.start,
       clause.duration,
       options.timeZone,
     );
-    occurrence.end = iso(end, options.timeZone);
+    occurrence.end = seconds(end);
   }
 
-  if (
-    occurrence.end &&
-    Date.parse(occurrence.end) <= Date.parse(occurrence.start)
-  ) {
+  if (occurrence.end !== undefined && occurrence.end <= occurrence.start) {
     throw new RangeError("The resolved end must be after the start.");
   }
   return occurrence;

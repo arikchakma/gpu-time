@@ -9,7 +9,7 @@
     "reference": "2026-09-09T12:00:00+06:00",
     "timeZone": "Asia/Dhaka"
   },
-  "method": "Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover native parsing (AST for gpu-time), excluding normalization, recurrence expansion, worker messaging and DOM. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.",
+  "method": "Dedicated worker per library; ten warmups; 100 single-input samples; fixed repeated four-input batches. Timings cover public parse calls, including gpu-time date resolution and recurrence previews, excluding worker messaging and DOM. No complete parse-result cache is used. Initialization includes local development module loading. Different output contracts make this an experimental workload comparison, not an interchangeable-feature ranking.",
   "limitations": [
     "Native outputs differ: gpu-time returns resolved dates, ranges and recurrence rules; other libraries return components, dates, TIMEX or recurrence constraints. Speed is not feature equivalence.",
     "The four-input batch workload includes unsupported inputs. Reported thrown-error counts do not include silent partial parses or abstentions.",
@@ -24,29 +24,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.16999998688697815,
-        "p95Ms": 0.21000000834465027
+        "p50Ms": 0.14499999582767487,
+        "p95Ms": 0.17500001192092896
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 180.50499999523163,
-          "p95Ms": 181.41999998688698,
+          "ms": 84.16000001132488,
+          "p95Ms": 85.04999999701977,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 5540.012742175656
+          "inputsPerSecond": 11882.129275967638
         },
         {
           "size": 10000,
-          "ms": 1773.4399999976158,
-          "p95Ms": 1778.6850000023842,
+          "ms": 813.4150000065565,
+          "p95Ms": 822.1149999946356,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 5638.758570920609
+          "inputsPerSecond": 12293.847543897513
         }
       ],
-      "initializationMs": 16.020000010728836,
-      "firstParseMs": 8.474999994039536
+      "initializationMs": 13.909999996423721,
+      "firstParseMs": 9.049999997019768
     },
     {
       "library": "gpu-time-webgpu",
@@ -54,29 +54,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.614999994635582,
-        "p95Ms": 0.7299999892711639
+        "p50Ms": 0.3149999976158142,
+        "p95Ms": 0.6650000065565109
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 108.67499999701977,
-          "p95Ms": 109.89499999582767,
+          "ms": 11.640000000596046,
+          "p95Ms": 12.060000002384186,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 9201.748332435458
+          "inputsPerSecond": 85910.65291656299
         },
         {
           "size": 10000,
-          "ms": 1061.1749999970198,
-          "p95Ms": 1063.1950000077486,
+          "ms": 86.65999999642372,
+          "p95Ms": 92.9050000011921,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 9423.51638516558
+          "inputsPerSecond": 115393.49181182413
         }
       ],
-      "initializationMs": 8.42000000178814,
-      "firstParseMs": 5.375
+      "initializationMs": 8.190000012516975,
+      "firstParseMs": 4.5899999886751175
     },
     {
       "library": "chrono",
@@ -84,29 +84,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.01000000536441803,
-        "p95Ms": 0.025000005960464478
+        "p50Ms": 0.014999985694885254,
+        "p95Ms": 0.024999991059303284
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 9.99499998986721,
-          "p95Ms": 12.305000007152557,
+          "ms": 9.480000004172325,
+          "p95Ms": 9.689999997615814,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 100050.02511393555
+          "inputsPerSecond": 105485.23202108452
         },
         {
           "size": 10000,
-          "ms": 90.17000000178814,
-          "p95Ms": 91.07999999821186,
+          "ms": 86.47499999403954,
+          "p95Ms": 87.82500000298023,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 110901.63025176547
+          "inputsPerSecond": 115640.35849308205
         }
       ],
-      "initializationMs": 162.77500000596046,
-      "firstParseMs": 9.894999995827675
+      "initializationMs": 149.63499999046326,
+      "firstParseMs": 9.38000001013279
     },
     {
       "library": "compromise",
@@ -114,29 +114,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 1.3700000047683716,
-        "p95Ms": 1.8200000077486038
+        "p50Ms": 1.405000001192093,
+        "p95Ms": 1.8499999940395355
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 603.109999999404,
-          "p95Ms": 620.7900000065565,
+          "ms": 597.5700000077486,
+          "p95Ms": 611.7699999958277,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1658.0723251164602
+          "inputsPerSecond": 1673.4441153120692
         },
         {
           "size": 10000,
-          "ms": 6115.434999987483,
-          "p95Ms": 6271.324999988079,
+          "ms": 6260.695000007749,
+          "p95Ms": 6263.659999996424,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1635.2066533321781
+          "inputsPerSecond": 1597.2667571232305
         }
       ],
-      "initializationMs": 229.3149999976158,
-      "firstParseMs": 17.390000000596046
+      "initializationMs": 230.62000000476837,
+      "firstParseMs": 17.825000002980232
     },
     {
       "library": "rrule",
@@ -150,23 +150,23 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 1.510000005364418,
-          "p95Ms": 1.5349999964237213,
+          "ms": 1.5549999922513962,
+          "p95Ms": 1.6200000047683716,
           "samples": 3,
           "failures": 250,
-          "inputsPerSecond": 662251.6532764273
+          "inputsPerSecond": 643086.8199247749
         },
         {
           "size": 10000,
-          "ms": 13.54500000178814,
-          "p95Ms": 14.480000004172325,
+          "ms": 13.530000001192093,
+          "p95Ms": 14.959999993443489,
           "samples": 3,
           "failures": 2500,
-          "inputsPerSecond": 738279.8079497861
+          "inputsPerSecond": 739098.3000087898
         }
       ],
-      "initializationMs": 184.04999999701977,
-      "firstParseMs": 0.23999999463558197
+      "initializationMs": 186.57999999821186,
+      "firstParseMs": 0.25999999046325684
     },
     {
       "library": "recognizers",
@@ -174,29 +174,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.5849999934434891,
-        "p95Ms": 0.7299999892711639
+        "p50Ms": 0.5600000023841858,
+        "p95Ms": 0.7699999958276749
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 587.7699999958277,
-          "p95Ms": 592.4350000023842,
+          "ms": 602.7849999964237,
+          "p95Ms": 610.3699999898672,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1701.3457645117965
+          "inputsPerSecond": 1658.9662981094966
         },
         {
           "size": 10000,
-          "ms": 5880.7750000059605,
-          "p95Ms": 5895.364999994636,
+          "ms": 5974.814999997616,
+          "p95Ms": 5986.604999989271,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1700.4561473598064
+          "inputsPerSecond": 1673.691988790279
         }
       ],
-      "initializationMs": 309.80500000715256,
-      "firstParseMs": 63.435000002384186
+      "initializationMs": 313.9699999988079,
+      "firstParseMs": 62.17000000178814
     },
     {
       "library": "later",
@@ -210,31 +210,31 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 0.8999999910593033,
-          "p95Ms": 0.9000000059604645,
+          "ms": 0.8800000101327896,
+          "p95Ms": 0.9050000011920929,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1111111.1221490086
+          "inputsPerSecond": 1136363.6232789392
         },
         {
           "size": 10000,
-          "ms": 7.054999992251396,
-          "p95Ms": 7.115000009536743,
+          "ms": 7.1099999994039536,
+          "p95Ms": 7.354999989271164,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1417434.4452137686
+          "inputsPerSecond": 1406469.761018048
         }
       ],
-      "initializationMs": 250.01999999582767,
-      "firstParseMs": 0.2900000065565109
+      "initializationMs": 246.00999999046326,
+      "firstParseMs": 0.2750000059604645
     }
   ],
   "sizes": [
     {
       "library": "gpu-time",
-      "bytes": 80618,
-      "gzipBytes": 38720,
-      "brotliBytes": 33106,
+      "bytes": 82205,
+      "gzipBytes": 39367,
+      "brotliBytes": 33734,
       "name": "gpu-time"
     },
     {
