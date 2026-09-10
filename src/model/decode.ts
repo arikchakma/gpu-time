@@ -10,6 +10,7 @@ export interface EncodedWeights {
     offset: number;
     length: number;
     scale: number;
+    rowScales?: string;
     shape: readonly number[];
   }[];
 }
@@ -33,12 +34,25 @@ export function decodeWeights(
       segment.scale <= 0
     )
       throw new Error("Invalid model tensor metadata.");
-    for (let index = 0; index < segment.length; index++) {
-      const code = codes[encoded.q.charCodeAt(offset + index)];
-      if (code === undefined || code > 63)
-        throw new Error("Invalid int6 model data.");
-      const value = code & 1 ? -(code + 1) / 2 : code / 2;
-      values[offset + index] = value * segment.scale;
+    const rows = segment.rowScales?.length ?? 1;
+    const width = segment.length / rows;
+    if (!Number.isInteger(width) || rows < 1)
+      throw new Error("Invalid model row scale.");
+    for (let row = 0; row < rows; row++) {
+      const exponent = segment.rowScales
+        ? segment.rowScales.charCodeAt(row) - 65
+        : 0;
+      if (exponent < 0 || exponent > 16)
+        throw new Error("Invalid model row scale.");
+      const scale = segment.scale * 2 ** -exponent;
+      const start = offset + row * width;
+      for (let index = start; index < start + width; index++) {
+        const code = codes[encoded.q.charCodeAt(index)];
+        if (code === undefined || code > 63)
+          throw new Error("Invalid quantized model data.");
+        const value = code & 1 ? -(code + 1) / 2 : code / 2;
+        values[index] = value * scale;
+      }
     }
     tensors.set(segment.name, values.subarray(offset, offset + segment.length));
     offset += segment.length;

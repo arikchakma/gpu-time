@@ -47,7 +47,7 @@ root.innerHTML = `
       </div>
     </section>
     <details class="research" id="benchmarks"><summary><span>Model & benchmarks</span><span class="summary-meta">${report.parameters.toLocaleString()} parameters ${icon("chevron")}</span></summary><div class="research-content">
-    <section class="model-card"><div><p class="eyebrow">THE TRAINED NETWORK</p><h2>Model details</h2></div><dl><div><dt>Parameters</dt><dd>${report.parameters.toLocaleString()}</dd></div><div><dt>Weight precision</dt><dd>int6</dd></div><div><dt>Weights, Brotli</dt><dd>${(report.moduleBrotliBytes / 1000).toFixed(1)} KB</dd></div><div><dt>Checkpoint training</dt><dd>${(report.tokensSeenAtCheckpoint / 1e6).toFixed(1)}M tokens</dd></div></dl></section>
+    <section class="model-card"><div><p class="eyebrow">THE TRAINED NETWORK</p><h2>Model details</h2></div><dl><div><dt>Parameters</dt><dd>${report.parameters.toLocaleString()}</dd></div><div><dt>Weight precision</dt><dd>int${report.quantizationBits}</dd></div><div><dt>Weights, Brotli</dt><dd>${(report.moduleBrotliBytes / 1000).toFixed(1)} KB</dd></div><div><dt>Checkpoint training</dt><dd>${(report.tokensSeenAtCheckpoint / 1e6).toFixed(1)}M tokens</dd></div></dl></section>
     <section class="measurements"><div><p class="eyebrow">MEASURED TOKEN LABEL AGREEMENT</p><h2>Validation</h2><p>These scores measure synthetic token labels. All 25 adversarial development schedules pass, and 10,000 inputs match between CPU and WebGPU. Broader accuracy evaluation is still in progress.</p></div><div class="bars">${[
       ["Same-template validation", report.metrics.validation.tokenAccuracy],
       ["Held-out surface templates", report.metrics.heldout.tokenAccuracy],

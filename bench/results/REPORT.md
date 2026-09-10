@@ -14,13 +14,13 @@ Each batch size has one warmup and three measurements. The table reports median 
 
 | Library | Single p50 (µs) | Single p95 (µs) | 1,000 inputs (ms) | 10,000 inputs (ms) | Throws / 10,000 | Single returned output |
 |---|---:|---:|---:|---:|---:|---|
-| gpu-time CPU | 140.0 | 170.0 | 84.56 | 821.64 | 0 | Yes |
-| gpu-time WebGPU | 315.0 | 695.0 | 10.87 | 96.18 | 0 | Yes |
-| Chrono (English) | 10.0 | 25.0 | 9.81 | 88.49 | 0 | Yes |
-| Compromise + dates | 1385.0 | 1780.0 | 593.33 | 5988.09 | 0 | Yes |
-| rrule | <5 | 5.0 | 1.53 | 13.49 | 2500 | No |
-| Microsoft Recognizers | 565.0 | 735.0 | 593.31 | 5895.89 | 0 | Yes |
-| Later | <5 | 5.0 | 0.84 | 6.89 | 0 | No |
+| gpu-time CPU | 105.0 | 175.0 | 73.77 | 726.77 | 0 | Yes |
+| gpu-time WebGPU | 305.0 | 605.0 | 10.87 | 80.33 | 0 | Yes |
+| Chrono (English) | 15.0 | 30.0 | 9.53 | 91.59 | 0 | Yes |
+| Compromise + dates | 1460.0 | 1930.0 | 622.83 | 6183.99 | 0 | Yes |
+| rrule | <5 | 5.0 | 1.53 | 13.35 | 2500 | No |
+| Microsoft Recognizers | 560.0 | 725.0 | 616.98 | 5893.13 | 0 | Yes |
+| Later | <5 | 5.0 | 0.86 | 6.97 | 0 | No |
 
 A zero-duration sample is below the isolated browser timer's 5 µs resolution, displayed as <5. Native caches remain enabled. Returning output does not imply correctness.
 
@@ -59,10 +59,10 @@ In-process native parsing, ten warmups and 100 samples. Exceptions are captured,
 
 | Library | Version | Single p50 (µs) | Single p95 (µs) |
 |---|---|---:|---:|
-| dateparser | 1.4.3 | 3739.5 | 3986.7 |
-| parsedatetime | 2.6 | 18.7 | 19.4 |
-| recurrent | 0.4.1 | 151.6 | 163.3 |
-| timefhuman | 0.1.5 | 5.3 | 5.6 |
+| dateparser | 1.4.3 | 4155.1 | 4515.4 |
+| parsedatetime | 2.6 | 18.5 | 19.8 |
+| recurrent | 0.4.1 | 152.6 | 166.0 |
+| timefhuman | 0.1.5 | 5.3 | 5.9 |
 
 ## Browser bundle size
 
@@ -72,7 +72,7 @@ All gpu-time runtime exports, its resolver and trained weights are included. Dif
 
 | Library | Minified bytes | Gzip bytes | Brotli bytes |
 |---|---:|---:|---:|
-| gpu-time | 87619 | 41229 | 35419 |
+| gpu-time | 87370 | 41379 | 35562 |
 | Chrono (English) | 45491 | 13258 | 11848 |
 | Compromise + dates | 487957 | 179679 | 156071 |
 | rrule | 45944 | 13663 | 12380 |
@@ -266,7 +266,7 @@ Normalized occurrences/rules are shown when the adapter can represent them. Othe
 | gpu-time CPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | gpu-time WebGPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | Chrono (English) | `{"occurrences":[{"start":"2026-09-09T06:00:00.000Z","end":"2026-09-10T03:00:00.000Z"}],"rrules":null}` |
-| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:30:00.337+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":30},"unit":"time"}],"rrules":null}` |
+| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:35:09.617+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":35},"unit":"time"}],"rrules":null}` |
 | rrule | `"Error: expected every but found friday"` |
 | Microsoft Recognizers | `[{"start":0,"end":15,"resolution":{"values":[{"timex":"(T09,T12,PT3H)","type":"timerange","start":"09:00:00","end":"12:00:00"}]},"text":"from 9am to noon","typeName":"datetimeV2.timerange"}]` |
 | Later | `{"schedules":[],"exceptions":[],"error":0}` |

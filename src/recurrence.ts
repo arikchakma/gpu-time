@@ -178,11 +178,7 @@ function candidate(
       }
     }
     // The recurrence chooses the date; one-off weekday roll-forward must not run again.
-    return resolveOccurrence(
-      { ...event, date: undefined },
-      { start: date },
-      { ...context, recurring: true },
-    );
+    return resolveOccurrence(event, { start: date }, context);
   } catch (error) {
     if (error instanceof NonexistentTimeError) return;
     throw error;
@@ -210,6 +206,9 @@ export function expandRecurrence(
   )
     throw new RangeError("Recurrence count must be a positive integer.");
 
+  // Normalize these once for the whole series, rather than once per occurrence.
+  clause = { ...clause, date: undefined };
+  context = { ...context, recurring: true };
   const { reference, options } = context;
   const localReference = civil(reference, options.timeZone);
   const requested = rule.start
@@ -309,7 +308,8 @@ export function expandRecurrence(
     if (dayNumber(date) > lastDay) break;
     if (!matches(date, anchor, rule, anchorWeek)) continue;
 
-    const occurrence = candidate(clause, date, context, generatedClock);
+    const occurrence =
+      offset === 0 ? first : candidate(clause, date, context, generatedClock);
     if (!occurrence) continue;
     const start = occurrence.start;
     if (

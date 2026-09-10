@@ -1,4 +1,5 @@
 import { expect, it, vi } from "vitest";
+import { Role } from "../src/labels.js";
 import { createTagger } from "../src/tagger.js";
 
 vi.mock("../src/compile.js", () => {
@@ -21,8 +22,8 @@ it("returns source-aligned predictions without interpreting calendar values", as
         label: token.label,
       })),
     ).toEqual([
-      { text: "27", start: 0, end: 2, label: "HOUR" },
-      { text: "pm", start: 2, end: 4, label: "MERIDIEM" },
+      { text: "27", start: 0, end: 2, label: Role.HOUR },
+      { text: "pm", start: 2, end: 4, label: Role.MERIDIEM },
     ]);
     expect(result.unknownLabels).toBe(false);
     expect(result).not.toHaveProperty("expressions");

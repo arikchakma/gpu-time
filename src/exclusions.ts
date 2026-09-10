@@ -16,10 +16,13 @@ export function excludedWeekdays(spec: DateSpec): Weekday[] | undefined {
   }
 }
 
+const noExclusions = () => false;
+
 export function exclusionFilter(
   exceptions: DateSpec[],
   context: ResolutionContext,
 ): (date: Civil) => boolean {
+  if (exceptions.length === 0) return noExclusions;
   const reference = civil(context.reference, context.options.timeZone);
   const patterns = new Set<Weekday>();
   const periods: { start: number; end: number }[] = [];

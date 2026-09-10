@@ -2,6 +2,12 @@
 
 The public date/range API and the approved natural-language additions are implemented and trained. The broader release remains experimental.
 
+## Size and runtime optimization
+
+The committed 6-bit model remains selected. Smaller 4-bit candidates were rejected after individual regressions, including incorrect grouping in a playground case. A candidate was temporarily shown in the playground and then rolled back. All 25 playground examples are now included in the automated model gate.
+
+Runtime changes retain the original weights: numeric internal roles, bounded embedding caching, reusable CPU workspaces, four GPU scratch buffers instead of seven, and fewer calendar allocations. The package excludes duplicate internal bundles. Balanced minification preserves CPU throughput. Benchmarks reuse existing evaluation corpora unless `--refresh-corpus` is explicitly supplied; changing training renderers must not silently change comparison inputs.
+
 ## Current scope
 
 Text -> neural language recognition -> TypeScript value normalization -> dates, ranges and recurrence rules. The caller supplies reference/timezone. There is no public AST or token-label output, and no timezone role in the model.
@@ -18,15 +24,15 @@ The September 9 scope approval adds spoken clocks, fractional clock expressions,
 
 ## Verified results
 
-- 761 tests pass, including the original 710 checks and 51 added checks covering new language, calendar composition and regressions. TypeScript passes.
+- 790 tests pass, including the original 710 checks and 80 added checks covering new language, calendar composition and regressions. TypeScript passes.
 - 18/18 packaged public-result fixtures and all 25 adversarial schedules pass.
 - Original generated interpretations: 4996/5000. New generated phrasing: 997/1000. All renderer/oracle checks pass. Both sets share rendering families with training and are development metrics.
 - The separate 1,000-case unseen sentence-frame evaluation scores 511/1000 under strict whole-expression equality. Many failures contain the correct temporal result plus a false temporal interpretation in surrounding prose. This is a real remaining limitation; it is not omitted from the report or used as an independent success claim.
 - Microsoft development agreement: 156/563 (previously 121/563). All 134 grouped Microsoft test cases remain reserved. Policy differences remain failures in the primary score.
 - CPU/WebGPU parity covers 10,000 sequences, 512 direct PyTorch fixtures, and 1,000 source-versus-packaged shader sequences.
 - The full benchmark, installed-package smoke check, checkpoint provenance audit and production playground build pass. Live UI checks pass for 25 adversarial and seven new natural-language cases, with WebGPU, no page errors and no mobile overflow.
-- Warm 10,000-input medians: WebGPU 96.2 ms, CPU 821.6 ms, Chrono 88.5 ms. WebGPU remains below the requested 100 ms target on this workload. Other parsers have different output contracts. No complete parse-result cache is used.
-- Public bundle: 35,419 bytes Brotli; weights: 14,995 bytes Brotli. The existing 30,000-byte release gate remains unmet.
+- Warm 10,000-input medians: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. WebGPU remains below the requested 100 ms target on this workload. Other parsers have different output contracts. No complete parse-result cache is used.
+- Public bundle: 35,058 bytes Brotli; weights: 14,995 bytes Brotli. The existing 30,000-byte release gate remains unmet.
 
 The generator also normalizes ordinal suffix spelling and the midnight meaning of `twelve at night`. These value/rendering corrections do not change model role supervision; exact training reproduction uses the saved run sources.
 

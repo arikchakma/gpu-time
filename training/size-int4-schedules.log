@@ -1,0 +1,70 @@
+{"stage": "preparing-data", "run": "size-int4-schedules", "device": "mps", "samplesPerEpoch": 300000}
+{"epoch": 1, "batch": 1, "batches": 294, "loss": 0.3893665373325348, "qat": true, "tokensSeen": 14984}
+{"epoch": 1, "batch": 51, "batches": 294, "loss": 0.38198402523994446, "qat": true, "tokensSeen": 789921}
+{"epoch": 1, "batch": 101, "batches": 294, "loss": 0.383314311504364, "qat": true, "tokensSeen": 1584034}
+{"epoch": 1, "batch": 151, "batches": 294, "loss": 0.38203907012939453, "qat": true, "tokensSeen": 2379655}
+{"epoch": 1, "batch": 201, "batches": 294, "loss": 0.3821847438812256, "qat": true, "tokensSeen": 3144643}
+{"epoch": 1, "batch": 251, "batches": 294, "loss": 0.3823869228363037, "qat": true, "tokensSeen": 3966204}
+{"epoch": 1, "loss": 0.3822160065174103, "seconds": 5.865392209001584, "qat": true, "trainingSeed": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/data/synth/size-int4-schedules/train.jsonl", "trainingTokens": 4617747, "validation": {"tokens": 88696, "sequences": 10000, "tokenAccuracy": 0.9998083340849644, "exactLabelAndBoundarySequence": 0.998, "boundaryPrecision": 0.995, "boundaryRecall": 0.9983277591973244, "boundaryF1": 0.996661101836394, "boundaryCounts": {"truePositive": 597, "falsePositive": 3, "falseNegative": 1}}, "heldout": {"tokens": 71630, "sequences": 10000, "tokenAccuracy": 0.9736423286332542, "exactLabelAndBoundarySequence": 0.8586, "boundaryPrecision": 0.9825889477668432, "boundaryRecall": 1.0, "boundaryF1": 0.9912180221458572, "boundaryCounts": {"truePositive": 1298, "falsePositive": 23, "falseNegative": 0}}}
+{"epoch": 2, "batch": 1, "batches": 294, "loss": 0.38048461079597473, "qat": true, "tokensSeen": 4632298}
+{"epoch": 2, "batch": 51, "batches": 294, "loss": 0.3811107575893402, "qat": true, "tokensSeen": 5428281}
+{"epoch": 2, "batch": 101, "batches": 294, "loss": 0.38184109330177307, "qat": true, "tokensSeen": 6243591}
+{"epoch": 2, "batch": 151, "batches": 294, "loss": 0.38074225187301636, "qat": true, "tokensSeen": 7032145}
+{"epoch": 2, "batch": 201, "batches": 294, "loss": 0.38178473711013794, "qat": true, "tokensSeen": 7776732}
+{"epoch": 2, "batch": 251, "batches": 294, "loss": 0.38207194209098816, "qat": true, "tokensSeen": 8574459}
+{"epoch": 2, "loss": 0.38147294521331787, "seconds": 5.906961290995241, "qat": true, "trainingSeed": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/data/synth/size-int4-schedules/train.jsonl", "trainingTokens": 4622720, "validation": {"tokens": 88696, "sequences": 10000, "tokenAccuracy": 0.9998308830161451, "exactLabelAndBoundarySequence": 0.9976, "boundaryPrecision": 0.9835255354200988, "boundaryRecall": 0.9983277591973244, "boundaryF1": 0.9908713692946058, "boundaryCounts": {"truePositive": 597, "falsePositive": 10, "falseNegative": 1}}, "heldout": {"tokens": 71630, "sequences": 10000, "tokenAccuracy": 0.9794359905067709, "exactLabelAndBoundarySequence": 0.8659, "boundaryPrecision": 0.8847989093387867, "boundaryRecall": 1.0, "boundaryF1": 0.938878842676311, "boundaryCounts": {"truePositive": 1298, "falsePositive": 169, "falseNegative": 0}}}
+{"epoch": 3, "batch": 1, "batches": 294, "loss": 0.38086920976638794, "qat": true, "tokensSeen": 9255623}
+{"epoch": 3, "batch": 51, "batches": 294, "loss": 0.38049179315567017, "qat": true, "tokensSeen": 10058108}
+{"epoch": 3, "batch": 101, "batches": 294, "loss": 0.38115736842155457, "qat": true, "tokensSeen": 10828476}
+{"epoch": 3, "batch": 151, "batches": 294, "loss": 0.3806881010532379, "qat": true, "tokensSeen": 11627524}
+{"epoch": 3, "batch": 201, "batches": 294, "loss": 0.37974876165390015, "qat": true, "tokensSeen": 12423166}
+{"epoch": 3, "batch": 251, "batches": 294, "loss": 0.3811144232749939, "qat": true, "tokensSeen": 13168510}
+{"epoch": 3, "loss": 0.3807238042354584, "seconds": 5.958486458010157, "qat": true, "trainingSeed": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/data/synth/size-int4-schedules/train.jsonl", "trainingTokens": 4617809, "validation": {"tokens": 88696, "sequences": 10000, "tokenAccuracy": 0.9997745106881933, "exactLabelAndBoundarySequence": 0.9979, "boundaryPrecision": 0.9966666666666667, "boundaryRecall": 1.0, "boundaryF1": 0.9983305509181971, "boundaryCounts": {"truePositive": 598, "falsePositive": 2, "falseNegative": 0}}, "heldout": {"tokens": 71630, "sequences": 10000, "tokenAccuracy": 0.9754292894038811, "exactLabelAndBoundarySequence": 0.8362, "boundaryPrecision": 0.9057920446615492, "boundaryRecall": 1.0, "boundaryF1": 0.9505675576711827, "boundaryCounts": {"truePositive": 1298, "falsePositive": 135, "falseNegative": 0}}}
+{"epoch": 4, "batch": 1, "batches": 294, "loss": 0.3832553029060364, "qat": true, "tokensSeen": 13872959}
+{"epoch": 4, "batch": 51, "batches": 294, "loss": 0.38141879439353943, "qat": true, "tokensSeen": 14646268}
+{"epoch": 4, "batch": 101, "batches": 294, "loss": 0.38110557198524475, "qat": true, "tokensSeen": 15422966}
+{"epoch": 4, "batch": 151, "batches": 294, "loss": 0.38102221488952637, "qat": true, "tokensSeen": 16191981}
+{"epoch": 4, "batch": 201, "batches": 294, "loss": 0.3807055652141571, "qat": true, "tokensSeen": 16988551}
+{"epoch": 4, "batch": 251, "batches": 294, "loss": 0.3806242346763611, "qat": true, "tokensSeen": 17819376}
+{"epoch": 4, "loss": 0.3809184730052948, "seconds": 6.041258167009801, "qat": true, "trainingSeed": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/data/synth/size-int4-schedules/train.jsonl", "trainingTokens": 4625836, "validation": {"tokens": 88696, "sequences": 10000, "tokenAccuracy": 0.9996279426355191, "exactLabelAndBoundarySequence": 0.9965, "boundaryPrecision": 0.9900662251655629, "boundaryRecall": 1.0, "boundaryF1": 0.9950083194675541, "boundaryCounts": {"truePositive": 598, "falsePositive": 6, "falseNegative": 0}}, "heldout": {"tokens": 71630, "sequences": 10000, "tokenAccuracy": 0.9731955884405975, "exactLabelAndBoundarySequence": 0.8118, "boundaryPrecision": 0.8841961852861036, "boundaryRecall": 1.0, "boundaryF1": 0.9385394070860449, "boundaryCounts": {"truePositive": 1298, "falsePositive": 170, "falseNegative": 0}}}
+{"epoch": 5, "batch": 1, "batches": 294, "loss": 0.3809150457382202, "qat": true, "tokensSeen": 18499042}
+{"epoch": 5, "batch": 51, "batches": 294, "loss": 0.38193780183792114, "qat": true, "tokensSeen": 19269968}
+{"epoch": 5, "batch": 101, "batches": 294, "loss": 0.3805677890777588, "qat": true, "tokensSeen": 20073772}
+{"epoch": 5, "batch": 151, "batches": 294, "loss": 0.3806433379650116, "qat": true, "tokensSeen": 20868166}
+{"epoch": 5, "batch": 201, "batches": 294, "loss": 0.38108187913894653, "qat": true, "tokensSeen": 21612227}
+{"epoch": 5, "batch": 251, "batches": 294, "loss": 0.3802253007888794, "qat": true, "tokensSeen": 22433285}
+{"epoch": 5, "loss": 0.3808782696723938, "seconds": 6.1153109169972595, "qat": true, "trainingSeed": "/Users/arikko/Developer/vibecode/gpu-time-rewrite/data/synth/size-int4-schedules/train.jsonl", "trainingTokens": 4614963, "validation": {"tokens": 88696, "sequences": 10000, "tokenAccuracy": 0.9998421574817353, "exactLabelAndBoundarySequence": 0.9979, "boundaryPrecision": 0.9884297520661157, "boundaryRecall": 1.0, "boundaryF1": 0.9941812136325853, "boundaryCounts": {"truePositive": 598, "falsePositive": 7, "falseNegative": 0}}, "heldout": {"tokens": 71630, "sequences": 10000, "tokenAccuracy": 0.9799944157475918, "exactLabelAndBoundarySequence": 0.8785, "boundaryPrecision": 0.9976940814757879, "boundaryRecall": 1.0, "boundaryF1": 0.9988457098884186, "boundaryCounts": {"truePositive": 1298, "falsePositive": 3, "falseNegative": 0}}}
+Traceback (most recent call last):
+  File "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/train.py", line 386, in <module>
+    main()
+    ~~~~^^
+  File "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/train.py", line 264, in main
+    training = prepare(
+        "train", args.samples, args.seed + epoch * 101, directory
+    )
+  File "/Users/arikko/Developer/vibecode/gpu-time-rewrite/training/train.py", line 151, in prepare
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        ["bun", "training/featurize.ts", f"{prefix}.jsonl", str(prefix)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        stdout=subprocess.DEVNULL,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 1214, in communicate
+    self.wait()
+    ~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 1280, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 2066, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 2024, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

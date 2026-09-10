@@ -436,3 +436,27 @@ it("does not invent fractional calendar durations", () => {
       .schedule,
   ).toBeNull();
 });
+
+it("validates ISO date order independently of the model's month/day roles", () => {
+  const text = "2026-13-01";
+  const result = compile(
+    text,
+    oracle(text, ["YEAR", "GLUE", "DOM", "GLUE", "MONTH"]),
+  )[0];
+  expect(result.schedule).toBeNull();
+  expect(
+    result.diagnostics.some((value) => value.code === "invalid-date"),
+  ).toBe(true);
+});
+
+it("reports a missing recurrence bound when until is recognized as a range separator", () => {
+  const text = "every Monday until";
+  const result = compile(
+    text,
+    oracle(text, ["RECUR", "WEEKDAY", "RANGE_END"]),
+  )[0];
+  expect(result.schedule).toBeNull();
+  expect(
+    result.diagnostics.some((value) => value.code === "invalid-bound"),
+  ).toBe(true);
+});

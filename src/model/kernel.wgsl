@@ -25,6 +25,8 @@ var<workgroup> output: array<f32, 41>;
 
 fn rounded(value: f32) -> f32 { ROUND_BODY }
 fn sigmoid(value: f32) -> f32 { return 1.0 / (1.0 + exp(-value)); }
+// Four buffers follow tensor lifetimes: embedding -> forward, encoded,
+// gate -> combined, candidate -> backward. Barriers precede cross-lane reads.
 fn readState(stage: u32, token: u32, channel: u32) -> f32 {
   return f32(stateData[(stage * parameters.tokenCount + token) * 32u + channel]);
 }
@@ -116,13 +118,13 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
     writeState(2u, token, lane, gate);
     writeState(3u, token, lane, candidate);
     state = gate * state + candidate;
-    writeState(4u, token, lane, state);
+    writeState(0u, token, lane, state);
   }
   state = 0.0;
   for (var position = i32(count) - 1; position >= 0; position--) {
     let token = start + u32(position);
     state = readState(2u, token, lane) * state + readState(3u, token, lane);
-    writeState(5u, token, lane, state);
+    writeState(3u, token, lane, state);
   }
   storageBarrier();
   workgroupBarrier();
@@ -132,11 +134,11 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
     let token = start + position;
     var value = modelWeights[COMBINE_BIAS_OFFSET + lane];
     for (var channel = 0u; channel < 32u; channel++) {
-      value += readState(4u, token, channel) * modelWeights[COMBINE_WEIGHT_OFFSET + lane * 64u + channel];
-      value += readState(5u, token, channel) * modelWeights[COMBINE_WEIGHT_OFFSET + lane * 64u + 32u + channel];
+      value += readState(0u, token, channel) * modelWeights[COMBINE_WEIGHT_OFFSET + lane * 64u + channel];
+      value += readState(3u, token, channel) * modelWeights[COMBINE_WEIGHT_OFFSET + lane * 64u + 32u + channel];
     }
     let combined = rounded(tanh(readState(1u, token, lane) + value));
-    writeState(6u, token, lane, combined);
+    writeState(2u, token, lane, combined);
     sum += combined;
   }
   pooled[lane] = sum / f32(count);
@@ -156,7 +158,7 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
     if (hasToken && lane < 16u) {
       var value = modelWeights[HEAD_GATE_BIAS_OFFSET + lane];
       for (var channel = 0u; channel < 32u; channel++) {
-        value += readState(6u, token, channel) * modelWeights[HEAD_GATE_WEIGHT_OFFSET + lane * 64u + channel];
+        value += readState(2u, token, channel) * modelWeights[HEAD_GATE_WEIGHT_OFFSET + lane * 64u + channel];
         value += context[channel] * modelWeights[HEAD_GATE_WEIGHT_OFFSET + lane * 64u + 32u + channel];
       }
       headGate[lane] = sigmoid(value);
@@ -168,7 +170,7 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
         let hidden = lane + side * 32u;
         var value = modelWeights[HEAD_HIDDEN_BIAS_OFFSET + hidden];
         for (var channel = 0u; channel < 32u; channel++) {
-          value += readState(6u, token, channel) * modelWeights[HEAD_HIDDEN_WEIGHT_OFFSET + hidden * 80u + channel];
+          value += readState(2u, token, channel) * modelWeights[HEAD_HIDDEN_WEIGHT_OFFSET + hidden * 80u + channel];
           value += context[channel] * modelWeights[HEAD_HIDDEN_WEIGHT_OFFSET + hidden * 80u + 32u + channel];
         }
         for (var channel = 0u; channel < 16u; channel++) {

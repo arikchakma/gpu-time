@@ -10,7 +10,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/types.d.ts",
+    "dist/labels.d.ts"
   ],
   "scripts": {
     "dev": "vite playground --host 127.0.0.1 --port 5174",
@@ -42,6 +45,7 @@
     "playwright": "1.63.0",
     "prettier": "3.9.6",
     "rrule": "2.8.1",
+    "terser": "5.51.2",
     "ts-json-schema-generator": "2.9.0",
     "tsx": "4.23.13",
     "typescript": "5.9.3",

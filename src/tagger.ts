@@ -1,8 +1,12 @@
 import { tokenize } from "./tokenizer.js";
-import { LABELS } from "./labels.js";
+import { LABELS, Role } from "./labels.js";
 import { inferCPU, type Predictions } from "./model/cpu.js";
 import { GPUModel } from "./model/gpu.js";
-import type { ParserOptions, RawToken, Token } from "./types.js";
+import type {
+  ParserOptions,
+  RawToken,
+  PredictionToken as Token,
+} from "./types.js";
 
 export interface TagResult {
   tokens: Token[];
@@ -156,7 +160,7 @@ export async function createTagger(
     const labeled = jobs.map((job) =>
       job.tokens.map((token): Token => ({
         ...token,
-        label: "O",
+        label: Role.O,
         clauseStart: false,
         score: 0,
       })),
@@ -165,10 +169,10 @@ export async function createTagger(
     windows.forEach((window, index) => {
       const prediction = predictions[index];
       for (let token = window.keepStart; token < window.keepEnd; token++) {
-        const label = LABELS[prediction.labels[token]];
-        if (!label) invalid.add(window.job);
+        const label = prediction.labels[token];
+        if (label >= LABELS.length) invalid.add(window.job);
         const result = labeled[window.job][window.start + token];
-        result.label = label ?? "O";
+        result.label = label < LABELS.length ? label : Role.O;
         result.clauseStart = Boolean(prediction.clauseStarts[token]);
         result.score = prediction.scores[token];
       }

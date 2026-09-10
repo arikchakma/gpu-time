@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, writeFileSync } from "node:fs";
 
 const started = performance.now();
+const refreshCorpus = process.argv.includes("--refresh-corpus");
 
 function run(command: string, args: string[]) {
   execFileSync(command, args, { stdio: "inherit" });
@@ -13,13 +14,14 @@ run("bun", ["scripts/build.ts", "--report-only"]);
 run("bun", ["scripts/evaluate-model.ts"]);
 run("bun", ["scripts/evaluate-results.ts"]);
 run("bun", ["tests/browser.ts"]);
-run("uv", [
-  "run",
-  "--project",
-  "training",
-  "python",
-  "training/check-natural.py",
-]);
+if (refreshCorpus || !existsSync("data/synth/natural-evaluation.jsonl"))
+  run("uv", [
+    "run",
+    "--project",
+    "training",
+    "python",
+    "training/check-natural.py",
+  ]);
 run("bun", [
   "training/check-semantic.ts",
   "data/synth/natural-evaluation.jsonl",
@@ -29,28 +31,30 @@ run("bun", [
   "training/natural-evaluation.json",
   "data/synth/natural-evaluation.jsonl",
 ]);
-run("uv", [
-  "run",
-  "--project",
-  "training",
-  "python",
-  "training/check-natural.py",
-  "--reserved",
-  "--out",
-  "data/synth/natural-reserved.jsonl",
-]);
+if (refreshCorpus || !existsSync("data/synth/natural-reserved.jsonl"))
+  run("uv", [
+    "run",
+    "--project",
+    "training",
+    "python",
+    "training/check-natural.py",
+    "--reserved",
+    "--out",
+    "data/synth/natural-reserved.jsonl",
+  ]);
 run("bun", [
   "training/evaluate-semantic.ts",
   "training/natural-reserved-evaluation.json",
   "data/synth/natural-reserved.jsonl",
 ]);
-run("uv", [
-  "run",
-  "--project",
-  "training",
-  "python",
-  "training/generate-semantic.py",
-]);
+if (refreshCorpus || !existsSync("data/synth/semantic-checks.jsonl"))
+  run("uv", [
+    "run",
+    "--project",
+    "training",
+    "python",
+    "training/generate-semantic.py",
+  ]);
 run("bun", ["training/check-semantic.ts"]);
 run("bun", ["training/evaluate-semantic.ts"]);
 if (!existsSync("data/external/recognizers/cases.jsonl"))

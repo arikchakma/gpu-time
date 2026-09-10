@@ -9,6 +9,7 @@ interface Example {
   schedule: Schedule | null;
 }
 const examples: Example[] = [
+  "adversarial",
   "grammar",
   "negatives",
   "grammar-variations",

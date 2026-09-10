@@ -1,4 +1,4 @@
-import type { Label } from "./labels.js";
+import type { Label, Role } from "./labels.js";
 export type { Label };
 export type Weekday = "MO" | "TU" | "WE" | "TH" | "FR" | "SA" | "SU";
 export type Unit = "minute" | "hour" | "day" | "week" | "month" | "year";
@@ -113,6 +113,10 @@ export interface Token extends RawToken {
   clauseStart: boolean;
   score: number;
 }
+export interface PredictionToken extends Omit<Token, "label"> {
+  label: Role;
+}
+
 export interface Diagnostic {
   code: string;
   message: string;

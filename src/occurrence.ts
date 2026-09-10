@@ -82,12 +82,16 @@ function applyShift(
 }
 
 function atTime(date: Civil, seconds: number, timeZone: string): number {
-  const local = {
-    ...addDays(date, Math.floor(seconds / 86_400)),
-    hour: Math.floor(seconds / 3600) % 24,
-    minute: Math.floor(seconds / 60) % 60,
-    second: seconds % 60,
-  };
+  const dayOffset = Math.floor(seconds / 86_400);
+  const local =
+    seconds === secondsOfDay(date)
+      ? date
+      : {
+          ...(dayOffset ? addDays(date, dayOffset) : date),
+          hour: Math.floor(seconds / 3600) % 24,
+          minute: Math.floor(seconds / 60) % 60,
+          second: seconds % 60,
+        };
 
   const result = zonedToEpoch(local, timeZone);
   if (result.kind === "gap") {

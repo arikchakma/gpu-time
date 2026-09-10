@@ -25,9 +25,13 @@ try {
   const page = await browser.newPage({ timezoneId: "Asia/Dhaka" });
   await page.goto(server.resolvedUrls!.local[0] + "profile.html");
   const results = await page.evaluate(
-    async ({ prefix, diverse }) => {
-      const path = `${prefix}/src/index.ts`;
-      const schedulePath = `${prefix}/src/schedule.ts`;
+    async ({ prefix, diverse, packaged }) => {
+      const path = packaged
+        ? `${prefix}/dist/index.js`
+        : `${prefix}/src/index.ts`;
+      const schedulePath = packaged
+        ? `${prefix}/dist/schedule.js`
+        : `${prefix}/src/schedule.ts`;
       const api = await import(path);
       const internal = await import(schedulePath);
       const context = {
@@ -108,9 +112,12 @@ try {
       };
     },
     {
-      prefix: process.argv.includes("--baseline")
-        ? "/test-results/baseline"
-        : "",
+      prefix: process.argv.includes("--prefix")
+        ? process.argv[process.argv.indexOf("--prefix") + 1]
+        : process.argv.includes("--baseline")
+          ? "/test-results/baseline"
+          : "",
+      packaged: process.argv.includes("--package"),
       diverse: process.argv.includes("--diverse"),
     },
   );

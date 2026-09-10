@@ -1,4 +1,5 @@
 import { shader } from "./shader.js";
+import { diagnostics, fullPrecision } from "./options.js";
 import { weights } from "./weights.gen.js";
 import { decodeWeights, type EncodedWeights } from "./decode.js";
 import type { RawToken } from "../types.js";
@@ -42,9 +43,7 @@ export class GPUModel {
     const adapter = await globalThis.navigator?.gpu?.requestAdapter();
     if (!adapter) throw new Error("WebGPU is unavailable.");
     const nativeHalf =
-      model.storage !== "f32" &&
-      !this.emulateF16 &&
-      adapter.features.has("shader-f16");
+      !fullPrecision && !this.emulateF16 && adapter.features.has("shader-f16");
     const device = await adapter.requestDevice({
       requiredFeatures: nativeHalf ? ["shader-f16"] : [],
       requiredLimits: {
@@ -107,6 +106,7 @@ export class GPUModel {
   }
 
   inferMany(inputs: RawToken[][], debug = false): Promise<Predictions[]> {
+    debug = diagnostics && debug;
     const result = this.queue.then(async () => {
       try {
         return await this.run(inputs, debug);
@@ -183,7 +183,7 @@ export class GPUModel {
     const packedBytes = Math.ceil(count / 4) * 4;
     const scoreBytes = count * 4;
     const debugBytes = debug ? count * 41 * 4 : 4;
-    const stateSize = count * 32 * 7 * this.stateBytes;
+    const stateSize = count * 32 * 4 * this.stateBytes;
     const sizes = [
       features.byteLength,
       streamTable.byteLength,

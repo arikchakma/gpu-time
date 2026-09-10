@@ -3,12 +3,13 @@ import type { RawToken } from "../types.js";
 import { decodeWeights, type EncodedWeights } from "./decode.js";
 import { storeHalf } from "./half.js";
 import { weights } from "./weights.gen.js";
+import { diagnostics, fullPrecision } from "./options.js";
 
 const hiddenSize = 32;
 const rowsPerToken = 17;
 const model: EncodedWeights = weights;
 const tensors = decodeWeights(model);
-const store = model.storage === "f32" ? Math.fround : storeHalf;
+const store = fullPrecision ? Math.fround : storeHalf;
 const featureMap =
   model.featureRows === 324
     ? Uint16Array.from({ length: 581 }, (_, row) => compactFeature(row))
@@ -67,9 +68,43 @@ function dot(
   width: number,
 ): number {
   let sum = 0;
-  for (let index = 0; index < width; index++)
-    sum += input[offset + index] * matrix[row * width + index];
+  const base = row * width;
+  // Network rows have width 32 or 64. Preserve scalar accumulation order.
+  for (let index = 0; index < width; index += 4) {
+    sum += input[offset + index] * matrix[base + index];
+    sum += input[offset + index + 1] * matrix[base + index + 1];
+    sum += input[offset + index + 2] * matrix[base + index + 2];
+    sum += input[offset + index + 3] * matrix[base + index + 3];
+  }
   return Math.fround(sum);
+}
+
+function createWorkspace(count: number) {
+  return {
+    count,
+    embedded: new Float32Array(count * hiddenSize),
+    encoded: new Float32Array(count * hiddenSize),
+    gate: new Float32Array(count * hiddenSize),
+    candidate: new Float32Array(count * hiddenSize),
+    forward: new Float32Array(count * hiddenSize),
+    backward: new Float32Array(count * hiddenSize),
+    combined: new Float32Array(count * hiddenSize),
+    previous: new Int32Array(count),
+    next: new Int32Array(count),
+    pooled: new Float32Array(hiddenSize),
+    context: new Float32Array(hiddenSize),
+    headGate: new Float32Array(16),
+    headHidden: new Float32Array(64),
+    output: new Float32Array(weights.roleClasses + 1),
+  };
+}
+
+let scratch: ReturnType<typeof createWorkspace> | undefined;
+function getWorkspace(count: number) {
+  // Inference is synchronous. Retain at most one normal 128-token window.
+  if (count > 128) return createWorkspace(count);
+  if (!scratch || scratch.count < count) scratch = createWorkspace(count);
+  return scratch;
 }
 
 export function inferCPU(tokens: RawToken[], debug = false): Predictions {
@@ -79,11 +114,18 @@ export function inferCPU(tokens: RawToken[], debug = false): Predictions {
   tokens.forEach((token, index) =>
     rows.set(featureRows(token.features), index * rowsPerToken),
   );
-  return inferRows(rows, debug);
+  return inferRows(rows, debug, tokens);
 }
 
 /** Runs the trained network. This module contains no language or calendar rules. */
-export function inferRows(rows: Uint16Array, debug = false): Predictions {
+const embeddingCache = new Map<string, Float32Array>();
+
+export function inferRows(
+  rows: Uint16Array,
+  debug = false,
+  tokens?: RawToken[],
+): Predictions {
+  debug = diagnostics && debug;
   if (featureMap) rows = rows.map((row) => featureMap[row]);
   if (rows.length % rowsPerToken !== 0)
     throw new RangeError("Invalid feature-row buffer.");
@@ -97,20 +139,38 @@ export function inferRows(rows: Uint16Array, debug = false): Predictions {
   const boundaryLogits = debug ? new Float32Array(count) : undefined;
   if (!count) return { labels, clauseStarts, scores, logits, boundaryLogits };
 
-  const embedded = new Float32Array(count * hiddenSize);
-  const encoded = new Float32Array(embedded.length);
-  const gate = new Float32Array(embedded.length);
-  const candidate = new Float32Array(embedded.length);
-  const forward = new Float32Array(embedded.length);
-  const backward = new Float32Array(embedded.length);
-  const combined = new Float32Array(embedded.length);
-  const previous = new Int32Array(count).fill(-1);
-  const next = new Int32Array(count).fill(-1);
+  const workspace = debug ? createWorkspace(count) : getWorkspace(count);
+  const {
+    embedded,
+    encoded,
+    gate,
+    candidate,
+    forward,
+    backward,
+    combined,
+    previous,
+    next,
+    pooled,
+    context,
+    headGate,
+    headHidden,
+    output,
+  } = workspace;
+  pooled.fill(0);
 
   let neighbor = -1;
   for (let token = 0; token < count; token++) {
     previous[token] = neighbor;
     if (rows[token * rowsPerToken] !== 3) neighbor = token;
+    const key =
+      tokens && !debug
+        ? `${tokens[token].features[0]}:${tokens[token].features[1]}`
+        : undefined;
+    const cached = key === undefined ? undefined : embeddingCache.get(key);
+    if (cached) {
+      embedded.set(cached, token * hiddenSize);
+      continue;
+    }
     for (let channel = 0; channel < hiddenSize; channel++) {
       let value = 0;
       for (let feature = 0; feature < rowsPerToken; feature++) {
@@ -119,6 +179,14 @@ export function inferRows(rows: Uint16Array, debug = false): Predictions {
           value = Math.fround(value + embedding[row * hiddenSize + channel]);
       }
       embedded[token * hiddenSize + channel] = store(value);
+    }
+    if (key !== undefined) {
+      if (embeddingCache.size >= 2048)
+        embeddingCache.delete(embeddingCache.keys().next().value!);
+      embeddingCache.set(
+        key,
+        embedded.slice(token * hiddenSize, (token + 1) * hiddenSize),
+      );
     }
   }
   neighbor = -1;
@@ -202,7 +270,6 @@ export function inferRows(rows: Uint16Array, debug = false): Predictions {
     }
   }
 
-  const pooled = new Float32Array(hiddenSize);
   for (let token = 0; token < count; token++) {
     const offset = token * hiddenSize;
     for (let channel = 0; channel < hiddenSize; channel++) {
@@ -221,16 +288,12 @@ export function inferRows(rows: Uint16Array, debug = false): Predictions {
   for (let channel = 0; channel < hiddenSize; channel++)
     pooled[channel] /= count;
 
-  const context = new Float32Array(hiddenSize);
   for (let channel = 0; channel < hiddenSize; channel++)
     context[channel] =
       sigmoid(
         globalBias[channel] + dot(pooled, 0, globalWeight, channel, hiddenSize),
       ) * pooled[channel];
 
-  const headGate = new Float32Array(16);
-  const headHidden = new Float32Array(64);
-  const output = new Float32Array(weights.roleClasses + 1);
   for (let token = 0; token < count; token++) {
     if (rows[token * rowsPerToken] === 3) continue;
     const offset = token * hiddenSize;

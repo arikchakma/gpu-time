@@ -125,6 +125,8 @@ npm run test:browser
 npm run bench
 ```
 
+The benchmark reuses existing evaluation corpora for comparisons. Use `npm run bench -- --refresh-corpus` only when intentionally changing the evaluation inputs; compare source hashes before comparing accuracy.
+
 `npm run dev` opens the workbench server on port 5174. Browser parity and the
 benchmark start their own temporary servers. The benchmark installs its pinned
 Python dependencies in `bench/.venv` and writes `bench/results/REPORT.md` and
