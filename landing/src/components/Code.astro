@@ -1,0 +1,17 @@
+---
+import { example, highlight } from '../lib/demo';
+---
+<div class="overflow-x-auto rounded-box bg-neutral-900 p-4 font-mono text-[12.5px] leading-[1.7] text-neutral-300">
+  <pre class="w-max"><span class="text-neutral-500">$</span> npm install gpu-time
+
+<span class="text-violet-300">import</span> {'{'} parse {'}'} <span class="text-violet-300">from</span> <span class="text-emerald-300">"gpu-time"</span>;
+
+<span class="text-violet-300">const</span> {'{'} occurrences, rrules {'}'} = <span class="text-violet-300">await</span> <span class="text-sky-300">parse</span>(<span class="text-emerald-300">"</span>{highlight(example).map(part => part.kind ? <span class={`hl hl-${part.kind}`}>{part.text}</span> : part.text)}<span class="text-emerald-300">"</span>, {'{'}
+  reference: <span class="text-emerald-300">"2026-09-10T12:00:00+06:00"</span>, <span class="text-neutral-500">// your "now"</span>
+  timeZone: <span class="text-emerald-300">"Asia/Dhaka"</span>,            <span class="text-neutral-500">// your zone</span>
+{'}'});
+
+<span class="text-neutral-500">// occurrences[0] → {'{'} start: "2026-09-14T20:00:00+06:00",</span>
+<span class="text-neutral-500">//                    end: "2026-09-14T22:00:00+06:00", allDay: false {'}'}</span>
+<span class="text-neutral-500">// rrules[0]      → "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO"</span></pre>
+</div>

@@ -72,6 +72,14 @@ try {
       await page.waitForFunction(() => document.querySelector('#demo-result').getAttribute('aria-busy') === 'false');
       assert.equal(await page.locator('#demo-dates li').count(), 1);
       assert.match(await page.locator('#demo-context').innerText(), /Asia\/Dhaka/);
+      const card = page.locator('.demo-example').first();
+      const phrase = await card.getAttribute('data-phrase');
+      await card.click();
+      await page.waitForFunction(() => document.querySelector('#demo-result').getAttribute('aria-busy') === 'false');
+      assert.equal(await page.locator('#demo-input').inputValue(), phrase, 'An example card fills the field');
+      assert.equal(await page.locator('#demo-highlight').innerText(), phrase, 'The highlight layer tracks the field');
+      assert((await page.locator('#demo-highlight .hl').count()) > 0, 'An example card highlights its parts');
+
       await page.locator('#film-play').click();
       await page.waitForFunction(() => document.querySelector('video').currentTime > 0.1);
       assert.equal(await page.locator('#film-play').isVisible(), false);

@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import Demo from '../components/Demo.astro';
+import Code from '../components/Code.astro';
+import Examples from '../components/Examples.astro';
 import Video from '../components/Video.astro';
 ---
 <!doctype html>
@@ -11,39 +13,47 @@ import Video from '../components/Video.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="gpu-time is a small neural parser that turns everyday English into dates, time ranges, and recurrence rules. Runs locally on CPU or WebGPU." />
     <meta name="theme-color" content="#ffffff" />
-    <title>gpu-time — A Little Model for Everyday Time.</title>
+    <title>gpu-time</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="font-sans">
-    <main class="mx-auto max-w-[600px] px-6 py-12 text-center [&_h1]:text-balance [&_h2]:text-balance [&_p]:text-balance">
-      <header>
+    <main class="mx-auto max-w-[680px] px-6 py-12 [&_h1]:text-balance [&_h2]:text-balance [&_h2]:text-center">
+      <header class="text-center">
         <a href="/" aria-label="gpu-time home" class="inline-flex h-12 items-center gap-2.5 text-[18px] font-medium tracking-[-0.32px] no-underline">
           <Logo />
         </a>
-        <h1 class="mt-10 text-[28px] font-medium leading-[1.2] tracking-[-0.48px]">A Little Model for Everyday Time.</h1>
-        <div class="mx-auto mt-4 max-w-[388px] space-y-4 text-[14px] leading-[1.5] tracking-[-0.1px]">
-          <p>“Every Monday from 8pm to 10pm.”<br />Simple to say. A little harder to turn into dates.</p>
-          <p>gpu-time turns English into dates, time ranges, and recurrence rules with a small neural model. Just add a reference date and timezone.</p>
-          <p>It runs locally, on CPU or WebGPU.<br />No API keys. No server round trips.</p>
-        </div>
+        <h1 class="mt-8 text-[30px] font-medium leading-[1.15] tracking-[-0.6px]">Plain English to Real Dates.</h1>
+        <p class="mx-auto mt-3 max-w-[420px] text-[14px] leading-[1.5] tracking-[-0.1px] text-neutral-600">A small neural model, running in this page. No API key, no server.</p>
       </header>
 
       <Demo />
 
-      <section class="mt-10" aria-labelledby="film-title">
-        <h2 id="film-title" class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">From Words to Time</h2>
-        <p class="mx-auto mb-4 mt-4 max-w-[388px] text-[14px] leading-[1.5] tracking-[-0.1px]">Inside the neural model: from words to scores to dates.</p>
-        <Video />
-        <p class="mx-auto mt-3 max-w-[388px] text-[14px] leading-[1.5] tracking-[-0.1px] text-neutral-500">Actual model activations and scores. Connections simplified for clarity.</p>
+      <section class="mt-14" aria-labelledby="examples-title">
+        <h2 id="examples-title" class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">Tap One, See the Dates</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-[440px] text-center text-[13px] leading-[1.5] text-neutral-500">Each of these runs in the box above.</p>
+        <Examples />
       </section>
 
-      <footer class="mt-10">
+      <section class="mt-14" aria-labelledby="use-title">
+        <h2 id="use-title" class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">Use It in Your Code</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-[440px] text-center text-[13px] leading-[1.5] text-neutral-500">You pass the phrase, your reference instant, and your timezone. You get back dates and RFC 5545 rules.</p>
+        <Code />
+      </section>
+
+      <section class="mt-14" aria-labelledby="film-title">
+        <h2 id="film-title" class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">Inside the Model</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-[440px] text-center text-[13px] leading-[1.5] text-neutral-500">Words to scores to dates, in 24,761 parameters.</p>
+        <Video />
+        <p class="mx-auto mt-3 max-w-[440px] text-center text-[13px] leading-[1.5] text-neutral-500">Actual model activations and scores. Connections simplified for clarity.</p>
+      </section>
+
+      <footer class="mt-14 text-center">
         <h2 class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">A Small Experiment. Still Growing.</h2>
-        <div class="mx-auto mt-4 max-w-[388px] space-y-4 text-[14px] leading-[1.5] tracking-[-0.1px]">
+        <div class="mx-auto mt-3 max-w-[440px] space-y-3 text-[14px] leading-[1.5] tracking-[-0.1px] text-neutral-600">
           <p>Time comes in all kinds of words. Try a one-off plan, a weekly routine, or an overnight shift in the demo above.</p>
           <p>gpu-time is still learning the edges of everyday language. Unfamiliar wording can trip it up, so check the results and see how it handles the way you write.</p>
         </div>
-        <a href="#demo-input" class="mt-4 inline-flex items-center justify-center rounded-full bg-black px-3 py-2 text-[14px] font-medium leading-none tracking-[-0.14px] text-white no-underline transition-colors hover:bg-neutral-700">Try your own phrase <span class="ml-2" aria-hidden="true">↗</span></a>
+        <a href="#demo-input" class="mt-4 inline-flex items-center justify-center rounded-full bg-black px-3.5 py-2.5 text-[14px] font-medium leading-none tracking-[-0.14px] text-white no-underline transition-colors hover:bg-neutral-700">Try your own phrase <span class="ml-2" aria-hidden="true">↗</span></a>
         <p class="mt-12 text-[14px] leading-[1.5] tracking-[-0.1px] text-black/40">gpu-time<br />A small experiment in understanding time.</p>
       </footer>
     </main>

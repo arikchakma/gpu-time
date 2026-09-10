@@ -1,6 +1,6 @@
 ---
 import { parse } from '../../../src/index';
-import { example, format } from '../lib/demo';
+import { example, format, highlight, kinds, rowClass } from '../lib/demo';
 
 // Ship a complete example with explicit context in the static HTML.
 const reference = new Date();
@@ -9,37 +9,79 @@ const initial = format(await parse(example, {
   reference: reference.toISOString(), timeZone, limit: 3,
 }), reference, timeZone);
 ---
-<section class="mx-auto mt-10 max-w-[388px] text-center text-[14px] leading-[1.5] tracking-[-0.1px]" aria-label="Try gpu-time">
-  <form id="demo-form" class="flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50/60 px-2 py-1 focus-within:border-neutral-400">
-    <label for="demo-input" class="sr-only">Time expression</label>
-    <input id="demo-input" name="expression" type="text" value={example} maxlength="500" required class="min-w-0 flex-1 bg-transparent px-1 py-1.5 outline-none" />
-    <button id="demo-submit" class="inline-flex shrink-0 items-center justify-center rounded-full bg-black px-3 py-2 font-medium leading-none tracking-[-0.14px] text-white transition-colors hover:bg-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50" type="submit">Parse</button>
+<section id="demo-card" class="mt-8 overflow-hidden rounded-box border border-neutral-200" aria-label="Try gpu-time">
+  <div class="flex items-center justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-4 py-2">
+    <span class="label">Plain English</span>
+    <span class="text-[11px] text-neutral-400">an example — edit it</span>
+  </div>
+
+  <form id="demo-form" class="flex items-stretch gap-2 p-2">
+    <div class="relative min-w-0 flex-1 rounded-box transition-colors focus-within:bg-neutral-50">
+      <div id="demo-highlight" class="demo-field pointer-events-none absolute inset-0 overflow-hidden whitespace-pre" aria-hidden="true">{highlight(example).map(part => part.kind ? <span class={`hl hl-${part.kind}`}>{part.text}</span> : part.text)}</div>
+      <input id="demo-input" name="expression" type="text" value={example} maxlength="500" required spellcheck="false" autocomplete="off" class="demo-field relative w-full bg-transparent text-transparent caret-black outline-none focus-visible:outline-none" />
+    </div>
+    <button id="demo-submit" class="inline-flex h-10 shrink-0 items-center justify-center self-center rounded-full bg-black px-4 text-[14px] font-medium tracking-[-0.14px] text-white transition-colors hover:bg-neutral-700 disabled:opacity-50" type="submit">Parse</button>
   </form>
-  <div id="demo-result" class="mt-4 text-left mx-3" aria-live="polite" aria-atomic="true">
-    <p id="demo-status" class="text-[12px] text-neutral-500">{initial.status}</p>
-    <ul id="demo-dates" class="mt-2 space-y-2">
+
+  <div class="relative flex justify-center py-2" aria-hidden="true">
+    <span class="absolute inset-x-4 top-1/2 border-t border-dashed border-neutral-200"></span>
+    <span class="relative flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-mono text-[11px] text-neutral-600">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v9m0 0 3.5-3.5M6 10 2.5 6.5" /></svg>
+      parse()
+    </span>
+  </div>
+
+  <div id="demo-result" class="px-4 pb-4 pt-1 text-[14px] leading-[1.5] tracking-[-0.1px]" aria-live="polite" aria-atomic="true">
+    <div class="flex items-center justify-between gap-3">
+      <span class="label">Real dates</span>
+      <p id="demo-status" class="text-[12px] text-neutral-500">{initial.status}</p>
+    </div>
+    <ul id="demo-dates" class="mt-2 space-y-1.5">
       {initial.rows.map(row => (
-        <li class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-          <span>{row.date}</span><span class="text-neutral-500">{row.time}</span>
+        <li class={rowClass}>
+          <span>{row.date}</span><span class="tabular-nums text-neutral-500">{row.time}</span>
         </li>
       ))}
     </ul>
+    <p id="demo-context" class="mt-3 text-[12px] leading-[1.5] text-neutral-500">{initial.context}</p>
+    <noscript><p class="mt-3">Enable JavaScript to try your own phrase.</p></noscript>
   </div>
-  <p id="demo-context" class="mt-4 text-[12px] leading-[1.5] text-neutral-500">{initial.context}</p>
-  <noscript><p class="mt-3">Enable JavaScript to try the parser in your browser.</p></noscript>
 </section>
 
+<ul class="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[12px] text-neutral-500">
+  {kinds.map(kind => (
+    <li class="flex items-center gap-1.5">
+      <span class={`sw hl-${kind.kind} inline-block size-3 rounded-[4px]`} aria-hidden="true"></span>{kind.label}
+    </li>
+  ))}
+</ul>
+
 <script>
-  import { format } from '../lib/demo';
+  import { format, highlight, rowClass } from '../lib/demo';
 
   const form = document.querySelector<HTMLFormElement>('#demo-form')!;
   const input = document.querySelector<HTMLInputElement>('#demo-input')!;
+  const layer = document.querySelector<HTMLDivElement>('#demo-highlight')!;
   const button = document.querySelector<HTMLButtonElement>('#demo-submit')!;
   const context = document.querySelector<HTMLParagraphElement>('#demo-context')!;
   const status = document.querySelector<HTMLParagraphElement>('#demo-status')!;
   const dates = document.querySelector<HTMLUListElement>('#demo-dates')!;
   const result = document.querySelector<HTMLDivElement>('#demo-result')!;
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  function paint() {
+    const fragment = document.createDocumentFragment();
+    for (const part of highlight(input.value)) {
+      if (!part.kind) { fragment.append(part.text); continue; }
+      const mark = document.createElement('span');
+      mark.className = `hl hl-${part.kind}`;
+      mark.textContent = part.text;
+      fragment.append(mark);
+    }
+    layer.replaceChildren(fragment);
+    layer.scrollLeft = input.scrollLeft;
+  }
+
   async function run() {
     button.disabled = true;
     input.disabled = true;
@@ -54,11 +96,11 @@ const initial = format(await parse(example, {
       const fragment = document.createDocumentFragment();
       for (const row of formatted.rows) {
         const item = document.createElement('li');
-        item.className = 'flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5';
+        item.className = rowClass;
         const date = document.createElement('span');
         const time = document.createElement('span');
         date.textContent = row.date;
-        time.className = 'text-neutral-500';
+        time.className = 'tabular-nums text-neutral-500';
         time.textContent = row.time;
         item.append(date, time);
         fragment.append(item);
@@ -76,8 +118,20 @@ const initial = format(await parse(example, {
     }
   }
 
+  input.addEventListener('input', paint);
+  input.addEventListener('scroll', () => { layer.scrollLeft = input.scrollLeft; });
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     if (input.value.trim()) void run();
   });
+
+  // The example cards below feed the same field.
+  for (const card of document.querySelectorAll<HTMLButtonElement>('.demo-example')) {
+    card.addEventListener('click', () => {
+      input.value = card.dataset.phrase!;
+      paint();
+      form.requestSubmit();
+      document.querySelector('#demo-card')!.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
 </script>

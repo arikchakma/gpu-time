@@ -14,6 +14,17 @@ no separately hosted playground is needed.
 `npm run check` validates Astro; `npm run build` creates `dist/`.
 The footer links back to the on-page demo.
 
+The page is built to be skimmed: a hero card shows one phrase turning into real
+dates, a colored legend names the four kinds of meaning, tappable use cases feed
+the same field, and a code block shows the call. Words are kept to a minimum.
+
+`src/lib/demo.ts` holds the shared pieces: the example phrase, result row class,
+use-case list, and `highlight()`. Highlighting is a cosmetic regex pass, not
+parser output, and the parser exposes no token spans. Its parts must reassemble
+into the exact input, because the highlight layer sits behind a transparent
+input and both lay out text with the same `.demo-field` metrics. Run
+`npm run test:highlight` for that check.
+
 The initial example is rendered at build time with explicit UTC context. Loading
 JavaScript does not replace it. Submissions use the current instant and the
 browser's timezone, and load the parser on demand. Video loads only after Play.
