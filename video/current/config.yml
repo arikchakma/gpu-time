@@ -1,0 +1,12 @@
+directories:
+  output: video/current/output
+  cache: video/current/output/cache
+camera:
+  background_color: "#FFFFFF"
+  resolution: (1920, 1080)
+  fps: 60
+text:
+  font: "Helvetica Neue"
+file_writer:
+  video_codec: libx264
+  pixel_format: yuv420p
