@@ -9,7 +9,8 @@
     "preview": "astro preview --host 127.0.0.1 --port 4321",
     "check": "astro check",
     "prepare:video": "bash scripts/prepare-video.sh",
-    "test:browser": "npm run build && node tests/first-load.mjs"
+    "test:browser": "npm run build && node tests/first-load.mjs",
+    "prepare:thumbnail": "node scripts/prepare-thumbnail.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.0",

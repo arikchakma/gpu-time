@@ -37,7 +37,14 @@ The white-background film includes newly generated synthetic narration and timed
 English captions. The original music and effect synthesis is adapted to the new scene timings.
 
 Run `npm run prepare:video` to copy the completed film and regenerate its poster
-and captions. Requires FFmpeg and the rendered current film. Included public
-media allow normal site builds without video-production tools.
+and captions. Requires the rendered current film, Chrome, and the root Playwright
+dependency. Included public media allow normal site builds without production tools.
 
 Page headings and video titles use Chicago headline-style capitalization.
+
+## Thumbnail
+
+`artwork/thumbnail.html` is the editable HTML/CSS source. Run
+`npm run prepare:thumbnail` to export 1920×1080 PNG and JPEG versions to
+`public/media/poster.*`. The export uses the existing logo and selected model's
+parameter count. The player uses JPEG; PNG is available for sharing.
