@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html { background: #fff; color: #000; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+::selection { background: #dce9f9; }
+a { text-underline-offset: 4px; }
+a:focus-visible, video:focus-visible { outline: 2px solid #2563eb; outline-offset: 6px; }

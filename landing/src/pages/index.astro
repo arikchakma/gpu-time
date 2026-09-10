@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Demo from '../components/Demo.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="gpu-time is a small neural parser that turns everyday English into dates, time ranges, and recurrence rules. Runs locally on CPU or WebGPU." />
+    <meta name="theme-color" content="#ffffff" />
+    <title>gpu-time — A little model for everyday time.</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="font-sans">
+    <main class="mx-auto max-w-[600px] px-6 py-12 text-center">
+      <header>
+        <a href="/" aria-label="gpu-time home" class="inline-flex h-12 items-center gap-2.5 text-[18px] font-medium tracking-[-0.32px] no-underline">
+          <Logo />
+        </a>
+        <h1 class="mt-10 text-[28px] font-medium leading-[1.2] tracking-[-0.48px]">A little model for everyday time.</h1>
+        <div class="mx-auto mt-4 max-w-[388px] space-y-4 text-[14px] leading-[1.5] tracking-[-0.1px]">
+          <p>“Every Monday from 8pm to 10pm.”<br />Simple to say. A little harder to turn into dates.</p>
+          <p>gpu-time is a small neural parser that turns English time expressions into dates, time ranges, and recurrence rules. Give it a reference date and a timezone. Get back results your app can use.</p>
+          <p>It runs locally, on CPU or WebGPU.<br />No API keys. No server round trips.</p>
+        </div>
+      </header>
+
+      <Demo />
+
+      <section class="mt-10" aria-labelledby="film-title">
+        <h2 id="film-title" class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">From words to time</h2>
+        <p class="mx-auto mb-4 mt-4 max-w-[388px] text-[14px] leading-[1.5] tracking-[-0.1px]">A one-minute look inside the original experiment.</p>
+        <video class="block aspect-video w-full border border-neutral-200 bg-white" controls playsinline preload="metadata" poster="/media/poster.jpg" aria-label="gpu-time original parser walkthrough">
+          <source src="/media/gpu-time-light.mp4" type="video/mp4" />
+          <track kind="captions" src="/media/captions.vtt" srclang="en" label="English" />
+          <p>Your browser does not support this video. <a href="/media/gpu-time-light.mp4">Download the walkthrough</a>.</p>
+        </video>
+        <p class="mx-auto mt-3 max-w-[388px] text-[14px] leading-[1.5] tracking-[-0.1px] text-neutral-500">This film shows an earlier version. The current parser returns dates and rules directly.</p>
+      </section>
+
+      <footer class="mt-10">
+        <h2 class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">A small experiment. Still growing.</h2>
+        <div class="mx-auto mt-4 max-w-[388px] space-y-4 text-[14px] leading-[1.5] tracking-[-0.1px]">
+          <p>Time comes in all kinds of words. Try a one-off plan, a weekly routine, or an overnight shift in the demo above.</p>
+          <p>gpu-time is still learning the edges of everyday language. Unfamiliar wording can trip it up, so check the results and see how it handles the way you write.</p>
+        </div>
+        <a href="#demo-input" class="mt-4 inline-flex items-center justify-center rounded-full bg-black px-3 py-2 text-[14px] font-medium leading-none tracking-[-0.14px] text-white no-underline transition-colors hover:bg-neutral-700">Try your own phrase <span class="ml-2" aria-hidden="true">↗</span></a>
+        <p class="mt-12 text-[14px] leading-[1.5] tracking-[-0.1px] text-black/40">gpu-time<br />A small experiment in understanding time.</p>
+      </footer>
+    </main>
+  </body>
+</html>

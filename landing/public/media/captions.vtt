@@ -1,0 +1,41 @@
+WEBVTT
+
+1
+00:00:00.700 --> 00:00:03.489
+Every Monday, from eight to ten in the evening.
+
+2
+00:00:05.550 --> 00:00:09.383
+Split the sentence into tokens, keeping each word's position.
+
+3
+00:00:10.700 --> 00:00:16.055
+Each word becomes numerical features: its spelling, its shape, and its neighbors.
+
+4
+00:00:17.750 --> 00:00:22.895
+One tiny neural network turns those features into fifteen scores per token.
+
+5
+00:00:25.000 --> 00:00:29.560
+These are raw model scores. For Monday, the highest score is weekday.
+
+6
+00:00:31.700 --> 00:00:35.064
+The model labels the words. Code handles the meaning.
+
+7
+00:00:36.800 --> 00:00:41.197
+Code builds the schedule: every Monday, eight to ten, in New York.
+
+8
+00:00:43.850 --> 00:00:49.612
+Eight in the evening stays fixed, even when daylight saving changes the U T C time.
+
+9
+00:00:51.900 --> 00:00:54.849
+Export calendar rules from the same schedule.
+
+10
+00:00:57.000 --> 00:01:00.817
+G P U time. Plain English. Precise schedules.
