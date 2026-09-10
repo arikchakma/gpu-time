@@ -1,0 +1,105 @@
+{
+  "provenance": {
+    "source": "src/index.ts",
+    "sourceSha256": "2e0e4502ec20cf29d34173f32231c1e171ea9dae43056f0663fbb64f165e0082",
+    "checkpointSha256": "443c98c548dba368f160a627585b3297b60b97b4398a587d86a94f7da74e1ba0",
+    "artifactSha256": "0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac"
+  },
+  "parameters": 24761,
+  "context": {
+    "reference": "2026-10-24T12:00:00Z",
+    "timeZone": "America/New_York",
+    "limit": 3
+  },
+  "examples": [
+    {
+      "text": "Every Monday from 8pm to 10pm",
+      "result": {
+        "occurrences": [
+          {
+            "start": "2026-10-26T20:00:00-04:00",
+            "allDay": false,
+            "end": "2026-10-26T22:00:00-04:00"
+          },
+          {
+            "start": "2026-11-02T20:00:00-05:00",
+            "allDay": false,
+            "end": "2026-11-02T22:00:00-05:00"
+          },
+          {
+            "start": "2026-11-09T20:00:00-05:00",
+            "allDay": false,
+            "end": "2026-11-09T22:00:00-05:00"
+          }
+        ],
+        "rrules": [
+          "DTSTART;TZID=America/New_York:20261026T200000\nDTEND;TZID=America/New_York:20261026T220000\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO"
+        ],
+        "truncated": true,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.7517080000000007,
+          "inferMs": 2.757541,
+          "resolveMs": 2.7912080000000046
+        }
+      }
+    },
+    {
+      "text": "Friday at 10pm until Saturday at 2am",
+      "result": {
+        "occurrences": [
+          {
+            "start": "2026-10-30T22:00:00-04:00",
+            "allDay": false,
+            "end": "2026-10-31T02:00:00-04:00"
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.05225099999999827,
+          "inferMs": 1.230125000000001,
+          "resolveMs": 0.33979200000000276
+        }
+      }
+    },
+    {
+      "text": "in half an hour",
+      "result": {
+        "occurrences": [
+          {
+            "start": "2026-10-24T08:30:00-04:00",
+            "allDay": false
+          }
+        ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.03812500000000085,
+          "inferMs": 0.5786250000000024,
+          "resolveMs": 0.23054099999999522
+        }
+      }
+    },
+    {
+      "text": "ASAP",
+      "result": {
+        "occurrences": [],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
+        "backend": "cpu",
+        "timings": {
+          "tokenizeMs": 0.016542000000001167,
+          "inferMs": 0.12820899999999824,
+          "resolveMs": 0.002625000000001876
+        }
+      }
+    }
+  ]
+}

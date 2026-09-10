@@ -11,3 +11,8 @@ package-lock.json
 src/model/weights.gen.ts
 research/gpu-lexer/runtime.js
 research/gpu-lexer/runtime.d.ts
+video/.venv/
+video/output/
+video/reference/
+video/__pycache__/
+video/legacy/

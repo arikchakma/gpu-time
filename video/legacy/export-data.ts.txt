@@ -1,0 +1,65 @@
+import { writeFileSync } from "node:fs";
+import { createParser, expand, toRecurrenceRules } from "../src/index.js";
+import {
+  tokenize,
+  features,
+  INPUT_SIZE,
+  HIDDEN_SIZE,
+  LABELS,
+} from "../src/model/features.js";
+import packed from "../src/model/weights.json";
+
+const text = "every Monday from 8pm to 10pm";
+const context = {
+  reference: "2026-10-24T12:00:00-04:00",
+  timeZone: "America/New_York",
+};
+const parser = createParser({ backend: "cpu" });
+const parsed = await parser.parse(text, context);
+if (!parsed.ast) throw new Error(JSON.stringify(parsed.diagnostics));
+const tokens = tokenize(text);
+const [w1, b1, w2, b2] = packed.tensors.map((t) => {
+  const bytes = Uint8Array.from(atob(t.data), (c) => c.charCodeAt(0));
+  return Float32Array.from(new Int8Array(bytes.buffer), (n) => n * t.scale);
+});
+const model = tokens.map((token, t) => {
+  const x = features(tokens, t),
+    hidden = b1.slice();
+  for (let i = 0; i < INPUT_SIZE; i++)
+    if (x[i])
+      for (let h = 0; h < HIDDEN_SIZE; h++)
+        hidden[h] += x[i] * w1[i * HIDDEN_SIZE + h];
+  const logits = new Float32Array(LABELS.length);
+  for (let c = 0; c < LABELS.length; c++) {
+    let value = b2[c];
+    for (let h = 0; h < HIDDEN_SIZE; h++)
+      value += Math.max(0, hidden[h]) * w2[h * LABELS.length + c];
+    logits[c] = value;
+  }
+  const best = logits.indexOf(Math.max(...logits));
+  if (LABELS[best] !== parsed.tokens[t].label)
+    throw new Error("Model output mismatch");
+  return {
+    ...parsed.tokens[t],
+    features: Array.from(x),
+    hidden: Array.from(hidden, (n) => Math.max(0, n)),
+    logits: Array.from(logits),
+  };
+});
+writeFileSync(
+  new URL("./data.json", import.meta.url),
+  JSON.stringify(
+    {
+      text,
+      context,
+      labels: LABELS,
+      model,
+      ast: parsed.ast,
+      expansion: expand(parsed.ast, { reference: context.reference, limit: 3 }),
+      rules: toRecurrenceRules(parsed.ast, context.reference),
+    },
+    null,
+    2,
+  ),
+);
+parser.dispose();

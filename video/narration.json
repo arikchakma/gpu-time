@@ -1,0 +1,52 @@
+[
+  {
+    "start": 0.7,
+    "end": 4.8,
+    "text": "Every Monday, from eight to ten in the evening."
+  },
+  {
+    "start": 5.55,
+    "end": 9.7,
+    "text": "Split the sentence into tokens, keeping each word's position."
+  },
+  {
+    "start": 10.7,
+    "end": 16.7,
+    "text": "Each word becomes numerical features: its spelling, its shape, and its neighbors."
+  },
+  {
+    "start": 17.75,
+    "end": 24.0,
+    "text": "One tiny neural network turns those features into fifteen scores per token."
+  },
+  {
+    "start": 25.0,
+    "end": 30.65,
+    "text": "These are raw model scores. For Monday, the highest score is weekday."
+  },
+  {
+    "start": 31.7,
+    "end": 35.8,
+    "text": "The model labels the words. Code handles the meaning."
+  },
+  {
+    "start": 36.8,
+    "end": 42.65,
+    "text": "Code builds the schedule: every Monday, eight to ten, in New York."
+  },
+  {
+    "start": 43.85,
+    "end": 50.65,
+    "text": "Eight in the evening stays fixed, even when daylight saving changes the U T C time."
+  },
+  {
+    "start": 51.9,
+    "end": 55.7,
+    "text": "Export calendar rules from the same schedule."
+  },
+  {
+    "start": 57.0,
+    "end": 61.35,
+    "text": "G P U time. Plain English. Precise schedules."
+  }
+]
