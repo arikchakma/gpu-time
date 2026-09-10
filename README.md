@@ -1,5 +1,10 @@
 # gpu-time
 
+This is the single authoritative project folder. The former `gpu-time-rewrite`
+path is a compatibility symlink to this directory. The retired implementation
+is retained only on the `archive/legacy-gpu-time` Git branch. Existing `video/`
+assets are archived work and do not describe the current model or public API.
+
 A small trained model that reads natural-language time expressions and returns
 actual dates, time ranges and recurrence rules. Inference runs locally on CPU or
 WebGPU. The caller supplies the reference instant and timezone.
@@ -36,7 +41,7 @@ or a reusable instance, use `await createParser({ backend: "webgpu" })`, then
 `parser.parse(text, context)` and `parser.dispose()` when finished.
 
 The package is not published yet; local builds are in `dist/index.js`.
-The playground runs at port 5174 and displays dates and the returned result.
+The playground runs at http://127.0.0.1:5173/ and displays dates and the returned result.
 
 ## Interpretation
 
@@ -127,7 +132,9 @@ npm run bench
 
 The benchmark reuses existing evaluation corpora for comparisons. Use `npm run bench -- --refresh-corpus` only when intentionally changing the evaluation inputs; compare source hashes before comparing accuracy.
 
-`npm run dev` opens the workbench server on port 5174. Browser parity and the
+Browser checks use Node.js 24 or newer to run TypeScript directly; Bun is still used for the build step.
+
+`npm run dev` opens the workbench server on port 5173 and fails if that port is already occupied. Browser parity and the
 benchmark start their own temporary servers. The benchmark installs its pinned
 Python dependencies in `bench/.venv` and writes `bench/results/REPORT.md` and
 `summary.json`.

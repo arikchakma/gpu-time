@@ -16,7 +16,7 @@
     "dist/labels.d.ts"
   ],
   "scripts": {
-    "dev": "vite playground --host 127.0.0.1 --port 5174",
+    "dev": "vite playground --host 127.0.0.1 --port 5173 --strictPort",
     "check": "tsc --noEmit",
     "test": "vitest run",
     "test:grammar": "vitest run tests/grammar-model.test.ts",
@@ -27,7 +27,7 @@
     "gen": "uv run --project training python training/generate.py",
     "evaluate": "bun scripts/evaluate-model.ts",
     "train": "uv run --project training python training/train.py",
-    "test:browser": "bun scripts/build.ts --report-only && bun tests/browser.ts",
+    "test:browser": "bun scripts/build.ts --report-only && node tests/browser.ts",
     "bench": "bun bench/run.ts",
     "format:check": "prettier --check ."
   },
