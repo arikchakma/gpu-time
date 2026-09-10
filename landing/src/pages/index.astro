@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import Demo from '../components/Demo.astro';
+import Video from '../components/Video.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -32,11 +33,7 @@ import Demo from '../components/Demo.astro';
       <section class="mt-10" aria-labelledby="film-title">
         <h2 id="film-title" class="text-[18px] font-medium leading-[1.35] tracking-[-0.32px]">From Words to Time</h2>
         <p class="mx-auto mb-4 mt-4 max-w-[388px] text-[14px] leading-[1.5] tracking-[-0.1px]">Inside the neural model: from words to scores to dates.</p>
-        <video class="block aspect-video w-full border border-neutral-200 bg-white" controls playsinline preload="metadata" poster="/media/poster.jpg?v=chicago-4" aria-label="How the gpu-time neural model works">
-          <source src="/media/gpu-time-neural.mp4?v=chicago-4" type="video/mp4" />
-          <track kind="captions" src="/media/captions.vtt" srclang="en" label="English" />
-          <p>Your browser does not support this video. <a href="/media/gpu-time-neural.mp4?v=chicago-4">Download the walkthrough</a>.</p>
-        </video>
+        <Video />
         <p class="mx-auto mt-3 max-w-[388px] text-[14px] leading-[1.5] tracking-[-0.1px] text-neutral-500">Actual model activations and scores. Connections simplified for clarity.</p>
       </section>
 

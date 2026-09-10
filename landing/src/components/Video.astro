@@ -1,0 +1,134 @@
+<div id="film-player" class="border border-neutral-200 bg-white text-neutral-900">
+  <div class="film-stage relative aspect-video">
+    <video id="film-video" class="block h-full w-full bg-white object-contain" playsinline preload="none" poster="/media/poster.jpg?v=chicago-4" tabindex="0" aria-label="How the gpu-time neural model works">
+      <source src="/media/gpu-time-neural.mp4?v=chicago-4" type="video/mp4" />
+      <track kind="captions" src="/media/captions.vtt" srclang="en" label="English" />
+    </video>
+    <button id="film-play" type="button" aria-label="Play the neural model walkthrough" class="absolute inset-0 grid w-full cursor-pointer place-items-center bg-white">
+      <img src="/media/poster.jpg?v=chicago-4" width="1920" height="1080" alt="" fetchpriority="high" class="absolute inset-0 h-full w-full object-contain" />
+      <span class="relative grid size-12 place-items-center rounded-full bg-black text-white">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z" /></svg>
+      </span>
+    </button>
+  </div>
+  <div class="film-controls flex h-12 items-center gap-2 border-t border-neutral-200 px-2 sm:px-3" role="group" aria-label="Video controls">
+    <button id="film-toggle" class="film-control" type="button" aria-label="Play">
+      <svg class="play-icon" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z" /></svg>
+      <svg class="pause-icon" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z" /></svg>
+    </button>
+    <input id="film-seek" class="film-seek min-w-8 flex-1" type="range" min="0" max="91" step="0.1" value="0" aria-label="Seek video" aria-valuetext="0:00 of 1:31" disabled />
+    <span class="shrink-0 text-[11px] tabular-nums text-neutral-500"><span id="film-time">0:00</span><span aria-hidden="true"> / </span><span id="film-duration">1:31</span></span>
+    <button id="film-mute" class="film-control" type="button" aria-label="Mute" aria-pressed="false">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 5-6 4H2v6h3l6 4z" /><path class="sound-icon" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" /><path class="muted-icon" d="m16 9 6 6m0-6-6 6" /></svg>
+    </button>
+    <button id="film-captions" class="film-control text-[11px] font-medium" type="button" aria-label="Show captions" aria-pressed="false">CC</button>
+    <button id="film-fullscreen" class="film-control" type="button" aria-label="Enter fullscreen">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4" /></svg>
+    </button>
+  </div>
+</div>
+<p id="film-error" class="mt-3 text-[14px] text-neutral-500" role="status" hidden></p>
+<noscript><p class="mt-3 text-[14px]"><a href="/media/gpu-time-neural.mp4?v=chicago-4">Watch the walkthrough</a></p></noscript>
+
+<style>
+  .film-control { display: grid; place-items: center; width: 28px; height: 32px; flex-shrink: 0; border-radius: 5px; cursor: pointer; }
+  .film-control:hover { background: #f5f5f5; }
+  .film-control:focus-visible, #film-play:focus-visible, .film-seek:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+  .film-control[aria-pressed="true"] { background: #ededed; }
+  .pause-icon, .muted-icon { display: none; }
+  #film-player[data-playing] .play-icon, #film-player[data-muted] .sound-icon { display: none; }
+  #film-player[data-playing] .pause-icon, #film-player[data-muted] .muted-icon { display: block; }
+  .film-seek { appearance: none; height: 18px; cursor: pointer; background: transparent; }
+  .film-seek::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(to right, #171717 var(--progress, 0%), #e5e5e5 var(--progress, 0%)); }
+  .film-seek::-moz-range-track { height: 2px; background: #e5e5e5; }
+  .film-seek::-moz-range-progress { height: 2px; background: #171717; }
+  .film-seek::-webkit-slider-thumb { appearance: none; width: 8px; height: 8px; margin-top: -3px; background: #171717; border-radius: 50%; }
+  .film-seek::-moz-range-thumb { width: 8px; height: 8px; border: none; background: #171717; border-radius: 50%; }
+  #film-player:fullscreen { display: flex; flex-direction: column; width: 100%; height: 100%; border: none; }
+  #film-player:fullscreen .film-stage { flex: 1; min-height: 0; aspect-ratio: auto; }
+  #film-player:fullscreen .film-controls { flex-shrink: 0; }
+</style>
+
+<script>
+  const player = document.querySelector<HTMLDivElement>('#film-player')!;
+  const video = document.querySelector<HTMLVideoElement>('#film-video')!;
+  const cover = document.querySelector<HTMLButtonElement>('#film-play')!;
+  const toggle = document.querySelector<HTMLButtonElement>('#film-toggle')!;
+  const seek = document.querySelector<HTMLInputElement>('#film-seek')!;
+  const mute = document.querySelector<HTMLButtonElement>('#film-mute')!;
+  const captions = document.querySelector<HTMLButtonElement>('#film-captions')!;
+  const fullscreen = document.querySelector<HTMLButtonElement>('#film-fullscreen')!;
+  const time = document.querySelector<HTMLSpanElement>('#film-time')!;
+  const duration = document.querySelector<HTMLSpanElement>('#film-duration')!;
+  const error = document.querySelector<HTMLParagraphElement>('#film-error')!;
+  const stamp = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+
+  async function play() {
+    error.hidden = true;
+    try {
+      if (video.ended) video.currentTime = 0;
+      await video.play();
+    } catch (reason) {
+      if (reason instanceof DOMException && reason.name === 'AbortError') return;
+      error.textContent = 'The video could not start. Please try again.';
+      error.hidden = false;
+    }
+  }
+  const togglePlayback = () => { if (video.paused) void play(); else video.pause(); };
+  cover.addEventListener('click', () => void play());
+  toggle.addEventListener('click', togglePlayback);
+  video.addEventListener('click', togglePlayback);
+  video.addEventListener('playing', () => {
+    if (!cover.hidden) { cover.hidden = true; toggle.focus(); }
+  });
+  for (const event of ['play', 'pause', 'ended']) video.addEventListener(event, () => {
+    player.toggleAttribute('data-playing', !video.paused && !video.ended);
+    toggle.setAttribute('aria-label', video.ended ? 'Replay' : video.paused ? 'Play' : 'Pause');
+  });
+  video.addEventListener('loadedmetadata', () => {
+    if (Number.isFinite(video.duration)) {
+      seek.max = String(video.duration);
+      duration.textContent = stamp(video.duration);
+      seek.disabled = false;
+    }
+  });
+  video.addEventListener('timeupdate', () => {
+    seek.value = String(video.currentTime);
+    seek.style.setProperty('--progress', `${video.currentTime / (video.duration || 91) * 100}%`);
+    time.textContent = stamp(video.currentTime);
+    seek.setAttribute('aria-valuetext', `${stamp(video.currentTime)} of ${duration.textContent}`);
+  });
+  seek.addEventListener('input', () => { video.currentTime = Number(seek.value); });
+  mute.addEventListener('click', () => { video.muted = !video.muted; });
+  video.addEventListener('volumechange', () => {
+    player.toggleAttribute('data-muted', video.muted);
+    mute.setAttribute('aria-label', video.muted ? 'Unmute' : 'Mute');
+    mute.setAttribute('aria-pressed', String(video.muted));
+  });
+  captions.addEventListener('click', () => {
+    const track = video.textTracks[0];
+    if (!track) return;
+    const show = track.mode !== 'showing';
+    track.mode = show ? 'showing' : 'disabled';
+    captions.setAttribute('aria-pressed', String(show));
+    captions.setAttribute('aria-label', show ? 'Hide captions' : 'Show captions');
+  });
+  fullscreen.addEventListener('click', async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else if (player.requestFullscreen) await player.requestFullscreen();
+      else (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen?.();
+    } catch {
+      error.textContent = 'Fullscreen is unavailable in this browser.';
+      error.hidden = false;
+    }
+  });
+  document.addEventListener('fullscreenchange', () => fullscreen.setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'));
+  video.addEventListener('keydown', event => {
+    if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); togglePlayback(); }
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      if (Number.isFinite(video.duration)) video.currentTime = Math.max(0, Math.min(video.duration, video.currentTime + (event.key === 'ArrowRight' ? 5 : -5)));
+    }
+  });
+</script>
