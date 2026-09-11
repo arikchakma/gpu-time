@@ -130,12 +130,14 @@ try {
         0,
         `${width}px: initial layout shift`,
       );
+      const beforeTyping = await page.locator("#demo-dates").innerText();
       await page.locator("#demo-input").fill("tomorrow at 9am");
-      await page.locator("#demo-submit").click();
       await page.waitForFunction(
-        () =>
+        (before) =>
           document.querySelector("#demo-result").getAttribute("aria-busy") ===
-          "false",
+            "false" &&
+          document.querySelector("#demo-dates").innerText !== before,
+        beforeTyping,
       );
       assert.equal(await page.locator("#demo-dates li").count(), 1);
       assert.match(
@@ -146,9 +148,10 @@ try {
       const phrase = await card.getAttribute("data-phrase");
       await card.click();
       await page.waitForFunction(
-        () =>
+        (text) =>
           document.querySelector("#demo-result").getAttribute("aria-busy") ===
-          "false",
+            "false" && document.querySelector("#demo-input").value === text,
+        phrase,
       );
       assert.equal(
         await page.locator("#demo-input").inputValue(),
@@ -246,12 +249,13 @@ try {
     });
   });
   await cpuOnly.goto(url);
+  const beforeCpuTyping = await cpuOnly.locator("#demo-dates").innerText();
   await cpuOnly.locator("#demo-input").fill("tomorrow at 9am");
-  await cpuOnly.locator("#demo-submit").click();
   await cpuOnly.waitForFunction(
-    () =>
+    (before) =>
       document.querySelector("#demo-result").getAttribute("aria-busy") ===
-      "false",
+        "false" && document.querySelector("#demo-dates").innerText !== before,
+    beforeCpuTyping,
   );
   assert.equal(
     await cpuOnly.locator("#demo-dates li").count(),

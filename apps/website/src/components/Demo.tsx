@@ -13,6 +13,7 @@ export function Demo({ initial }: { initial: Formatted }) {
   const layer = useRef<HTMLDivElement>(null);
   const parser = useRef<Parser>(undefined);
   const gpu = useRef(true);
+  const seq = useRef(0);
 
   async function cpuParser() {
     gpu.current = false;
@@ -44,6 +45,7 @@ export function Demo({ initial }: { initial: Formatted }) {
 
   async function run(value: string) {
     if (!value.trim()) return;
+    const ticket = ++seq.current;
     setBusy(true);
     const reference = new Date();
     try {
@@ -52,6 +54,7 @@ export function Demo({ initial }: { initial: Formatted }) {
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         limit: 3,
       });
+      if (ticket !== seq.current) return;
       setResult(
         format(
           parsed,
@@ -60,13 +63,14 @@ export function Demo({ initial }: { initial: Formatted }) {
         ),
       );
     } catch {
+      if (ticket !== seq.current) return;
       setResult({
         rows: [],
         status: "The parser could not run. Please reload and try again.",
         context: "",
       });
     } finally {
-      setBusy(false);
+      if (ticket === seq.current) setBusy(false);
     }
   }
 
@@ -74,7 +78,6 @@ export function Demo({ initial }: { initial: Formatted }) {
     function pick(event: Event) {
       const phrase = (event as CustomEvent<string>).detail;
       setText(phrase);
-      void run(phrase);
       document
         .querySelector("#demo-card")
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -82,6 +85,13 @@ export function Demo({ initial }: { initial: Formatted }) {
     window.addEventListener("demo:example", pick);
     return () => window.removeEventListener("demo:example", pick);
   }, []);
+
+  // The server already parsed the default phrase, so the first render skips a run.
+  useEffect(() => {
+    if (text === demoDefault && seq.current === 0) return;
+    const timer = setTimeout(() => void run(text), 150);
+    return () => clearTimeout(timer);
+  }, [text]);
 
   return (
     <>
@@ -107,12 +117,12 @@ export function Demo({ initial }: { initial: Formatted }) {
             void run(text);
           }}
         >
-          <div className="relative pr-21.5">
+          <div className="relative">
             <div
               id="demo-highlight"
               ref={layer}
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 right-21.5 m-0 overflow-hidden whitespace-pre border-0 p-4 font-sans text-base leading-6.5 tracking-[-0.2px]"
+              className="pointer-events-none absolute inset-y-0 left-0 right-0 m-0 overflow-hidden whitespace-pre border-0 p-4 font-sans text-base leading-6.5 tracking-[-0.2px]"
             >
               <Mark text={text} />
             </div>
@@ -126,7 +136,6 @@ export function Demo({ initial }: { initial: Formatted }) {
               required
               spellCheck={false}
               autoComplete="off"
-              disabled={busy}
               onChange={(event) => setText(event.target.value)}
               onScroll={() => {
                 if (layer.current && input.current)
@@ -135,14 +144,6 @@ export function Demo({ initial }: { initial: Formatted }) {
               className="relative m-0 w-full border-0 bg-transparent p-4 font-sans text-base leading-6.5 tracking-[-0.2px] text-transparent caret-black outline-none focus-visible:outline-none"
             />
           </div>
-          <button
-            id="demo-submit"
-            type="submit"
-            disabled={busy}
-            className="absolute right-3 top-1/2 inline-flex h-7 -translate-y-1/2 items-center justify-center rounded-box bg-black px-3.5 text-note font-medium tracking-[-0.14px] text-white transition-colors hover:bg-neutral-700 disabled:opacity-50"
-          >
-            Parse
-          </button>
         </form>
 
         {/* One tinted block, one rule: the answer is the only filled region. */}
