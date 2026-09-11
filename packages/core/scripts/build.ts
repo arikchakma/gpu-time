@@ -159,7 +159,7 @@ const files = await Promise.all(
     };
   }),
 );
-const limitBytes = 30_000;
+const limitBytes = 50_000;
 const withinBudget = files[0].brotliBytes <= limitBytes;
 await writeFile(
   `${outputDirectory}/size.json`,

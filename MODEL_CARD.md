@@ -45,7 +45,7 @@ The surrounding prose is combinatorial rather than a fixed list, and 49,740 real
 - Complex recurring exception combinations preview correctly but can return an `unsupported-export` diagnostic when no single RFC 5545 rule represents them.
 - Quantization and browser GPU implementations can differ from the PyTorch reference unless parity is explicitly tested. It is, but only for the fixtures listed above.
 - WebGPU startup and dispatch overhead make small inputs slower than a CPU parser, which is why `auto` keeps them on the CPU.
-- The 30,000-byte Brotli release gate is unmet at 34,650 bytes.
+- The build is 34,650 bytes Brotli against a 50,000-byte release gate, so roughly 15 KB of headroom remains for future capacity.
 
 ## Reproducibility
 

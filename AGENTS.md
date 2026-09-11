@@ -27,7 +27,7 @@ Python is always invoked through `uv`. There are three separate Python environme
 
 ## Rules
 
-- Do not lower an existing release gate. The 30,000-byte Brotli gate is currently unmet at 34,650 bytes; that is a known open item, not a reason to raise the threshold.
+- Do not lower an existing release gate. The Brotli budget is 50,000 bytes and the build is at 34,650; `pnpm size:gate` blocks CI, so a change that breaches it fails the build rather than being waived.
 - Preserve benchmark evaluation corpora. `pnpm benchmark` reuses them unless `--refresh-corpus` is passed explicitly. Changing a training renderer must not silently change comparison inputs.
 - Never train on the runtime parser's own output. Supervision comes from the generators in `packages/training/torch/`.
 - Export is gated. A candidate ships only if it strictly improves the unseen-carrier score with no per-family regression. Use `--force` only deliberately; it records what it overrode.

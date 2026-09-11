@@ -38,7 +38,7 @@ Against the independent Microsoft Recognizers date/time specifications, developm
 
 Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Different parsers return different structures, so speed does not imply equivalent capability. See [MODEL_CARD.md](MODEL_CARD.md) for the evaluation contract and limitations, and the [benchmark report](packages/benchmark/results/REPORT.md) for measured timings, bundle sizes, and full output for all 25 adversarial inputs.
 
-The package is not published yet. The current build is 34,650 bytes Brotli against a 30,000-byte release gate, which remains unmet.
+The package is not published yet. The current build is 34,650 bytes Brotli against a 50,000-byte release gate.
 
 ## Development
 

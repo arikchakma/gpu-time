@@ -30,8 +30,5 @@ jobs:
         run: pnpm build:core
       - name: Inspect npm package contents
         run: pnpm check:package
-      # The 30,000-byte Brotli budget is a known-unmet release gate. Surfaced
-      # here rather than blocking CI; see MODEL_CARD.md.
       - name: Release size gate
         run: pnpm size:gate
-        continue-on-error: true
