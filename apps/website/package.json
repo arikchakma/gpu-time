@@ -7,7 +7,7 @@
     "dev": "astro dev --host 127.0.0.1 --port 4321",
     "build": "pnpm --filter gpu-time build && astro build",
     "preview": "astro preview --host 127.0.0.1 --port 4321",
-    "check": "astro check",
+    "check": "pnpm --filter gpu-time build && astro check",
     "prepare:video": "bash scripts/prepare-video.sh",
     "prepare:thumbnail": "node scripts/prepare-thumbnail.mjs",
     "test:browser": "pnpm run build && node tests/first-load.mjs",

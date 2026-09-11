@@ -20,14 +20,14 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Build publishable core
+        run: pnpm build:core
       - name: Core tests
         run: pnpm test:core
       - name: Benchmark utility tests
         run: pnpm test:benchmark
       - name: Website type check
         run: pnpm test:website
-      - name: Build publishable core
-        run: pnpm build:core
       - name: Inspect npm package contents
         run: pnpm check:package
       - name: Release size gate
