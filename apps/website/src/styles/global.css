@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius-box: 14px;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+html {
+  background: #fff;
+  color: #000;
+}
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: #dce9f9;
+}
+a {
+  text-underline-offset: 4px;
+}
+
+/* Meaning colors. Shared by the live phrase, the code sample and the examples. */
+.hl-date {
+  --hl: #cfe3fd;
+}
+.hl-time {
+  --hl: #fde8b4;
+}
+.hl-repeat {
+  --hl: #e2dcfd;
+}
+.hl-duration {
+  --hl: #cfefd8;
+}
+.hl {
+  background: var(--hl);
+  color: #171717;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px var(--hl);
+}
+.sw {
+  background: var(--hl);
+}
+
+/* The highlight layer sits behind the input, so both must lay text out identically. */
+.demo-field {
+  font: inherit;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+  padding: 24px 16px;
+  border: 0;
+  margin: 0;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #737373;
+}

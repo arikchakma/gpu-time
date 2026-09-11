@@ -6,13 +6,16 @@ if [ ! -x video/.venv/bin/python ]; then
   uv venv video/.venv --python 3.13
 fi
 uv pip install --quiet --python video/.venv/bin/python -r video/requirements.txt
-test -s video/data.json
-echo "Rendering archived video data, not the current parser. See video/README.md." >&2
+
+npx tsx --import ./packages/core/scripts/register.mjs video/export-data.ts
 mkdir -p video/output
-video/.venv/bin/manimgl video/launch.py Launch -w --hd \
-  --config_file video/custom_config.yml \
-  --video_dir video/output --file_name gpu-time-master
-ffmpeg -hide_banner -loglevel error -y -i video/output/gpu-time-master.mp4 \
-  -c copy -movflags +faststart video/output/gpu-time-launch.mp4
-ffmpeg -hide_banner -loglevel error -y -ss 30 -i video/output/gpu-time-launch.mp4 \
-  -frames:v 1 video/output/gpu-time-launch-poster.jpg
+video/.venv/bin/manimgl video/gpu_time_pipeline.py GpuTimePipeline -w --hd \
+  --config_file video/custom_config.yml --video_dir video/output --file_name silent
+video/.venv/bin/python - <<'PY'
+import json, subprocess
+info = json.loads(subprocess.check_output([
+    'ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'json',
+    'video/output/silent.mp4'
+]))
+assert 91 <= float(info['format']['duration']) < 91.1, 'The render did not complete'
+PY

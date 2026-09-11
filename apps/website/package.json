@@ -1,0 +1,27 @@
+{
+  "name": "@gpu-time/website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1 --port 4321",
+    "build": "pnpm --filter gpu-time build && astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4321",
+    "check": "astro check",
+    "prepare:video": "bash scripts/prepare-video.sh",
+    "prepare:thumbnail": "node scripts/prepare-thumbnail.mjs",
+    "test:browser": "pnpm run build && node tests/first-load.mjs",
+    "test:highlight": "node tests/highlight.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^7.3.2",
+    "gpu-time": "workspace:*",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "playwright": "1.63.0",
+    "typescript": "^5.9.3"
+  }
+}

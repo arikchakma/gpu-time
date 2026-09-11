@@ -1,18 +1,6 @@
 # gpu-time
 
-This is the single authoritative project folder. The former `gpu-time-rewrite`
-path is a compatibility symlink to this directory. The retired implementation
-is retained only on the `archive/legacy-gpu-time` Git branch. Existing `video/`
-assets are archived work and do not describe the current model or public API.
-
-A small trained model that reads natural-language time expressions and returns
-actual dates, time ranges and recurrence rules. Inference runs locally on CPU or
-WebGPU. The caller supplies the reference instant and timezone.
-
-The public API returns results directly. There is no AST or token-label step for
-consumers. Calendar normalization stays separate from neural inference internally.
-
-## Use
+`gpu-time` is an experimental neural parser for English time expressions. One small learned model reads natural language and returns actual dates, time ranges, and RFC 5545 recurrence rules. Inference runs locally on CPU or WebGPU; nothing is sent anywhere.
 
 ```js
 import { parse } from "gpu-time";
@@ -23,140 +11,73 @@ const result = await parse("Sat Sun 1pm-8pm Mon 10pm-12am", {
   limit: 12,
 });
 
-console.log(result.occurrences);
-// Saturday and Sunday: 13:00–20:00
-// Monday: 22:00–Tuesday 00:00
-console.log(result.rrules);
-console.log(result.diagnostics);
+console.log(result.occurrences); // ISO start/end strings and an allDay flag
+console.log(result.rrules); // RFC 5545 properties for repeating expressions
+console.log(result.diagnostics); // why an expression was rejected
 ```
 
-`occurrences` contains ISO start/end strings and an `allDay` flag. Explicit
-recurrence produces a bounded preview plus RFC 5545 properties in `rrules`.
-`truncated` indicates that more occurrences exist beyond the preview. Invalid
-expressions return diagnostics rather than fabricated dates. Invalid caller
-context, such as an unknown timezone, rejects the call.
+The package exports `parse(text, context)`, `parseMany(texts, context)`, and `defineParser(options)` for a reusable instance with explicit backend selection. The caller always supplies the reference instant and timezone — they are calendar inputs, never model inputs. There is no public AST or token-label output.
 
-Use `parseMany(texts, context)` for several inputs. For explicit backend selection
-or a reusable instance, use `await defineParser({ backend: "webgpu" })`, then
-`parser.parse(text, context)` and `parser.dispose()` when finished.
+## How it works
 
-The package is not published yet; local builds are in `dist/index.js`.
-The playground runs at http://127.0.0.1:5173/ and displays dates and the returned result.
+A mechanical CPU pass splits the input into tokens and packs each one into a sparse feature row: character shape, casing, digit and punctuation class, lexicon membership, and neighbor hashes. No grammar, regex table, or date library runs on the CPU.
 
-## Interpretation
+The model embeds those rows into learned channels and runs a bidirectional affine scan so every token sees its whole sentence. A classifier assigns each token one of 35 semantic roles — clock hour, weekday, ordinal, recurrence marker, range separator, and so on — plus a boundary score that cuts the sequence into independent expressions. The WebGPU path evaluates the scan in parallel blocks with exact block prefixes, so block boundaries do not reset context.
 
-- Bare weekday lists are upcoming one-off dates. Explicit recurrence and
-  conventional day groups such as weekdays produce repeated occurrences.
-- Each time window applies to the days in its group. An earlier end clock crosses
-  midnight.
-- Missing AM/PM uses the partner endpoint where possible: `9am to 5` is 09:00–17:00.
-- Timezone, daylight-saving transitions, reference dates and expansion limits are
-  handled by calendar code. They are not model inputs.
-- `reference` is an ISO string, for example `new Date().toISOString()`.
-- `until` restricts a preview. Without it, recurrence has a one-year preview horizon.
-- Optional context policies control bare weekdays, next weekdays and week starts.
-  `dateOrder` is a parser option for ambiguous numeric dates.
+Everything after that is ordinary TypeScript. Predicted roles compile to a typed schedule, and a calendar resolver turns the schedule into concrete instants using the caller's timezone, DST rules, reference date, and expansion limit. Keeping calendar arithmetic out of the model is deliberate: timezone handling has exact answers, and a model should not be guessing them.
 
-## Natural wording
+`backend: "auto"` runs on WebGPU once a batch reaches 32 expressions or 512 tokens, and on CPU below that, where dispatch overhead dominates. Asking for `"webgpu"` explicitly disables the built-in CPU fallback, so the caller owns that failure path.
 
-The parser supports these concrete forms, including spoken numbers:
+## Accuracy
 
-| Form                   | Examples                                                                                  |
-| ---------------------- | ----------------------------------------------------------------------------------------- |
-| Clocks                 | `eight forty`, `ten thirty-five pm`, `seven o'clock`                                      |
-| Clock offsets          | `half past seven`, `quarter to six`                                                       |
-| Day-part qualifiers    | `eight in the morning`, `ten at night`                                                    |
-| Combined quantities    | `for three hours and thirty minutes`, `in two days and six hours`                         |
-| Fractional durations   | `in half an hour`, `for an hour and a half`, `for 2.5 hours`                              |
-| Dates in sentences     | `I'll be back on the 15th`, `book dinner for October 2 at eight pm`                       |
-| Date ranges            | `from September 4 through September 8`                                                    |
-| Cross-date time ranges | `Friday at 10pm until Saturday at 2am`                                                    |
-| Calendar periods       | `this September`, `next month`, `the first week of October`                               |
-| Recurrence             | `every other Friday`, `the last Friday of each month`                                     |
-| Bounds and exceptions  | `weekdays at nine until December 20`, `every Monday except the first Monday of the month` |
-| Shared times           | `every weekday at nine am and five pm`                                                    |
+The model is trained on generated supervision, and the honest headline is mixed. On the 1,000-case unseen sentence-frame evaluation — sentence shapes never seen in training, scored on strict whole-expression equality — it reaches **511/1000**. Many of those failures contain the correct temporal result plus a spurious second interpretation drawn from surrounding prose. That is the real remaining limitation.
 
-A clock without AM/PM uses the existing 24-hour interpretation. `twelve at night` means midnight. `03/04/2027`
-uses the parser's `dateOrder` (`MDY` by default); unambiguous dates such as
-`21/04/2016` retain their meaning. Yearless named dates retain the reference year.
+Held-in numbers are much higher and much less meaningful: 4,996/5,000 on the original generated interpretations and 997/1,000 on the newer phrasings. Both share rendering families with training and are development metrics, not language accuracy.
 
-Date-only ranges include both named days and return an exclusive end at midnight
-after the final day. Explicit clock endpoints return the stated end instant.
-`this September` covers the whole month. Numbered weeks of a named month are
-seven-day blocks beginning on its first day; the final block ends at month end.
-Combined quantities apply in spoken order: calendar days preserve local wall
-clock time across DST, then hours/minutes add elapsed time. Fractional calendar
-days, months and years are not assigned an implicit duration.
+Against the independent Microsoft Recognizers date/time specifications, development agreement is **156/563**. Its reserved test split is not used for model selection.
 
-Each shared clock produces its own recurrence rule. A weekly weekday with a
-monthly ordinal exception can be exported as the remaining ordinal weekdays
-of each month. More complex recurring exception combinations return previews
-and an `unsupported-export` diagnostic when a single rule cannot represent them.
-Vague expressions such as `ASAP` and `after work` have no invented clock value.
+Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Different parsers return different structures, so speed does not imply equivalent capability. See [MODEL_CARD.md](MODEL_CARD.md) for the evaluation contract and limitations, and the [benchmark report](packages/benchmark/results/REPORT.md) for measured timings, bundle sizes, and full output for all 25 adversarial inputs.
 
-The model is trained, but broader accuracy and release requirements remain open.
+The package is not published yet. The current build is 35,058 bytes Brotli against a 30,000-byte release gate, which remains unmet.
 
-## Results
+## Development
 
-The [benchmark report](bench/results/REPORT.md) contains measured browser and
-Python parsing times, bundle sizes, and actual outputs for all 25 adversarial
-inputs. Different parsers return different structures, so speed does not imply
-equivalent capability.
-
-The exported model passes the [adversarial development checks](bench/results/model-structure.json).
-These fixtures influenced implementation and training. They are not an untouched
-accuracy test. [WebGPU parity](training/parity-gpu.json) checks 10,000 sequences
-against CPU inference and 512 sequences directly against PyTorch.
-
-The report also includes independent Microsoft date/time specifications. Current
-agreement is far below the release target. Its reserved test split is not used
-for model selection. The separate generated-schedule test shares rendering
-families with training and must not be presented as independent language accuracy.
-
-The [model card](training/export-report.json) includes the checkpoint hash,
-training ancestry, weight size, and measured token metrics.
-The [completion audit](PROJECT_STATUS.md) lists the remaining release work.
-
-## Develop and reproduce
-
-The development tools are Node.js, Bun, uv, Python 3.13, and Chrome with WebGPU.
+Install with Node.js 24+, pnpm 11, uv, Python 3.13, and Chrome with WebGPU:
 
 ```sh
-npm ci
-npm run dev
-npm test
-npm run check
-npm run test:browser
-npm run bench
+pnpm install
+pnpm test
+pnpm build:core
 ```
 
-The benchmark reuses existing evaluation corpora for comparisons. Use `npm run bench -- --refresh-corpus` only when intentionally changing the evaluation inputs; compare source hashes before comparing accuracy.
-
-Browser checks use Node.js 24 or newer to run TypeScript directly; Bun is still used for the build step.
-
-`npm run dev` opens the workbench server on port 5173 and fails if that port is already occupied. Browser parity and the
-benchmark start their own temporary servers. The benchmark installs its pinned
-Python dependencies in `bench/.venv` and writes `bench/results/REPORT.md` and
-`summary.json`.
+Generated training data, downloaded corpora, training runs, and local virtual environments are intentionally ignored. To prepare data and train:
 
 ```sh
-# Build even when investigating a missed size target.
-bun scripts/build.ts --report-only
-
-# Strict release build: fails above 30,000 bytes Brotli.
-npm run build
-
-# Train from generated supervision.
-npm run train -- --run experiment --storage f32 --batch 1024
-
-# Export a trained checkpoint, then rebuild and evaluate it.
-uv run --project training python training/export.py \
-  --checkpoint training/runs/experiment/best.pt
-bun scripts/build.ts --report-only
-npm run evaluate
+pnpm gen
+pnpm train -- --run experiment --storage f32 --batch 1024
 ```
 
-Training uses generated labeled spans, not labels from the runtime parser.
-The original semantic generator covers 26 phrase families; `training/natural.py` adds 16 natural-phrasing families. Run folders contain checkpoints,
-measured reports, and source snapshots. Large training data and checkpoints are
-kept outside the distribution bundle.
+Runs are written under `packages/training/runs/`. Export a checkpoint to regenerate the shipped weights, then rebuild and evaluate:
+
+```sh
+pnpm --filter @gpu-time/training export -- --checkpoint runs/experiment/best.pt
+pnpm build:core
+pnpm evaluate
+```
+
+The tracked `packages/training/active/` directory holds the promoted model report, provenance, and the CPU/GPU parity fixtures needed to verify a clean clone. `pnpm test:browser` checks the model and packaged runtime on real WebGPU. `pnpm benchmark` reuses existing evaluation corpora unless `--refresh-corpus` is passed explicitly; compare source hashes before comparing accuracy.
+
+## Repository
+
+- `packages/core`: publishable browser package, WGSL kernel, and calendar resolver
+- `packages/training`: corpus generation, PyTorch training, evaluation, export, and provenance
+- `packages/benchmark`: size, browser performance, and cross-library comparisons
+- `apps/website`: project site and interactive demo
+- `apps/playground`: developer UI with backend selection, a worker path, and live library comparison
+- `video`: explainer source and storyboard
+
+Architecture details live in [architecture.md](architecture.md). Model provenance and limitations are in [MODEL_CARD.md](MODEL_CARD.md). Third-party attribution is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## License
+
+MIT © Arik Chakma. Comparison libraries and evaluation corpora retain their own licenses.

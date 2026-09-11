@@ -1,0 +1,107 @@
+{
+  "model": "0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac",
+  "generatedWeightsHashMatches": true,
+  "matchingExportFiles": 5,
+  "results": [
+    {
+      "checkpoint": "runs/natural-language-final/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/natural-language-v2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/direct-results/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/clock-periods/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/prose-casing/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/prose-durations/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/prose-context/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/timezone-free/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/caller-timezone/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/natural-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/timezone-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/range-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/written-time/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/complete-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/modifier-context/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/grammar-contrasts/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/grammar-context/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "runs/core-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 8
+    },
+    {
+      "checkpoint": "runs/grammar-coverage/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 8
+    },
+    {
+      "checkpoint": "runs/compact/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 8
+    }
+  ]
+}

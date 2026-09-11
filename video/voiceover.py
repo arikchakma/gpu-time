@@ -9,13 +9,10 @@ from kokoro_onnx import Kokoro
 
 root = Path("video/output")
 segments = json.loads(Path("video/narration.json").read_text())
-duration = float(json.loads(subprocess.check_output([
-    "ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json",
-    str(root / "gpu-time-launch.mp4")
-]))["format"]["duration"])
+duration = 91.0
 rate = 48000
 voice = np.zeros(round(duration*rate), dtype=np.float64)
-kokoro = Kokoro(str(root/"tts-models/kokoro-v1.0.onnx"), str(root/"tts-models/voices-v1.0.bin"))
+kokoro = Kokoro("video/output/tts-models/kokoro-v1.0.onnx", "video/output/tts-models/voices-v1.0.bin")
 manifest = []
 (root/"narration").mkdir(exist_ok=True)
 for i, segment in enumerate(segments):

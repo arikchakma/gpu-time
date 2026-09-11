@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-if [ ! -f video/output/gpu-time-launch.mp4 ]; then
+if [ ! -f video/output/silent.mp4 ]; then
   bash video/render.sh
 fi
 uv pip install --quiet --python video/.venv/bin/python -r video/voice-requirements.txt
@@ -16,4 +16,4 @@ for model_file in kokoro-v1.0.onnx voices-v1.0.bin; do
 done
 video/.venv/bin/python video/voiceover.py
 video/.venv/bin/python video/music.py
-video/.venv/bin/python video/mix-voiceover.py
+video/.venv/bin/python video/mix.py

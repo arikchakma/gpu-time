@@ -1,0 +1,24 @@
+{
+  "name": "@gpu-time/playground",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview",
+    "qa": "node --experimental-strip-types tests/qa.ts"
+  },
+  "dependencies": {
+    "chrono-node": "2.10.1",
+    "gpu-time": "workspace:*",
+    "rrule": "2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "@webgpu/types": "0.1.72",
+    "playwright": "1.63.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.6"
+  }
+}

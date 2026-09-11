@@ -8,7 +8,7 @@ import numpy as np
 from scipy.signal import butter, sosfilt
 
 RATE, FPS = 48000, 60
-SOURCE = Path(sys.argv[1] if len(sys.argv) > 1 else "video/output/gpu-time-launch.mp4")
+SOURCE = Path(sys.argv[1] if len(sys.argv) > 1 else "video/output/silent.mp4")
 duration = float(json.loads(subprocess.check_output([
     "ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(SOURCE)
 ]))["format"]["duration"])
@@ -39,7 +39,7 @@ def env(t, attack, release):
 
 
 def chord_at(time):
-    return chords[int(max(0, time)//5) % 4] if time < 55 else chords[0]
+    return chords[int(max(0, time)//5) % 4] if time < duration-7 else chords[0]
 
 
 def place(bus, signal, start, level=1, pan=0):
@@ -67,7 +67,7 @@ def keys(note, length=2.8):
 
 
 # Warm, continuous harmony with slower felt-key phrases; no unrelated clicks or hats.
-for block in range(12):
+for block in range(int(np.ceil(duration/5))):
     start = block*5
     notes, bass = chord_at(start)
     length = min(7.2, duration-start+0.3)
@@ -78,9 +78,9 @@ for block in range(12):
             phase = 2*np.pi*hz(note)*2**(cents/1200)*t+j*0.8
             pad[:, channel] += (np.sin(phase)+0.10*np.sin(2*phase))/len(notes)
     pad *= env(t, 1.45, 2.0)[:, None]
-    place(bed, pad, start-0.30, 0.15 if start < 43 else 0.17)
+    place(bed, pad, start-0.30, 0.15 if start < duration-19 else 0.17)
     for i, offset in enumerate([0.75, 2.0, 3.25]):
-        if start+offset > 55:
+        if start+offset > duration-7:
             break
         note = notes[[2, 4, 1][i]]+12
         signal = keys(note)
@@ -157,6 +157,9 @@ motion("tokenize", 0.010)
 point("tokens settled", events["tokenize"]["end"], level=0.042)
 reveals("features", 0.018)
 motion("context_scan", 0.008, 0.15)
+motion("local_mix", 0.008)
+motion("forward_scan", 0.010, -0.2, tonal=True)
+motion("backward_scan", 0.010, 0.2, tonal=True)
 motion("network_focus", 0.011, -0.2)
 point("model input arrived", events["network_focus"]["end"], level=0.032, pan=-0.3)
 motion("network_encode", 0.014, -0.1, tonal=True)
