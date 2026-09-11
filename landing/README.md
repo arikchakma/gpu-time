@@ -27,7 +27,14 @@ input and both lay out text with the same `.demo-field` metrics. Run
 
 The initial example is rendered at build time with explicit UTC context. Loading
 JavaScript does not replace it. Submissions use the current instant and the
-browser's timezone, and load the parser on demand. Video loads only after Play.
+browser's timezone, and load the parser on demand. Each run reports the real
+`timings` total and the `backend` it used in the `parse()` chip.
+
+The demo asks for `backend: "webgpu"` rather than using the default `parse()`,
+whose `auto` heuristic keeps single short phrases on CPU. Because `"webgpu"`
+turns off the library's own fallback, the page owns both failure paths: no
+WebGPU at all, and a dispatch that fails mid-session. `npm run test:browser`
+covers the first by stubbing `Navigator.prototype.gpu`. Video loads only after Play.
 Its white control bar stays below the picture and provides seeking, mute,
 captions, and fullscreen.
 

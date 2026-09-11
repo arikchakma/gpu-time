@@ -112,6 +112,18 @@ try {
   await page.goto(url);
   assert.equal(await page.locator('#demo-dates li').count(), 3, 'The initial example also works without JavaScript');
   await page.close();
+
+  // The demo asks for WebGPU, which turns off the library's own fallback.
+  const cpuOnly = await browser.newPage({ timezoneId: 'Asia/Dhaka' });
+  await cpuOnly.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'gpu', { get: () => undefined, configurable: true }); });
+  await cpuOnly.goto(url);
+  await cpuOnly.locator('#demo-input').fill('tomorrow at 9am');
+  await cpuOnly.locator('#demo-submit').click();
+  await cpuOnly.waitForFunction(() => document.querySelector('#demo-result').getAttribute('aria-busy') === 'false');
+  assert.equal(await cpuOnly.locator('#demo-dates li').count(), 1, 'Parsing falls back when WebGPU is missing');
+  assert.match(await cpuOnly.locator('#demo-meta').innerText(), /cpu$/, 'The fallback run reports cpu');
+  await cpuOnly.close();
+  console.log('no WebGPU: parsing falls back to cpu');
 } finally {
   await browser.close();
   await new Promise(resolve => server.close(resolve));

@@ -12,28 +12,30 @@ const initial = format(await parse(example, {
 <section id="demo-card" class="mt-8 overflow-hidden rounded-box border border-neutral-200" aria-label="Try gpu-time">
   <div class="flex items-center justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-4 py-2">
     <span class="label">Plain English</span>
-    <span class="text-[11px] text-neutral-400">an example — edit it</span>
+    <span class="text-[11px] text-neutral-400"><span class="hidden sm:inline">an example — </span>edit it, press Enter</span>
   </div>
 
-  <form id="demo-form" class="flex items-stretch gap-2 p-2">
-    <div class="relative min-w-0 flex-1 rounded-box transition-colors focus-within:bg-neutral-50">
-      <div id="demo-highlight" class="demo-field pointer-events-none absolute inset-0 overflow-hidden whitespace-pre" aria-hidden="true">{highlight(example).map(part => part.kind ? <span class={`hl hl-${part.kind}`}>{part.text}</span> : part.text)}</div>
+  <form id="demo-form" class="relative">
+    <!-- The layer and the input span the same width, so their text lines up exactly. -->
+    <div class="relative pr-[86px] transition-colors focus-within:bg-neutral-50">
+      <div id="demo-highlight" class="demo-field pointer-events-none absolute inset-y-0 left-0 right-[86px] overflow-hidden whitespace-pre" aria-hidden="true">{highlight(example).map(part => part.kind ? <span class={`hl hl-${part.kind}`}>{part.text}</span> : part.text)}</div>
       <input id="demo-input" name="expression" type="text" value={example} maxlength="500" required spellcheck="false" autocomplete="off" class="demo-field relative w-full bg-transparent text-transparent caret-black outline-none focus-visible:outline-none" />
     </div>
-    <button id="demo-submit" class="inline-flex h-10 shrink-0 items-center justify-center self-center rounded-full bg-black px-4 text-[14px] font-medium tracking-[-0.14px] text-white transition-colors hover:bg-neutral-700 disabled:opacity-50" type="submit">Parse</button>
+    <button id="demo-submit" class="absolute right-3 top-1/2 inline-flex h-9 -translate-y-1/2 items-center justify-center rounded-box bg-black px-3.5 text-[13px] font-medium tracking-[-0.14px] text-white transition-colors hover:bg-neutral-700 disabled:opacity-50" type="submit">Parse</button>
   </form>
 
-  <div class="relative flex justify-center py-2" aria-hidden="true">
-    <span class="absolute inset-x-4 top-1/2 border-t border-dashed border-neutral-200"></span>
+  <div class="relative flex justify-center py-2">
+    <span class="absolute inset-x-4 top-1/2 border-t border-dashed border-neutral-200" aria-hidden="true"></span>
     <span class="relative flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-mono text-[11px] text-neutral-600">
-      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v9m0 0 3.5-3.5M6 10 2.5 6.5" /></svg>
-      parse()
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 1v9m0 0 3.5-3.5M6 10 2.5 6.5" /></svg>
+      <span aria-hidden="true">parse()</span>
+      <span id="demo-meta" class="text-neutral-400"></span>
     </span>
   </div>
 
   <div id="demo-result" class="px-4 pb-4 pt-1 text-[14px] leading-[1.5] tracking-[-0.1px]" aria-live="polite" aria-atomic="true">
-    <div class="flex items-center justify-between gap-3">
-      <span class="label">Real dates</span>
+    <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+      <span class="label shrink-0">Real dates</span>
       <p id="demo-status" class="text-[12px] text-neutral-500">{initial.status}</p>
     </div>
     <ul id="demo-dates" class="mt-2 space-y-1.5">
@@ -67,7 +69,36 @@ const initial = format(await parse(example, {
   const status = document.querySelector<HTMLParagraphElement>('#demo-status')!;
   const dates = document.querySelector<HTMLUListElement>('#demo-dates')!;
   const result = document.querySelector<HTMLDivElement>('#demo-result')!;
+  const meta = document.querySelector<HTMLSpanElement>('#demo-meta')!;
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  type Parser = Awaited<ReturnType<typeof import('../../../src/index').defineParser>>;
+  let parser: Parser | undefined;
+  let gpu = true;
+
+  async function cpuParser() {
+    gpu = false;
+    const { defineParser } = await import('../../../src/index');
+    return defineParser({ backend: 'cpu' });
+  }
+
+  // Prefer WebGPU. defineParser rejects here when the browser has none, and
+  // backend: "webgpu" turns off the library's own fallback, so we own both paths.
+  async function parseWith(text: string, context: { reference: string; timeZone: string; limit: number }) {
+    if (!parser) {
+      const { defineParser } = await import('../../../src/index');
+      try { parser = await defineParser({ backend: 'webgpu' }); }
+      catch { parser = await cpuParser(); }
+    }
+    try {
+      return await parser.parse(text, context);
+    } catch (error) {
+      if (!gpu) throw error;
+      parser.dispose();
+      parser = await cpuParser();
+      return parser.parse(text, context);
+    }
+  }
 
   function paint() {
     const fragment = document.createDocumentFragment();
@@ -88,11 +119,12 @@ const initial = format(await parse(example, {
     result.setAttribute('aria-busy', 'true');
     const reference = new Date();
     try {
-      const { parse } = await import('../../../src/index');
-      const parsed = await parse(input.value.trim(), {
+      const parsed = await parseWith(input.value.trim(), {
         reference: reference.toISOString(), timeZone, limit: 3,
       });
       const formatted = format(parsed, reference, timeZone);
+      const { tokenizeMs, inferMs, resolveMs } = parsed.timings;
+      meta.textContent = `${(tokenizeMs + inferMs + resolveMs).toFixed(1)} ms · ${parsed.backend}`;
       const fragment = document.createDocumentFragment();
       for (const row of formatted.rows) {
         const item = document.createElement('li');
@@ -110,6 +142,7 @@ const initial = format(await parse(example, {
       context.textContent = formatted.context;
     } catch {
       dates.replaceChildren();
+      meta.textContent = '';
       status.textContent = 'The parser could not run. Please reload and try again.';
     } finally {
       button.disabled = false;
