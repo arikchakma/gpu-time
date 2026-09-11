@@ -30,7 +30,7 @@ Everything after that is ordinary TypeScript. Predicted roles compile to a typed
 
 ## Accuracy
 
-The model is trained on generated supervision, and the honest headline is mixed. On the 1,000-case unseen sentence-frame evaluation — sentence shapes never seen in training, scored on strict whole-expression equality — it reaches **511/1000**. Many of those failures contain the correct temporal result plus a spurious second interpretation drawn from surrounding prose. That is the real remaining limitation.
+The model is trained on generated supervision. On the 1,000-case unseen-carrier evaluation — the words surrounding the time expression are drawn from a reserved set the model never saw, scored on strict whole-expression equality — it reaches **993/1000**. The earlier figure was 511/1000, before the surrounding prose was made combinatorial and real English sentences were mixed in.
 
 Held-in numbers are much higher and much less meaningful: 4,996/5,000 on the original generated interpretations and 997/1,000 on the newer phrasings. Both share rendering families with training and are development metrics, not language accuracy.
 
@@ -38,7 +38,7 @@ Against the independent Microsoft Recognizers date/time specifications, developm
 
 Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Different parsers return different structures, so speed does not imply equivalent capability. See [MODEL_CARD.md](MODEL_CARD.md) for the evaluation contract and limitations, and the [benchmark report](packages/benchmark/results/REPORT.md) for measured timings, bundle sizes, and full output for all 25 adversarial inputs.
 
-The package is not published yet. The current build is 35,120 bytes Brotli against a 30,000-byte release gate, which remains unmet.
+The package is not published yet. The current build is 34,650 bytes Brotli against a 30,000-byte release gate, which remains unmet.
 
 ## Development
 

@@ -2,9 +2,9 @@
 
 ## Model
 
-The published package embeds checkpoint `natural-language-final` epoch 8, artifact sha256 `0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac`. It has 24,761 parameters at 6-bit symmetric per-tensor quantization with f32 intermediates, 324 embedding rows, and 40 output slots (35 named semantic roles plus 5 reserved). Logical packed weights are 18,571 bytes, 14,995 bytes Brotli. The full minified module including the shader is 35,120 bytes Brotli.
+The published package embeds checkpoint `terse-f32` epoch 10, artifact sha256 `0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6`. It has 24,761 parameters at 6-bit symmetric per-tensor quantization with f32 intermediates, 324 embedding rows, and 40 output slots (35 named semantic roles plus 5 reserved). Weights are 14,641 bytes Brotli; the full minified module including the shader is 34,650 bytes Brotli. Its ancestry runs 21 checkpoints deep and 394,995,596 tokens.
 
-The model predicts one semantic role per token — clock hour and minute, meridiem, weekday, month, ordinal, year, quantity and unit, recurrence markers, range separators, bounds, exceptions, filler — plus a per-token boundary score that splits one input into independent expressions at threshold 4.25. A `CLOCK_OFFSET` role distinguishes half and quarter clock arithmetic.
+The model predicts one semantic role per token — clock hour and minute, meridiem, weekday, month, ordinal, year, quantity and unit, recurrence markers, range separators, bounds, exceptions, filler — plus a per-token boundary score that splits one input into independent expressions at threshold 3.0. A `CLOCK_OFFSET` role distinguishes half and quarter clock arithmetic.
 
 Timezone is not a model role. Calendar arithmetic, DST, the reference instant, and expansion limits are handled by TypeScript after inference.
 
@@ -18,17 +18,17 @@ It is not suitable for parsing documents, extracting dates from long prose, lega
 
 Supervision is entirely generated. `packages/training/torch/generate.py` renders schedules from 26 phrase families; `natural.py` adds 16 natural-phrasing families, including negative prose containing no time expression. Labels come from the generator's structure, never from the runtime parser, so the model is not trained on its own predictions.
 
-Two completed runs contributed to the deployed weights: `natural-language-v2` (10 epochs) and `natural-language-final` (8 epochs), each drawing 300,000 fresh examples per epoch. Together they processed 5.4 million examples and 83,308,190 tokens; the checkpoint records 337,245,315 tokens seen across its full ancestry.
+The deployed weights are the end of a 21-checkpoint lineage recording 394,995,596 tokens, each run drawing 300,000 fresh examples per epoch. The final run warm-starts from its predecessor rather than training from scratch: a cold run reaches a comparable aggregate score but loses terse forms the lineage already learned.
 
 Generated corpora live under the ignored `packages/training/data/synth/` and are rebuilt with `pnpm gen`. Hand-authored evaluation corpora are tracked in `packages/training/data/gold/`.
 
 Because training data is synthetic, the distribution is the generator's, not a real user's. That is the single most important caveat on every number below.
 
-**Every figure in this card describes the shipped checkpoint, which predates the current data pipeline.** That checkpoint was trained against nine fixed carrier phrases, and it memorised them — the evidence is a flat ~50% failure rate across all sixteen families on unseen carriers, which is the signature of a shared-carrier failure rather than a grammar gap. The generator now composes carriers from a slot grammar (9,476 prefixes and 112 suffixes, roughly a million combinations) and mixes in 49,740 real Tatoeba sentences filtered of time words. `heldout` was also rebuilt: it now runs the same renderers, augmentation, and carrier distribution as training, so it measures unseen structure-and-carrier combinations rather than five confounded shifts at once. Old and new `heldout` numbers are not comparable, and none of the figures below move until the model is retrained.
+The surrounding prose is combinatorial rather than a fixed list, and 49,740 real Tatoeba sentences supply background nobody here authored. Terse forms that the renderers previously produced once or twice per 4,000 examples — bare day groups, abbreviated weekday ranges, month-day ranges, bare clock ranges — are now generated as a family in their own right, because at that rarity whether the model learned them was decided by the random seed.
 
 ## Evaluation
 
-- **Unseen sentence frames: 511/1000.** Sentence shapes never seen in training, scored on strict whole-expression equality. This is the primary honest measure. Many failures return the correct temporal result alongside a spurious second interpretation drawn from surrounding prose.
+- **Unseen carriers: 993/1000.** The surrounding words come from a reserved set kept unreachable from the training grammar, scored on strict whole-expression equality. The previous checkpoint scored 511/1000 on the same corpus. No phrase family regressed.
 - **Microsoft Recognizers development agreement: 156/563.** Independent third-party date/time specifications. Its reserved test split — all 134 grouped test cases — is not used for model selection. Policy differences count as failures rather than being excused.
 - Original generated interpretations: 4,996/5,000. New generated phrasings: 997/1,000. **Both share rendering families with training and are development metrics, not language accuracy.** They must not be quoted as evidence of natural-language understanding.
 - 18/18 packaged public-result fixtures and all 25 adversarial schedules pass. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
@@ -38,7 +38,6 @@ Because training data is synthetic, the distribution is the generator's, not a r
 
 ## Limitations
 
-- Unfamiliar surrounding prose is the dominant failure mode. The model frequently finds the right expression and then also labels something that is not a time expression.
 - Accuracy on real user phrasing is unmeasured. Every high score above is held-in.
 - English only. No language detection; other languages will produce confident nonsense.
 - Vague expressions (`ASAP`, `after work`, `soon`) are deliberately given no clock value rather than a guessed one.
@@ -46,13 +45,13 @@ Because training data is synthetic, the distribution is the generator's, not a r
 - Complex recurring exception combinations preview correctly but can return an `unsupported-export` diagnostic when no single RFC 5545 rule represents them.
 - Quantization and browser GPU implementations can differ from the PyTorch reference unless parity is explicitly tested. It is, but only for the fixtures listed above.
 - WebGPU startup and dispatch overhead make small inputs slower than a CPU parser, which is why `auto` keeps them on the CPU.
-- The 30,000-byte Brotli release gate is unmet at 35,120 bytes.
+- The 30,000-byte Brotli release gate is unmet at 34,650 bytes.
 
 ## Reproducibility
 
-`packages/training/active/` holds `export-report.json` (selected weights, lineage, calibration, source hashes, token metrics), `provenance.json` (the 20-entry checkpoint chain with hash verification), and the `parity.*` fixtures that check decoded int6 inference against PyTorch logits.
+`packages/training/active/` holds `export-report.json` (selected weights, lineage, calibration, source hashes, token metrics), `provenance.json` (the 21-entry checkpoint chain with hash verification), and the `parity.*` fixtures that check decoded int6 inference against PyTorch logits.
 
-`packages/training/runs/natural-language-final/` keeps the promoted run's report and a source snapshot of the exact generator, tokenizer, and label set used to produce it. `packages/training/exports/0195bf43…/source/` keeps the export-time snapshot and lockfile. The `.pt` checkpoint itself is not tracked, so regenerating weights from scratch requires the local run directory.
+`packages/training/runs/terse-f32/` keeps the promoted run's report and a source snapshot of the exact generator, tokenizer, and label set used to produce it. `packages/training/exports/0aba3976…/source/` keeps the export-time snapshot and lockfile. The `.pt` checkpoint itself is not tracked, so regenerating weights from scratch requires the local run directory.
 
 `pnpm --filter @gpu-time/training audit:model` re-verifies the weight file hash and the training source hashes against the recorded chain. Superseded runs and exports were untracked during the monorepo restructure and remain recoverable from Git history.
 
@@ -60,6 +59,6 @@ Because training data is synthetic, the distribution is the generator's, not a r
 
 Export is gated. A candidate replaces the shipped weights only if it strictly improves the unseen-carrier score and no individual phrase family regresses beyond a two-proportion tolerance. Both sides are decoded from their int6 wire form and re-scored in the same process on the same corpus — a stored score is never read, and the baseline is decoded from the shipped `weights.gen.ts` itself, so the model being compared against is the model that ships. Weights and the report are published by rename, with the report last, so its presence is the commit point. `--force` overrides the decision and records what it overrode.
 
-Two distinct numbers are involved here and must not be conflated. The published **511/1000** is exact-AST equality measured through the built TypeScript parser, and `packages/training/results/natural-reserved-evaluation.json` remains its authority. The gate instead measures exact token-label-and-boundary equality in PyTorch, which is stricter because every filler `O` must also be correct, and scores **304/1000** for the current model on the same corpus. The AST metric is not available before the decision, because computing it would require building the package from the very weights being gated.
+Two distinct numbers are involved here and must not be conflated. The published **993/1000** is exact-AST equality measured through the built TypeScript parser, and `packages/training/results/natural-reserved-evaluation.json` remains its authority. The gate instead measures exact token-label-and-boundary equality in PyTorch, which is stricter because every filler `O` must also be correct, and scores **975/1000** for this model on the same corpus. The AST metric is not available before the decision, because computing it would require building the package from the very weights being gated.
 
 Held-in metrics gate nothing. `heldout` is still reported, but `calibrate()` fits the boundary threshold partly on that split, so it is threshold-contaminated and is excluded from the decision by design.

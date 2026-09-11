@@ -1,25 +1,25 @@
 {
-  "checkpoint": "runs/natural-language-final/best.pt",
-  "checkpointSha256": "443c98c548dba368f160a627585b3297b60b97b4398a587d86a94f7da74e1ba0",
-  "artifactSha256": "0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac",
-  "boundaryThreshold": 4.25,
+  "checkpoint": "runs/terse-f32/best.pt",
+  "checkpointSha256": "a6b4b1ed1be3793ad5f6171c26e06a349da2a7b0a3851870c458f5061f081ca8",
+  "artifactSha256": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
+  "boundaryThreshold": 3.0,
   "calibration": {
-    "threshold": 4.25,
+    "threshold": 3.0,
     "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
     "grid": [
       {
         "threshold": 0.0,
         "metrics": {
           "validation": {
-            "f1": 0.9984399375975039,
-            "truePositive": 640,
-            "falsePositive": 2,
+            "f1": 0.9944044764188649,
+            "truePositive": 622,
+            "falsePositive": 7,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9153737658674189,
-            "truePositive": 1298,
-            "falsePositive": 240,
+            "f1": 0.974716652136007,
+            "truePositive": 559,
+            "falsePositive": 29,
             "falseNegative": 0
           }
         }
@@ -28,15 +28,15 @@
         "threshold": 0.25,
         "metrics": {
           "validation": {
-            "f1": 0.9984399375975039,
-            "truePositive": 640,
-            "falsePositive": 2,
+            "f1": 0.9952,
+            "truePositive": 622,
+            "falsePositive": 6,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9288014311270125,
-            "truePositive": 1298,
-            "falsePositive": 199,
+            "f1": 0.9772727272727273,
+            "truePositive": 559,
+            "falsePositive": 26,
             "falseNegative": 0
           }
         }
@@ -45,15 +45,15 @@
         "threshold": 0.5,
         "metrics": {
           "validation": {
-            "f1": 0.9984399375975039,
-            "truePositive": 640,
-            "falsePositive": 2,
+            "f1": 0.9952,
+            "truePositive": 622,
+            "falsePositive": 6,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.938878842676311,
-            "truePositive": 1298,
-            "falsePositive": 169,
+            "f1": 0.9815627743634767,
+            "truePositive": 559,
+            "falsePositive": 21,
             "falseNegative": 0
           }
         }
@@ -62,15 +62,15 @@
         "threshold": 0.75,
         "metrics": {
           "validation": {
-            "f1": 0.9984399375975039,
-            "truePositive": 640,
-            "falsePositive": 2,
+            "f1": 0.9959967974379503,
+            "truePositive": 622,
+            "falsePositive": 5,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9495245062179956,
-            "truePositive": 1298,
-            "falsePositive": 138,
+            "f1": 0.9832893579595426,
+            "truePositive": 559,
+            "falsePositive": 19,
             "falseNegative": 0
           }
         }
@@ -79,15 +79,15 @@
         "threshold": 1.0,
         "metrics": {
           "validation": {
-            "f1": 0.9984399375975039,
-            "truePositive": 640,
-            "falsePositive": 2,
+            "f1": 0.9967948717948718,
+            "truePositive": 622,
+            "falsePositive": 4,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9586410635155096,
-            "truePositive": 1298,
-            "falsePositive": 112,
+            "f1": 0.9841549295774648,
+            "truePositive": 559,
+            "falsePositive": 18,
             "falseNegative": 0
           }
         }
@@ -96,15 +96,15 @@
         "threshold": 1.25,
         "metrics": {
           "validation": {
-            "f1": 0.9992193598750976,
-            "truePositive": 640,
-            "falsePositive": 1,
+            "f1": 0.9967948717948718,
+            "truePositive": 622,
+            "falsePositive": 4,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9664929262844378,
-            "truePositive": 1298,
-            "falsePositive": 90,
+            "f1": 0.9858906525573192,
+            "truePositive": 559,
+            "falsePositive": 16,
             "falseNegative": 0
           }
         }
@@ -113,15 +113,15 @@
         "threshold": 1.5,
         "metrics": {
           "validation": {
-            "f1": 0.9992193598750976,
-            "truePositive": 640,
-            "falsePositive": 1,
-            "falseNegative": 0
+            "f1": 0.9967897271268058,
+            "truePositive": 621,
+            "falsePositive": 3,
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9730134932533733,
-            "truePositive": 1298,
-            "falsePositive": 72,
+            "f1": 0.9885057471264368,
+            "truePositive": 559,
+            "falsePositive": 13,
             "falseNegative": 0
           }
         }
@@ -130,15 +130,15 @@
         "threshold": 1.75,
         "metrics": {
           "validation": {
-            "f1": 0.9992193598750976,
-            "truePositive": 640,
-            "falsePositive": 1,
-            "falseNegative": 0
+            "f1": 0.9967897271268058,
+            "truePositive": 621,
+            "falsePositive": 3,
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.979253112033195,
-            "truePositive": 1298,
-            "falsePositive": 55,
+            "f1": 0.9885057471264368,
+            "truePositive": 559,
+            "falsePositive": 13,
             "falseNegative": 0
           }
         }
@@ -147,15 +147,15 @@
         "threshold": 2.0,
         "metrics": {
           "validation": {
-            "f1": 0.9992193598750976,
-            "truePositive": 640,
-            "falsePositive": 1,
-            "falseNegative": 0
+            "f1": 0.9959839357429718,
+            "truePositive": 620,
+            "falsePositive": 3,
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9837059492231907,
-            "truePositive": 1298,
-            "falsePositive": 43,
+            "f1": 0.9902568644818424,
+            "truePositive": 559,
+            "falsePositive": 11,
             "falseNegative": 0
           }
         }
@@ -164,15 +164,15 @@
         "threshold": 2.25,
         "metrics": {
           "validation": {
-            "f1": 0.9992193598750976,
-            "truePositive": 640,
-            "falsePositive": 1,
-            "falseNegative": 0
+            "f1": 0.9959839357429718,
+            "truePositive": 620,
+            "falsePositive": 3,
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9859475883023168,
-            "truePositive": 1298,
-            "falsePositive": 37,
+            "f1": 0.9928952042628775,
+            "truePositive": 559,
+            "falsePositive": 8,
             "falseNegative": 0
           }
         }
@@ -181,15 +181,15 @@
         "threshold": 2.5,
         "metrics": {
           "validation": {
-            "f1": 0.9992193598750976,
-            "truePositive": 640,
-            "falsePositive": 1,
-            "falseNegative": 0
+            "f1": 0.9959839357429718,
+            "truePositive": 620,
+            "falsePositive": 3,
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9874476987447699,
-            "truePositive": 1298,
-            "falsePositive": 33,
+            "f1": 0.9937777777777778,
+            "truePositive": 559,
+            "falsePositive": 7,
             "falseNegative": 0
           }
         }
@@ -198,15 +198,15 @@
         "threshold": 2.75,
         "metrics": {
           "validation": {
-            "f1": 0.9984375,
-            "truePositive": 639,
+            "f1": 0.9967793880837359,
+            "truePositive": 619,
             "falsePositive": 1,
-            "falseNegative": 1
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.989329268292683,
-            "truePositive": 1298,
-            "falsePositive": 28,
+            "f1": 0.9964349376114082,
+            "truePositive": 559,
+            "falsePositive": 4,
             "falseNegative": 0
           }
         }
@@ -215,15 +215,15 @@
         "threshold": 3.0,
         "metrics": {
           "validation": {
-            "f1": 0.9984375,
-            "truePositive": 639,
-            "falsePositive": 1,
-            "falseNegative": 1
+            "f1": 0.9975825946817083,
+            "truePositive": 619,
+            "falsePositive": 0,
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9904616558565433,
-            "truePositive": 1298,
-            "falsePositive": 25,
+            "f1": 0.9973238180196253,
+            "truePositive": 559,
+            "falsePositive": 3,
             "falseNegative": 0
           }
         }
@@ -232,16 +232,16 @@
         "threshold": 3.25,
         "metrics": {
           "validation": {
-            "f1": 0.9976544175136826,
-            "truePositive": 638,
-            "falsePositive": 1,
-            "falseNegative": 2
+            "f1": 0.9975825946817083,
+            "truePositive": 619,
+            "falsePositive": 0,
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9927342256214149,
-            "truePositive": 1298,
-            "falsePositive": 19,
-            "falseNegative": 0
+            "f1": 0.9964285714285714,
+            "truePositive": 558,
+            "falsePositive": 3,
+            "falseNegative": 1
           }
         }
       },
@@ -249,16 +249,16 @@
         "threshold": 3.5,
         "metrics": {
           "validation": {
-            "f1": 0.9984350547730829,
-            "truePositive": 638,
+            "f1": 0.9975825946817083,
+            "truePositive": 619,
             "falsePositive": 0,
-            "falseNegative": 2
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9934940681209338,
-            "truePositive": 1298,
-            "falsePositive": 17,
-            "falseNegative": 0
+            "f1": 0.9964285714285714,
+            "truePositive": 558,
+            "falsePositive": 3,
+            "falseNegative": 1
           }
         }
       },
@@ -266,16 +266,16 @@
         "threshold": 3.75,
         "metrics": {
           "validation": {
-            "f1": 0.996078431372549,
-            "truePositive": 635,
+            "f1": 0.9975825946817083,
+            "truePositive": 619,
             "falsePositive": 0,
-            "falseNegative": 5
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9942550746840291,
-            "truePositive": 1298,
-            "falsePositive": 15,
-            "falseNegative": 0
+            "f1": 0.9973190348525469,
+            "truePositive": 558,
+            "falsePositive": 2,
+            "falseNegative": 1
           }
         }
       },
@@ -283,16 +283,16 @@
         "threshold": 4.0,
         "metrics": {
           "validation": {
-            "f1": 0.996078431372549,
-            "truePositive": 635,
+            "f1": 0.9959644874899112,
+            "truePositive": 617,
             "falsePositive": 0,
             "falseNegative": 5
           },
           "heldoutDevelopment": {
-            "f1": 0.995398773006135,
-            "truePositive": 1298,
-            "falsePositive": 12,
-            "falseNegative": 0
+            "f1": 0.9973190348525469,
+            "truePositive": 558,
+            "falsePositive": 2,
+            "falseNegative": 1
           }
         }
       },
@@ -300,16 +300,16 @@
         "threshold": 4.25,
         "metrics": {
           "validation": {
-            "f1": 0.996078431372549,
-            "truePositive": 635,
+            "f1": 0.9951534733441034,
+            "truePositive": 616,
             "falsePositive": 0,
-            "falseNegative": 5
+            "falseNegative": 6
           },
           "heldoutDevelopment": {
-            "f1": 0.9965451055662188,
-            "truePositive": 1298,
-            "falsePositive": 9,
-            "falseNegative": 0
+            "f1": 0.9973190348525469,
+            "truePositive": 558,
+            "falsePositive": 2,
+            "falseNegative": 1
           }
         }
       },
@@ -317,16 +317,16 @@
         "threshold": 4.5,
         "metrics": {
           "validation": {
-            "f1": 0.9945011783189317,
-            "truePositive": 633,
+            "f1": 0.9951534733441034,
+            "truePositive": 616,
             "falsePositive": 0,
-            "falseNegative": 7
+            "falseNegative": 6
           },
           "heldoutDevelopment": {
-            "f1": 0.9973107952362659,
-            "truePositive": 1298,
-            "falsePositive": 7,
-            "falseNegative": 0
+            "f1": 0.998211091234347,
+            "truePositive": 558,
+            "falsePositive": 1,
+            "falseNegative": 1
           }
         }
       },
@@ -334,16 +334,16 @@
         "threshold": 4.75,
         "metrics": {
           "validation": {
-            "f1": 0.992918961447679,
-            "truePositive": 631,
+            "f1": 0.9927125506072875,
+            "truePositive": 613,
             "falsePositive": 0,
             "falseNegative": 9
           },
           "heldoutDevelopment": {
-            "f1": 0.9988457098884186,
-            "truePositive": 1298,
-            "falsePositive": 3,
-            "falseNegative": 0
+            "f1": 0.9973142345568488,
+            "truePositive": 557,
+            "falsePositive": 1,
+            "falseNegative": 2
           }
         }
       },
@@ -351,140 +351,146 @@
         "threshold": 5.0,
         "metrics": {
           "validation": {
-            "f1": 0.9921259842519685,
-            "truePositive": 630,
+            "f1": 0.9918962722852512,
+            "truePositive": 612,
             "falsePositive": 0,
             "falseNegative": 10
           },
           "heldoutDevelopment": {
-            "f1": 0.9992301770592764,
-            "truePositive": 1298,
-            "falsePositive": 2,
-            "falseNegative": 0
+            "f1": 0.996415770609319,
+            "truePositive": 556,
+            "falsePositive": 1,
+            "falseNegative": 3
           }
         }
       }
     ]
   },
-  "epoch": 8,
-  "tokensSeenAtCheckpoint": 337245315,
+  "epoch": 9,
+  "tokensSeenAtCheckpoint": 394995596,
   "lineage": [
     {
-      "checkpoint": "runs/natural-language-final/best.pt",
+      "checkpoint": "runs/terse-f32/best.pt",
+      "sha256": "a6b4b1ed1be3793ad5f6171c26e06a349da2a7b0a3851870c458f5061f081ca8",
+      "epoch": 9,
+      "trainingTokens": 57750281
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-language-final/best.pt",
       "sha256": "443c98c548dba368f160a627585b3297b60b97b4398a587d86a94f7da74e1ba0",
       "epoch": 8,
       "trainingTokens": 36959364
     },
     {
-      "checkpoint": "runs/natural-language-v2/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-language-v2/best.pt",
       "sha256": "242413626cb6158d1fb3c17511e39141b0e7073ccb9062b82480dc90f988a9e5",
       "epoch": 9,
       "trainingTokens": 41712078
     },
     {
-      "checkpoint": "runs/direct-results/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/direct-results/best.pt",
       "sha256": "c7566f5ba54b587d3a951c5b6ea27556837192827675352884b989c332327ee2",
       "epoch": 8,
       "trainingTokens": 32631905
     },
     {
-      "checkpoint": "runs/clock-periods/last.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/clock-periods/last.pt",
       "sha256": "ef52b6ad9935d72e4f6e6de1408e11eae527a0fbbd73cd4671ce6c1d1c309003",
       "epoch": 4,
       "trainingTokens": 16309375
     },
     {
-      "checkpoint": "runs/prose-casing/last.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-casing/last.pt",
       "sha256": "a3e695075a980b5de88c77c40b1a5cd95891f06fc9c5da2a3fdcf95c280406e6",
       "epoch": 3,
       "trainingTokens": 12098451
     },
     {
-      "checkpoint": "runs/prose-durations/last.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-durations/last.pt",
       "sha256": "0c1198524b16faa4a52036d81f1789c8d4208cbedd9fab4311c929e39502d39d",
       "epoch": 4,
       "trainingTokens": 16120775
     },
     {
-      "checkpoint": "runs/prose-context/last.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-context/last.pt",
       "sha256": "aa332cd5851986f48981d8dba7535b9648a69d817d9069c76ea7880a4f81dff9",
       "epoch": 3,
       "trainingTokens": 12075714
     },
     {
-      "checkpoint": "runs/timezone-free/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/timezone-free/best.pt",
       "sha256": "4abbe1eeb3f9218dbee317ca6339eec177bdcaef76b866639c4b05233bb952d4",
       "epoch": 1,
       "trainingTokens": 3889018
     },
     {
-      "checkpoint": "runs/caller-timezone/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/caller-timezone/best.pt",
       "sha256": "e3a7716f53059dc8a7eae876d1e324c4f6c84b29ce95a54929251cab7b7ca9da",
       "epoch": 2,
       "trainingTokens": 7803214
     },
     {
-      "checkpoint": "runs/natural-grammar/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-grammar/best.pt",
       "sha256": "3192efb3f907073baa31ffadce4d3753fd36ddcb483474594a91c60ae6df2888",
       "epoch": 2,
       "trainingTokens": 7659498
     },
     {
-      "checkpoint": "runs/timezone-grammar/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/timezone-grammar/best.pt",
       "sha256": "db532eb33cff44bbdde1c154b6c611ca70522abd04a160d415eb8dfe80d430c7",
       "epoch": 1,
       "trainingTokens": 3820163
     },
     {
-      "checkpoint": "runs/range-grammar/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/range-grammar/best.pt",
       "sha256": "e8bbd55dfdad73a9c676af05b777fa3b619dbc577c0d8710f9e780f8383c49df",
       "epoch": 2,
       "trainingTokens": 7776685
     },
     {
-      "checkpoint": "runs/written-time/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/written-time/best.pt",
       "sha256": "a251091c0350f83059e06396731b8922b5cb39e4d072299e264c5b3e3f46383a",
       "epoch": 1,
       "trainingTokens": 3886977
     },
     {
-      "checkpoint": "runs/complete-grammar/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/complete-grammar/best.pt",
       "sha256": "d6b126345206512308c29c6bccbd5cfb87c90d6c0d933549236163c80deaab38",
       "epoch": 1,
       "trainingTokens": 3873541
     },
     {
-      "checkpoint": "runs/modifier-context/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/modifier-context/best.pt",
       "sha256": "7dbc03c567769b7caeff76e8023c61c1e1c9dd18c8f553f55858dd5a2f9d5ac6",
       "epoch": 1,
       "trainingTokens": 4210121
     },
     {
-      "checkpoint": "runs/grammar-contrasts/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-contrasts/best.pt",
       "sha256": "3ff0d3caa9c6d65fc5f3d3eed3b1ffb22fa7cdd1e2726326112369322c0afbdf",
       "epoch": 1,
       "trainingTokens": 4199340
     },
     {
-      "checkpoint": "runs/grammar-context/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-context/best.pt",
       "sha256": "4663a3c890f380eee299611b0ea25158969051982bea9cd941d28b913bd2c8d0",
       "epoch": 2,
       "trainingTokens": 8305966
     },
     {
-      "checkpoint": "runs/core-grammar/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/core-grammar/best.pt",
       "sha256": "32e745c07f07bd55fe36f562d73e7516ee69bce2b33a09935fc25fac4834e615",
       "epoch": 3,
       "trainingTokens": 12536650
     },
     {
-      "checkpoint": "runs/grammar-coverage/best.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-coverage/best.pt",
       "sha256": "ae743a161809e9ceae976d118acf28d7bcc8972e37e4a19dcfb017c4a8614e75",
       "epoch": 3,
       "trainingTokens": 13221729
     },
     {
-      "checkpoint": "runs/compact/last.pt",
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/compact/last.pt",
       "sha256": "128022aa97bfda180c0d4fb77f450b8ae6f1881bbc835bfd14e54c27572ba75b",
       "epoch": 20,
       "trainingTokens": 88154751
@@ -492,11 +498,12 @@
   ],
   "parameters": 24761,
   "quantizationBits": 6,
+  "quantizationScheme": "tensor",
   "logicalPackedBytes": 18571,
   "encodedCharacters": 24761,
-  "moduleBytes": 27064,
-  "moduleGzipBytes": 16981,
-  "moduleBrotliBytes": 14995,
+  "moduleBytes": 27059,
+  "moduleGzipBytes": 16704,
+  "moduleBrotliBytes": 14641,
   "labels": [
     "O",
     "NUM",
@@ -536,49 +543,503 @@
   ],
   "metrics": {
     "validation": {
-      "tokens": 89128,
+      "tokens": 124151,
       "sequences": 10000,
-      "tokenAccuracy": 0.999831702719684,
-      "exactLabelAndBoundarySequence": 0.9982,
+      "tokenAccuracy": 0.9994764440077003,
+      "exactLabelAndBoundarySequence": 0.9937,
       "boundaryPrecision": 1.0,
-      "boundaryRecall": 0.9921875,
-      "boundaryF1": 0.996078431372549,
+      "boundaryRecall": 0.9951768488745981,
+      "boundaryF1": 0.9975825946817084,
       "boundaryCounts": {
-        "truePositive": 635,
+        "truePositive": 619,
         "falsePositive": 0,
-        "falseNegative": 5
+        "falseNegative": 3
       }
     },
     "heldout": {
-      "tokens": 71630,
+      "tokens": 115136,
       "sequences": 10000,
-      "tokenAccuracy": 0.9805807622504538,
-      "exactLabelAndBoundarySequence": 0.878,
-      "boundaryPrecision": 0.9931140015302219,
+      "tokenAccuracy": 0.9970643413007226,
+      "exactLabelAndBoundarySequence": 0.9721,
+      "boundaryPrecision": 0.994661921708185,
       "boundaryRecall": 1.0,
-      "boundaryF1": 0.9965451055662188,
+      "boundaryF1": 0.9973238180196252,
       "boundaryCounts": {
-        "truePositive": 1298,
-        "falsePositive": 9,
+        "truePositive": 559,
+        "falsePositive": 3,
         "falseNegative": 0
       }
     }
   },
-  "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Browser parity and end-to-end schedule accuracy are separate gates.",
+  "corpora": {
+    "validation": "309e35aba8ca9d9bedf4fc51a2f77e07b7185d0d70a15b628c7bbb38706c8cc8",
+    "heldout": "6b1e657bce61bf95c30cc475496dfc6c9dd82899f8d4d4d65cd1a03de2fe2808",
+    "reservedCarrier": "92e8845732f2ffb41d1eabdd23732da09b9aaf2c927f62b5318845649fdd07ae"
+  },
+  "promotion": {
+    "criterion": "reserved-carrier-exact-sequence",
+    "candidate": {
+      "boundaryThreshold": 3.0,
+      "total": 1000,
+      "correct": 975,
+      "families": {
+        "compound-duration": {
+          "total": 63,
+          "correct": 57
+        },
+        "compound-shift": {
+          "total": 63,
+          "correct": 63
+        },
+        "date-range": {
+          "total": 62,
+          "correct": 62
+        },
+        "datetime-range": {
+          "total": 62,
+          "correct": 62
+        },
+        "fraction-clock": {
+          "total": 63,
+          "correct": 63
+        },
+        "fraction-duration": {
+          "total": 63,
+          "correct": 53
+        },
+        "month-period": {
+          "total": 62,
+          "correct": 62
+        },
+        "month-week": {
+          "total": 62,
+          "correct": 62
+        },
+        "monthly-exception": {
+          "total": 62,
+          "correct": 62
+        },
+        "numeric-date": {
+          "total": 63,
+          "correct": 63
+        },
+        "prose-date": {
+          "total": 63,
+          "correct": 56
+        },
+        "qualified-clock": {
+          "total": 63,
+          "correct": 63
+        },
+        "recurrence": {
+          "total": 62,
+          "correct": 60
+        },
+        "recurrence-bound": {
+          "total": 62,
+          "correct": 62
+        },
+        "shared-times": {
+          "total": 62,
+          "correct": 62
+        },
+        "spoken-clock": {
+          "total": 63,
+          "correct": 63
+        }
+      }
+    },
+    "baseline": {
+      "boundaryThreshold": 4.25,
+      "total": 1000,
+      "correct": 304,
+      "families": {
+        "compound-duration": {
+          "total": 63,
+          "correct": 29
+        },
+        "compound-shift": {
+          "total": 63,
+          "correct": 42
+        },
+        "date-range": {
+          "total": 62,
+          "correct": 15
+        },
+        "datetime-range": {
+          "total": 62,
+          "correct": 12
+        },
+        "fraction-clock": {
+          "total": 63,
+          "correct": 15
+        },
+        "fraction-duration": {
+          "total": 63,
+          "correct": 33
+        },
+        "month-period": {
+          "total": 62,
+          "correct": 11
+        },
+        "month-week": {
+          "total": 62,
+          "correct": 14
+        },
+        "monthly-exception": {
+          "total": 62,
+          "correct": 18
+        },
+        "numeric-date": {
+          "total": 63,
+          "correct": 13
+        },
+        "prose-date": {
+          "total": 63,
+          "correct": 17
+        },
+        "qualified-clock": {
+          "total": 63,
+          "correct": 11
+        },
+        "recurrence": {
+          "total": 62,
+          "correct": 14
+        },
+        "recurrence-bound": {
+          "total": 62,
+          "correct": 14
+        },
+        "shared-times": {
+          "total": 62,
+          "correct": 20
+        },
+        "spoken-clock": {
+          "total": 63,
+          "correct": 26
+        }
+      },
+      "report": "active/export-report.json",
+      "checkpoint": "runs/natural-language-final/best.pt",
+      "checkpointSha256": "443c98c548dba368f160a627585b3297b60b97b4398a587d86a94f7da74e1ba0",
+      "artifactSha256": "0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac",
+      "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
+    },
+    "improvement": 0.671,
+    "guards": [
+      {
+        "family": "compound-duration",
+        "support": 63,
+        "delta": -0.4444444444444444,
+        "tolerance": 0.1449616512801932,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "compound-shift",
+        "support": 63,
+        "delta": -0.3333333333333333,
+        "tolerance": 0.12073498343962695,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "date-range",
+        "support": 62,
+        "delta": -0.7580645161290323,
+        "tolerance": 0.11211939987633286,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "datetime-range",
+        "support": 62,
+        "delta": -0.8064516129032258,
+        "tolerance": 0.1047969306486936,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "fraction-clock",
+        "support": 63,
+        "delta": -0.7619047619047619,
+        "tolerance": 0.11062935137625236,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "fraction-duration",
+        "support": 63,
+        "delta": -0.31746031746031744,
+        "tolerance": 0.15422367355845393,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "month-period",
+        "support": 62,
+        "delta": -0.8225806451612904,
+        "tolerance": 0.10194328430909907,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "month-week",
+        "support": 62,
+        "delta": -0.7741935483870968,
+        "tolerance": 0.10987065113049395,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "monthly-exception",
+        "support": 62,
+        "delta": -0.7096774193548387,
+        "tolerance": 0.11784240390138884,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "numeric-date",
+        "support": 63,
+        "delta": -0.7936507936507936,
+        "tolerance": 0.10596495022971542,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "prose-date",
+        "support": 63,
+        "delta": -0.6190476190476191,
+        "tolerance": 0.13708121090303732,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "qualified-clock",
+        "support": 63,
+        "delta": -0.8253968253968254,
+        "tolerance": 0.10051282051282051,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "recurrence",
+        "support": 62,
+        "delta": -0.7419354838709677,
+        "tolerance": 0.11784240390138884,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "recurrence-bound",
+        "support": 62,
+        "delta": -0.7741935483870968,
+        "tolerance": 0.10987065113049395,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "shared-times",
+        "support": 62,
+        "delta": -0.6774193548387096,
+        "tolerance": 0.12088399823064178,
+        "passed": true,
+        "reason": null
+      },
+      {
+        "family": "spoken-clock",
+        "support": 63,
+        "delta": -0.5873015873015873,
+        "tolerance": 0.12542545609309308,
+        "passed": true,
+        "reason": null
+      }
+    ],
+    "failures": [],
+    "accepted": true,
+    "corpus": {
+      "path": "data/synth/natural-reserved.jsonl",
+      "sha256": "fa0b5b943308aa8325355094a3e5f0e4125f63421fcef18849813021598a7721",
+      "featurizedSha256": "92e8845732f2ffb41d1eabdd23732da09b9aaf2c927f62b5318845649fdd07ae",
+      "sequences": 1000,
+      "families": 16
+    },
+    "bare": {
+      "corpus": {
+        "path": "data/synth/natural-bare.jsonl",
+        "sha256": "782982df0b112526fd0c30fc431f4c883a51e345fb9c680843653b798d53b83a",
+        "featurizedSha256": "d18b9fd202178d94a3110d2656f8e42ed07107c408cddd7ea2676943d7bcf770",
+        "sequences": 1000,
+        "families": 16
+      },
+      "candidate": {
+        "boundaryThreshold": 3.0,
+        "total": 1000,
+        "correct": 1000,
+        "families": {
+          "compound-duration": {
+            "total": 63,
+            "correct": 63
+          },
+          "compound-shift": {
+            "total": 63,
+            "correct": 63
+          },
+          "date-range": {
+            "total": 62,
+            "correct": 62
+          },
+          "datetime-range": {
+            "total": 62,
+            "correct": 62
+          },
+          "fraction-clock": {
+            "total": 63,
+            "correct": 63
+          },
+          "fraction-duration": {
+            "total": 63,
+            "correct": 63
+          },
+          "month-period": {
+            "total": 62,
+            "correct": 62
+          },
+          "month-week": {
+            "total": 62,
+            "correct": 62
+          },
+          "monthly-exception": {
+            "total": 62,
+            "correct": 62
+          },
+          "numeric-date": {
+            "total": 63,
+            "correct": 63
+          },
+          "prose-date": {
+            "total": 63,
+            "correct": 63
+          },
+          "qualified-clock": {
+            "total": 63,
+            "correct": 63
+          },
+          "recurrence": {
+            "total": 62,
+            "correct": 62
+          },
+          "recurrence-bound": {
+            "total": 62,
+            "correct": 62
+          },
+          "shared-times": {
+            "total": 62,
+            "correct": 62
+          },
+          "spoken-clock": {
+            "total": 63,
+            "correct": 63
+          }
+        }
+      },
+      "baseline": {
+        "boundaryThreshold": 4.25,
+        "total": 1000,
+        "correct": 997,
+        "families": {
+          "compound-duration": {
+            "total": 63,
+            "correct": 63
+          },
+          "compound-shift": {
+            "total": 63,
+            "correct": 63
+          },
+          "date-range": {
+            "total": 62,
+            "correct": 59
+          },
+          "datetime-range": {
+            "total": 62,
+            "correct": 62
+          },
+          "fraction-clock": {
+            "total": 63,
+            "correct": 63
+          },
+          "fraction-duration": {
+            "total": 63,
+            "correct": 63
+          },
+          "month-period": {
+            "total": 62,
+            "correct": 62
+          },
+          "month-week": {
+            "total": 62,
+            "correct": 62
+          },
+          "monthly-exception": {
+            "total": 62,
+            "correct": 62
+          },
+          "numeric-date": {
+            "total": 63,
+            "correct": 63
+          },
+          "prose-date": {
+            "total": 63,
+            "correct": 63
+          },
+          "qualified-clock": {
+            "total": 63,
+            "correct": 63
+          },
+          "recurrence": {
+            "total": 62,
+            "correct": 62
+          },
+          "recurrence-bound": {
+            "total": 62,
+            "correct": 62
+          },
+          "shared-times": {
+            "total": 62,
+            "correct": 62
+          },
+          "spoken-clock": {
+            "total": 63,
+            "correct": 63
+          }
+        }
+      },
+      "guard": {
+        "passed": true,
+        "reason": null,
+        "support": 1000,
+        "delta": -0.003,
+        "tolerance": 0.0043708825111001244
+      }
+    },
+    "description": "Strict improvement in exact label-and-boundary sequences on the reserved carrier corpus, with no per-family regression beyond a two-proportion z=1.96 tolerance. Both sides are decoded from their wire artifacts and re-scored in this process on this corpus; stored scores are never read. The heldout split is excluded because calibrate() fits the boundary threshold on it."
+  },
+  "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. The heldout metrics share the split calibrate() fitted the boundary threshold on and gate nothing. Browser parity and end-to-end schedule accuracy are separate gates.",
   "parity": {
     "prefix": "active/parity",
     "sequences": 512,
-    "tokens": 6002,
+    "tokens": 10384,
     "rowsPerToken": 17,
     "rolesPerToken": 40,
-    "boundaryThreshold": 4.25
+    "boundaryThreshold": 3.0
   },
-  "exportSourceDirectory": "exports/0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac/source",
+  "exportSourceDirectory": "exports/0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6/source",
   "exportSourceHashes": {
-    "training/export.py": "c24a6453e3c1304bc3d5cf25258b4149ea8a6bab2d01d7611051377d35f47aa1",
+    "training/export.py": "eca672d647fd05a517fac44ed871dcffb50c612c40adfe69914d10a506ff8097",
     "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
-    "training/model.py": "2d293439c4b256bf424ed09cc0523121752c5a455cd0640f308ab3730bd7cc43",
-    "training/train.py": "fb1be4d54e8c9502a21bc6f33db908b87b55f3b7e906ffb3c64c265204edf3a2",
+    "training/model.py": "4df9943a6d9ddfe4525cd9925bc79e74003d30c1d537bfddca1f44b2db8b22de",
+    "training/train.py": "9bc9ea0055617525fdf8d8887d9444cab99588267958950a2b181d899ad6e901",
     "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
   }
 }
