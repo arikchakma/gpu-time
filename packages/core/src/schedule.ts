@@ -5,7 +5,6 @@ import type { ParseResult, ParserOptions } from "./types.js";
 
 export * from "./types.js";
 export { resolve } from "./resolve.js";
-export { offsetAt } from "./zoned.js";
 
 // Existing schedule API, kept separate from the model's token predictions.
 export async function defineParser(options: ParserOptions = {}) {

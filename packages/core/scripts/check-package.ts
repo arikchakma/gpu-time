@@ -20,6 +20,30 @@ try {
       { cwd: packageRoot, encoding: "utf8" },
     ),
   );
+  // Assert the exact shipped file list. Emitted declarations can reference a
+  // sibling that the prune step removed, which typechecks as `any` for any
+  // consumer using skipLibCheck; only a contents check catches that.
+  const shipped = packed[0].files.map((entry: { path: string }) => entry.path);
+  const expected = [
+    "LICENSE",
+    "README.md",
+    "dist/index.d.ts",
+    "dist/index.js",
+    "dist/labels.d.ts",
+    "dist/resolve.d.ts",
+    "dist/schedule.d.ts",
+    "dist/schedule.js",
+    "dist/size.json",
+    "dist/types.d.ts",
+    "package.json",
+  ];
+  const actual = [...shipped].sort();
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(
+      `Package contents changed.\n  expected: ${expected.join(", ")}\n  actual:   ${actual.join(", ")}`,
+    );
+  }
+
   await writeFile(
     join(temporary, "package.json"),
     JSON.stringify({ private: true, type: "module" }),

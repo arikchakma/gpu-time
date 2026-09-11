@@ -136,6 +136,7 @@ execFileSync(
 const publicTypes = new Set([
   "index.d.ts",
   "schedule.d.ts",
+  "resolve.d.ts",
   "types.d.ts",
   "labels.d.ts",
 ]);
