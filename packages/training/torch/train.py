@@ -171,7 +171,7 @@ def prepare(split: str, count: int, seed: int, directory: Path) -> Dataset:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--epochs", type=int, default=20)
-    parser.add_argument("--quantization-bits", type=int, choices=[4, 5, 6], default=6)
+    parser.add_argument("--quantization-bits", type=int, choices=[4, 5, 6], default=5)
     parser.add_argument("--row-scales", action="store_true")
     parser.add_argument("--samples", type=int, default=300000)
     parser.add_argument("--eval-samples", type=int, default=10000)
