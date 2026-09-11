@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "corpus:fetch": "node --experimental-strip-types src/fetch-corpus.ts",
     "gen": "uv run --project . python torch/generate.py",
     "gen:semantic": "uv run --project . python torch/generate-semantic.py",
     "train": "uv run --project . python torch/train.py",

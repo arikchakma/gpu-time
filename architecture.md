@@ -51,7 +51,9 @@ Supervision is generated, not scraped. `packages/training/torch/generate.py` ren
 
 Each epoch draws fresh examples. The structural holdout and the unseen-sentence-frame evaluation are kept separate, because a split that only holds out rendered strings leaks the phrase family.
 
-Every run snapshots its source files and their hashes into `runs/<run>/source/`, so an exported checkpoint can be traced to the exact generator and tokenizer that produced it. Export records that lineage in `active/export-report.json` and `active/provenance.json`; `pnpm --filter @gpu-time/training audit:model` re-verifies the chain.
+The text surrounding a time expression matters as much as the expression itself, because the model's only concept of "not a time" comes from whatever non-temporal text it was shown. That text has two sources. `background.py` composes carrier phrases from a slot grammar rather than drawing from a fixed list, and real English sentences from the pinned Tatoeba export supply prose nobody here wrote. Borrowed sentences need no labeler — every token in them is `O` — but any sentence containing a time word is filtered out first, since one stray `tomorrow` would be a silently wrong label.
+
+Every run snapshots its source files and their hashes into `runs/<run>/source/`, so an exported checkpoint can be traced to the exact generator and tokenizer that produced it. Export records that lineage in `active/export-report.json` and `active/provenance.json`; `pnpm --filter @gpu-time/training audit:model` re-verifies the chain. Export is also gated: a candidate ships only if it strictly improves the unseen-carrier score with no per-family regression, with both sides decoded from int6 and re-scored in the same process. See `MODEL_CARD.md` for the decision and the two metrics involved.
 
 ## Performance boundaries
 

@@ -11,6 +11,8 @@ test-results/
 
 packages/training/.venv/
 packages/training/data/synth/
+packages/training/data/prose/
+packages/training/data/downloads/
 packages/training/*.npz
 packages/training/runs/*
 !packages/training/runs/natural-language-final/

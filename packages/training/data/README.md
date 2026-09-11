@@ -49,3 +49,47 @@ so a `data/synth/` split is only as trustworthy as the generator that produced i
 Each split records a `.manifest.json` with the generator's own sha256 and a
 `.fingerprints.json` of structural signatures, which is how train/validation/heldout
 splits are kept disjoint.
+
+`data/prose/` is borrowed, generated, and git-ignored. `sentences.txt` holds ordinary
+English sentences from the [Tatoeba](https://tatoeba.org) English export, one per line,
+and gives the generator carrier text that nobody here wrote. Training only on sentences
+our own generator writes is what produced a model that scores 511/1000 once the prose
+around a time expression changes; the point of this file is that its phrasing was not
+chosen by us. Fetch it with:
+
+```sh
+pnpm --filter @gpu-time/training corpus:fetch
+```
+
+`corpus.json` is the tracked pin: the export URL, its license, the retrieval date, the
+sha256 of the archive that was downloaded, and every filter and selection parameter.
+Tatoeba rebuilds the export weekly, so a later fetch will disagree with the pinned
+digest; the fetcher stops and asks for the pin to be updated rather than swapping the
+corpus out underneath a run. The archive and `sentences.txt` itself stay out of git.
+
+Every borrowed token is labelled `O`, so one stray `tomorrow` or `3pm` is a wrong label
+that nothing downstream can notice. The filter is blunt on purpose: a sentence is dropped
+if any of its words is a weekday, month, unit, holiday, or quantity in
+`../../core/src/lexicon.ts`, if it contains a digit at all, or if it uses one of the
+temporal words `corpus.json` lists (`today`, `noon`, `pm`, `ago`, and the rest) that the
+lexicon does not export. `a` and `an` are the only quantities kept — they are temporal
+only next to a unit, and every unit is already gone.
+
+The 2026-09-11 retrieval read 2,036,144 sentences:
+
+| dropped by     | sentences |
+| -------------- | --------- |
+| length         | 704,301   |
+| time word      | 195,553   |
+| sentence shape | 27,740    |
+| digit          | 24,672    |
+| duplicate      | 0         |
+| kept           | 1,083,878 |
+
+`sentences.txt` is an evenly spaced 50,000-sentence sample of what survived: 2.2 MB, 8.5
+words per sentence on average. A grep of the full time vocabulary over the written file
+matches nothing. The file is optional — `torch/generate.py` falls back to its own grammar
+when it is absent.
+
+Tatoeba's sentences are CC-BY 2.0 FR. Anything shipped from a model trained on them owes
+Tatoeba (https://tatoeba.org) attribution.

@@ -73,6 +73,21 @@ class Sentence:
         self.in_expression = False
 
     def add(self, text: str, label: str = "O", separator: str = " ") -> None:
+        if label in ("O", "GLUE") and self.in_expression:
+            # A carrier ending in a preposition meeting a clause that opens with
+            # one reads as "the appointment is at on the 18th".
+            words = text.split()
+            tail = self.text.split()
+            if (
+                words
+                and tail
+                and words[0] in background.CONNECTORS
+                and tail[-1].lower() in background.CONNECTORS
+            ):
+                words = words[1:]
+                if not words:
+                    return
+                text = " ".join(words)
         if label == "O" and self.in_expression:
             if (
                 self.augment
@@ -89,16 +104,18 @@ class Sentence:
             and self.rng.random() < 0.3
         ):
             text = self.rng.choice([text.lower(), text.upper(), text.capitalize()])
-        if self.augment and self.text and separator == " ":
+        if self.text:
             left, right = self.text[-1], text[0]
             would_merge = (
                 (left.isalpha() or left == "_") and (right.isalpha() or right == "_")
             ) or (left.isdigit() and right.isdigit())
-            separator = self.rng.choice(
-                [" ", " ", "  ", "\t"] if would_merge else ["", " ", " ", "  "]
-            )
-        if self.text:
-            self.text += separator
+            if self.augment and separator == " ":
+                separator = self.rng.choice(
+                    [" ", " ", "  ", "\t"] if would_merge else ["", " ", " ", "  "]
+                )
+            # A caller asking for no separator cannot know what precedes it; two
+            # tokens fused here leave a span the tokenizer cannot address.
+            self.text += separator or (" " if would_merge else "")
         start = len(self.text.encode("utf-16-le")) // 2
         self.text += text
         end = len(self.text.encode("utf-16-le")) // 2
@@ -285,7 +302,7 @@ class Sentence:
 
 def render(family: int, variant: int, rng: random.Random) -> Sentence:
     sentence = Sentence(rng)
-    if rng.random() < 0.3:
+    if rng.random() < 0.45:
         sentence.add(background.prefix(rng))
     sentence.clause()
     if family == 0:  # A weekday list shares a clock or a window.
@@ -597,19 +614,14 @@ def render(family: int, variant: int, rng: random.Random) -> Sentence:
                 ]
             )
         )
-    if family != 23 and rng.random() < 0.25:
-        sentence.in_expression = False
-        sentence.add(
-            rng.choice(
-                ["works for me", "please", "for the team", "is the deadline", "."]
-            )
-        )
     return sentence
 
 
 def render_heldout(family: int, rng: random.Random) -> Sentence:
     """Alternative frames, not renamed copies of the training templates."""
-    sentence = Sentence(rng, augment=False)
+    sentence = Sentence(rng)
+    if rng.random() < 0.45:
+        sentence.add(background.prefix(rng))
     sentence.clause()
     if family == 0:
         sentence.add("at")
@@ -732,19 +744,8 @@ def render_heldout(family: int, rng: random.Random) -> Sentence:
         sentence.add("at")
         sentence.clock()
     else:
-        sentence = Sentence(rng, augment=False)
-        sentence.add(
-            rng.choice(
-                [
-                    "May wrote a second edition of the book.",
-                    "The timestamp column is empty.",
-                    "Choose option 2 from section 3.",
-                    "March is a family name on the document.",
-                    "The last draft contains 31 examples.",
-                    "We may print another 12 copies.",
-                ]
-            )
-        )
+        sentence = Sentence(rng)
+        sentence.add(background.sentence(rng))
     return sentence
 
 
@@ -789,16 +790,12 @@ def generate(
                     1,
                     3,
                     2,
-                    6 if split == "heldout" else 24,
+                    24,
                 ],
             )[0]
             variant = rng.choice(variants)
-            spec = (
-                semantic.sample(rng)
-                if split != "heldout" and family != 23 and rng.random() < 0.8
-                else None
-            )
-            if split != "heldout" and rng.random() < 0.4:
+            spec = semantic.sample(rng) if family != 23 and rng.random() < 0.8 else None
+            if rng.random() < 0.4:
                 sentence = Sentence(rng, augment=False)
                 spec = natural.render(sentence, reserved=split == "heldout")
                 template = f"natural-{spec.family}/" + ("reserved" if split == "heldout" else "train")
@@ -815,6 +812,12 @@ def generate(
                 template = f"family-{family:02d}/" + (
                     "heldout-reordered" if split == "heldout" else f"surface-{variant}"
                 )
+            if sentence.clauses and rng.random() < 0.3:
+                sentence.in_expression = False
+                tail = background.suffix(rng)
+                if tail[:1].isupper():
+                    sentence.add(".", separator="")
+                sentence.add(tail)
             row = {
                 "id": f"{split}-{seed}-{index}",
                 "template": template,
@@ -837,10 +840,15 @@ def generate(
             span_counts.update(span["label"] for span in sentence.spans)
             templates.add(template)
     path.with_suffix(".fingerprints.json").write_text(json.dumps(sorted(signatures)))
+    prose = background.borrowed()
     return {
         "structuralFingerprints": len(signatures),
         "rejectedReservedFrames": rejected,
         "generatorSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "borrowedProse": len(prose),
+        "borrowedProseSha256": (
+            hashlib.sha256(background.PROSE.read_bytes()).hexdigest() if prose else None
+        ),
         "sequences": count,
         "seed": seed,
         "split": split,

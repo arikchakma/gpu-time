@@ -24,6 +24,8 @@ Generated corpora live under the ignored `packages/training/data/synth/` and are
 
 Because training data is synthetic, the distribution is the generator's, not a real user's. That is the single most important caveat on every number below.
 
+**Every figure in this card describes the shipped checkpoint, which predates the current data pipeline.** That checkpoint was trained against nine fixed carrier phrases, and it memorised them — the evidence is a flat ~50% failure rate across all sixteen families on unseen carriers, which is the signature of a shared-carrier failure rather than a grammar gap. The generator now composes carriers from a slot grammar (9,476 prefixes and 112 suffixes, roughly a million combinations) and mixes in 49,740 real Tatoeba sentences filtered of time words. `heldout` was also rebuilt: it now runs the same renderers, augmentation, and carrier distribution as training, so it measures unseen structure-and-carrier combinations rather than five confounded shifts at once. Old and new `heldout` numbers are not comparable, and none of the figures below move until the model is retrained.
+
 ## Evaluation
 
 - **Unseen sentence frames: 511/1000.** Sentence shapes never seen in training, scored on strict whole-expression equality. This is the primary honest measure. Many failures return the correct temporal result alongside a spurious second interpretation drawn from surrounding prose.
@@ -53,3 +55,11 @@ Because training data is synthetic, the distribution is the generator's, not a r
 `packages/training/runs/natural-language-final/` keeps the promoted run's report and a source snapshot of the exact generator, tokenizer, and label set used to produce it. `packages/training/exports/0195bf43…/source/` keeps the export-time snapshot and lockfile. The `.pt` checkpoint itself is not tracked, so regenerating weights from scratch requires the local run directory.
 
 `pnpm --filter @gpu-time/training audit:model` re-verifies the weight file hash and the training source hashes against the recorded chain. Superseded runs and exports were untracked during the monorepo restructure and remain recoverable from Git history.
+
+## Promotion
+
+Export is gated. A candidate replaces the shipped weights only if it strictly improves the unseen-carrier score and no individual phrase family regresses beyond a two-proportion tolerance. Both sides are decoded from their int6 wire form and re-scored in the same process on the same corpus — a stored score is never read, and the baseline is decoded from the shipped `weights.gen.ts` itself, so the model being compared against is the model that ships. Weights and the report are published by rename, with the report last, so its presence is the commit point. `--force` overrides the decision and records what it overrode.
+
+Two distinct numbers are involved here and must not be conflated. The published **511/1000** is exact-AST equality measured through the built TypeScript parser, and `packages/training/results/natural-reserved-evaluation.json` remains its authority. The gate instead measures exact token-label-and-boundary equality in PyTorch, which is stricter because every filler `O` must also be correct, and scores **304/1000** for the current model on the same corpus. The AST metric is not available before the decision, because computing it would require building the package from the very weights being gated.
+
+Held-in metrics gate nothing. `heldout` is still reported, but `calibrate()` fits the boundary threshold partly on that split, so it is threshold-contaminated and is excluded from the decision by design.

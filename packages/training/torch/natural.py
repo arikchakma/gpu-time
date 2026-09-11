@@ -7,6 +7,7 @@ separate sentence frames; quantities, dates and combinations vary within frames.
 from __future__ import annotations
 import random
 from copy import deepcopy
+import background
 from semantic import DAYS, DAY_CODES, MONTHS, Specification
 
 ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
@@ -29,23 +30,16 @@ FAMILIES = [
     "monthly-exception",
     "shared-times",
 ]
-PREFIXES = [
-    "set an alarm for",
-    "remind me at",
-    "book dinner for",
-    "schedule a call for",
-    "I'll be back at",
-    "the appointment is at",
-    "wake me at",
-    "please reserve",
-    "",
-]
 RESERVED = [
     "could you arrange a reminder for",
     "our rehearsal begins at",
     "the train leaves at",
     "please put this in my diary for",
 ]
+RESERVED_DURATION = ["allow extra time", "the workshop continues"]
+# Registered rather than imported: background cannot see natural without closing
+# the cycle that runs back through semantic.
+background.reserve(RESERVED + RESERVED_DURATION)
 
 
 def words(value, hyphen=False):
@@ -143,13 +137,17 @@ def calendar(s, date, numeric=False):
 def render(s, reserved=False, family=None):
     r = s.rng
     family = family or r.choice(FAMILIES)
-    prefix = r.choice(RESERVED if reserved else PREFIXES)
-    if family in ("compound-duration", "compound-shift", "fraction-duration"):
-        prefix = r.choice(
-            ["the session lasts", "please wait", "we need the room"]
-            if not reserved
-            else ["allow extra time", "the workshop continues"]
-        )
+    anchored = family not in (
+        "compound-duration",
+        "compound-shift",
+        "fraction-duration",
+    )
+    if reserved:
+        prefix = r.choice(RESERVED if anchored else RESERVED_DURATION)
+    elif r.random() < 0.85:
+        prefix = background.prefix(r, connector=anchored)
+    else:
+        prefix = ""
     if prefix:
         s.add(prefix)
     s.clause()

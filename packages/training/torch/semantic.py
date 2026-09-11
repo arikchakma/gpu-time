@@ -213,10 +213,8 @@ def sample(rng: random.Random) -> Specification:
 def render(spec: Specification, sentence: Sentence, style: int) -> None:
     rng = sentence.rng
     if rng.random() < 0.4:
-        prefix = background.prefix(rng)
-        if spec.family in ("duration", "weekday-range", "relative"):
-            prefix = prefix.removesuffix(" for")
-        sentence.add(prefix)
+        anchored = spec.family not in ("duration", "weekday-range", "relative")
+        sentence.add(background.prefix(rng, connector=anchored))
     for index, clause in enumerate(spec.schedule["clauses"]):
         if index and style % 2:
             sentence.add(rng.choice(["and", ";", ",", "then"]), "JOIN")

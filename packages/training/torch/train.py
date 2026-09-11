@@ -268,6 +268,13 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
         source_hashes[name] = hashlib.sha256(content).hexdigest()
+    # Borrowed prose is training input but too large to snapshot; the hash is
+    # enough to tell whether a run saw the same corpus.
+    prose = ROOT / "data" / "prose" / "sentences.txt"
+    if prose.exists():
+        source_hashes["data/prose/sentences.txt"] = hashlib.sha256(
+            prose.read_bytes()
+        ).hexdigest()
     history = []
     best = -1.0
     step = 0
