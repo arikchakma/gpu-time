@@ -1,0 +1,25 @@
+{"id":"adversarial-01","family":"multi-clause","text":"Monday 10pm-12am and Saturday Sunday 1pm-8pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}},{"date":{"kind":"weekday","days":["SA","SU"]},"time":{"start":{"hour":13,"minute":0},"end":{"hour":20,"minute":0}}}]}}
+{"id":"adversarial-02","family":"recurrence-bounds","text":"every other Tuesday until Dec","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"],"until":{"kind":"calendar","month":12}}}]}}
+{"id":"adversarial-03","family":"shared-weekdays","text":"Tuesday and Thursday at 3pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["TU","TH"]},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"adversarial-04","family":"anchored-relative","text":"3 days before Christmas","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"},"shift":{"amount":3,"unit":"day","direction":"before"}}]}}
+{"id":"adversarial-05","family":"relative-quantity","text":"1 day before","schedule":{"clauses":[{"shift":{"amount":1,"unit":"day","direction":"before"}}]}}
+{"id":"adversarial-06","family":"frequency-count","text":"twice a week","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"timesPer":2}}]}}
+{"id":"adversarial-07","family":"exceptions","text":"every day except Sundays","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":1,"except":[{"kind":"weekday","days":["SU"]}]}}]}}
+{"id":"adversarial-08","family":"ambiguous-range","text":"10pm-12pm","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"hour":12,"minute":0}}}]},"diagnostics":["probable-typo-range"]}
+{"id":"adversarial-09","family":"overnight","text":"10pm-12am","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"hour":0,"minute":0}}}]}}
+{"id":"adversarial-10","family":"weekday-range","text":"from 9 to 5 Mon-Fri","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}},"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]}}]},"diagnostics":["working-hours"]}
+{"id":"adversarial-11","family":"named-clock","text":"from 9am to noon","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"named":"noon"}}}]}}
+{"id":"adversarial-12","family":"calendar-range","text":"26 July - 22 August","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"month":7,"day":26},"to":{"month":8,"day":22}}}]}}
+{"id":"adversarial-13","family":"relative-window","text":"in 5 to 10 minutes","schedule":{"clauses":[{"shift":{"amount":5,"endAmount":10,"unit":"minute","direction":"after"}}]}}
+{"id":"adversarial-14","family":"day-part","text":"sunday morning","reference":"2026-09-13T12:00:00+06:00","schedule":{"clauses":[{"date":{"kind":"weekday","days":["SU"]},"time":{"start":{"part":"morning"}}}]}}
+{"id":"adversarial-15","family":"duration","text":"starting from tomorrow for the next 10 days","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"duration":{"amount":10,"unit":"day"}}]}}
+{"id":"adversarial-16","family":"modified-weekday","text":"next Monday at 2pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"],"modifier":"next"},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"adversarial-17","family":"ordinal-date","text":"1st Friday of next month","schedule":{"clauses":[{"date":{"kind":"ordinalWeekday","ordinal":1,"day":"FR","of":{"kind":"relativeUnit","unit":"month","modifier":"next"}}}]}}
+{"id":"adversarial-18","family":"relative-period","text":"this week","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"this"}}]}}
+{"id":"adversarial-19","family":"weekly","text":"every Monday at 9am","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":9,"minute":0}}}]}}
+{"id":"adversarial-20","family":"yearly","text":"every other year on the 26th of March","schedule":{"clauses":[{"recurrence":{"freq":"yearly","interval":2,"byMonthDay":[26],"byMonth":[3]}}]}}
+{"id":"adversarial-21","family":"period-bound","text":"every 3 days until the end of the month","schedule":{"clauses":[{"recurrence":{"freq":"daily","interval":3,"until":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}}]}}
+{"id":"adversarial-22","family":"start-bound","text":"every week starting next week","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"start":{"kind":"relativeUnit","unit":"week","modifier":"next"}}}]}}
+{"id":"adversarial-23","family":"calendar-bound","text":"every Monday until december 31","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"],"until":{"kind":"calendar","month":12,"day":31}}}]}}
+{"id":"adversarial-24","family":"monthly-list","text":"1st and 15th of each month","schedule":{"clauses":[{"recurrence":{"freq":"monthly","interval":1,"byMonthDay":[1,15]}}]}}
+{"id":"adversarial-25","family":"shared-month-range","text":"June 11-16, 2026","schedule":{"clauses":[{"date":{"kind":"calendarRange","from":{"year":2026,"month":6,"day":11},"to":{"year":2026,"month":6,"day":16}}}]}}

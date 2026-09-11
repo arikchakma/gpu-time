@@ -1,0 +1,3171 @@
+{
+  "model": "986640d821f70a0959ebc73fa05742455f14e17c9ca140a2596c112b2d9db577",
+  "source": "data/synth/clock-period-checks.jsonl",
+  "sourceSha256": "90f55ae9233b6c4ee8d0b70a2d8ad933e1018bf5db2bb9aa05522f7b51e2d455",
+  "totalFailures": 40,
+  "inspected": 40,
+  "stages": {
+    "boundary-sensitive": 26,
+    "role-sensitive": 14
+  },
+  "failures": [
+    {
+      "id": "semantic-271828-791",
+      "family": "weekday-windows",
+      "text": "Thursday  MONDAY\tfrom 4:30 In the morning\tto9:30am  every 4weeks on Tuesday  Monday\tFrom 4:30am\tto 6:30am  every FOUR  weeks on WEDNESDAY Tuesday Saturday  from 7:15am  TO 10:15 in the morning",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 30
+              },
+              "end": {
+                "hour": 9,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 30
+              },
+              "end": {
+                "hour": 6,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TU",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 7,
+                "minute": 15
+              },
+              "end": {
+                "hour": 10,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE",
+                "TU",
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 192,
+          "text": "Thursday  MONDAY\tfrom 4:30 In the morning\tto9:30am  every 4weeks on Tuesday  Monday\tFrom 4:30am\tto 6:30am  every FOUR  weeks on WEDNESDAY Tuesday Saturday  from 7:15am  TO 10:15 in the morning",
+          "confidence": 0.9049617648124695,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 161,
+              "end": 162,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 107,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-1195",
+      "family": "weekday-windows",
+      "text": "the lesson starts Wednesday and\tSunday\tand friday 11:30  in morning-  9:30pm every3weeks  on  tuesday  , Sunday , Monday  2:30 in the afternoon -5:30pm Monday  5:15 in the morning  - 12:15pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 30
+              },
+              "end": {
+                "hour": 21,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE",
+                "SU",
+                "FR"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "TU",
+                "SU",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 5,
+                "minute": 15
+              },
+              "end": {
+                "hour": 12,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 18,
+          "end": 190,
+          "text": "Wednesday and\tSunday\tand friday 11:30  in morning-  9:30pm every3weeks  on  tuesday  , Sunday , Monday  2:30 in the afternoon -5:30pm Monday  5:15 in the morning  - 12:15pm",
+          "confidence": 0.8607004880905151,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 122,
+              "end": 123,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 77,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2017",
+      "family": "weekday-windows",
+      "text": "Tuesday, Sunday &SATURDAY  Five\tpm -twelve  in morning\tThursday  and Sunday  and  Tuesday  5:45Pm  -  10:45Pm  Monday&  Sunday 12:30pm -  2:30  in the afternoon",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0
+              },
+              "end": {
+                "hour": 0,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "SU",
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 45
+              },
+              "end": {
+                "hour": 22,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "SU",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 12,
+                "minute": 30
+              },
+              "end": {
+                "hour": 14,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 160,
+          "text": "Tuesday, Sunday &SATURDAY  Five\tpm -twelve  in morning\tThursday  and Sunday  and  Tuesday  5:45Pm  -  10:45Pm  Monday&  Sunday 12:30pm -  2:30  in the afternoon",
+          "confidence": 0.5991028547286987,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 91,
+              "end": 92,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Thursday",
+          "start": 55,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2346",
+      "family": "weekday-windows",
+      "text": "you'll go back\tevery  4weeks on  sunday 2:30am  - 4:30am every two  weeks on\tSaturday  9:15pm -7:15in the morning Thursday ,  Friday,Wednesday 11:30in the morning -10:30pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 30
+              },
+              "end": {
+                "hour": 4,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 21,
+                "minute": 15
+              },
+              "end": {
+                "hour": 7,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 30
+              },
+              "end": {
+                "hour": 22,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "FR",
+                "WE"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 15,
+          "end": 171,
+          "text": "every  4weeks on  sunday 2:30am  - 4:30am every two  weeks on\tSaturday  9:15pm -7:15in the morning Thursday ,  Friday,Wednesday 11:30in the morning -10:30pm",
+          "confidence": 0.9312226176261902,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 143,
+              "end": 145,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Thursday",
+          "start": 114,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2840",
+      "family": "weekday-windows",
+      "text": "WEDNESDAY9:45pm-12:45 in morning every\tfour weeks  On WEDNESDAY9:30 in morning - 5:30Pm every two weeks\ton  Sunday &Monday 7:15am - 11:15in the morning",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 21,
+                "minute": 45
+              },
+              "end": {
+                "hour": 0,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 7,
+                "minute": 15
+              },
+              "end": {
+                "hour": 11,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SU",
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 151,
+          "text": "WEDNESDAY9:45pm-12:45 in morning every\tfour weeks  On WEDNESDAY9:30 in morning - 5:30Pm every two weeks\ton  Sunday &Monday 7:15am - 11:15in the morning",
+          "confidence": 0.6808968782424927,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 63,
+              "end": 64,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 33,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-2914",
+      "family": "weekday-windows",
+      "text": "the library is open  every three  weeks Sunday from one pm To Seven pm  saturday Monday from11:30am to 2:30  in afternoon  friday Sunday from  5:30pm to 12:30am for our team",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              },
+              "end": {
+                "hour": 19,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 30
+              },
+              "end": {
+                "hour": 14,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 160,
+          "text": "every three  weeks Sunday from one pm To Seven pm  saturday Monday from11:30am to 2:30  in afternoon  friday Sunday from  5:30pm to 12:30am",
+          "confidence": 0.5379214882850647,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 143,
+              "end": 144,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "friday",
+          "start": 123,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-3354",
+      "family": "duration",
+      "text": "Deadline: for  next  A  day  PLEASE",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 1,
+              "unit": "day"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 15,
+          "end": 27,
+          "text": "next  A  day",
+          "confidence": 0.7633614540100098,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 15,
+              "end": 19,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "for",
+          "start": 10,
+          "predictedRole": "O",
+          "expectedRole": "DUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-3801",
+      "family": "duration",
+      "text": "can you schedule a call  for\tthe Next  10minutes\tFOR OUR TEAM",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 10,
+              "unit": "minute"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 48,
+          "text": "Next  10minutes",
+          "confidence": 0.9472196698188782,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 33,
+              "end": 37,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "for",
+          "start": 25,
+          "predictedRole": "O",
+          "expectedRole": "DUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-4613",
+      "family": "weekday-windows",
+      "text": "each SUNDAY  ,  Friday,Thursday3:15am -4:15am every3weeks on FRIDAY two am  - eleven Am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 15
+              },
+              "end": {
+                "hour": 4,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "SU",
+                "FR",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 0
+              },
+              "end": {
+                "hour": 11,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 87,
+          "text": "each SUNDAY  ,  Friday,Thursday3:15am -4:15am every3weeks on FRIDAY two am  - eleven Am",
+          "confidence": 0.9267045855522156,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 68,
+              "end": 71,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 46,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7023",
+      "family": "weekday-windows",
+      "text": "Wednesday  from\tsix  am\tto ten  am\tevery\tfour\tweeks on\ttuesday\tFrom  five PM  to eleven\tpm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 6,
+                "minute": 0
+              },
+              "end": {
+                "hour": 10,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0
+              },
+              "end": {
+                "hour": 23,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 90,
+          "text": "Wednesday  from\tsix  am\tto ten  am\tevery\tfour\tweeks on\ttuesday\tFrom  five PM  to eleven\tpm",
+          "confidence": 0.9161615371704102,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 69,
+              "end": 73,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 35,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7409",
+      "family": "weekday-windows",
+      "text": "WEDNESDAY\ttwo  in the morning-ten am Thursday 6:45in the evening-  5:45  in morning SATURDAY  &  Sunday 10:45 in morning - 4:45pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 0
+              },
+              "end": {
+                "hour": 10,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 45
+              },
+              "end": {
+                "hour": 5,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 45
+              },
+              "end": {
+                "hour": 16,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 129,
+          "text": "WEDNESDAY\ttwo  in the morning-ten am Thursday 6:45in the evening-  5:45  in morning SATURDAY  &  Sunday 10:45 in morning - 4:45pm",
+          "confidence": 0.7497139573097229,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 104,
+              "end": 106,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "SATURDAY",
+          "start": 84,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7844",
+      "family": "anchored-relative",
+      "text": "the library is closed  a\tDay after\tEighth of  January",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "calendar",
+              "month": 1,
+              "day": 8
+            },
+            "shift": {
+              "amount": 1,
+              "unit": "day",
+              "direction": "after"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 23,
+          "end": 53,
+          "text": "a\tDay after\tEighth of  January",
+          "confidence": 0.020448731258511543,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unknown relative day.",
+              "start": 29,
+              "end": 34,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 23,
+              "end": 24,
+              "severity": "warning"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "after",
+          "start": 29,
+          "predictedRole": "REL_DAY",
+          "expectedRole": "DIR_AFTER",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-7895",
+      "family": "weekday-windows",
+      "text": "they'll be back\tSunday thursday from  3:30am  to 8:30am Saturday  FROM  eleven am To six pm  every four  weeks\ton Monday  Sunday Saturday from11:15 in the morning  to 2:15pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 30
+              },
+              "end": {
+                "hour": 8,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 0
+              },
+              "end": {
+                "hour": 18,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 15
+              },
+              "end": {
+                "hour": 14,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "MO",
+                "SU",
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 16,
+          "end": 173,
+          "text": "Sunday thursday from  3:30am  to 8:30am Saturday  FROM  eleven am To six pm  every four  weeks\ton Monday  Sunday Saturday from11:15 in the morning  to 2:15pm",
+          "confidence": 0.9214131236076355,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 142,
+              "end": 144,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 93,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-9460",
+      "family": "weekday-windows",
+      "text": "Sunday & Wednesday  6:30am- 11:30 in the morning  saturday , wednesday  AND Friday  6:30pm  -3:30am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 6,
+                "minute": 30
+              },
+              "end": {
+                "hour": 11,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 30
+              },
+              "end": {
+                "hour": 3,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA",
+                "WE",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 99,
+          "text": "Sunday & Wednesday  6:30am- 11:30 in the morning  saturday , wednesday  AND Friday  6:30pm  -3:30am",
+          "confidence": 0.9288505911827087,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 84,
+              "end": 85,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "saturday",
+          "start": 50,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-9629",
+      "family": "relative",
+      "text": "before  A Year  works for me",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "shift": {
+              "amount": 1,
+              "unit": "year",
+              "direction": "before"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 14,
+          "text": "before  A Year",
+          "confidence": 0.4071158766746521,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role DIR_BEFORE.",
+              "start": 0,
+              "end": 6,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 0,
+              "end": 6,
+              "severity": "warning"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "A",
+          "start": 8,
+          "predictedRole": "O",
+          "expectedRole": "NUM",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-9953",
+      "family": "weekday-windows",
+      "text": "Monday 11:30pm- 11:30  in the morning\tevery\tfour\tweeks THURSDAY,  SUNDAY 2:30am - 3:30AM Every three weeks Saturday& Thursday two AM  - six am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 30
+              },
+              "end": {
+                "hour": 11,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 30
+              },
+              "end": {
+                "hour": 3,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TH",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 0
+              },
+              "end": {
+                "hour": 6,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "SA",
+                "TH"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 142,
+          "text": "Monday 11:30pm- 11:30  in the morning\tevery\tfour\tweeks THURSDAY,  SUNDAY 2:30am - 3:30AM Every three weeks Saturday& Thursday two AM  - six am",
+          "confidence": 0.9305413365364075,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 73,
+              "end": 74,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 38,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-10778",
+      "family": "time-window",
+      "text": "at  5:00:23Pm-10in the evening",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0,
+                "second": 23
+              },
+              "end": {
+                "hour": 22,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 4,
+          "end": 30,
+          "text": "5:00:23Pm-10in the evening",
+          "confidence": 0.5377258658409119,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unlinked-times",
+              "message": "Two clocks need a range separator or separate clauses.",
+              "start": 14,
+              "end": 16,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "-",
+          "start": 13,
+          "predictedRole": "GLUE",
+          "expectedRole": "RANGE_END",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-11261",
+      "family": "weekday-windows",
+      "text": "Can you set an alarm for  Wednesday from 5:15 in the afternoon to  8:15in the evening  every  Four\tweeks on Wednesday  Saturday from 4:15pm\tto 2:15 In morning  every  4 weeks  ON\tThursday  Sunday from  7:15pm to 1:15am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 15
+              },
+              "end": {
+                "hour": 20,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 15
+              },
+              "end": {
+                "hour": 2,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE",
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 15
+              },
+              "end": {
+                "hour": 1,
+                "minute": 15
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TH",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 26,
+          "end": 218,
+          "text": "Wednesday from 5:15 in the afternoon to  8:15in the evening  every  Four\tweeks on Wednesday  Saturday from 4:15pm\tto 2:15 In morning  every  4 weeks  ON\tThursday  Sunday from  7:15pm to 1:15am",
+          "confidence": 0.5345811247825623,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 133,
+              "end": 134,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 87,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-11734",
+      "family": "weekday-windows",
+      "text": "Wednesday 4:45Am -2:45in the afternoon Tuesday&WEDNESDAY & Saturday  1:45pm  - 7:45pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 45
+              },
+              "end": {
+                "hour": 14,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 45
+              },
+              "end": {
+                "hour": 19,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "WE",
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 85,
+          "text": "Wednesday 4:45Am -2:45in the afternoon Tuesday&WEDNESDAY & Saturday  1:45pm  - 7:45pm",
+          "confidence": 0.9338716864585876,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 69,
+              "end": 70,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Tuesday",
+          "start": 39,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-11978",
+      "family": "duration",
+      "text": "could you book room 22 FOR the next 6  hours\tplease",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 6,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 31,
+          "end": 44,
+          "text": "next 6  hours",
+          "confidence": 0.9470707178115845,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 31,
+              "end": 35,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "FOR",
+          "start": 23,
+          "predictedRole": "O",
+          "expectedRole": "DUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-12046",
+      "family": "duration",
+      "text": "I'D LIKE TO BOOK ROOM 27 for The next1week",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 1,
+              "unit": "week"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 42,
+          "text": "next1week",
+          "confidence": 0.9343535900115967,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 33,
+              "end": 37,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "for",
+          "start": 25,
+          "predictedRole": "O",
+          "expectedRole": "DUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-12372",
+      "family": "weekday-windows",
+      "text": "every  4  weeks  SUNDAY from  twelve  Am  to three  am  every3 weeks  Saturday\tSunday  from  5:30am  to9:30am EVERY four weeks\ton THURSDAY\tMonday from nine\tAm to six  pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 0
+              },
+              "end": {
+                "hour": 3,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 5,
+                "minute": 30
+              },
+              "end": {
+                "hour": 9,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "SA",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 0
+              },
+              "end": {
+                "hour": 18,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "TH",
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 169,
+          "text": "every  4  weeks  SUNDAY from  twelve  Am  to three  am  every3 weeks  Saturday\tSunday  from  5:30am  to9:30am EVERY four weeks\ton THURSDAY\tMonday from nine\tAm to six  pm",
+          "confidence": 0.8484970331192017,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 93,
+              "end": 94,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 56,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        },
+        {
+          "text": "EVERY",
+          "start": 110,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-12653",
+      "family": "time-window",
+      "text": "WE SHOULD MEET from1  in the afternoon -  5 In the afternoon",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              },
+              "end": {
+                "hour": 17,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 15,
+          "end": 60,
+          "text": "from1  in the afternoon -  5 In the afternoon",
+          "confidence": 0.4835207462310791,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role MERIDIEM.",
+              "start": 44,
+              "end": 46,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 15,
+              "end": 19,
+              "severity": "warning"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "5",
+          "start": 42,
+          "predictedRole": "DOM",
+          "expectedRole": "HOUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-13989",
+      "family": "weekday-windows",
+      "text": "the office is open  Friday & Monday, Wednesday 7:30  in the morning -5:30  in the afternoon every2weeks  Saturday  8:30pm -  12:30AM  every\tFour  weeks  on Saturday ,tuesday &Friday8:45pm-4:45am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 7,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "MO",
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 45
+              },
+              "end": {
+                "hour": 4,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SA",
+                "TU",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 20,
+          "end": 194,
+          "text": "Friday & Monday, Wednesday 7:30  in the morning -5:30  in the afternoon every2weeks  Saturday  8:30pm -  12:30AM  every\tFour  weeks  on Saturday ,tuesday &Friday8:45pm-4:45am",
+          "confidence": 0.8683359026908875,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 181,
+              "end": 182,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 134,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-14006",
+      "family": "weekday",
+      "text": "last Friday\tAnd Sunday  at  EIGHT in evening  please",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "SU"
+              ],
+              "modifier": "last"
+            },
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 44,
+          "text": "last Friday\tAnd Sunday  at  EIGHT in evening",
+          "confidence": 0.10026812553405762,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-time",
+              "message": "Clock components are out of range.",
+              "start": 28,
+              "end": 33,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 0,
+              "end": 4,
+              "severity": "warning"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "evening",
+          "start": 37,
+          "predictedRole": "DAYPART",
+          "expectedRole": "MERIDIEM",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-14545",
+      "family": "recurrence-bounds",
+      "text": "our clinic opens every\tyear\tat10:45:08until1/8please",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "yearly",
+              "interval": 1,
+              "until": {
+                "kind": "calendar",
+                "month": 1,
+                "day": 8
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 45,
+                "second": 8
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 17,
+          "end": 46,
+          "text": "every\tyear\tat10:45:08until1/8",
+          "confidence": 0.838833212852478,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-date",
+              "message": "Multiple dates need a range or recurrence.",
+              "start": 45,
+              "end": 46,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "1",
+          "start": 43,
+          "predictedRole": "DOM",
+          "expectedRole": "MONTH",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15197",
+      "family": "weekday-windows",
+      "text": "deadline:  every  2WEEKS  on  Saturday and\tMonday\tand\tFriday 12:45AM -  1:45  in the morning  Tuesday & thursday\tAND Sunday FOUR\tam  - eleven am for our team",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 45
+              },
+              "end": {
+                "hour": 1,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "SA",
+                "MO",
+                "FR"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 0
+              },
+              "end": {
+                "hour": 11,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TU",
+                "TH",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 11,
+          "end": 144,
+          "text": "every  2WEEKS  on  Saturday and\tMonday\tand\tFriday 12:45AM -  1:45  in the morning  Tuesday & thursday\tAND Sunday FOUR\tam  - eleven am",
+          "confidence": 0.940914511680603,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 124,
+              "end": 128,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Tuesday",
+          "start": 94,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15213",
+      "family": "weekday-windows",
+      "text": "I'D LIKE TO REMIND ME ABOUT\tFriday & Thursday 11:15 in the evening  -11:15  in the morning friday  and  Monday ,Sunday 1:45AM  - 8:45am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 15
+              },
+              "end": {
+                "hour": 11,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 1,
+                "minute": 45
+              },
+              "end": {
+                "hour": 8,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "MO",
+                "SU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 28,
+          "end": 135,
+          "text": "Friday & Thursday 11:15 in the evening  -11:15  in the morning friday  and  Monday ,Sunday 1:45AM  - 8:45am",
+          "confidence": 0.9178399443626404,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 119,
+              "end": 120,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "friday",
+          "start": 91,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15672",
+      "family": "weekday-windows",
+      "text": "Sunday  Saturday from 3:30PM  to10:30pm\tFriday  MONDAY\tthursday from 10:45  in the morning\tTO3:45PM\tevery\tfour weeks\ton  Friday Thursday  Tuesday  from 8:45am TO 6:45Pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 15,
+                "minute": 30
+              },
+              "end": {
+                "hour": 22,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "SA"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 45
+              },
+              "end": {
+                "hour": 15,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "MO",
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 8,
+                "minute": 45
+              },
+              "end": {
+                "hour": 18,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "FR",
+                "TH",
+                "TU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 168,
+          "text": "Sunday  Saturday from 3:30PM  to10:30pm\tFriday  MONDAY\tthursday from 10:45  in the morning\tTO3:45PM\tevery\tfour weeks\ton  Friday Thursday  Tuesday  from 8:45am TO 6:45Pm",
+          "confidence": 0.929418683052063,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 152,
+              "end": 153,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 100,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-15791",
+      "family": "weekday-windows",
+      "text": "Wednesday and  Saturday and Tuesday 7:45  in the evening- 12:45 in the morning Sunday\tand\tSaturday  & Wednesday3:15am  -  3:15pm wednesday and Tuesday 11:15am - 10:15pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 45
+              },
+              "end": {
+                "hour": 0,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE",
+                "SA",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 15
+              },
+              "end": {
+                "hour": 15,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "SA",
+                "WE"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 11,
+                "minute": 15
+              },
+              "end": {
+                "hour": 22,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "WE",
+                "TU"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 168,
+          "text": "Wednesday and  Saturday and Tuesday 7:45  in the evening- 12:45 in the morning Sunday\tand\tSaturday  & Wednesday3:15am  -  3:15pm wednesday and Tuesday 11:15am - 10:15pm",
+          "confidence": 0.8980746269226074,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 111,
+              "end": 112,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Sunday",
+          "start": 79,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-16207",
+      "family": "duration",
+      "text": "the interview is scheduled\tfor\tthe  next90  weeks works for me",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 90,
+              "unit": "week"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 36,
+          "end": 49,
+          "text": "next90  weeks",
+          "confidence": 0.9130174517631531,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 36,
+              "end": 40,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "for",
+          "start": 27,
+          "predictedRole": "O",
+          "expectedRole": "DUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-16356",
+      "family": "weekday-windows",
+      "text": "Sunday  from1:30 in the afternoon\tTO12:30am each  Sunday  FROM 12am to 6am\tevery\tfour weeks SATURDAY  from5:30AM\tto  12:30pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 0
+              },
+              "end": {
+                "hour": 6,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 5,
+                "minute": 30
+              },
+              "end": {
+                "hour": 12,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 124,
+          "text": "Sunday  from1:30 in the afternoon\tTO12:30am each  Sunday  FROM 12am to 6am\tevery\tfour weeks SATURDAY  from5:30AM\tto  12:30pm",
+          "confidence": 0.9040336608886719,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 106,
+              "end": 107,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 75,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-17910",
+      "family": "weekday-windows",
+      "text": "SUNDAY , Wednesday\tand  Friday2:45am - 3:45 in the morning\tFriday and Tuesday\tAND Wednesday 3:15PM - 8:15in evening  please",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 2,
+                "minute": 45
+              },
+              "end": {
+                "hour": 3,
+                "minute": 45
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "WE",
+                "FR"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 15,
+                "minute": 15
+              },
+              "end": {
+                "hour": 20,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "FR",
+                "TU",
+                "WE"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 115,
+          "text": "SUNDAY , Wednesday\tand  Friday2:45am - 3:45 in the morning\tFriday and Tuesday\tAND Wednesday 3:15PM - 8:15in evening",
+          "confidence": 0.6751859784126282,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 92,
+              "end": 93,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Friday",
+          "start": 59,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-18860",
+      "family": "duration",
+      "text": "THE OFFICE IS CLOSED  for  next a MINUTE",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 1,
+              "unit": "minute"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 27,
+          "end": 40,
+          "text": "next a MINUTE",
+          "confidence": 0.9150865077972412,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "The expression has no date or time.",
+              "start": 27,
+              "end": 31,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "for",
+          "start": 22,
+          "predictedRole": "O",
+          "expectedRole": "DUR",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-18978",
+      "family": "weekday-windows",
+      "text": "Thursday Wednesday  Tuesday  FROM\tfour am\tTo six  am  Monday  Friday  tuesday\tFROM  2:15pm  to 7:15pm each saturday from 7:45pm\tto 9:45pm",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 4,
+                "minute": 0
+              },
+              "end": {
+                "hour": 6,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH",
+                "WE",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 15
+              },
+              "end": {
+                "hour": 19,
+                "minute": 15
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO",
+                "FR",
+                "TU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 45
+              },
+              "end": {
+                "hour": 21,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "SA"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 137,
+          "text": "Thursday Wednesday  Tuesday  FROM\tfour am\tTo six  am  Monday  Friday  tuesday\tFROM  2:15pm  to 7:15pm each saturday from 7:45pm\tto 9:45pm",
+          "confidence": 0.9203426837921143,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 121,
+              "end": 122,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "each",
+          "start": 102,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19052",
+      "family": "weekday-windows",
+      "text": "Thursday from10:30am\tTo 5:30PM  every four\tweeks ON\tSaturday  Wednesday\tSUNDAY  from6:30pm to 12:30am Monday  From eleven\tpm\tto one am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 30
+              },
+              "end": {
+                "hour": 17,
+                "minute": 30
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "TH"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 30
+              },
+              "end": {
+                "hour": 0,
+                "minute": 30
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "SA",
+                "WE",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 0
+              },
+              "end": {
+                "hour": 1,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "MO"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 134,
+          "text": "Thursday from10:30am\tTo 5:30PM  every four\tweeks ON\tSaturday  Wednesday\tSUNDAY  from6:30pm to 12:30am Monday  From eleven\tpm\tto one am",
+          "confidence": 0.9258690476417542,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 84,
+              "end": 85,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "every",
+          "start": 32,
+          "predictedRole": "RECUR",
+          "expectedRole": "RECUR",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19562",
+      "family": "weekday-range",
+      "text": "Please schedule a interview From Sun To  Sat",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekdayRange",
+              "from": "SU",
+              "to": "SA"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 44,
+          "text": "Sun To  Sat",
+          "confidence": 0.9407395720481873,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "byDay": [
+                    "SU",
+                    "MO",
+                    "TU",
+                    "WE",
+                    "TH",
+                    "FR",
+                    "SA"
+                  ]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ],
+      "differences": [
+        {
+          "text": "From",
+          "start": 28,
+          "predictedRole": "O",
+          "expectedRole": "RANGE_START",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19595",
+      "family": "recurrence",
+      "text": "every day at 4 In afternoon",
+      "stage": "role-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": false,
+      "rolesCorrect": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "daily",
+              "interval": 1
+            },
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 27,
+          "text": "every day at 4 In afternoon",
+          "confidence": 0.12074185907840729,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-time",
+              "message": "Clock components are out of range.",
+              "start": 13,
+              "end": 14,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 0,
+              "end": 5,
+              "severity": "warning"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "afternoon",
+          "start": 18,
+          "predictedRole": "DAYPART",
+          "expectedRole": "MERIDIEM",
+          "predictedBoundary": false,
+          "expectedBoundary": false
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19792",
+      "family": "weekday-windows",
+      "text": "our clinic opens every  4weeks Wednesday & Monday  and SUNDAY12:45In afternoon -  4:45in the afternoon  Sunday ,  friday three in the morning -  four am",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 12,
+                "minute": 45
+              },
+              "end": {
+                "hour": 16,
+                "minute": 45
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 4,
+              "byDay": [
+                "WE",
+                "MO",
+                "SU"
+              ]
+            }
+          },
+          {
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 0
+              },
+              "end": {
+                "hour": 4,
+                "minute": 0
+              }
+            },
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 17,
+          "end": 152,
+          "text": "every  4weeks Wednesday & Monday  and SUNDAY12:45In afternoon -  4:45in the afternoon  Sunday ,  friday three in the morning -  four am",
+          "confidence": 0.9197565913200378,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "More than two clocks need a new clause.",
+              "start": 121,
+              "end": 126,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "Sunday",
+          "start": 104,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-19797",
+      "family": "weekday-points",
+      "text": "remind me to call Sam on Sunday at3  SATURDAY8works for me",
+      "stage": "boundary-sensitive",
+      "oracleCorrect": true,
+      "boundariesCorrect": true,
+      "rolesCorrect": false,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SU"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 0
+              }
+            }
+          },
+          {
+            "date": {
+              "kind": "weekday",
+              "days": [
+                "SA"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 8,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 25,
+          "end": 46,
+          "text": "Sunday at3  SATURDAY8",
+          "confidence": 0.9253590703010559,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unlinked-times",
+              "message": "Two clocks need a range separator or separate clauses.",
+              "start": 45,
+              "end": 46,
+              "severity": "error"
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "text": "SATURDAY",
+          "start": 37,
+          "predictedRole": "WEEKDAY",
+          "expectedRole": "WEEKDAY",
+          "predictedBoundary": false,
+          "expectedBoundary": true
+        }
+      ]
+    }
+  ],
+  "scope": "Counterfactual checks on the evaluation's captured failures (at most 100). Replacing roles or boundaries identifies sensitivity, not proof that the model is wrong: equivalent semantic roles and harmless filler still require compiler-contract review. No weights or runtime predictions are changed."
+}

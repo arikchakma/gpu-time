@@ -1,0 +1,72 @@
+{"id":"prose-001-authored","family":"prose-carrier","variant":"authored","text":"I'll be out between 5 and 6pm","schedule":{"clauses":[{"time":{"start":{"hour":17,"minute":0},"end":{"hour":18,"minute":0}}}]}}
+{"id":"prose-001-lowercase","family":"prose-carrier","variant":"lowercase","text":"i'll be out between 5 and 6pm","schedule":{"clauses":[{"time":{"start":{"hour":17,"minute":0},"end":{"hour":18,"minute":0}}}]}}
+{"id":"prose-001-uppercase","family":"prose-carrier","variant":"uppercase","text":"I'LL BE OUT BETWEEN 5 AND 6PM","schedule":{"clauses":[{"time":{"start":{"hour":17,"minute":0},"end":{"hour":18,"minute":0}}}]}}
+{"id":"prose-002-authored","family":"prose-carrier","variant":"authored","text":"I'll be out from 1am to 5pm","schedule":{"clauses":[{"time":{"start":{"hour":1,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"prose-002-lowercase","family":"prose-carrier","variant":"lowercase","text":"i'll be out from 1am to 5pm","schedule":{"clauses":[{"time":{"start":{"hour":1,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"prose-002-uppercase","family":"prose-carrier","variant":"uppercase","text":"I'LL BE OUT FROM 1AM TO 5PM","schedule":{"clauses":[{"time":{"start":{"hour":1,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"prose-003-authored","family":"prose-carrier","variant":"authored","text":"We'll be available from 9am to 5pm","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"prose-003-lowercase","family":"prose-carrier","variant":"lowercase","text":"we'll be available from 9am to 5pm","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"prose-003-uppercase","family":"prose-carrier","variant":"uppercase","text":"WE'LL BE AVAILABLE FROM 9AM TO 5PM","schedule":{"clauses":[{"time":{"start":{"hour":9,"minute":0},"end":{"hour":17,"minute":0}}}]}}
+{"id":"prose-004-authored","family":"prose-carrier","variant":"authored","text":"The library is open from 10am to noon","schedule":{"clauses":[{"time":{"start":{"hour":10,"minute":0},"end":{"named":"noon"}}}]}}
+{"id":"prose-004-lowercase","family":"prose-carrier","variant":"lowercase","text":"the library is open from 10am to noon","schedule":{"clauses":[{"time":{"start":{"hour":10,"minute":0},"end":{"named":"noon"}}}]}}
+{"id":"prose-004-uppercase","family":"prose-carrier","variant":"uppercase","text":"THE LIBRARY IS OPEN FROM 10AM TO NOON","schedule":{"clauses":[{"time":{"start":{"hour":10,"minute":0},"end":{"named":"noon"}}}]}}
+{"id":"prose-005-authored","family":"prose-carrier","variant":"authored","text":"The office is closed from 10pm to midnight","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"named":"midnight"}}}]}}
+{"id":"prose-005-lowercase","family":"prose-carrier","variant":"lowercase","text":"the office is closed from 10pm to midnight","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"named":"midnight"}}}]}}
+{"id":"prose-005-uppercase","family":"prose-carrier","variant":"uppercase","text":"THE OFFICE IS CLOSED FROM 10PM TO MIDNIGHT","schedule":{"clauses":[{"time":{"start":{"hour":22,"minute":0},"end":{"named":"midnight"}}}]}}
+{"id":"prose-006-authored","family":"prose-carrier","variant":"authored","text":"Could you set an alarm for 8am","schedule":{"clauses":[{"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"prose-006-lowercase","family":"prose-carrier","variant":"lowercase","text":"could you set an alarm for 8am","schedule":{"clauses":[{"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"prose-006-uppercase","family":"prose-carrier","variant":"uppercase","text":"COULD YOU SET AN ALARM FOR 8AM","schedule":{"clauses":[{"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"prose-007-authored","family":"prose-carrier","variant":"authored","text":"Please set an alarm for 7:30am","schedule":{"clauses":[{"time":{"start":{"hour":7,"minute":30}}}]}}
+{"id":"prose-007-lowercase","family":"prose-carrier","variant":"lowercase","text":"please set an alarm for 7:30am","schedule":{"clauses":[{"time":{"start":{"hour":7,"minute":30}}}]}}
+{"id":"prose-007-uppercase","family":"prose-carrier","variant":"uppercase","text":"PLEASE SET AN ALARM FOR 7:30AM","schedule":{"clauses":[{"time":{"start":{"hour":7,"minute":30}}}]}}
+{"id":"prose-008-authored","family":"prose-carrier","variant":"authored","text":"Can you book room 24 for tomorrow at 3pm","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"prose-008-lowercase","family":"prose-carrier","variant":"lowercase","text":"can you book room 24 for tomorrow at 3pm","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"prose-008-uppercase","family":"prose-carrier","variant":"uppercase","text":"CAN YOU BOOK ROOM 24 FOR TOMORROW AT 3PM","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1},"time":{"start":{"hour":15,"minute":0}}}]}}
+{"id":"prose-009-authored","family":"prose-carrier","variant":"authored","text":"The appointment is scheduled for Friday at noon","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"named":"noon"}}}]}}
+{"id":"prose-009-lowercase","family":"prose-carrier","variant":"lowercase","text":"the appointment is scheduled for friday at noon","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"named":"noon"}}}]}}
+{"id":"prose-009-uppercase","family":"prose-carrier","variant":"uppercase","text":"THE APPOINTMENT IS SCHEDULED FOR FRIDAY AT NOON","schedule":{"clauses":[{"date":{"kind":"weekday","days":["FR"]},"time":{"start":{"named":"noon"}}}]}}
+{"id":"prose-010-authored","family":"prose-carrier","variant":"authored","text":"The interview starts Monday at 2pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"prose-010-lowercase","family":"prose-carrier","variant":"lowercase","text":"the interview starts monday at 2pm","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"prose-010-uppercase","family":"prose-carrier","variant":"uppercase","text":"THE INTERVIEW STARTS MONDAY AT 2PM","schedule":{"clauses":[{"date":{"kind":"weekday","days":["MO"]},"time":{"start":{"hour":14,"minute":0}}}]}}
+{"id":"prose-011-authored","family":"prose-carrier","variant":"authored","text":"Our clinic opens every weekday at 8am","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]},"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"prose-011-lowercase","family":"prose-carrier","variant":"lowercase","text":"our clinic opens every weekday at 8am","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]},"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"prose-011-uppercase","family":"prose-carrier","variant":"uppercase","text":"OUR CLINIC OPENS EVERY WEEKDAY AT 8AM","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO","TU","WE","TH","FR"]},"time":{"start":{"hour":8,"minute":0}}}]}}
+{"id":"prose-012-authored","family":"prose-carrier","variant":"authored","text":"Please schedule a call for every other Tuesday at 11am","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"]},"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"prose-012-lowercase","family":"prose-carrier","variant":"lowercase","text":"please schedule a call for every other tuesday at 11am","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"]},"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"prose-012-uppercase","family":"prose-carrier","variant":"uppercase","text":"PLEASE SCHEDULE A CALL FOR EVERY OTHER TUESDAY AT 11AM","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":2,"byDay":["TU"]},"time":{"start":{"hour":11,"minute":0}}}]}}
+{"id":"prose-013-authored","family":"prose-carrier","variant":"authored","text":"The lesson is scheduled for June 12","schedule":{"clauses":[{"date":{"kind":"calendar","month":6,"day":12}}]}}
+{"id":"prose-013-lowercase","family":"prose-carrier","variant":"lowercase","text":"the lesson is scheduled for june 12","schedule":{"clauses":[{"date":{"kind":"calendar","month":6,"day":12}}]}}
+{"id":"prose-013-uppercase","family":"prose-carrier","variant":"uppercase","text":"THE LESSON IS SCHEDULED FOR JUNE 12","schedule":{"clauses":[{"date":{"kind":"calendar","month":6,"day":12}}]}}
+{"id":"prose-014-authored","family":"prose-carrier","variant":"authored","text":"They'll be back in two hours","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"prose-014-lowercase","family":"prose-carrier","variant":"lowercase","text":"they'll be back in two hours","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"prose-014-uppercase","family":"prose-carrier","variant":"uppercase","text":"THEY'LL BE BACK IN TWO HOURS","schedule":{"clauses":[{"shift":{"amount":2,"unit":"hour","direction":"after"}}]}}
+{"id":"prose-015-authored","family":"prose-carrier","variant":"authored","text":"I'd like to schedule a meeting for tomorrow","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"prose-015-lowercase","family":"prose-carrier","variant":"lowercase","text":"i'd like to schedule a meeting for tomorrow","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"prose-015-uppercase","family":"prose-carrier","variant":"uppercase","text":"I'D LIKE TO SCHEDULE A MEETING FOR TOMORROW","schedule":{"clauses":[{"date":{"kind":"relativeDay","offset":1}}]}}
+{"id":"prose-016-authored","family":"prose-carrier","variant":"authored","text":"Please remind me about Christmas","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"prose-016-lowercase","family":"prose-carrier","variant":"lowercase","text":"please remind me about christmas","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"prose-016-uppercase","family":"prose-carrier","variant":"uppercase","text":"PLEASE REMIND ME ABOUT CHRISTMAS","schedule":{"clauses":[{"date":{"kind":"holiday","name":"christmas"}}]}}
+{"id":"prose-017-authored","family":"prose-carrier","variant":"authored","text":"The meeting is scheduled for next week","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"prose-017-lowercase","family":"prose-carrier","variant":"lowercase","text":"the meeting is scheduled for next week","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"prose-017-uppercase","family":"prose-carrier","variant":"uppercase","text":"THE MEETING IS SCHEDULED FOR NEXT WEEK","schedule":{"clauses":[{"date":{"kind":"relativeUnit","unit":"week","modifier":"next"}}]}}
+{"id":"prose-018-authored","family":"prose-carrier","variant":"authored","text":"Please book room 17 from Monday to Wednesday","schedule":{"clauses":[{"date":{"kind":"weekdayRange","from":"MO","to":"WE"}}]}}
+{"id":"prose-018-lowercase","family":"prose-carrier","variant":"lowercase","text":"please book room 17 from monday to wednesday","schedule":{"clauses":[{"date":{"kind":"weekdayRange","from":"MO","to":"WE"}}]}}
+{"id":"prose-018-uppercase","family":"prose-carrier","variant":"uppercase","text":"PLEASE BOOK ROOM 17 FROM MONDAY TO WEDNESDAY","schedule":{"clauses":[{"date":{"kind":"weekdayRange","from":"MO","to":"WE"}}]}}
+{"id":"prose-019-authored","family":"prose-negative","variant":"authored","text":"The library is closed for repairs.","schedule":null}
+{"id":"prose-019-lowercase","family":"prose-negative","variant":"lowercase","text":"the library is closed for repairs.","schedule":null}
+{"id":"prose-019-uppercase","family":"prose-negative","variant":"uppercase","text":"THE LIBRARY IS CLOSED FOR REPAIRS.","schedule":null}
+{"id":"prose-020-authored","family":"prose-negative","variant":"authored","text":"Please set an alarm for the experiment.","schedule":null}
+{"id":"prose-020-lowercase","family":"prose-negative","variant":"lowercase","text":"please set an alarm for the experiment.","schedule":null}
+{"id":"prose-020-uppercase","family":"prose-negative","variant":"uppercase","text":"PLEASE SET AN ALARM FOR THE EXPERIMENT.","schedule":null}
+{"id":"prose-021-authored","family":"prose-negative","variant":"authored","text":"Can you book room 24 for the team?","schedule":null}
+{"id":"prose-021-lowercase","family":"prose-negative","variant":"lowercase","text":"can you book room 24 for the team?","schedule":null}
+{"id":"prose-021-uppercase","family":"prose-negative","variant":"uppercase","text":"CAN YOU BOOK ROOM 24 FOR THE TEAM?","schedule":null}
+{"id":"prose-022-authored","family":"prose-negative","variant":"authored","text":"The interview is about our second product.","schedule":null}
+{"id":"prose-022-lowercase","family":"prose-negative","variant":"lowercase","text":"the interview is about our second product.","schedule":null}
+{"id":"prose-022-uppercase","family":"prose-negative","variant":"uppercase","text":"THE INTERVIEW IS ABOUT OUR SECOND PRODUCT.","schedule":null}
+{"id":"prose-023-authored","family":"prose-negative","variant":"authored","text":"I'll be out of the office for personal reasons.","schedule":null}
+{"id":"prose-023-lowercase","family":"prose-negative","variant":"lowercase","text":"i'll be out of the office for personal reasons.","schedule":null}
+{"id":"prose-023-uppercase","family":"prose-negative","variant":"uppercase","text":"I'LL BE OUT OF THE OFFICE FOR PERSONAL REASONS.","schedule":null}
+{"id":"prose-024-authored","family":"prose-negative","variant":"authored","text":"Our clinic is open for questions.","schedule":null}
+{"id":"prose-024-lowercase","family":"prose-negative","variant":"lowercase","text":"our clinic is open for questions.","schedule":null}
+{"id":"prose-024-uppercase","family":"prose-negative","variant":"uppercase","text":"OUR CLINIC IS OPEN FOR QUESTIONS.","schedule":null}

@@ -1,0 +1,49 @@
+WEBVTT
+
+1
+00:00:00.700 --> 00:00:03.489
+Every Monday, from eight to ten in the evening.
+
+2
+00:00:05.900 --> 00:00:10.736
+Split the sentence into tokens, keeping the position of every word and number.
+
+3
+00:00:13.000 --> 00:00:20.459
+Token features select learned vectors. Their sum gives each token thirty-two numbers. These are the actual values.
+
+4
+00:00:23.000 --> 00:00:29.029
+Learned filters mix nearby positions and neighboring words, giving each token local context.
+
+5
+00:00:31.200 --> 00:00:37.997
+Gates control how much context to carry forward. A backward pass adds context from the other direction.
+
+6
+00:00:41.000 --> 00:00:46.752
+Learned gates and hidden units combine token and sentence context, turning it into scores.
+
+7
+00:00:49.200 --> 00:00:56.339
+These are Monday's ten highest named role scores. Weekday wins. A separate score detects clause boundaries.
+
+8
+00:00:59.000 --> 00:01:03.471
+The scores become roles. The model does not calculate calendar dates.
+
+9
+00:01:05.000 --> 00:01:10.763
+Code combines the roles into a weekly window, then applies your reference date and timezone.
+
+10
+00:01:13.000 --> 00:01:19.136
+Eight P M stays fixed in New York, even when daylight saving changes the U T C time.
+
+11
+00:01:21.000 --> 00:01:24.566
+The API returns dates and calendar rules directly.
+
+12
+00:01:26.300 --> 00:01:30.452
+G P U time. A small neural model for everyday schedules.

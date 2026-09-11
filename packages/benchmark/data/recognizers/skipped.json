@@ -1,0 +1,252 @@
+[
+  {
+    "id": "DateParser-17",
+    "reason": "Component-specific non-match: absence of a date/period result does not establish absence of any temporal expression",
+    "text": "I'll go back at 4-22"
+  },
+  {
+    "id": "DateParser-18",
+    "reason": "Component-specific non-match: absence of a date/period result does not establish absence of any temporal expression",
+    "text": "I'll go back at 4.22"
+  },
+  {
+    "id": "DatePeriodParser-27",
+    "reason": "Component-specific non-match: absence of a date/period result does not establish absence of any temporal expression",
+    "text": "schedule a meeting in two weeks"
+  },
+  {
+    "id": "DatePeriodParser-61",
+    "reason": "Component-specific non-match: absence of a date/period result does not establish absence of any temporal expression",
+    "text": "I'll be out in 3 years"
+  },
+  {
+    "id": "DatePeriodParser-81",
+    "reason": "Component-specific non-match: absence of a date/period result does not establish absence of any temporal expression",
+    "text": "I'll be out during H2"
+  },
+  {
+    "id": "DatePeriodParser-82",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave this summer"
+  },
+  {
+    "id": "DatePeriodParser-83",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave next spring"
+  },
+  {
+    "id": "DatePeriodParser-84",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave the summer"
+  },
+  {
+    "id": "DatePeriodParser-85",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave summer"
+  },
+  {
+    "id": "DatePeriodParser-86",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave summer 2016"
+  },
+  {
+    "id": "DatePeriodParser-87",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave summer of 2016"
+  },
+  {
+    "id": "DatePeriodParser-130",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "In the spring of nineteen seventy eight"
+  },
+  {
+    "id": "DatePeriodParser-153",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "what about by mid summer?"
+  },
+  {
+    "id": "DatePeriodParser-162",
+    "reason": "Component-specific non-match: absence of a date/period result does not establish absence of any temporal expression",
+    "text": "schedule a meeting in couple of weeks"
+  },
+  {
+    "id": "DatePeriodParser-215",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I have already finished all my work more than 2 weeks before today"
+  },
+  {
+    "id": "DatePeriodParser-216",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "This task should have been done more than 2 days before yesterday"
+  },
+  {
+    "id": "DatePeriodParser-237",
+    "reason": "No explicit reference context",
+    "text": "6,107.31 August 2019 should not include the decimal"
+  },
+  {
+    "id": "DatePeriodParser-252",
+    "reason": "No explicit reference context",
+    "text": "Show me the records for August 99"
+  },
+  {
+    "id": "SetParser-1",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave weekly"
+  },
+  {
+    "id": "SetParser-2",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave biweekly"
+  },
+  {
+    "id": "SetParser-3",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave daily"
+  },
+  {
+    "id": "SetParser-4",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every day"
+  },
+  {
+    "id": "SetParser-5",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave each month"
+  },
+  {
+    "id": "SetParser-6",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave annually"
+  },
+  {
+    "id": "SetParser-7",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave annual"
+  },
+  {
+    "id": "SetParser-8",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave each two days"
+  },
+  {
+    "id": "SetParser-9",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every three week"
+  },
+  {
+    "id": "SetParser-10",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave 3pm every day"
+  },
+  {
+    "id": "SetParser-11",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave 3pm each day"
+  },
+  {
+    "id": "SetParser-12",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave each 4/15"
+  },
+  {
+    "id": "SetParser-13",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every monday"
+  },
+  {
+    "id": "SetParser-14",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave each monday 4pm"
+  },
+  {
+    "id": "SetParser-15",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every morning"
+  },
+  {
+    "id": "SetParser-16",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every morning at 9am"
+  },
+  {
+    "id": "SetParser-17",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every afternoon at 4pm"
+  },
+  {
+    "id": "SetParser-18",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every night at 9pm"
+  },
+  {
+    "id": "SetParser-19",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave every night at 9"
+  },
+  {
+    "id": "SetParser-20",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave mornings at 9am"
+  },
+  {
+    "id": "SetParser-21",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave on mornings at 9"
+  },
+  {
+    "id": "SetParser-22",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave at 9am every Sunday"
+  },
+  {
+    "id": "SetParser-23",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave at 9am on Sundays"
+  },
+  {
+    "id": "SetParser-24",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave at 9am Sundays"
+  },
+  {
+    "id": "SetParser-25",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave on Mondays"
+  },
+  {
+    "id": "SetParser-26",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave on Sundays"
+  },
+  {
+    "id": "SetParser-27",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I'll leave Sundays"
+  },
+  {
+    "id": "SetParser-28",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "I go on vacation once a year"
+  },
+  {
+    "id": "SetParser-29",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "Let's meet once a week"
+  },
+  {
+    "id": "SetParser-30",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "Every other Friday"
+  },
+  {
+    "id": "SetParser-31",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "Let's have a quarterly meeting."
+  },
+  {
+    "id": "SetParser-32",
+    "reason": "No concrete future date/interval (for example, symbolic SET or duration)",
+    "text": "It's an everyday routine."
+  }
+]

@@ -1,0 +1,617 @@
+{
+  "model": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
+  "source": "data/synth/natural-reserved.jsonl",
+  "sourceSha256": "fa0b5b943308aa8325355094a3e5f0e4125f63421fcef18849813021598a7721",
+  "total": 1000,
+  "correct": 993,
+  "families": {
+    "spoken-clock": {
+      "total": 63,
+      "correct": 63
+    },
+    "fraction-clock": {
+      "total": 63,
+      "correct": 63
+    },
+    "qualified-clock": {
+      "total": 63,
+      "correct": 63
+    },
+    "compound-duration": {
+      "total": 63,
+      "correct": 63
+    },
+    "compound-shift": {
+      "total": 63,
+      "correct": 63
+    },
+    "fraction-duration": {
+      "total": 63,
+      "correct": 58
+    },
+    "prose-date": {
+      "total": 63,
+      "correct": 63
+    },
+    "numeric-date": {
+      "total": 63,
+      "correct": 63
+    },
+    "date-range": {
+      "total": 62,
+      "correct": 62
+    },
+    "datetime-range": {
+      "total": 62,
+      "correct": 62
+    },
+    "month-period": {
+      "total": 62,
+      "correct": 62
+    },
+    "month-week": {
+      "total": 62,
+      "correct": 62
+    },
+    "recurrence": {
+      "total": 62,
+      "correct": 60
+    },
+    "recurrence-bound": {
+      "total": 62,
+      "correct": 62
+    },
+    "monthly-exception": {
+      "total": 62,
+      "correct": 62
+    },
+    "shared-times": {
+      "total": 62,
+      "correct": 62
+    }
+  },
+  "failures": [
+    {
+      "id": "natural-424242-21",
+      "family": "fraction-duration",
+      "text": "allow extra time for 4.5 hours",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 24,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 4.5,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 30,
+          "text": "4.5 hours",
+          "confidence": 0.9511762261390686,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 21,
+              "end": 22,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-236",
+      "family": "recurrence",
+      "text": "please put this in my diary for three weeks on weekdays at 3:00 pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 31,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 43,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 55,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 58,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 60,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 60,
+          "end": 61,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 63,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 64,
+          "end": 66,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 15,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 28,
+          "end": 66,
+          "text": "for three weeks on weekdays at 3:00 pm",
+          "confidence": 0.946918249130249,
+          "schedule": {
+            "clauses": [
+              {
+                "time": {
+                  "start": {
+                    "hour": 15,
+                    "minute": 0
+                  }
+                },
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "span": {
+                    "amount": 3,
+                    "unit": "week"
+                  },
+                  "byDay": [
+                    "MO",
+                    "TU",
+                    "WE",
+                    "TH",
+                    "FR"
+                  ]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-620",
+      "family": "recurrence",
+      "text": "please put this in my diary for two weeks on weekdays at ten seventeen am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 31,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 41,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 53,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 54,
+          "end": 56,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 60,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 70,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 73,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 17
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 28,
+          "end": 73,
+          "text": "for two weeks on weekdays at ten seventeen am",
+          "confidence": 0.9046397805213928,
+          "schedule": {
+            "clauses": [
+              {
+                "time": {
+                  "start": {
+                    "hour": 10,
+                    "minute": 17
+                  }
+                },
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "span": {
+                    "amount": 2,
+                    "unit": "week"
+                  },
+                  "byDay": [
+                    "MO",
+                    "TU",
+                    "WE",
+                    "TH",
+                    "FR"
+                  ]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-677",
+      "family": "fraction-duration",
+      "text": "allow extra time for 2.5 hours",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 24,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 2.5,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 30,
+          "text": "2.5 hours",
+          "confidence": 0.9559295177459717,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 21,
+              "end": 22,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-741",
+      "family": "fraction-duration",
+      "text": "allow extra time for 2.5 hours",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 24,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 2.5,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 30,
+          "text": "2.5 hours",
+          "confidence": 0.9559295177459717,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 21,
+              "end": 22,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-805",
+      "family": "fraction-duration",
+      "text": "allow extra time for 4.5 hours",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 24,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 4.5,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 30,
+          "text": "4.5 hours",
+          "confidence": 0.9511762261390686,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 21,
+              "end": 22,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-869",
+      "family": "fraction-duration",
+      "text": "allow extra time for 3.5 hours",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "DUR",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 24,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "UNIT",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 3.5,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 30,
+          "text": "3.5 hours",
+          "confidence": 0.9331858158111572,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 21,
+              "end": 22,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Exact AST equality from neural predictions against independently sampled specifications. Fresh values use the same rendering families as part of training; this is a synthetic development check, not unseen-language accuracy."
+}

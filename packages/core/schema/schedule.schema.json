@@ -1,0 +1,609 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Schedule",
+  "$id": "urn:gpu-time:schedule:1",
+  "$defs": {
+    "Schedule": {
+      "type": "object",
+      "properties": {
+        "clauses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Clause"
+          },
+          "minItems": 1,
+          "maxItems": 128
+        }
+      },
+      "required": ["clauses"],
+      "additionalProperties": false
+    },
+    "Clause": {
+      "type": "object",
+      "properties": {
+        "endDate": {
+          "$ref": "#/$defs/DateSpec"
+        },
+        "date": {
+          "$ref": "#/$defs/DateSpec"
+        },
+        "time": {
+          "$ref": "#/$defs/TimeSpec"
+        },
+        "shift": {
+          "$ref": "#/$defs/Shift"
+        },
+        "duration": {
+          "$ref": "#/$defs/Duration"
+        },
+        "recurrence": {
+          "$ref": "#/$defs/Recurrence"
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "properties": {
+            "date": {}
+          },
+          "required": ["date"]
+        },
+        {
+          "properties": {
+            "time": {}
+          },
+          "required": ["time"]
+        },
+        {
+          "properties": {
+            "shift": {}
+          },
+          "required": ["shift"]
+        },
+        {
+          "properties": {
+            "duration": {}
+          },
+          "required": ["duration"]
+        },
+        {
+          "properties": {
+            "recurrence": {}
+          },
+          "required": ["recurrence"]
+        }
+      ]
+    },
+    "DateSpec": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "now"
+            }
+          },
+          "required": ["kind"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "relativeDay"
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": -10000,
+              "maximum": 10000
+            }
+          },
+          "required": ["kind", "offset"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "weekday"
+            },
+            "days": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Weekday"
+              },
+              "minItems": 1,
+              "maxItems": 7,
+              "uniqueItems": true
+            },
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            }
+          },
+          "required": ["kind", "days"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "weekdayRange"
+            },
+            "from": {
+              "$ref": "#/$defs/Weekday"
+            },
+            "to": {
+              "$ref": "#/$defs/Weekday"
+            }
+          },
+          "required": ["kind", "from", "to"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "dayGroup"
+            },
+            "group": {
+              "type": "string",
+              "enum": ["weekday", "weekend"]
+            },
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            }
+          },
+          "required": ["kind", "group"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31
+            },
+            "kind": {
+              "type": "string",
+              "const": "calendar"
+            }
+          },
+          "required": ["kind"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "calendarRange"
+            },
+            "from": {
+              "$ref": "#/$defs/CalendarDate"
+            },
+            "to": {
+              "$ref": "#/$defs/CalendarDate"
+            }
+          },
+          "required": ["kind", "from", "to"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "calendarPeriod"
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999
+            },
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            },
+            "week": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          "required": ["kind", "month"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "relativeUnit"
+            },
+            "unit": {
+              "$ref": "#/$defs/Unit"
+            },
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            },
+            "edge": {
+              "type": "string",
+              "enum": ["start", "end"]
+            }
+          },
+          "required": ["kind", "unit", "modifier"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "ordinalWeekday"
+            },
+            "ordinal": {
+              "type": "integer",
+              "minimum": -5,
+              "maximum": 5,
+              "not": {
+                "const": 0
+              }
+            },
+            "day": {
+              "$ref": "#/$defs/Weekday"
+            },
+            "of": {
+              "$ref": "#/$defs/MonthRef"
+            },
+            "recurring": {
+              "type": "boolean"
+            }
+          },
+          "required": ["kind", "ordinal", "day", "of"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "holiday"
+            },
+            "name": {
+              "type": "string",
+              "enum": [
+                "christmas",
+                "christmas-eve",
+                "new-year",
+                "new-years-eve",
+                "halloween",
+                "valentines"
+              ]
+            }
+          },
+          "required": ["kind", "name"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Weekday": {
+      "type": "string",
+      "enum": ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+    },
+    "Modifier": {
+      "type": "string",
+      "enum": ["this", "next", "last"]
+    },
+    "CalendarDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9999
+        },
+        "month": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "day": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 31
+        }
+      },
+      "additionalProperties": false
+    },
+    "Unit": {
+      "type": "string",
+      "enum": ["minute", "hour", "day", "week", "month", "year"]
+    },
+    "MonthRef": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "calendar"
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            }
+          },
+          "required": ["kind"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "relativeUnit"
+            },
+            "unit": {
+              "type": "string",
+              "enum": ["month", "year"]
+            },
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            }
+          },
+          "required": ["kind", "unit", "modifier"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "TimeSpec": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/ClockTime"
+        },
+        "end": {
+          "$ref": "#/$defs/ClockTime"
+        }
+      },
+      "required": ["start"],
+      "additionalProperties": false
+    },
+    "ClockTime": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 24
+            },
+            "minute": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 59
+            },
+            "second": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 59
+            }
+          },
+          "required": ["hour", "minute"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "named": {
+              "type": "string",
+              "enum": ["noon", "midnight"]
+            }
+          },
+          "required": ["named"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "part": {
+              "$ref": "#/$defs/DayPart"
+            }
+          },
+          "required": ["part"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "DayPart": {
+      "type": "string",
+      "enum": ["morning", "afternoon", "evening", "night"]
+    },
+    "Shift": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Quantity"
+          }
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["before", "after"]
+        },
+        "endAmount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "approximate": {
+          "type": "boolean"
+        }
+      },
+      "required": ["amount", "unit", "direction"],
+      "additionalProperties": false
+    },
+    "Quantity": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        }
+      },
+      "required": ["amount", "unit"],
+      "additionalProperties": false
+    },
+    "Duration": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Quantity"
+          }
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        }
+      },
+      "required": ["amount", "unit"],
+      "additionalProperties": false
+    },
+    "Recurrence": {
+      "type": "object",
+      "properties": {
+        "freq": {
+          "type": "string",
+          "enum": ["hourly", "daily", "weekly", "monthly", "yearly"]
+        },
+        "interval": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "byDay": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Weekday"
+          },
+          "minItems": 1,
+          "maxItems": 7,
+          "uniqueItems": true
+        },
+        "byMonthDay": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -31,
+            "maximum": 31,
+            "not": {
+              "const": 0
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "bySetPos": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -366,
+            "maximum": 366,
+            "not": {
+              "const": 0
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "byMonth": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "not": {
+              "const": 0
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "timesPer": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 24
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "until": {
+          "$ref": "#/$defs/DateSpec"
+        },
+        "start": {
+          "$ref": "#/$defs/DateSpec"
+        },
+        "except": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DateSpec"
+          }
+        },
+        "span": {
+          "$ref": "#/$defs/Duration",
+          "description": "A bound on the entire series, distinct from the duration of each occurrence."
+        }
+      },
+      "required": ["freq", "interval"],
+      "additionalProperties": false
+    }
+  }
+}

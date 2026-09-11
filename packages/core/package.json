@@ -1,0 +1,54 @@
+{
+  "name": "gpu-time",
+  "version": "0.1.0",
+  "description": "A compact neural parser for English schedules",
+  "author": "Arik Chakma",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node --experimental-strip-types scripts/build.ts --report-only",
+    "build:release": "node --experimental-strip-types scripts/build.ts",
+    "prepack": "pnpm build",
+    "test": "vitest run",
+    "test:browser": "node --experimental-strip-types scripts/build.ts --report-only && node --experimental-strip-types test/browser.ts",
+    "check": "tsc --noEmit",
+    "schema": "node --experimental-strip-types scripts/generate-schema.ts",
+    "check:package": "pnpm build && node --experimental-strip-types scripts/check-package.ts"
+  },
+  "devDependencies": {
+    "@js-temporal/polyfill": "0.5.1",
+    "@types/node": "24.13.3",
+    "@webgpu/types": "0.1.72",
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.63.0",
+    "rrule": "2.8.1",
+    "terser": "5.51.2",
+    "ts-json-schema-generator": "2.9.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "4.1.11",
+    "wgslender": "1.4.1"
+  },
+  "keywords": [
+    "schedule",
+    "natural-language",
+    "date",
+    "recurrence",
+    "webgpu"
+  ],
+  "license": "MIT"
+}
