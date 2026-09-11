@@ -36,7 +36,7 @@ Held-in numbers are much higher and much less meaningful: 4,996/5,000 on the ori
 
 Against the independent Microsoft Recognizers date/time specifications, development agreement is **156/563**. Its reserved test split is not used for model selection.
 
-Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Different parsers return different structures, so speed does not imply equivalent capability. See [MODEL_CARD.md](MODEL_CARD.md) for the evaluation contract and limitations, and the [benchmark report](packages/benchmark/results/REPORT.md) for measured timings, bundle sizes, and full output for all 25 adversarial inputs.
+Warm medians over 10,000 inputs: WebGPU 82.7 ms, CPU 702.5 ms, Chrono 82.8 ms. Different parsers return different structures, so speed does not imply equivalent capability. See [MODEL_CARD.md](MODEL_CARD.md) for the evaluation contract and limitations, and the [benchmark report](packages/benchmark/results/REPORT.md) for measured timings, bundle sizes, and full output for all 25 adversarial inputs.
 
 The package is not published yet. The current build is 34,650 bytes Brotli against a 50,000-byte release gate.
 

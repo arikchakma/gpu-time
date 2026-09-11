@@ -1,13 +1,13 @@
 {
-  "model": "0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac",
+  "model": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
   "source": "data/synth/natural-evaluation.jsonl",
-  "sourceSha256": "205aceceb6c94fe3a256137f1ca70d49215ad1e64374d8e2905539c071a3dcb7",
+  "sourceSha256": "a7a3de8f7de614e3bfd83fe36943cfe659b12efcf9ce6acf81ff0ce22dd73756",
   "total": 1000,
-  "correct": 997,
+  "correct": 999,
   "families": {
     "spoken-clock": {
       "total": 63,
-      "correct": 63
+      "correct": 62
     },
     "fraction-clock": {
       "total": 63,
@@ -39,7 +39,7 @@
     },
     "date-range": {
       "total": 62,
-      "correct": 60
+      "correct": 62
     },
     "datetime-range": {
       "total": 62,
@@ -67,207 +67,41 @@
     },
     "shared-times": {
       "total": 62,
-      "correct": 61
+      "correct": 62
     }
   },
   "failures": [
     {
-      "id": "natural-424242-632",
-      "family": "date-range",
-      "text": "please reserve from Friday the 3rd until Sunday the 24th",
+      "id": "natural-424242-704",
+      "family": "spoken-clock",
+      "text": "could you reserve the interview six thirty six",
       "spans": [
         {
           "start": 0,
-          "end": 14,
+          "end": 31,
           "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 15,
-          "end": 19,
-          "label": "RANGE_START",
-          "clauseStart": false
-        },
-        {
-          "start": 20,
-          "end": 26,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 27,
-          "end": 30,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 31,
-          "end": 32,
-          "label": "DOM",
           "clauseStart": false
         },
         {
           "start": 32,
-          "end": 34,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 35,
-          "end": 40,
-          "label": "RANGE_END",
-          "clauseStart": false
-        },
-        {
-          "start": 41,
-          "end": 47,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 48,
-          "end": 51,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 52,
-          "end": 54,
-          "label": "DOM",
-          "clauseStart": false
-        },
-        {
-          "start": 54,
-          "end": 56,
-          "label": "GLUE",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "date": {
-              "kind": "calendarRange",
-              "from": {
-                "day": 3
-              },
-              "to": {
-                "day": 24
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 15,
-          "end": 54,
-          "text": "from Friday the 3rd until Sunday the 24",
-          "confidence": 0.8655489683151245,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unsupported",
-              "message": "This bound requires recurrence.",
-              "start": 35,
-              "end": 40,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-863",
-      "family": "shared-times",
-      "text": "book dinner for weekday at three eighteen and 12 in the evening",
-      "spans": [
-        {
-          "start": 0,
-          "end": 15,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 16,
-          "end": 23,
-          "label": "DAYGROUP",
-          "clauseStart": false
-        },
-        {
-          "start": 24,
-          "end": 26,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 27,
-          "end": 32,
+          "end": 35,
           "label": "HOUR",
           "clauseStart": false
         },
         {
-          "start": 33,
-          "end": 41,
+          "start": 36,
+          "end": 46,
           "label": "MINUTE",
           "clauseStart": false
-        },
-        {
-          "start": 42,
-          "end": 45,
-          "label": "JOIN",
-          "clauseStart": false
-        },
-        {
-          "start": 46,
-          "end": 48,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 49,
-          "end": 63,
-          "label": "MERIDIEM",
-          "clauseStart": false
         }
       ],
       "schedule": {
         "clauses": [
           {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
-            },
             "time": {
               "start": {
-                "hour": 3,
-                "minute": 18
-              }
-            }
-          },
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 1,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 12,
-                "minute": 0
+                "hour": 6,
+                "minute": 36
               }
             }
           }
@@ -275,165 +109,24 @@
       },
       "actual": [
         {
-          "start": 16,
-          "end": 32,
-          "text": "weekday at three",
-          "confidence": 0.948192298412323,
-          "schedule": {
-            "clauses": [
-              {
-                "time": {
-                  "start": {
-                    "hour": 3,
-                    "minute": 0
-                  }
-                },
-                "recurrence": {
-                  "freq": "weekly",
-                  "interval": 1,
-                  "byDay": [
-                    "MO",
-                    "TU",
-                    "WE",
-                    "TH",
-                    "FR"
-                  ]
-                }
-              }
-            ]
-          },
-          "diagnostics": [
-            {
-              "code": "ambiguous-meridiem",
-              "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-              "start": 27,
-              "end": 32,
-              "severity": "warning"
-            }
-          ]
-        },
-        {
-          "start": 46,
-          "end": 63,
-          "text": "12 in the evening",
-          "confidence": 0.9428508281707764,
-          "schedule": {
-            "clauses": [
-              {
-                "time": {
-                  "start": {
-                    "hour": 12,
-                    "minute": 0
-                  }
-                }
-              }
-            ]
-          },
-          "diagnostics": []
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-904",
-      "family": "date-range",
-      "text": "from Sunday the 1st until Monday the 25th",
-      "spans": [
-        {
-          "start": 0,
-          "end": 4,
-          "label": "RANGE_START",
-          "clauseStart": false
-        },
-        {
-          "start": 5,
-          "end": 11,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 12,
-          "end": 15,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 16,
-          "end": 17,
-          "label": "DOM",
-          "clauseStart": false
-        },
-        {
-          "start": 17,
-          "end": 19,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 20,
-          "end": 25,
-          "label": "RANGE_END",
-          "clauseStart": false
-        },
-        {
-          "start": 26,
-          "end": 32,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 33,
-          "end": 36,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 37,
-          "end": 39,
-          "label": "DOM",
-          "clauseStart": false
-        },
-        {
-          "start": 39,
-          "end": 41,
-          "label": "GLUE",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "date": {
-              "kind": "calendarRange",
-              "from": {
-                "day": 1
-              },
-              "to": {
-                "day": 25
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 0,
-          "end": 39,
-          "text": "from Sunday the 1st until Monday the 25",
-          "confidence": 0.1838942915201187,
+          "start": 32,
+          "end": 46,
+          "text": "six thirty six",
+          "confidence": 0.39875999093055725,
           "schedule": null,
           "diagnostics": [
             {
               "code": "unsupported",
-              "message": "This bound requires recurrence.",
-              "start": 20,
-              "end": 25,
+              "message": "Unsupported token role NUM.",
+              "start": 32,
+              "end": 35,
               "severity": "error"
             },
             {
               "code": "low-confidence",
               "message": "The model is uncertain about this expression.",
-              "start": 0,
-              "end": 4,
+              "start": 32,
+              "end": 35,
               "severity": "warning"
             }
           ]

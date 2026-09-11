@@ -29,12 +29,15 @@ The surrounding prose is combinatorial rather than a fixed list, and 49,740 real
 ## Evaluation
 
 - **Unseen carriers: 993/1000.** The surrounding words come from a reserved set kept unreachable from the training grammar, scored on strict whole-expression equality. The previous checkpoint scored 511/1000 on the same corpus. No phrase family regressed.
-- **Microsoft Recognizers development agreement: 156/563.** Independent third-party date/time specifications. Its reserved test split — all 134 grouped test cases — is not used for model selection. Policy differences count as failures rather than being excused.
+- **Microsoft Recognizers development agreement: 167/563 (29.7%), up from 156.** Independent third-party date/time specifications, and the only measure here that is not our own distribution. Its reserved test split — all 134 grouped test cases — is not used for model selection. Policy differences count as failures rather than being excused.
+
+  The contrast with the line above is the honest summary of this release: our own unseen-carrier score nearly doubled while the independent benchmark moved two points. We got substantially better at the distribution our generator produces and marginally better at somebody else's. Of the 396 non-matching cases, 194 are inputs the parser cannot interpret at all and 137 resolve to a different value, so the larger half is missing grammar rather than disagreement. The weakest family is `DatePeriodParser` at 24/190, dominated by day-number ranges anchored to a month such as "from 4 to 22 this month".
+
 - Original generated interpretations: 4,996/5,000. New generated phrasings: 997/1,000. **Both share rendering families with training and are development metrics, not language accuracy.** They must not be quoted as evidence of natural-language understanding.
 - 18/18 packaged public-result fixtures and all 25 adversarial schedules pass. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
 - 786 core tests, 4 benchmark tests, and 6 PyTorch unit tests pass, covering tokenization, compilation, calendar resolution, DST, RFC 5545 export, and inference workspace reuse.
 - CPU/WebGPU parity covers 10,000 sequences, 512 fixtures directly against PyTorch, and 1,000 source-versus-packaged shader sequences.
-- Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison.
+- Warm medians over 10,000 inputs: WebGPU 82.7 ms, CPU 702.5 ms, Chrono 82.8 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison.
 
 ## Limitations
 
