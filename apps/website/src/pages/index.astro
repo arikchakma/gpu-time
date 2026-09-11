@@ -7,6 +7,7 @@ import Code from '../components/Code.astro';
 import { Demo } from '../components/Demo';
 import { Examples } from '../components/Examples';
 import { Video } from '../components/Video';
+import Analytics from '@vercel/analytics/astro';
 
 const reference = new Date();
 const timeZone = 'UTC';
@@ -64,6 +65,7 @@ const image = new URL('/og.png', Astro.site);
       author: { '@type': 'Person', name: 'Arik Chakma' },
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     })} />
+    <Analytics />
   </head>
   <body class="m-0 bg-white font-sans text-black antialiased [&_a]:[text-underline-offset:4px]">
     <main class="mx-auto max-w-[600px] px-6 py-12 [&_h1]:text-balance [&_h2]:text-balance [&_h2]:text-center">
