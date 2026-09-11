@@ -20,7 +20,6 @@
     "evaluate": "pnpm --filter @gpu-time/benchmark evaluate:model",
     "benchmark": "pnpm --filter @gpu-time/benchmark benchmark",
     "website:dev": "pnpm --filter @gpu-time/website dev",
-    "playground:dev": "pnpm --filter @gpu-time/playground dev",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

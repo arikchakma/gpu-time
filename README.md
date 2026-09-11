@@ -38,7 +38,7 @@ Against the independent Microsoft Recognizers date/time specifications, developm
 
 Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Different parsers return different structures, so speed does not imply equivalent capability. See [MODEL_CARD.md](MODEL_CARD.md) for the evaluation contract and limitations, and the [benchmark report](packages/benchmark/results/REPORT.md) for measured timings, bundle sizes, and full output for all 25 adversarial inputs.
 
-The package is not published yet. The current build is 35,058 bytes Brotli against a 30,000-byte release gate, which remains unmet.
+The package is not published yet. The current build is 35,120 bytes Brotli against a 30,000-byte release gate, which remains unmet.
 
 ## Development
 
@@ -73,7 +73,6 @@ The tracked `packages/training/active/` directory holds the promoted model repor
 - `packages/training`: corpus generation, PyTorch training, evaluation, export, and provenance
 - `packages/benchmark`: size, browser performance, and cross-library comparisons
 - `apps/website`: project site and interactive demo
-- `apps/playground`: developer UI with backend selection, a worker path, and live library comparison
 - `video`: explainer source and storyboard
 
 Architecture details live in [architecture.md](architecture.md). Model provenance and limitations are in [MODEL_CARD.md](MODEL_CARD.md). Third-party attribution is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

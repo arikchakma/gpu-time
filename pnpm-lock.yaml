@@ -15,34 +15,6 @@ importers:
         specifier: 4.23.13
         version: 4.23.13
 
-  apps/playground:
-    dependencies:
-      chrono-node:
-        specifier: 2.10.1
-        version: 2.10.1
-      gpu-time:
-        specifier: workspace:*
-        version: link:../../packages/core
-      rrule:
-        specifier: 2.8.1
-        version: 2.8.1
-    devDependencies:
-      '@types/node':
-        specifier: 24.13.3
-        version: 24.13.3
-      '@webgpu/types':
-        specifier: 0.1.72
-        version: 0.1.72
-      playwright:
-        specifier: 1.63.0
-        version: 1.63.0
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vite:
-        specifier: 7.3.6
-        version: 7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0)
-
   apps/website:
     dependencies:
       '@tailwindcss/vite':

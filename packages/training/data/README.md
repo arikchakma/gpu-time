@@ -6,18 +6,17 @@ they encode the cases in TypeScript and rewrite the corresponding `.jsonl`, one 
 per line, each with an `id`, a `text`, and the expected `schedule` (`null` where no
 schedule should be produced).
 
-| file                       | records | written by             | read by                                                                                                                       |
-| -------------------------- | ------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `grammar.jsonl`            | 115     | `pnpm seed:grammar`    | `grammar-model.test.ts`, `evaluate-model.ts`                                                                                  |
-| `grammar-variations.jsonl` | 314     | `pnpm seed:variations` | `grammar-model.test.ts`, `evaluate-model.ts`                                                                                  |
-| `adversarial.jsonl`        | 25      | `pnpm seed:gold`       | `grammar-model.test.ts`, `schema.test.ts`, `evaluate-model.ts`, `perf.browser.ts`, benchmark `sidecar.py`, playground `qa.ts` |
-| `user-cases.jsonl`         | 3       | `pnpm seed:gold`       | `schema.test.ts`, `evaluate-model.ts`                                                                                         |
-| `labels.jsonl`             | 26      | `pnpm seed:gold`       | `oracle.test.ts`, `schema.test.ts`, `evaluate-model.ts`, `pnpm evaluate:oracle`                                               |
-| `negatives.jsonl`          | 32      | `pnpm seed:negatives`  | `grammar-model.test.ts`, `evaluate-model.ts`                                                                                  |
-| `prose.jsonl`              | 72      | `pnpm seed:prose`      | `grammar-model.test.ts`, `evaluate-model.ts`                                                                                  |
-| `results.jsonl`            | 18      | authored by hand       | `results-gold.test.ts`, `evaluate-results.ts`                                                                                 |
-| `natural-browser.jsonl`    | 7       | authored by hand       | playground `qa.ts`                                                                                                            |
-| `oracle-baseline.json`     | —       | `pnpm evaluate:oracle` | recorded baseline, not an input                                                                                               |
+| file                       | records | written by             | read by                                                                                                   |
+| -------------------------- | ------- | ---------------------- | --------------------------------------------------------------------------------------------------------- |
+| `grammar.jsonl`            | 115     | `pnpm seed:grammar`    | `grammar-model.test.ts`, `evaluate-model.ts`                                                              |
+| `grammar-variations.jsonl` | 314     | `pnpm seed:variations` | `grammar-model.test.ts`, `evaluate-model.ts`                                                              |
+| `adversarial.jsonl`        | 25      | `pnpm seed:gold`       | `grammar-model.test.ts`, `schema.test.ts`, `evaluate-model.ts`, `perf.browser.ts`, benchmark `sidecar.py` |
+| `user-cases.jsonl`         | 3       | `pnpm seed:gold`       | `schema.test.ts`, `evaluate-model.ts`                                                                     |
+| `labels.jsonl`             | 26      | `pnpm seed:gold`       | `oracle.test.ts`, `schema.test.ts`, `evaluate-model.ts`, `pnpm evaluate:oracle`                           |
+| `negatives.jsonl`          | 32      | `pnpm seed:negatives`  | `grammar-model.test.ts`, `evaluate-model.ts`                                                              |
+| `prose.jsonl`              | 72      | `pnpm seed:prose`      | `grammar-model.test.ts`, `evaluate-model.ts`                                                              |
+| `results.jsonl`            | 18      | authored by hand       | `results-gold.test.ts`, `evaluate-results.ts`                                                             |
+| `oracle-baseline.json`     | —       | `pnpm evaluate:oracle` | recorded baseline, not an input                                                                           |
 
 A few notes on what the individual corpora are for. `grammar.jsonl` is the authored
 grammar surface; `grammar-variations.jsonl` is derived from it mechanically (casing,
@@ -28,8 +27,7 @@ model errors; `oracle-baseline.json` is that run's recorded output. `negatives.j
 is deliberately non-temporal text, including words that are time words in other
 contexts, so a `null` schedule is the correct answer. `results.jsonl` is the only
 corpus with a resolution context and expected occurrences rather than a schedule —
-it checks the resolver end to end. `natural-browser.jsonl` is a short spoken-phrase
-set used by the playground's browser QA pass.
+it checks the resolver end to end.
 
 Regenerate any of them with, for example:
 

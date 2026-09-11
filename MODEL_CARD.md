@@ -2,7 +2,7 @@
 
 ## Model
 
-The published package embeds checkpoint `natural-language-final` epoch 8, artifact sha256 `0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac`. It has 24,761 parameters at 6-bit symmetric per-tensor quantization with f32 intermediates, 324 embedding rows, and 40 output slots (35 named semantic roles plus 5 reserved). Logical packed weights are 18,571 bytes, 14,995 bytes Brotli. The full minified module including the shader is 35,058 bytes Brotli.
+The published package embeds checkpoint `natural-language-final` epoch 8, artifact sha256 `0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac`. It has 24,761 parameters at 6-bit symmetric per-tensor quantization with f32 intermediates, 324 embedding rows, and 40 output slots (35 named semantic roles plus 5 reserved). Logical packed weights are 18,571 bytes, 14,995 bytes Brotli. The full minified module including the shader is 35,120 bytes Brotli.
 
 The model predicts one semantic role per token — clock hour and minute, meridiem, weekday, month, ordinal, year, quantity and unit, recurrence markers, range separators, bounds, exceptions, filler — plus a per-token boundary score that splits one input into independent expressions at threshold 4.25. A `CLOCK_OFFSET` role distinguishes half and quarter clock arithmetic.
 
@@ -30,7 +30,7 @@ Because training data is synthetic, the distribution is the generator's, not a r
 - **Microsoft Recognizers development agreement: 156/563.** Independent third-party date/time specifications. Its reserved test split — all 134 grouped test cases — is not used for model selection. Policy differences count as failures rather than being excused.
 - Original generated interpretations: 4,996/5,000. New generated phrasings: 997/1,000. **Both share rendering families with training and are development metrics, not language accuracy.** They must not be quoted as evidence of natural-language understanding.
 - 18/18 packaged public-result fixtures and all 25 adversarial schedules pass. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
-- 790 tests pass, covering tokenization, compilation, calendar resolution, DST, RFC 5545 export, and inference workspace reuse.
+- 786 core tests, 4 benchmark tests, and 6 PyTorch unit tests pass, covering tokenization, compilation, calendar resolution, DST, RFC 5545 export, and inference workspace reuse.
 - CPU/WebGPU parity covers 10,000 sequences, 512 fixtures directly against PyTorch, and 1,000 source-versus-packaged shader sequences.
 - Warm medians over 10,000 inputs: WebGPU 80.3 ms, CPU 726.8 ms, Chrono 91.6 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison.
 
@@ -44,7 +44,7 @@ Because training data is synthetic, the distribution is the generator's, not a r
 - Complex recurring exception combinations preview correctly but can return an `unsupported-export` diagnostic when no single RFC 5545 rule represents them.
 - Quantization and browser GPU implementations can differ from the PyTorch reference unless parity is explicitly tested. It is, but only for the fixtures listed above.
 - WebGPU startup and dispatch overhead make small inputs slower than a CPU parser, which is why `auto` keeps them on the CPU.
-- The 30,000-byte Brotli release gate is unmet at 35,058 bytes.
+- The 30,000-byte Brotli release gate is unmet at 35,120 bytes.
 
 ## Reproducibility
 

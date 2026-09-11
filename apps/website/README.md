@@ -8,8 +8,7 @@ pnpm install
 pnpm --filter @gpu-time/website dev
 ```
 
-Opens at http://127.0.0.1:4321. The on-page demo runs the parser locally;
-no separately hosted playground is needed.
+Opens at http://127.0.0.1:4321. The on-page demo runs the parser locally.
 
 `pnpm check` validates Astro; `pnpm build` creates `dist/`. Because `gpu-time`
 resolves through its `exports` map to `packages/core/dist/`, the core package

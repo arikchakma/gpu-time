@@ -8,7 +8,6 @@
 - `packages/training` — `torch/` for Python (uv project), `src/` for TypeScript drivers, `data/gold/` for tracked evaluation corpora, `data/synth/` for generated data (ignored), `active/` for the promoted model report, provenance, and parity fixtures, `runs/` and `exports/` for history (only the promoted entries are tracked).
 - `packages/benchmark` — size, browser performance, and cross-library comparisons. Measures the **built** `packages/core/dist`, never the source.
 - `apps/website` — the Astro site. This is the public-facing site.
-- `apps/playground` — the Vite developer UI: backend selector, worker path, live comparison against chrono-node and rrule, and the model disclosure panel. Not a duplicate of the website.
 - `video` — ManimGL explainer source, storyboard in `scenes.md`.
 
 ## Validation
@@ -16,7 +15,8 @@
 ```sh
 pnpm install
 pnpm test           # core unit tests, benchmark utils, website typecheck
-pnpm build:core     # strict release build, fails above the size gate
+pnpm build:core     # emits packages/core/dist
+pnpm size:gate      # strict release size budget (currently unmet)
 pnpm test:browser   # real WebGPU parity and packaged-shader check
 pnpm benchmark      # full benchmark, writes packages/benchmark/results/
 ```
@@ -25,11 +25,9 @@ Node 24+ runs TypeScript directly via `--experimental-strip-types`; `bun` is gon
 
 Python is always invoked through `uv`. There are three separate Python environments by design: `packages/training/.venv` (a uv project), `packages/benchmark/.venv`, and `video/.venv`.
 
-`pnpm playground:dev` serves on port 5173 with `--strictPort`. The strict port is deliberate — investigate a conflict rather than silently using another port.
-
 ## Rules
 
-- Do not lower an existing release gate. The 30,000-byte Brotli gate is currently unmet at 35,058 bytes; that is a known open item, not a reason to raise the threshold.
+- Do not lower an existing release gate. The 30,000-byte Brotli gate is currently unmet at 35,120 bytes; that is a known open item, not a reason to raise the threshold.
 - Preserve benchmark evaluation corpora. `pnpm benchmark` reuses them unless `--refresh-corpus` is passed explicitly. Changing a training renderer must not silently change comparison inputs.
 - Never train on the runtime parser's own output. Supervision comes from the generators in `packages/training/torch/`.
 - Timezone stays out of the model. Calendar arithmetic has exact answers; resolve it in TypeScript.

@@ -1,7 +1,0 @@
-{"id": "natural-browser-1", "text": "set an alarm for eight forty", "schedule": {"clauses": [{"time": {"start": {"hour": 8, "minute": 40}}}]}}
-{"id": "natural-browser-2", "text": "quarter to six", "schedule": {"clauses": [{"time": {"start": {"hour": 5, "minute": 45}}}]}}
-{"id": "natural-browser-3", "text": "in two days and six hours", "schedule": {"clauses": [{"shift": {"amount": 2, "unit": "day", "components": [{"amount": 6, "unit": "hour"}], "direction": "after"}}]}}
-{"id": "natural-browser-4", "text": "for an hour and a half", "schedule": {"clauses": [{"duration": {"amount": 1.5, "unit": "hour"}}]}}
-{"id": "natural-browser-5", "text": "Friday at 10pm until Saturday at 2am", "schedule": {"clauses": [{"date": {"kind": "weekday", "days": ["FR"]}, "endDate": {"kind": "weekday", "days": ["SA"]}, "time": {"start": {"hour": 22, "minute": 0}, "end": {"hour": 2, "minute": 0}}}]}}
-{"id": "natural-browser-6", "text": "the first week of October", "schedule": {"clauses": [{"date": {"kind": "calendarPeriod", "month": 10, "week": 1}}]}}
-{"id": "natural-browser-equal-clocks", "text": "17 August 2013 2pm - 19 August 2013 2pm", "schedule": {"clauses": [{"date": {"kind": "calendar", "day": 17, "month": 8, "year": 2013}, "endDate": {"kind": "calendar", "day": 19, "month": 8, "year": 2013}, "time": {"start": {"hour": 14, "minute": 0}, "end": {"hour": 14, "minute": 0}}}]}}
