@@ -1,0 +1,138 @@
+{
+  "model": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
+  "source": "data/synth/natural-evaluation.jsonl",
+  "sourceSha256": "a7a3de8f7de614e3bfd83fe36943cfe659b12efcf9ce6acf81ff0ce22dd73756",
+  "total": 1000,
+  "correct": 999,
+  "families": {
+    "spoken-clock": {
+      "total": 63,
+      "correct": 62
+    },
+    "fraction-clock": {
+      "total": 63,
+      "correct": 63
+    },
+    "qualified-clock": {
+      "total": 63,
+      "correct": 63
+    },
+    "compound-duration": {
+      "total": 63,
+      "correct": 63
+    },
+    "compound-shift": {
+      "total": 63,
+      "correct": 63
+    },
+    "fraction-duration": {
+      "total": 63,
+      "correct": 63
+    },
+    "prose-date": {
+      "total": 63,
+      "correct": 63
+    },
+    "numeric-date": {
+      "total": 63,
+      "correct": 63
+    },
+    "date-range": {
+      "total": 62,
+      "correct": 62
+    },
+    "datetime-range": {
+      "total": 62,
+      "correct": 62
+    },
+    "month-period": {
+      "total": 62,
+      "correct": 62
+    },
+    "month-week": {
+      "total": 62,
+      "correct": 62
+    },
+    "recurrence": {
+      "total": 62,
+      "correct": 62
+    },
+    "recurrence-bound": {
+      "total": 62,
+      "correct": 62
+    },
+    "monthly-exception": {
+      "total": 62,
+      "correct": 62
+    },
+    "shared-times": {
+      "total": 62,
+      "correct": 62
+    }
+  },
+  "failures": [
+    {
+      "id": "natural-424242-704",
+      "family": "spoken-clock",
+      "text": "could you reserve the interview six thirty six",
+      "spans": [
+        {
+          "start": 0,
+          "end": 31,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 46,
+          "label": "MINUTE",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 6,
+                "minute": 36
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 32,
+          "end": 46,
+          "text": "six thirty six",
+          "confidence": 0.39875999093055725,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 32,
+              "end": 35,
+              "severity": "error"
+            },
+            {
+              "code": "low-confidence",
+              "message": "The model is uncertain about this expression.",
+              "start": 32,
+              "end": 35,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Exact AST equality from neural predictions against independently sampled specifications. Fresh values use the same rendering families as part of training; this is a synthetic development check, not unseen-language accuracy."
+}

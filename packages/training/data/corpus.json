@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "prose": {
+    "url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2",
+    "license": "CC-BY-2.0-FR",
+    "attribution": "Sentences from Tatoeba (https://tatoeba.org), CC-BY 2.0 FR.",
+    "retrievedAt": "2026-09-11",
+    "sha256": "b16a5f3451a517cd49529713620df90f4d78e679ee65e55e3171d3955819c302",
+    "filter": {
+      "minimumCharacters": 30,
+      "maximumCharacters": 160,
+      "minimumWords": 5,
+      "maximumWords": 26,
+      "allowedQuantityWords": ["a", "an"],
+      "additionalTimeWords": [
+        "afternoon",
+        "ago",
+        "annually",
+        "biweekly",
+        "century",
+        "daily",
+        "decade",
+        "evening",
+        "fortnight",
+        "fortnightly",
+        "hourly",
+        "immediately",
+        "later",
+        "midday",
+        "midnight",
+        "monthly",
+        "morning",
+        "night",
+        "nightly",
+        "noon",
+        "now",
+        "o'clock",
+        "oclock",
+        "pm",
+        "second",
+        "today",
+        "tomorrow",
+        "tonight",
+        "upcoming",
+        "weekday",
+        "weekend",
+        "weekly",
+        "yearly",
+        "yesterday"
+      ],
+      "timeShapedNumberPatterns": [
+        "\\d{1,2}\\s*:\\s*\\d{2}",
+        "\\d{1,2}\\s*(?:am|pm|a\\.m|p\\.m)",
+        "\\d{1,2}\\s*[/.-]\\s*\\d{1,2}",
+        "(?:19|20)\\d{2}",
+        "\\d{1,3}(?:st|nd|rd|th)"
+      ]
+    },
+    "selection": {
+      "limit": 50000
+    }
+  }
+}

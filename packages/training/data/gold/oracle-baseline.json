@@ -1,0 +1,1189 @@
+{
+  "total": 26,
+  "correct": 26,
+  "labelCounts": {
+    "O": 26,
+    "NUM": 10,
+    "ORD": 2,
+    "UNIT": 14,
+    "DIR_BEFORE": 3,
+    "DIR_AFTER": 2,
+    "NOW": 0,
+    "REL_DAY": 2,
+    "DEICTIC": 3,
+    "WEEKDAY": 13,
+    "DAYGROUP": 1,
+    "MONTH": 5,
+    "DOM": 7,
+    "YEAR": 3,
+    "HOUR": 10,
+    "MINUTE": 1,
+    "SECOND": 0,
+    "MERIDIEM": 9,
+    "TIME_NAMED": 4,
+    "DAYPART": 0,
+    "RANGE_START": 2,
+    "RANGE_END": 7,
+    "RECUR": 6,
+    "FREQ": 0,
+    "TIMES": 2,
+    "BOUND_START": 1,
+    "BOUND_END": 1,
+    "COUNT": 0,
+    "DUR": 2,
+    "EXCEPT": 1,
+    "HOLIDAY": 1,
+    "JOIN": 0,
+    "GLUE": 0,
+    "EDGE": 0,
+    "CLOCK_OFFSET": 0
+  },
+  "results": [
+    {
+      "id": "oracle-001",
+      "text": "1 day before",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "shift": {
+              "amount": 1,
+              "unit": "day",
+              "direction": "before"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "1 day before",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "shift": {
+                  "amount": 1,
+                  "unit": "day",
+                  "direction": "before"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-002",
+      "text": "one day after",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "shift": {
+              "amount": 1,
+              "unit": "day",
+              "direction": "after"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 13,
+          "text": "one day after",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "shift": {
+                  "amount": 1,
+                  "unit": "day",
+                  "direction": "after"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-003",
+      "text": "in 90 minutes",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "shift": {
+              "amount": 90,
+              "unit": "minute",
+              "direction": "after"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 13,
+          "text": "in 90 minutes",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "shift": {
+                  "amount": 90,
+                  "unit": "minute",
+                  "direction": "after"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-004",
+      "text": "two hours before tomorrow at noon",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "relativeDay",
+              "offset": 1
+            },
+            "time": {
+              "start": {
+                "named": "noon"
+              }
+            },
+            "shift": {
+              "amount": 2,
+              "unit": "hour",
+              "direction": "before"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 33,
+          "text": "two hours before tomorrow at noon",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "relativeDay",
+                  "offset": 1
+                },
+                "time": {
+                  "start": {
+                    "named": "noon"
+                  }
+                },
+                "shift": {
+                  "amount": 2,
+                  "unit": "hour",
+                  "direction": "before"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-005",
+      "text": "Monday at 2:00 p.m.",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": ["MO"]
+            },
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 19,
+          "text": "Monday at 2:00 p.m.",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "weekday",
+                  "days": ["MO"]
+                },
+                "time": {
+                  "start": {
+                    "hour": 14,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-006",
+      "text": "next Friday at noon",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": ["FR"],
+              "modifier": "next"
+            },
+            "time": {
+              "start": {
+                "named": "noon"
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 19,
+          "text": "next Friday at noon",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "weekday",
+                  "days": ["FR"],
+                  "modifier": "next"
+                },
+                "time": {
+                  "start": {
+                    "named": "noon"
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-007",
+      "text": "every other Tuesday until Dec",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": ["TU"],
+              "until": {
+                "kind": "calendar",
+                "month": 12
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 29,
+          "text": "every other Tuesday until Dec",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 2,
+                  "until": {
+                    "kind": "calendar",
+                    "month": 12
+                  },
+                  "byDay": ["TU"]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-008",
+      "text": "the first Monday of every month",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "monthly",
+              "interval": 1,
+              "byDay": ["MO"],
+              "bySetPos": [1]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 4,
+          "end": 31,
+          "text": "first Monday of every month",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "monthly",
+                  "interval": 1,
+                  "bySetPos": [1],
+                  "byDay": ["MO"]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-009",
+      "text": "last Friday of the month",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "monthly",
+              "interval": 1,
+              "byDay": ["FR"],
+              "bySetPos": [-1]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 24,
+          "text": "last Friday of the month",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "monthly",
+                  "interval": 1,
+                  "bySetPos": [-1],
+                  "byDay": ["FR"]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-010",
+      "text": "last Friday",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": ["FR"],
+              "modifier": "last"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 11,
+          "text": "last Friday",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "weekday",
+                  "days": ["FR"],
+                  "modifier": "last"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-011",
+      "text": "every weekday except Friday",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": ["MO", "TU", "WE", "TH", "FR"],
+              "except": [
+                {
+                  "kind": "weekday",
+                  "days": ["FR"]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 27,
+          "text": "every weekday except Friday",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "except": [
+                    {
+                      "kind": "weekday",
+                      "days": ["FR"]
+                    }
+                  ],
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-012",
+      "text": "twice a week",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "timesPer": 2
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "twice a week",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "timesPer": 2
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-013",
+      "text": "3 times a day",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "daily",
+              "interval": 1,
+              "timesPer": 3
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 13,
+          "text": "3 times a day",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "daily",
+                  "interval": 1,
+                  "timesPer": 3
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-014",
+      "text": "every 2 weeks on Tuesday",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": ["TU"]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 24,
+          "text": "every 2 weeks on Tuesday",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 2,
+                  "byDay": ["TU"]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-015",
+      "text": "from 9 to 5 Mon-Fri",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 0
+              },
+              "end": {
+                "hour": 17,
+                "minute": 0
+              }
+            },
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": ["MO", "TU", "WE", "TH", "FR"]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 19,
+          "text": "from 9 to 5 Mon-Fri",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "byDay": ["MO", "TU", "WE", "TH", "FR"]
+                },
+                "time": {
+                  "start": {
+                    "hour": 9,
+                    "minute": 0
+                  },
+                  "end": {
+                    "hour": 17,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "working-hours",
+              "message": "Assumed a daytime working-hours range.",
+              "start": 5,
+              "end": 6,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oracle-016",
+      "text": "between 9am and noon",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 0
+              },
+              "end": {
+                "named": "noon"
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 20,
+          "text": "between 9am and noon",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "time": {
+                  "start": {
+                    "hour": 9,
+                    "minute": 0
+                  },
+                  "end": {
+                    "named": "noon"
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-017",
+      "text": "October 1, 2027 at noon",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "calendar",
+              "year": 2027,
+              "month": 10,
+              "day": 1
+            },
+            "time": {
+              "start": {
+                "named": "noon"
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 23,
+          "text": "October 1, 2027 at noon",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "calendar",
+                  "month": 10,
+                  "day": 1,
+                  "year": 2027
+                },
+                "time": {
+                  "start": {
+                    "named": "noon"
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-018",
+      "text": "2026-10-01",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "calendar",
+              "year": 2026,
+              "month": 10,
+              "day": 1
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 10,
+          "text": "2026-10-01",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "calendar",
+                  "year": 2026,
+                  "month": 10,
+                  "day": 1
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-019",
+      "text": "June 11-16, 2026",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "calendarRange",
+              "from": {
+                "year": 2026,
+                "month": 6,
+                "day": 11
+              },
+              "to": {
+                "year": 2026,
+                "month": 6,
+                "day": 16
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 16,
+          "text": "June 11-16, 2026",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "calendarRange",
+                  "from": {
+                    "month": 6,
+                    "day": 11,
+                    "year": 2026
+                  },
+                  "to": {
+                    "month": 6,
+                    "day": 16,
+                    "year": 2026
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-020",
+      "text": "for 2 hours",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "duration": {
+              "amount": 2,
+              "unit": "hour"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 11,
+          "text": "for 2 hours",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "duration": {
+                  "amount": 2,
+                  "unit": "hour"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-021",
+      "text": "starting from tomorrow for the next 10 days",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "relativeDay",
+              "offset": 1
+            },
+            "duration": {
+              "amount": 10,
+              "unit": "day"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 43,
+          "text": "starting from tomorrow for the next 10 days",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "duration": {
+                  "amount": 10,
+                  "unit": "day"
+                },
+                "date": {
+                  "kind": "relativeDay",
+                  "offset": 1
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-022",
+      "text": "3 days before Christmas",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "holiday",
+              "name": "christmas"
+            },
+            "shift": {
+              "amount": 3,
+              "unit": "day",
+              "direction": "before"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 23,
+          "text": "3 days before Christmas",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "holiday",
+                  "name": "christmas"
+                },
+                "shift": {
+                  "amount": 3,
+                  "unit": "day",
+                  "direction": "before"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-023",
+      "text": "9 to 5",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "time": {
+              "start": {
+                "hour": 9,
+                "minute": 0
+              },
+              "end": {
+                "hour": 17,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 6,
+          "text": "9 to 5",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "time": {
+                  "start": {
+                    "hour": 9,
+                    "minute": 0
+                  },
+                  "end": {
+                    "hour": 17,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "working-hours",
+              "message": "Assumed a daytime working-hours range.",
+              "start": 0,
+              "end": 1,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oracle-024",
+      "text": "every year on the 26th of March",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "yearly",
+              "interval": 1,
+              "byMonthDay": [26],
+              "byMonth": [3]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 31,
+          "text": "every year on the 26th of March",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "yearly",
+                  "interval": 1,
+                  "byMonthDay": [26],
+                  "byMonth": [3]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-025",
+      "text": "1st and 15th of each month",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "monthly",
+              "interval": 1,
+              "byMonthDay": [1, 15]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 26,
+          "text": "1st and 15th of each month",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "monthly",
+                  "interval": 1,
+                  "byMonthDay": [1, 15]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "oracle-026",
+      "text": "Sat Sun 1pm-8pm Mon 10pm-12am",
+      "correct": true,
+      "expected": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekday",
+              "days": ["SA", "SU"]
+            },
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              },
+              "end": {
+                "hour": 20,
+                "minute": 0
+              }
+            }
+          },
+          {
+            "date": {
+              "kind": "weekday",
+              "days": ["MO"]
+            },
+            "time": {
+              "start": {
+                "hour": 22,
+                "minute": 0
+              },
+              "end": {
+                "hour": 0,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 29,
+          "text": "Sat Sun 1pm-8pm Mon 10pm-12am",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "weekday",
+                  "days": ["SA", "SU"]
+                },
+                "time": {
+                  "start": {
+                    "hour": 13,
+                    "minute": 0
+                  },
+                  "end": {
+                    "hour": 20,
+                    "minute": 0
+                  }
+                }
+              },
+              {
+                "date": {
+                  "kind": "weekday",
+                  "days": ["MO"]
+                },
+                "time": {
+                  "start": {
+                    "hour": 22,
+                    "minute": 0
+                  },
+                  "end": {
+                    "hour": 0,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    }
+  ]
+}

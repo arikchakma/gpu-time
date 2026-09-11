@@ -1,0 +1,117 @@
+{
+  "model": "c69ab6c9be8ec854790c004b5d540dc6a41bececbacdbf34a4725de6b711d6d5",
+  "generatedWeightsHashMatches": true,
+  "matchingExportFiles": 5,
+  "results": [
+    {
+      "checkpoint": "runs/spoken2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/terse-f32/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-language-final/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-language-v2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/direct-results/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/clock-periods/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-casing/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-durations/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-context/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/timezone-free/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/caller-timezone/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/timezone-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/range-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/written-time/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/complete-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/modifier-context/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-contrasts/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-context/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 9
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/core-grammar/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 8
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-coverage/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 8
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/compact/last.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 8
+    }
+  ]
+}

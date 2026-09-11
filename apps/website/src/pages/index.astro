@@ -1,0 +1,128 @@
+---
+import '../styles/global.css';
+import { parse } from 'gpu-time';
+import { demoDefault, format } from '../lib/demo';
+import Logo from '../components/Logo.astro';
+import Code from '../components/Code.astro';
+import { Demo } from '../components/Demo';
+import { Examples } from '../components/Examples';
+import { Video } from '../components/Video';
+
+const reference = new Date();
+const timeZone = 'UTC';
+const initial = format(await parse(demoDefault, {
+  reference: reference.toISOString(), timeZone, limit: 3,
+}), reference, timeZone);
+
+const title = 'gpu-time — Plain English to Real Dates';
+const description =
+  'gpu-time is a small neural parser that turns everyday English into dates, time ranges, and RFC 5545 recurrence rules. The model runs locally in your browser, on CPU or WebGPU.';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const image = new URL('/og.png', Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Arik Chakma" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="gpu-time" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="gpu-time turning “every Monday from 8pm to 10pm” into a real date and time range" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content="gpu-time turning “every Monday from 8pm to 10pm” into a real date and time range" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'gpu-time',
+      description,
+      url: canonical.href,
+      image: image.href,
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Any',
+      license: 'https://opensource.org/licenses/MIT',
+      author: { '@type': 'Person', name: 'Arik Chakma' },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    })} />
+  </head>
+  <body class="m-0 bg-white font-sans text-black antialiased [&_a]:[text-underline-offset:4px]">
+    <main class="mx-auto max-w-[600px] px-6 py-12 [&_h1]:text-balance [&_h2]:text-balance [&_h2]:text-center">
+      <header class="text-center">
+        <a href="/" aria-label="gpu-time home" class="inline-flex h-12 items-center gap-2.5 text-2xl font-medium tracking-[-0.5px] no-underline [&_svg]:size-9">
+          <Logo />gpu-time
+        </a>
+        <h1 class="mt-8 text-3xl font-medium leading-[1.15] tracking-[-0.6px]">Plain English to Real Dates</h1>
+        <p class="mx-auto mt-3 max-w-[420px] text-body text-neutral-600">A small neural model, running locally in your browser</p>
+      </header>
+
+      <Demo client:load initial={initial} />
+      <noscript><p class="mt-3 text-center text-sm">Enable JavaScript to try your own phrase.</p></noscript>
+
+      <section class="mt-14" aria-labelledby="examples-title">
+        <h2 id="examples-title" class="text-heading font-medium">Tap One, See the Dates</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Each of these runs in the box above</p>
+        <Examples client:load />
+      </section>
+
+      <section class="mt-14" aria-labelledby="use-title">
+        <h2 id="use-title" class="text-heading font-medium">Use It in Your Code</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">You pass the phrase, your reference instant, and your timezone. You get back dates and RFC 5545 rules</p>
+        <Code />
+      </section>
+
+      <section class="mt-14" aria-labelledby="film-title">
+        <h2 id="film-title" class="text-heading font-medium">Inside the Model</h2>
+        <p class="mx-auto mb-5 mt-1.5 max-w-note text-center text-note leading-normal text-neutral-500">Words to scores to dates, in 24,761 parameters</p>
+        <Video client:load />
+        <noscript><p class="mt-3 text-sm"><a href="/media/gpu-time-neural.mp4?v=chicago-4">Watch the walkthrough</a></p></noscript>
+        <p class="mx-auto mt-3 max-w-note text-center text-note leading-normal text-neutral-500">Actual model activations and scores. Connections simplified for clarity</p>
+      </section>
+
+      <footer class="mt-14 text-center">
+        <h2 class="text-heading font-medium">A Small Experiment. Still Growing</h2>
+        <div class="mx-auto mt-3 max-w-note space-y-3 text-body text-neutral-600">
+          <p>Time comes in all kinds of words. Try a one-off plan, a weekly routine, or an overnight shift in the demo above.</p>
+          <p>gpu-time is still learning the edges of everyday language. Unfamiliar wording can trip it up, so check the results and see how it handles the way you write.</p>
+        </div>
+        <a href="#demo-input" class="mt-4 inline-flex items-center justify-center rounded-full bg-black px-3.5 py-2.5 text-sm font-medium leading-none tracking-[-0.14px] text-white no-underline transition-colors hover:bg-neutral-700">Try your own phrase <span class="ml-2" aria-hidden="true">↗</span></a>
+        <ul class="mt-10 flex items-center justify-center gap-5 text-neutral-500 [&_a]:transition-colors [&_a:hover]:text-neutral-900">
+          <li>
+            <a href="https://github.com/arikchakma/gpu-time" aria-label="gpu-time on GitHub" target="_blank" rel="noopener" class="block">
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.npmjs.com/package/gpu-time" aria-label="gpu-time on npm" target="_blank" rel="noopener" class="block">
+              <svg height="18" viewBox="0 7.334 24 9.332" fill="currentColor" aria-hidden="true">
+                <path d="M0 7.334v8h6.666v1.332H12v-1.332h12v-8H0zm6.666 6.663H5.334v-4H3.999v4H1.335V8.667h5.331v5.33zm4 0v1.336H8.001V8.667h5.334v5.33h-2.669zm12.001 0h-1.33v-4h-1.336v4h-1.335v-4h-1.33v4h-2.671V8.667h8.002v5.33zM10.665 10H12v2.667h-1.335V10z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <p class="mt-4 text-body text-black/40">gpu-time<br />A small experiment in understanding time</p>
+      </footer>
+    </main>
+  </body>
+</html>

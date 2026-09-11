@@ -1,0 +1,32 @@
+{
+  "name": "@gpu-time/website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm --filter gpu-time build && astro build",
+    "preview": "astro preview",
+    "check": "pnpm --filter gpu-time build && astro check",
+    "prepare:video": "bash scripts/prepare-video.sh",
+    "prepare:thumbnail": "node scripts/prepare-thumbnail.mjs",
+    "test:browser": "pnpm run build && node tests/first-load.mjs",
+    "test:highlight": "node tests/highlight.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^6.0.5",
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^7.3.2",
+    "gpu-time": "workspace:*",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "playwright": "1.63.0",
+    "typescript": "^5.9.3"
+  }
+}

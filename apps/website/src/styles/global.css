@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --radius-box: 14px;
+
+  --color-date: #cfe3fd;
+  --color-time: #fde8b4;
+  --color-repeat: #e2dcfd;
+  --color-duration: #cfefd8;
+
+  --text-label: 0.6875rem;
+  --text-label--letter-spacing: 0.08em;
+  --text-note: 0.8125rem;
+  --text-heading: 1.125rem;
+  --text-heading--line-height: 1.35;
+  --text-heading--letter-spacing: -0.32px;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.5;
+  --text-body--letter-spacing: -0.1px;
+
+  --container-note: 440px;
+}
+
+::selection {
+  background: #dce9f9;
+}

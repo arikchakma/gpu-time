@@ -1,0 +1,31 @@
+{
+  "name": "@gpu-time/training",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "corpus:fetch": "node --experimental-strip-types src/fetch-corpus.ts",
+    "gen": "uv run --project . python torch/generate.py",
+    "gen:semantic": "uv run --project . python torch/generate-semantic.py",
+    "train": "uv run --project . python torch/train.py",
+    "export": "uv run --project . python torch/export.py",
+    "check:natural": "uv run --project . python torch/check-natural.py",
+    "check:semantic": "tsx src/check-semantic.ts",
+    "evaluate:semantic": "tsx src/evaluate-semantic.ts",
+    "diagnose:semantic": "tsx --import ../core/scripts/register.mjs src/diagnose-semantic.ts",
+    "audit:model": "tsx src/audit-model.ts",
+    "evaluate:oracle": "tsx src/evaluate-oracle.ts",
+    "seed:gold": "tsx src/seed-gold.ts",
+    "seed:grammar": "tsx src/seed-grammar.ts",
+    "seed:negatives": "tsx src/seed-negatives.ts",
+    "seed:prose": "tsx src/seed-prose.ts",
+    "seed:variations": "tsx src/grammar-variations.ts",
+    "test": "uv run --project . python torch/test_model.py"
+  },
+  "dependencies": {
+    "gpu-time": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "4.23.13"
+  }
+}

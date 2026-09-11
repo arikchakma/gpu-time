@@ -1,0 +1,30 @@
+{
+  "name": "gpu-time-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.13.1",
+  "scripts": {
+    "test": "pnpm test:core && pnpm test:benchmark && pnpm test:website",
+    "test:core": "pnpm --filter gpu-time test",
+    "test:benchmark": "pnpm --filter @gpu-time/benchmark test",
+    "test:website": "pnpm --filter @gpu-time/website check && pnpm --filter @gpu-time/website test:highlight",
+    "test:browser": "pnpm --filter gpu-time test:browser",
+    "check": "pnpm -r check",
+    "build:core": "pnpm --filter gpu-time build",
+    "size:gate": "pnpm --filter gpu-time build:release",
+    "check:package": "pnpm --filter gpu-time check:package",
+    "schema": "pnpm --filter gpu-time schema",
+    "gen": "pnpm --filter @gpu-time/training gen",
+    "train": "pnpm --filter @gpu-time/training train",
+    "model:audit": "pnpm --filter @gpu-time/training audit:model",
+    "evaluate": "pnpm --filter @gpu-time/benchmark evaluate:model",
+    "benchmark": "pnpm --filter @gpu-time/benchmark benchmark",
+    "website:dev": "pnpm --filter @gpu-time/website dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "3.9.6",
+    "tsx": "4.23.13"
+  }
+}

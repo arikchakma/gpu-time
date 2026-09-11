@@ -1,0 +1,7 @@
+{
+  "source": "data/synth/semantic-checks.jsonl",
+  "total": 5000,
+  "correct": 5000,
+  "failures": [],
+  "scope": "Compiler equality using independently sampled ASTs and renderer slot labels. This validates training supervision, not neural prediction accuracy."
+}
