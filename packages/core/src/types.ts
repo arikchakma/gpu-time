@@ -57,7 +57,14 @@ export type ClockTime =
 export interface TimeSpec {
   start: ClockTime;
   end?: ClockTime;
+  /**
+   * The bound is open in this direction. The opposite edge is a floor, not a
+   * real edge: "after 6pm" is `{ start: 18:00, open: "end" }`, which a reader
+   * can tell apart from "at 6pm", `{ start: 18:00 }`.
+   */
+  open?: OpenBound;
 }
+export type OpenBound = "start" | "end";
 export interface Quantity {
   amount: number;
   unit: Unit;
@@ -161,6 +168,8 @@ export interface ResolveOptions {
 export interface Occurrence {
   start: string;
   end?: string;
+  /** Set when the expression bounded only one side, as in "after 6pm". */
+  open?: OpenBound;
   allDay: boolean;
   clause: number;
 }

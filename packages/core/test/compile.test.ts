@@ -460,3 +460,72 @@ it("reports a missing recurrence bound when until is recognized as a range separ
     result.diagnostics.some((value) => value.code === "invalid-bound"),
   ).toBe(true);
 });
+
+it("reads an open upper bound from a bare direction token", () => {
+  const text = "after 6pm";
+  expect(
+    compile(text, oracle(text, ["DIR_AFTER", "HOUR", "MERIDIEM"]))[0].schedule,
+  ).toEqual({
+    clauses: [{ time: { start: { hour: 18, minute: 0 }, open: "end" } }],
+  });
+});
+
+it("floors an open lower bound at midnight", () => {
+  const text = "before 6pm";
+  expect(
+    compile(text, oracle(text, ["DIR_BEFORE", "HOUR", "MERIDIEM"]))[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        time: {
+          start: { hour: 0, minute: 0 },
+          end: { hour: 18, minute: 0 },
+          open: "start",
+        },
+      },
+    ],
+  });
+});
+
+it("rejects an open bound with no clock instead of dropping the direction", () => {
+  const text = "after Friday";
+  const result = compile(text, oracle(text, ["DIR_AFTER", "WEEKDAY"]))[0];
+  expect(result.schedule).toBeNull();
+  expect(result.diagnostics.map((value) => value.code)).toContain(
+    "open-bound-needs-time",
+  );
+});
+
+it("rejects an open bound applied to a range", () => {
+  const text = "after 8 to 10pm";
+  const result = compile(
+    text,
+    oracle(text, ["DIR_AFTER", "HOUR", "RANGE_END", "HOUR", "MERIDIEM"]),
+  )[0];
+  expect(result.schedule).toBeNull();
+  expect(result.diagnostics.map((value) => value.code)).toContain(
+    "open-bound-needs-time",
+  );
+});
+
+it("marks a bare range start as open rather than returning a bare instant", () => {
+  const open = "from 6pm";
+  expect(
+    compile(open, oracle(open, ["RANGE_START", "HOUR", "MERIDIEM"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [{ time: { start: { hour: 18, minute: 0 }, open: "end" } }],
+  });
+
+  const closed = "from 8 to 10pm";
+  expect(
+    compile(
+      closed,
+      oracle(closed, ["RANGE_START", "HOUR", "RANGE_END", "HOUR", "MERIDIEM"]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      { time: { start: { hour: 20, minute: 0 }, end: { hour: 22, minute: 0 } } },
+    ],
+  });
+});

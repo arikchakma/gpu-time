@@ -390,6 +390,10 @@
         },
         "end": {
           "$ref": "#/$defs/ClockTime"
+        },
+        "open": {
+          "$ref": "#/$defs/OpenBound",
+          "description": "The bound is open in this direction. The opposite edge is a floor, not a real edge: \"after 6pm\" is `{ start: 18:00, open: \"end\" }`, which a reader can tell apart from \"at 6pm\", `{ start: 18:00 }`."
         }
       },
       "required": ["start"],
@@ -445,6 +449,10 @@
     "DayPart": {
       "type": "string",
       "enum": ["morning", "afternoon", "evening", "night"]
+    },
+    "OpenBound": {
+      "type": "string",
+      "enum": ["start", "end"]
     },
     "Shift": {
       "type": "object",

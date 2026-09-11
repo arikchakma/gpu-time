@@ -1,4 +1,10 @@
-import type { Clause, Duration, ResolveOptions, Shift } from "./types.js";
+import type {
+  Clause,
+  Duration,
+  OpenBound,
+  ResolveOptions,
+  Shift,
+} from "./types.js";
 import { resolveDates, type LocalPeriod } from "./calendar.js";
 import { resolveTime } from "./clock.js";
 import {
@@ -12,6 +18,7 @@ import {
 export interface NumericOccurrence {
   start: number;
   end?: number;
+  open?: OpenBound;
   allDay: boolean;
   clause: number;
 }
@@ -156,14 +163,25 @@ export function resolveOccurrence(
       : standaloneClock
         ? 1
         : 0;
-  const { date, start } = usesReferenceClock
+  // "before 6pm" floors the start at midnight, which is always in the past, so
+  // search on the edge the phrase actually named or every one lands tomorrow.
+  const searchSeconds =
+    clause.time?.open === "start" && endSeconds !== undefined
+      ? endSeconds
+      : startSeconds;
+  const { date, start: searched } = usesReferenceClock
     ? { date: period.start, start: reference }
-    : futureStart(period.start, startSeconds, step, context);
+    : futureStart(period.start, searchSeconds, step, context);
+  const start =
+    searchSeconds === startSeconds
+      ? searched
+      : atTime(date, startSeconds, options.timeZone);
 
   const occurrence: NumericOccurrence = {
     start: seconds(applyShift(start, clause.shift, options.timeZone)),
     allDay: !clause.time && !usesReferenceClock && !impliedClock,
     clause: clauseIndex,
+    ...(clause.time?.open ? { open: clause.time.open } : {}),
   };
 
   if (endSeconds !== undefined) {
@@ -177,7 +195,7 @@ export function resolveOccurrence(
     occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }
 
-  if (endSeconds === undefined && period.end) {
+  if (endSeconds === undefined && period.end && clause.time?.open !== "end") {
     const end = atTime(period.end, secondsOfDay(period.end), options.timeZone);
     occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }
