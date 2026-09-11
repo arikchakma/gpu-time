@@ -840,3 +840,51 @@ it("still rejects an empty hourly recurrence clock window", () => {
     ),
   ).toThrow();
 });
+
+it("leaves an open upper bound without an end", () => {
+  const schedule: Schedule = {
+    clauses: [{ time: { start: { hour: 18, minute: 0 }, open: "end" } }],
+  };
+  const [occurrence] = resolve(schedule, {
+    reference: "2026-09-11T10:00:00Z",
+    timeZone: "UTC",
+  }).occurrences;
+  expect(occurrence.start).toBe("2026-09-11T18:00:00+00:00");
+  expect(occurrence.end).toBeUndefined();
+  expect(occurrence.open).toBe("end");
+});
+
+it("anchors an open lower bound on the day its named edge falls in", () => {
+  const schedule: Schedule = {
+    clauses: [
+      {
+        time: {
+          start: { hour: 0, minute: 0 },
+          end: { hour: 18, minute: 0 },
+          open: "start",
+        },
+      },
+    ],
+  };
+  // Midnight is always behind the reference; searching on it lands tomorrow.
+  const [occurrence] = resolve(schedule, {
+    reference: "2026-09-11T10:00:00Z",
+    timeZone: "UTC",
+  }).occurrences;
+  expect(occurrence.start).toBe("2026-09-11T00:00:00+00:00");
+  expect(occurrence.end).toBe("2026-09-11T18:00:00+00:00");
+  expect(occurrence.open).toBe("start");
+});
+
+it("omits the open field for a fully bounded occurrence", () => {
+  const schedule: Schedule = {
+    clauses: [
+      { time: { start: { hour: 8, minute: 0 }, end: { hour: 10, minute: 0 } } },
+    ],
+  };
+  const [occurrence] = resolve(schedule, {
+    reference: "2026-09-11T10:00:00Z",
+    timeZone: "UTC",
+  }).occurrences;
+  expect(occurrence).not.toHaveProperty("open");
+});

@@ -49,7 +49,8 @@ export function resolveTime(
   const start = clockSeconds(time.start, options);
   let end: number | undefined;
   if (time.end) end = clockSeconds(time.end, options, true);
-  else if ("part" in time.start) end = clockSeconds(time.start, options, true);
+  else if (time.open !== "end" && "part" in time.start)
+    end = clockSeconds(time.start, options, true);
 
   // Ordering is validated after the endpoint dates and timezone are resolved.
   return { start, end };

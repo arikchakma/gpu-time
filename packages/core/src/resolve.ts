@@ -144,6 +144,7 @@ function resolvePrepared(
       start: iso(value.start, options.timeZone),
       allDay: value.allDay,
       clause: value.clause,
+      ...(value.open ? { open: value.open } : {}),
       ...(value.end === undefined
         ? {}
         : { end: iso(value.end, options.timeZone) }),

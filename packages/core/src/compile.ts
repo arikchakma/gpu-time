@@ -9,6 +9,7 @@ import type {
   Duration,
   Expression,
   Modifier,
+  OpenBound,
   Recurrence,
   Shift,
   TimeSpec,
@@ -351,6 +352,8 @@ function compileDateAndTime(
   let rangedDays = false;
   let pendingDayRange = false;
   let firstDayIndex = -1;
+  let openBound: OpenBound | undefined;
+  let openToken: Token | undefined;
 
   for (let index = 0; index < tokens.length; index++) {
     const token = tokens[index];
@@ -360,6 +363,17 @@ function compileDateAndTime(
       case Role.O:
       case Role.RANGE_START:
       case Role.RECUR:
+        break;
+
+      case Role.DIR_BEFORE:
+      case Role.DIR_AFTER:
+        // extractShift already took the directions that carry an amount and a
+        // unit ("3 days after Friday"). Whatever survives to here is an open
+        // bound, which used to fall through to the unsupported-role catch-all.
+        if (openBound)
+          fail(token, "unsupported", "An expression takes one open bound.");
+        openBound = token.label === Role.DIR_AFTER ? "end" : "start";
+        openToken = token;
         break;
 
       case Role.RANGE_END:
@@ -722,6 +736,38 @@ function compileDateAndTime(
     );
   }
   const time = compileTime(clocks, diagnostics);
+  if (openToken && openBound) {
+    if (!time)
+      fail(
+        openToken,
+        "open-bound-needs-time",
+        'An open bound needs a clock time, as in "after 6pm".',
+      );
+    if (time.end)
+      fail(
+        openToken,
+        "open-bound-needs-time",
+        "An open bound takes one time, not a range.",
+      );
+    if (openBound === "end") time.open = "end";
+    else {
+      // "before 6pm" reads as midnight up to 6pm; the start is the floor.
+      time.end = time.start;
+      time.start = { hour: 0, minute: 0 };
+      time.open = "start";
+    }
+  } else if (
+    time &&
+    !time.end &&
+    clocks.length === 1 &&
+    tokens.some((token) => token.label === Role.RANGE_START) &&
+    !tokens.some((token) => token.label === Role.RANGE_END)
+  ) {
+    // "from 6pm" means the same as "after 6pm". It used to return a bare
+    // instant and drop the openness, which a caller could not detect. A
+    // "from" that opens a real range ("from 8 to 10pm") keeps both edges.
+    time.open = "end";
+  }
   if (time) clause.time = time;
   if (!clause.date && !clause.time && !clause.recurrence) {
     fail(tokens[0], "unsupported", "The expression has no date or time.");
