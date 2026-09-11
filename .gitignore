@@ -14,6 +14,7 @@ packages/training/data/synth/
 packages/training/data/prose/
 packages/training/data/downloads/
 packages/training/*.npz
+packages/training/active/*.npz
 packages/training/runs/*
 !packages/training/runs/natural-language-final/
 packages/training/runs/**/*.pt

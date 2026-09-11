@@ -171,7 +171,7 @@ def prepare(split: str, count: int, seed: int, directory: Path) -> Dataset:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--epochs", type=int, default=20)
-    parser.add_argument("--quantization-bits", type=int, choices=[4, 5, 6], default=5)
+    parser.add_argument("--quantization-bits", type=int, choices=[4, 5, 6], default=6)
     parser.add_argument("--row-scales", action="store_true")
     parser.add_argument("--samples", type=int, default=300000)
     parser.add_argument("--eval-samples", type=int, default=10000)
@@ -268,11 +268,12 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
         source_hashes[name] = hashlib.sha256(content).hexdigest()
-    # Borrowed prose is training input but too large to snapshot; the hash is
-    # enough to tell whether a run saw the same corpus.
+    # Borrowed prose is training input but too large to snapshot. Its hash goes
+    # beside sourceHashes, which audit-model reads as files under source/.
+    dataset_hashes = {}
     prose = ROOT / "data" / "prose" / "sentences.txt"
     if prose.exists():
-        source_hashes["data/prose/sentences.txt"] = hashlib.sha256(
+        dataset_hashes["data/prose/sentences.txt"] = hashlib.sha256(
             prose.read_bytes()
         ).hexdigest()
     history = []
@@ -379,6 +380,7 @@ def main():
             "run": args.run,
             "parameters": sum(parameter.numel() for parameter in model.parameters()),
             "sourceHashes": source_hashes,
+            "datasetHashes": dataset_hashes,
             "config": vars(args),
             "elapsedSeconds": time.perf_counter() - started,
             "tokensSeen": tokens_seen,

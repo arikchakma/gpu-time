@@ -16,13 +16,16 @@ parser.add_argument(
     "--out", type=Path, default=ROOT / "data/synth/natural-evaluation.jsonl"
 )
 parser.add_argument("--reserved", action="store_true")
+parser.add_argument("--bare", action="store_true")
 args = parser.parse_args()
 rng = random.Random(args.seed)
 args.out.parent.mkdir(parents=True, exist_ok=True)
 with args.out.open("w") as output:
     for index in range(args.count):
         sentence = Sentence(rng, augment=False)
-        spec = render(sentence, args.reserved, FAMILIES[index % len(FAMILIES)])
+        spec = render(
+            sentence, args.reserved, FAMILIES[index % len(FAMILIES)], bare=args.bare
+        )
         output.write(
             json.dumps(
                 {

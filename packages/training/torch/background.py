@@ -120,7 +120,7 @@ def suffix(rng: random.Random) -> str:
 
 def sentence(rng: random.Random) -> str:
     pool = borrowed()
-    if pool and rng.random() < 0.35:
+    if pool and rng.random() < 0.15:
         return rng.choice(pool)
     if rng.random() < 0.12:
         subject = rng.choice(

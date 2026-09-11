@@ -56,7 +56,12 @@ def lineage(checkpoint: Path) -> list[dict]:
         parent = saved["config"].get("init")
         if not parent:
             break
-        checkpoint = ROOT / parent
+        # Checkpoints predating the monorepo move recorded paths rooted at the
+        # old repository, where this package was the "training" directory.
+        candidate = Path(parent)
+        if candidate.parts and candidate.parts[0] == "training":
+            candidate = Path(*candidate.parts[1:])
+        checkpoint = candidate if candidate.is_absolute() else ROOT / candidate
     return result
 
 
@@ -149,6 +154,27 @@ def score(model: TimeTagger, dataset: Dataset, families: list[str], threshold: f
     }
 
 
+def proportion_guard(candidate: dict, baseline: dict) -> dict:
+    support = candidate["total"]
+    if support != baseline["total"]:
+        return {"passed": False, "reason": "support mismatch", "support": support}
+    if support < GUARD_MINIMUM_SUPPORT:
+        return {"passed": False, "reason": "insufficient support", "support": support}
+    # Add-one smoothed two-proportion tolerance; a handful of examples either
+    # way is sampling noise, not a regression.
+    pc = (support - candidate["correct"] + 1) / (support + 2)
+    pb = (support - baseline["correct"] + 1) / (support + 2)
+    delta = (baseline["correct"] - candidate["correct"]) / support
+    tolerance = GUARD_Z * math.sqrt((pc * (1 - pc) + pb * (1 - pb)) / support)
+    return {
+        "passed": delta <= tolerance,
+        "reason": None if delta <= tolerance else "regression",
+        "support": support,
+        "delta": delta,
+        "tolerance": tolerance,
+    }
+
+
 def family_guards(candidate: dict, baseline: dict) -> list[dict]:
     guards = []
     for family in sorted(set(candidate["families"]) | set(baseline["families"])):
@@ -157,19 +183,13 @@ def family_guards(candidate: dict, baseline: dict) -> list[dict]:
         support = (current or {}).get("total", 0)
         reason = None
         delta = tolerance = None
-        if not current or not before or current["total"] != before["total"]:
+        if not current or not before:
             reason = "support mismatch"
-        elif support < GUARD_MINIMUM_SUPPORT:
-            reason = "insufficient support"
         else:
-            # Add-one smoothed two-proportion tolerance; at n~62 a handful of
-            # examples either way is sampling noise, not a regression.
-            pc = (support - current["correct"] + 1) / (support + 2)
-            pb = (support - before["correct"] + 1) / (support + 2)
-            delta = (before["correct"] - current["correct"]) / support
-            tolerance = GUARD_Z * math.sqrt((pc * (1 - pc) + pb * (1 - pb)) / support)
-            if delta > tolerance:
-                reason = "regression"
+            guard = proportion_guard(current, before)
+            reason = guard["reason"]
+            delta = guard.get("delta")
+            tolerance = guard.get("tolerance")
         guards.append(
             {
                 "family": family,
@@ -225,61 +245,100 @@ def override(decision: dict) -> dict:
     }
 
 
-def gate(
-    reference: TimeTagger, threshold: float, reserved: Path, baseline_report: Path
+def score_corpus(
+    path: Path,
+    label: str,
+    reference: TimeTagger,
+    threshold: float,
+    artifact: dict | None,
 ):
-    if not reserved.exists():
-        raise FileNotFoundError(
-            f"{reserved} is missing; run check-natural.py --reserved to build it."
-        )
     families = [
         json.loads(line)["family"]
-        for line in reserved.read_text().splitlines()
+        for line in path.read_text().splitlines()
         if line.strip()
     ]
     with tempfile.TemporaryDirectory() as scratch:
-        prefix = Path(scratch) / "reserved"
-        featurize(reserved, prefix)
+        prefix = Path(scratch) / label
+        featurize(path, prefix)
         dataset = Dataset(prefix)
         if dataset.manifest["skipped"] or len(dataset) != len(families):
-            raise ValueError("Reserved carrier corpus did not featurize one-to-one")
+            raise ValueError(f"{label} corpus did not featurize one-to-one")
         corpus = {
-            "path": portable(reserved),
-            "sha256": digest(reserved),
+            "path": portable(path),
+            "sha256": digest(path),
             "featurizedSha256": corpus_digest(prefix),
             "sequences": len(dataset),
             "families": len(set(families)),
         }
         candidate = score(reference, dataset, families, threshold)
-        failures = []
         baseline = None
-        pinned = None
-        if not baseline_report.exists():
-            failures.append(f"no pinned baseline at {baseline_report}")
+        if artifact:
+            baseline = score(
+                artifact_model(artifact),
+                dataset,
+                families,
+                artifact["boundaryThreshold"],
+            )
+    return corpus, candidate, baseline
+
+
+def gate(
+    reference: TimeTagger,
+    threshold: float,
+    reserved: Path,
+    bare: Path,
+    baseline_report: Path,
+):
+    for corpus_path, flag in ((reserved, "--reserved"), (bare, "--bare")):
+        if not corpus_path.exists():
+            raise FileNotFoundError(
+                f"{corpus_path} is missing; run check-natural.py {flag} to build it."
+            )
+    failures = []
+    pinned = None
+    artifact = None
+    if not baseline_report.exists():
+        failures.append(f"no pinned baseline at {baseline_report}")
+    else:
+        previous = json.loads(baseline_report.read_text())
+        pinned = {
+            "report": portable(baseline_report),
+            "checkpoint": previous["checkpoint"],
+            "checkpointSha256": previous["checkpointSha256"],
+            "artifactSha256": previous["artifactSha256"],
+            "artifact": portable(SHIPPED),
+        }
+        if not SHIPPED.exists() or digest(SHIPPED) != previous["artifactSha256"]:
+            failures.append("shipped weights do not match the pinned baseline")
         else:
-            previous = json.loads(baseline_report.read_text())
-            pinned = {
-                "report": portable(baseline_report),
-                "checkpoint": previous["checkpoint"],
-                "checkpointSha256": previous["checkpointSha256"],
-                "artifactSha256": previous["artifactSha256"],
-                "artifact": portable(SHIPPED),
-            }
-            if not SHIPPED.exists() or digest(SHIPPED) != previous["artifactSha256"]:
-                failures.append("shipped weights do not match the pinned baseline")
-            else:
-                artifact = read_artifact(SHIPPED)
-                baseline = score(
-                    artifact_model(artifact),
-                    dataset,
-                    families,
-                    artifact["boundaryThreshold"],
-                )
-                baseline.update(pinned)
+            artifact = read_artifact(SHIPPED)
+
+    corpus, candidate, baseline = score_corpus(
+        reserved, "reserved", reference, threshold, artifact
+    )
+    if baseline:
+        baseline.update(pinned)
+    bare_corpus, bare_candidate, bare_baseline = score_corpus(
+        bare, "bare", reference, threshold, artifact
+    )
+
     decision = decide(candidate, baseline, failures)
     if baseline is None and pinned:
         decision["baselineIdentity"] = pinned
     decision["corpus"] = corpus
+    # Carrier-rich sentences cannot expose an over-splitting regression on terse
+    # input: "Mon-Fri" collapsing to two occurrences still scores well in prose.
+    decision["bare"] = {
+        "corpus": bare_corpus,
+        "candidate": bare_candidate,
+        "baseline": bare_baseline,
+    }
+    if bare_baseline:
+        guard = proportion_guard(bare_candidate, bare_baseline)
+        decision["bare"]["guard"] = guard
+        if not guard["passed"]:
+            decision["failures"].append(f"bare expressions: {guard['reason']}")
+            decision["accepted"] = not decision["failures"]
     return decision
 
 
@@ -296,6 +355,7 @@ def export(
     report_path: Path,
     parity_prefix: Path | None,
     reserved: Path,
+    bare: Path,
     baseline_report: Path,
     force: bool,
 ):
@@ -363,7 +423,7 @@ def export(
     )
     threshold = calibration["threshold"]
 
-    promotion = gate(reference, threshold, reserved, baseline_report)
+    promotion = gate(reference, threshold, reserved, bare, baseline_report)
     if not promotion["accepted"]:
         if not force:
             raise SystemExit(
@@ -509,6 +569,9 @@ if __name__ == "__main__":
         "--reserved", type=Path, default=ROOT / "data/synth/natural-reserved.jsonl"
     )
     parser.add_argument(
+        "--bare", type=Path, default=ROOT / "data/synth/natural-bare.jsonl"
+    )
+    parser.add_argument(
         "--baseline", type=Path, default=ROOT / "active/export-report.json"
     )
     parser.add_argument("--force", action="store_true")
@@ -519,6 +582,7 @@ if __name__ == "__main__":
         args.report,
         args.parity,
         args.reserved,
+        args.bare,
         args.baseline,
         args.force,
     )

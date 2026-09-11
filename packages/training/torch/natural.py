@@ -134,7 +134,7 @@ def calendar(s, date, numeric=False):
             s.add(str(date["year"]), "YEAR")
 
 
-def render(s, reserved=False, family=None):
+def render(s, reserved=False, family=None, bare=False):
     r = s.rng
     family = family or r.choice(FAMILIES)
     anchored = family not in (
@@ -142,7 +142,9 @@ def render(s, reserved=False, family=None):
         "compound-shift",
         "fraction-duration",
     )
-    if reserved:
+    if bare:
+        prefix = ""
+    elif reserved:
         prefix = r.choice(RESERVED if anchored else RESERVED_DURATION)
     elif r.random() < 0.85:
         prefix = background.prefix(r, connector=anchored)

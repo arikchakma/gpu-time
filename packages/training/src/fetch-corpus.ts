@@ -47,6 +47,20 @@ if (manifest.prose.sha256 !== sha256) {
   );
 }
 
+// Numbers are kept: prose containing a plain number is exactly what teaches the
+// model that a digit is not automatically a time. Only time-shaped ones go.
+const TIME_SHAPED = [
+  /\d{1,2}\s*:\s*\d{2}/,
+  /\b\d{1,2}\s*(?:am|pm|a\.m|p\.m)\b/i,
+  /\b\d{1,2}\s*[\/.-]\s*\d{1,2}\b/,
+  /\b(?:19|20)\d{2}/,
+  /\b\d{1,3}(?:st|nd|rd|th)\b/i,
+];
+
+function timeLikeNumber(text: string): boolean {
+  return TIME_SHAPED.some((pattern) => pattern.test(text));
+}
+
 const seen = new Set<string>();
 const kept: string[] = [];
 const dropped = { digits: 0, shape: 0, length: 0, timeWord: 0, duplicate: 0 };
@@ -63,8 +77,8 @@ for await (const line of createInterface({
   if (language !== "eng" || !text) continue;
   read++;
 
-  if (/\d/.test(text)) dropped.digits++;
-  else if (!/^\p{Lu}[\p{L}\p{M} ,.;:'"!?()-]*[.!?]$/u.test(text))
+  if (timeLikeNumber(text)) dropped.digits++;
+  else if (!/^\p{Lu}[\p{L}\p{M}\d ,.;:'"!?()-]*[.!?]$/u.test(text))
     dropped.shape++;
   else if (!withinLength(text)) dropped.length++;
   else if (hasTimeWord(text)) dropped.timeWord++;
