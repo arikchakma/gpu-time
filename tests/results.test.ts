@@ -1,13 +1,13 @@
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { createParser } from "../src/index.js";
+import { defineParser } from "../src/index.js";
 
-let parser: Awaited<ReturnType<typeof createParser>>;
+let parser: Awaited<ReturnType<typeof defineParser>>;
 const context = {
   reference: "2026-09-09T12:00:00+06:00",
   timeZone: "Asia/Dhaka",
 };
 beforeAll(async () => {
-  parser = await createParser({ backend: "cpu" });
+  parser = await defineParser({ backend: "cpu" });
 });
 afterAll(() => parser.dispose());
 

@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { createParser } from "../src/index.js";
+import { defineParser } from "../src/index.js";
 import { resolve } from "../src/resolve.js";
 import { RRule } from "rrule";
 
@@ -8,9 +8,9 @@ const context = {
   timeZone: "UTC",
   limit: 6,
 };
-let parser: Awaited<ReturnType<typeof createParser>>;
+let parser: Awaited<ReturnType<typeof defineParser>>;
 beforeAll(async () => {
-  parser = await createParser({ backend: "cpu" });
+  parser = await defineParser({ backend: "cpu" });
 });
 afterAll(() => parser.dispose());
 
@@ -188,7 +188,7 @@ it("exports repeating monthly exclusions beyond the preview", () => {
 });
 
 it("uses the caller's date order for ambiguous numeric dates", async () => {
-  const dmy = await createParser({ backend: "cpu", dateOrder: "DMY" });
+  const dmy = await defineParser({ backend: "cpu", dateOrder: "DMY" });
   try {
     const european = await dmy.parse("03/04/2027", context);
     const american = await parser.parse("03/04/2027", context);

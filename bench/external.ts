@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import {
-  createParser,
+  defineParser,
   type ParseResult,
   type TimeRange,
 } from "../dist/index.js";
@@ -23,7 +23,7 @@ const cases: Example[] = (
   .split("\n")
   .map((line) => JSON.parse(line))
   .filter((example) => example.split === split);
-const parser = await createParser({ backend: "cpu" });
+const parser = await defineParser({ backend: "cpu" });
 const results: {
   id: string;
   family: string;

@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
-import { createParser } from "../src/schedule.js";
+import { defineParser } from "../src/schedule.js";
 import { compile } from "../src/compile.js";
 import type { Expression, Label, Schedule, Token } from "../src/types.js";
 
@@ -55,7 +55,7 @@ function oracle(example: Example, tokens: Token[]): Token[] {
   });
 }
 
-const parser = await createParser({ backend: "cpu", tokens: true });
+const parser = await defineParser({ backend: "cpu", tokens: true });
 const failures: {
   id: string;
   family: string;

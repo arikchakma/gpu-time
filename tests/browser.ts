@@ -182,10 +182,10 @@ try {
       const packagePath = "/dist/schedule.js";
       const cpu = await (
         await import(sourcePath)
-      ).createParser({ backend: "cpu", tokens: true });
+      ).defineParser({ backend: "cpu", tokens: true });
       const gpu = await (
         await import(packagePath)
-      ).createParser({ backend: "webgpu", tokens: true });
+      ).defineParser({ backend: "webgpu", tokens: true });
       let tokenMismatches = 0;
       let scheduleMismatches = 0;
       try {

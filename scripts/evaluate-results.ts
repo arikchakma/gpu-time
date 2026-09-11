@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import {
-  createParser,
+  defineParser,
   type ParseContext,
   type TimeRange,
 } from "../dist/index.js";
@@ -18,7 +18,7 @@ const examples: {
   .trim()
   .split("\n")
   .map((line) => JSON.parse(line));
-const parser = await createParser({ backend: "cpu" });
+const parser = await defineParser({ backend: "cpu" });
 const cases = [];
 try {
   for (const example of examples) {

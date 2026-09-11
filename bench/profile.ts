@@ -67,16 +67,16 @@ try {
         return times.sort((a, b) => a - b)[1];
       };
       for (const backend of ["cpu", "webgpu"] as const) {
-        const parser = await api.createParser({ backend });
+        const parser = await api.defineParser({ backend });
         samples[backend] = await measure(() =>
           parser.parseMany(texts, context),
         );
         parser.dispose();
       }
-      const parser = await internal.createParser({ backend: "cpu" });
+      const parser = await internal.defineParser({ backend: "cpu" });
       samples.recognition = await measure(() => parser.parseMany(texts));
       const schedules = await parser.parseMany(phrases);
-      const publicParser = await api.createParser({ backend: "cpu" });
+      const publicParser = await api.defineParser({ backend: "cpu" });
       const checked = await publicParser.parseMany(texts, context);
       const output = JSON.stringify(
         checked.map(({ occurrences, rrules, diagnostics }: any) => ({

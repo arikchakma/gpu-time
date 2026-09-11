@@ -7,7 +7,7 @@ export * from "./types.js";
 export { resolve } from "./resolve.js";
 
 // Existing schedule API, kept separate from the model's token predictions.
-export async function createParser(options: ParserOptions = {}) {
+export async function defineParser(options: ParserOptions = {}) {
   const tagger = await createTagger({ backend: options.backend });
 
   function assemble(text: string, result: TagResult): ParseResult {
@@ -62,12 +62,12 @@ export async function createParser(options: ParserOptions = {}) {
   };
 }
 
-let defaultParser: ReturnType<typeof createParser> | undefined;
+let defaultParser: ReturnType<typeof defineParser> | undefined;
 export async function parse(text: string): Promise<ParseResult> {
-  defaultParser ??= createParser();
+  defaultParser ??= defineParser();
   return (await defaultParser).parse(text);
 }
 export async function parseMany(texts: string[]): Promise<ParseResult[]> {
-  defaultParser ??= createParser();
+  defaultParser ??= defineParser();
   return (await defaultParser).parseMany(texts);
 }

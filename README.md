@@ -37,7 +37,7 @@ expressions return diagnostics rather than fabricated dates. Invalid caller
 context, such as an unknown timezone, rejects the call.
 
 Use `parseMany(texts, context)` for several inputs. For explicit backend selection
-or a reusable instance, use `await createParser({ backend: "webgpu" })`, then
+or a reusable instance, use `await defineParser({ backend: "webgpu" })`, then
 `parser.parse(text, context)` and `parser.dispose()` when finished.
 
 The package is not published yet; local builds are in `dist/index.js`.

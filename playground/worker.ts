@@ -1,8 +1,8 @@
-import { createParser } from "../src/index.js";
+import { defineParser } from "../src/index.js";
 import type { ParserOptions } from "../src/index.js";
 import { offsetAt } from "../src/zoned.js";
 
-const parsers = new Map<string, ReturnType<typeof createParser>>();
+const parsers = new Map<string, ReturnType<typeof defineParser>>();
 self.onmessage = async ({ data }) => {
   try {
     const backend: ParserOptions["backend"] = data.backend;
@@ -10,7 +10,7 @@ self.onmessage = async ({ data }) => {
     const key = `${backend ?? "auto"}:${dateOrder}`;
     let pending = parsers.get(key);
     if (!pending) {
-      pending = createParser({ backend, dateOrder });
+      pending = defineParser({ backend, dateOrder });
       parsers.set(key, pending);
     }
     const parser = await pending;

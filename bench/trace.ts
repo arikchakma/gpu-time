@@ -23,8 +23,8 @@ try {
   await page.goto(server.resolvedUrls!.local[0] + "trace.html");
   await page.evaluate(async () => {
     const path = "/src/index.ts";
-    const { createParser } = await import(path);
-    const parser = await createParser({ backend: "webgpu" });
+    const { defineParser } = await import(path);
+    const parser = await defineParser({ backend: "webgpu" });
     const phrases = [
       "tomorrow at noon",
       "next Monday at 2pm",

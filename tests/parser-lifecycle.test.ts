@@ -1,5 +1,5 @@
 import { beforeEach, expect, it, vi } from "vitest";
-import { createParser } from "../src/schedule.js";
+import { defineParser } from "../src/schedule.js";
 import { inferCPU, type Predictions } from "../src/model/cpu.js";
 import type { RawToken } from "../src/types.js";
 
@@ -32,7 +32,7 @@ beforeEach(() => {
 it("keeps mixed single and batch requests separate in one submission", async () => {
   const gpu = runtime();
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu" });
+  const parser = await defineParser({ backend: "webgpu" });
   try {
     const [first, batch, last] = await Promise.all([
       parser.parse("today"),
@@ -63,7 +63,7 @@ it("rejects an entire active batch on disposal before GPU work completes", async
     return completed.promise;
   });
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu" });
+  const parser = await defineParser({ backend: "webgpu" });
   const batch = parser.parseMany(["today", "tomorrow", "yesterday"]);
   const rejected = expect(batch).rejects.toThrow("disposed");
   await started.promise;
@@ -78,8 +78,8 @@ it("rejects an entire active batch on disposal before GPU work completes", async
 it("coalesces same-turn calls while preserving each input's predictions", async () => {
   const gpu = runtime();
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu", tokens: true });
-  const cpu = await createParser({ backend: "cpu", tokens: true });
+  const parser = await defineParser({ backend: "webgpu", tokens: true });
+  const cpu = await defineParser({ backend: "cpu", tokens: true });
   const texts = [
     "one day after",
     "Sat Sun 1pm-8pm Mon 10pm-12am",
@@ -114,7 +114,7 @@ it("queues arrivals during inference and settles every caller in order", async (
     return completed.promise;
   });
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu" });
+  const parser = await defineParser({ backend: "webgpu" });
   const first = parser.parse("tomorrow");
   await started.promise;
   const second = parser.parse("yesterday");
@@ -133,7 +133,7 @@ it("queues arrivals during inference and settles every caller in order", async (
 it("rejects pending calls immediately and disposes only once", async () => {
   const gpu = runtime();
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu" });
+  const parser = await defineParser({ backend: "webgpu" });
   const result = parser.parse("tomorrow");
   const rejected = expect(result).rejects.toThrow("disposed");
   parser.dispose();
@@ -152,7 +152,7 @@ it("disposes a GPU that finishes initialization after the parser closes", async 
     started.resolve();
     return ready.promise;
   });
-  const parser = await createParser({ backend: "auto" });
+  const parser = await defineParser({ backend: "auto" });
   let settled = false;
   const result = parser.parse("tomorrow ".repeat(300));
   const outcome = result.then(
@@ -184,7 +184,7 @@ it("rejects an active inference on disposal without producing a CPU fallback", a
     return completed.promise;
   });
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "auto" });
+  const parser = await defineParser({ backend: "auto" });
   const result = parser.parse("tomorrow ".repeat(300));
   const outcome = result.then(
     () => "resolved",
@@ -201,7 +201,7 @@ it("rejects a malformed inference batch without stranding callers or poisoning l
   const gpu = runtime();
   gpu.inferMany.mockResolvedValueOnce([]);
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu" });
+  const parser = await defineParser({ backend: "webgpu" });
   await expect(parser.parse("tomorrow")).rejects.toThrow("predictions");
   expect((await parser.parse("today")).expressions[0].schedule).not.toBeNull();
   parser.dispose();
@@ -209,7 +209,7 @@ it("rejects a malformed inference batch without stranding callers or poisoning l
 
 it("reports automatic fallback and does not retry an unavailable backend on every call", async () => {
   createGPU.mockRejectedValue(new Error("WebGPU unavailable"));
-  const parser = await createParser({ backend: "auto" });
+  const parser = await defineParser({ backend: "auto" });
   const result = await parser.parseMany(Array(32).fill("one day after"));
   expect(
     result.every(
@@ -224,13 +224,13 @@ it("reports automatic fallback and does not retry an unavailable backend on ever
   await parser.parseMany(Array(32).fill("tomorrow"));
   expect(createGPU).toHaveBeenCalledTimes(1);
   parser.dispose();
-  await expect(createParser({ backend: "webgpu" })).rejects.toThrow(
+  await expect(defineParser({ backend: "webgpu" })).rejects.toThrow(
     "WebGPU unavailable",
   );
 });
 
 it("does not initialize the GPU for a batch of empty strings", async () => {
-  const parser = await createParser();
+  const parser = await defineParser();
   expect(await parser.parseMany([])).toEqual([]);
   const results = await parser.parseMany(Array(40).fill(""));
   expect(
@@ -245,7 +245,7 @@ it("does not initialize the GPU for a batch of empty strings", async () => {
 it("preserves every source offset when splitting long inputs into bounded GPU batches", async () => {
   const gpu = runtime();
   createGPU.mockResolvedValue(gpu);
-  const parser = await createParser({ backend: "webgpu", tokens: true });
+  const parser = await defineParser({ backend: "webgpu", tokens: true });
   const text = "Tomorrow at noon. ".repeat(80);
   const results = await parser.parseMany(Array(32).fill(text));
   expect(gpu.inferMany.mock.calls.length).toBeGreaterThan(1);

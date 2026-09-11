@@ -1,4 +1,4 @@
-import { createParser as createScheduleParser } from "./schedule.js";
+import { defineParser as defineScheduleParser } from "./schedule.js";
 import { createResolver } from "./resolve.js";
 import { civil, instant } from "./zoned.js";
 import type {
@@ -24,8 +24,8 @@ export interface ParseResult {
   fallbackReason?: string;
 }
 
-export async function createParser(options: ParserOptions = {}) {
-  const parser = await createScheduleParser(options);
+export async function defineParser(options: ParserOptions = {}) {
+  const parser = await defineScheduleParser(options);
 
   function validate(context: ParseContext): number {
     // Context belongs to calendar resolution and never enters the model.
@@ -118,18 +118,18 @@ export async function createParser(options: ParserOptions = {}) {
   };
 }
 
-let defaultParser: ReturnType<typeof createParser> | undefined;
+let defaultParser: ReturnType<typeof defineParser> | undefined;
 export async function parse(
   text: string,
   context: ParseContext,
 ): Promise<ParseResult> {
-  defaultParser ??= createParser();
+  defaultParser ??= defineParser();
   return (await defaultParser).parse(text, context);
 }
 export async function parseMany(
   texts: string[],
   context: ParseContext,
 ): Promise<ParseResult[]> {
-  defaultParser ??= createParser();
+  defaultParser ??= defineParser();
   return (await defaultParser).parseMany(texts, context);
 }

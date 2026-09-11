@@ -1,4 +1,4 @@
-import { createParser } from '../../src/index.ts';
+import { defineParser } from '../../src/index.ts';
 import { createTagger } from '../../src/tagger.ts';
 import { tokenize, featureRows } from '../../src/tokenizer.ts';
 import { inferCPU } from '../../src/model/cpu.ts';
@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 
 const text = 'every Monday from 8pm to 10pm';
 const context = { reference: '2026-10-24T12:00:00-04:00', timeZone: 'America/New_York', limit: 3 };
-const parser = await createParser({ backend: 'cpu' });
+const parser = await defineParser({ backend: 'cpu' });
 const result = await parser.parse(text, context);
 parser.dispose();
 const tagger = await createTagger({ backend: 'cpu' });

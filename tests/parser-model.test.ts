@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { createParser, resolve } from "../src/schedule.js";
+import { defineParser, resolve } from "../src/schedule.js";
 import type { Clause } from "../src/types.js";
 
 it("preserves every clause when a schedule spans several inference windows", async () => {
@@ -10,7 +10,7 @@ it("preserves every clause when a schedule spans several inference windows", asy
     time: { start: { hour: 9 + (index % 3), minute: 0 } },
   }));
   const text = clauses.map((_, index) => forms[index % 3]).join(" and ");
-  const parser = await createParser({ backend: "cpu", tokens: true });
+  const parser = await defineParser({ backend: "cpu", tokens: true });
   try {
     const result = await parser.parse(text);
     expect(result.tokens!.length).toBeGreaterThan(128);
@@ -23,7 +23,7 @@ it("preserves every clause when a schedule spans several inference windows", asy
 });
 
 it("resolves one timezone-free prediction using each caller's timezone", async () => {
-  const parser = await createParser({ backend: "cpu" });
+  const parser = await defineParser({ backend: "cpu" });
   try {
     const result = await parser.parse("tomorrow at 3pm");
     const schedule = result.expressions[0].schedule!;
@@ -54,7 +54,7 @@ it("resolves one timezone-free prediction using each caller's timezone", async (
 });
 
 it("parses the user's shorthand using trained predictions, not oracle labels", async () => {
-  const parser = await createParser({ backend: "cpu", tokens: true });
+  const parser = await defineParser({ backend: "cpu", tokens: true });
   const result = await parser.parse("Sat Sun 1pm-8pm Mon 10pm-12am");
   expect(result.expressions).toHaveLength(1);
   expect(result.expressions[0].schedule).toEqual({
@@ -83,12 +83,12 @@ it("parses the user's shorthand using trained predictions, not oracle labels", a
 });
 
 it("passes dateOrder through to AST assembly without changing neural token predictions", async () => {
-  const monthFirst = await createParser({
+  const monthFirst = await defineParser({
     backend: "cpu",
     dateOrder: "MDY",
     tokens: true,
   });
-  const dayFirst = await createParser({
+  const dayFirst = await defineParser({
     backend: "cpu",
     dateOrder: "DMY",
     tokens: true,
@@ -112,7 +112,7 @@ it("passes dateOrder through to AST assembly without changing neural token predi
 });
 
 it("ignores boundary whitespace during inference while preserving every source token", async () => {
-  const parser = await createParser({ backend: "cpu", tokens: true });
+  const parser = await defineParser({ backend: "cpu", tokens: true });
   try {
     const source = " \ttoday\n";
     const plain = await parser.parse("today");

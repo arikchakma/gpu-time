@@ -28,8 +28,8 @@ try {
   await writeFile(
     join(temporary, "consumer.ts"),
     `
-import { createParser, type ParseResult } from "gpu-time";
-const parser = await createParser({ backend: "cpu" });
+import { defineParser, type ParseResult } from "gpu-time";
+const parser = await defineParser({ backend: "cpu" });
 const result: ParseResult = await parser.parse("one day after", { reference: "2026-09-09T12:00:00+06:00", timeZone: "Asia/Dhaka" });
 if (result.occurrences[0].start !== "2026-09-10T12:00:00+06:00") throw new Error("Packaged parser returned the wrong date.");
 if ("expressions" in result || "tokens" in result) throw new Error("Internal predictions leaked into the public result.");

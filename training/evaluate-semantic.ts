@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { isDeepStrictEqual } from "node:util";
 import { createHash } from "node:crypto";
-import { createParser } from "../dist/schedule.js";
+import { defineParser } from "../dist/schedule.js";
 import type { Schedule } from "../src/types.js";
 
 interface Example {
@@ -16,7 +16,7 @@ const examples: Example[] = contents
   .trim()
   .split("\n")
   .map((line) => JSON.parse(line));
-const parser = await createParser({ backend: "cpu" });
+const parser = await defineParser({ backend: "cpu" });
 const families = new Map<string, { total: number; correct: number }>();
 const failures = [];
 try {

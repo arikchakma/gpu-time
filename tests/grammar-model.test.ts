@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { createParser } from "../src/schedule.js";
+import { defineParser } from "../src/schedule.js";
 import type { Schedule } from "../src/types.js";
 
 interface Example {
@@ -20,9 +20,9 @@ const examples: Example[] = [
     .split("\n")
     .map((line) => JSON.parse(line)),
 );
-let parser: Awaited<ReturnType<typeof createParser>>;
+let parser: Awaited<ReturnType<typeof defineParser>>;
 beforeAll(async () => {
-  parser = await createParser({ backend: "cpu" });
+  parser = await defineParser({ backend: "cpu" });
 });
 afterAll(() => parser.dispose());
 

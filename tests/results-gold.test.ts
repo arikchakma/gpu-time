@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { afterAll, beforeAll, expect, it } from "vitest";
 import {
-  createParser,
+  defineParser,
   type ParseContext,
   type TimeRange,
 } from "../src/index.js";
@@ -16,9 +16,9 @@ const cases: {
   .trim()
   .split("\n")
   .map((line) => JSON.parse(line));
-let parser: Awaited<ReturnType<typeof createParser>>;
+let parser: Awaited<ReturnType<typeof defineParser>>;
 beforeAll(async () => {
-  parser = await createParser({ backend: "cpu" });
+  parser = await defineParser({ backend: "cpu" });
 });
 afterAll(() => parser.dispose());
 it.each(cases)("$id: $text", async (example) => {

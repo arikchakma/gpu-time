@@ -5,10 +5,10 @@ import type { Schedule } from "../src/types.js";
 
 // Evaluate the distributed parser. Importing source here would bypass the shader
 // bundler and would not test the package users actually receive.
-const { createParser } = await import(
+const { defineParser } = await import(
   new URL("../dist/schedule.js", import.meta.url).href
 );
-const parser = await createParser({ backend: "cpu", tokens: true });
+const parser = await defineParser({ backend: "cpu", tokens: true });
 const sets = [
   "adversarial",
   "user-cases",
