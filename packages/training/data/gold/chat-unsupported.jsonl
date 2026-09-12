@@ -1,0 +1,48 @@
+{"id":"chat-unsupported-001","family":"chat-relative","text":"the week after next","reason":"no two-step week offset; only this/next/last","schedule":null}
+{"id":"chat-unsupported-002","family":"chat-relative","text":"the last week of november","reason":"calendarPeriod.week has no last/-1 position","schedule":null}
+{"id":"chat-unsupported-003","family":"chat-relative","text":"mid october","reason":"no mid-month sub-period","schedule":null}
+{"id":"chat-unsupported-004","family":"chat-relative","text":"a few days ago","reason":"unquantified \"a few\" has no amount","schedule":null}
+{"id":"chat-unsupported-005","family":"chat-relative","text":"this time next week","reason":"no clock carried over from an unstated reference time","schedule":null}
+{"id":"chat-unsupported-006","family":"chat-abbrev","text":"3ish?","reason":"TimeSpec has no approximate flag (Shift.approximate is shift-only)","schedule":null}
+{"id":"chat-unsupported-007","family":"chat-abbrev","text":"noonish tomorrow","reason":"TimeSpec has no approximate flag","schedule":null}
+{"id":"chat-unsupported-008","family":"chat-abbrev","text":"cob tomorrow","reason":"\"close of business\" is an unmodelled named time of day","schedule":null}
+{"id":"chat-unsupported-009","family":"chat-abbrev","text":"eod friday","reason":"no end-of-day edge attached to a weekday","schedule":null}
+{"id":"chat-unsupported-010","family":"chat-question","text":"can you make it by friday?","reason":"no deadline/until bound outside a recurrence","schedule":null}
+{"id":"chat-unsupported-011","family":"chat-question","text":"tue or wed after 2?","reason":"Schedule has no alternation; separate clauses would mean both","schedule":null}
+{"id":"chat-unsupported-012","family":"chat-question","text":"lunch sometime next week, maybe tue or wed?","reason":"no alternation","schedule":null}
+{"id":"chat-unsupported-013","family":"chat-negation","text":"not on fridays","reason":"a bare exception with no base series","schedule":null}
+{"id":"chat-unsupported-014","family":"chat-negation","text":"mon wed fri except holidays","reason":"no \"holidays\" DateSpec","schedule":null}
+{"id":"chat-unsupported-015","family":"chat-tatoeba","text":"You should receive the letter by next Monday.","source":"tatoeba","reason":"no deadline bound","schedule":null}
+{"id":"chat-unsupported-016","family":"chat-tatoeba","text":"The work must be completed by tomorrow.","source":"tatoeba","reason":"no deadline bound","schedule":null}
+{"id":"chat-unsupported-017","family":"chat-tatoeba","text":"I have to pay this bill by Monday.","source":"tatoeba","reason":"no deadline bound","schedule":null}
+{"id":"chat-unsupported-018","family":"chat-tatoeba","text":"You need to register by Monday.","source":"tatoeba","reason":"no deadline bound","schedule":null}
+{"id":"chat-unsupported-019","family":"chat-tatoeba","text":"We must complete the bond by the end of this year.","source":"tatoeba","reason":"no deadline bound","schedule":null}
+{"id":"chat-unsupported-020","family":"chat-tatoeba","text":"She'll be available around four o'clock.","source":"tatoeba","reason":"no approximate clock","schedule":null}
+{"id":"chat-unsupported-021","family":"chat-tatoeba","text":"We eat supper about six o'clock.","source":"tatoeba","reason":"no approximate clock","schedule":null}
+{"id":"chat-unsupported-022","family":"chat-tatoeba","text":"Tom left at about 2:30 in the morning.","source":"tatoeba","reason":"no approximate clock","schedule":null}
+{"id":"chat-unsupported-023","family":"chat-tatoeba","text":"How about 28 February at about 3.00 pm?","source":"tatoeba","reason":"no approximate clock","schedule":null}
+{"id":"chat-unsupported-024","family":"chat-tatoeba","text":"I can't do that until next Monday.","source":"tatoeba","reason":"no until bound outside a recurrence","schedule":null}
+{"id":"chat-unsupported-025","family":"chat-tatoeba","text":"Tom wasn't supposed to be here until 2:30.","source":"tatoeba","reason":"no until bound outside a recurrence","schedule":null}
+{"id":"chat-unsupported-026","family":"chat-tatoeba","text":"My mother has been sick since last month.","source":"tatoeba","reason":"no since/open-start date bound","schedule":null}
+{"id":"chat-unsupported-027","family":"chat-tatoeba","text":"No one has heard from Sami since Friday morning.","source":"tatoeba","reason":"no since/open-start date bound","schedule":null}
+{"id":"chat-unsupported-028","family":"chat-tatoeba","text":"Underground fares will increase from 1st April 1999.","source":"tatoeba","reason":"no open-start date bound","schedule":null}
+{"id":"chat-unsupported-029","family":"chat-tatoeba","text":"Between Christmas and the new year, Mary and Tom go skiing.","source":"tatoeba","reason":"no range between two holidays","schedule":null}
+{"id":"chat-unsupported-030","family":"chat-tatoeba","text":"Tom was found alive late Monday.","source":"tatoeba","reason":"no late/early sub-part of a day","schedule":null}
+{"id":"chat-unsupported-031","family":"chat-recognizers","text":"I'll be back 11ish","source":"TimeParser-48","reason":"no approximate clock","schedule":null}
+{"id":"chat-unsupported-032","family":"chat-recognizers","text":"mid morning","source":"TimeParser-57","reason":"no sub-part of a day part","schedule":null}
+{"id":"chat-unsupported-033","family":"chat-recognizers","text":"I'll be back at lunchtime 12 o'clock","source":"TimeParser-82","reason":"no lunchtime concept","schedule":null}
+{"id":"chat-unsupported-034","family":"chat-recognizers","text":"I went back 20th of next month","source":"DateParser-88","reason":"calendar dates take no this/next/last modifier","schedule":null}
+{"id":"chat-unsupported-035","family":"chat-recognizers","text":"I went back Thursday the 21st","source":"DateParser-77","reason":"a weekday and a day-of-month cannot combine in one DateSpec","schedule":null}
+{"id":"chat-unsupported-036","family":"chat-recognizers","text":"who did I email a few days ago?","source":"DateParser-66","reason":"unquantified \"a few\"","schedule":null}
+{"id":"chat-unsupported-037","family":"chat-recognizers","text":"I'll be out the last week of july","source":"DatePeriodParser-20","reason":"calendarPeriod.week has no last position","schedule":null}
+{"id":"chat-unsupported-038","family":"chat-recognizers","text":"I'll be out the third quarter of 2016","source":"DatePeriodParser-68","reason":"no quarters","schedule":null}
+{"id":"chat-unsupported-039","family":"chat-recognizers","text":"In the 1970s","source":"DatePeriodParser-109","reason":"no decades","schedule":null}
+{"id":"chat-unsupported-040","family":"chat-recognizers","text":"Show me the records in 21st century","source":"DatePeriodParser-219","reason":"no centuries","schedule":null}
+{"id":"chat-unsupported-041","family":"chat-recognizers","text":"I will be back within 5 days","source":"DatePeriodParser-154","reason":"no within-window (a bounded span from now)","schedule":null}
+{"id":"chat-unsupported-042","family":"chat-recognizers","text":"I'll be out rest of the week","source":"DatePeriodParser-46","reason":"no rest-of-period","schedule":null}
+{"id":"chat-unsupported-043","family":"chat-recognizers","text":"Cortana, find us a time end of March","source":"DatePeriodParser-150","reason":"no edge on a named calendar month","schedule":null}
+{"id":"chat-unsupported-044","family":"chat-recognizers","text":"Cortana, please find us a time mid next week","source":"DatePeriodParser-151","reason":"no mid-period","schedule":null}
+{"id":"chat-unsupported-045","family":"chat-recognizers","text":"let's meet in the early-morning Tuesday","source":"DateTimePeriodParser-39","reason":"no early/late sub-part of a day part","schedule":null}
+{"id":"chat-unsupported-046","family":"chat-recognizers","text":"I will be back within 15 seconds","source":"DateTimePeriodParser-81","reason":"Unit has no second","schedule":null}
+{"id":"chat-unsupported-047","family":"chat-recognizers","text":"I'll go back tuesday PM","source":"DateTimePeriodParser-79","reason":"\"PM\" alone names no modelled day part","schedule":null}
+{"id":"chat-unsupported-048","family":"chat-recognizers","text":"I'll go back the next day","source":"DateParser-44","reason":"relative day with no anchor other than an unstated one","schedule":null}

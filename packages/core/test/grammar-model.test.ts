@@ -33,7 +33,29 @@ afterAll(() => parser.dispose());
 // the checkpoint that fixed it regressed compound-duration and prose-date, so
 // the gate rejected it. it.fails keeps the case running — a later retrain that
 // closes the gap turns this red and the id comes off the list.
-const knownGaps = new Set(["negative-017"]);
+// negative-033 onward are the number-heavy negatives added with chat.jsonl.
+// The model reads a bare ordinal, a numbered thing, or an "N to M" score as a
+// date or a clock range. Gold is right in every case; these are open model
+// gaps, kept running so a retrain that closes one turns it red.
+const knownGaps = new Set([
+  "negative-017",
+  "negative-034",
+  "negative-041",
+  "negative-044",
+  "negative-052",
+  "negative-059",
+  "negative-064",
+  "negative-067",
+  "negative-076",
+  "negative-081",
+  "negative-086",
+  "negative-089",
+  "negative-095",
+  "negative-104",
+  "negative-106",
+  "negative-110",
+  "negative-120",
+]);
 const isGap = (example: Example) => knownGaps.has(example.id);
 
 const check = async (example: Example) => {
