@@ -1,6 +1,8 @@
 """Non-temporal language for contextual contrast with the time grammar."""
 
 import random
+import re
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
@@ -30,6 +32,80 @@ ASKS = [
 NAMES = ["May", "Alex", "Jordan", "Riley", "Sam", "Taylor", "Casey"]
 ASIDES = ["", "", "", "please,", "note:", "could you check this:"]
 RECIPIENTS = ["me", "us", "the team"] + NAMES
+# Calendar-app input: an event title with no verb, a correction, a request, or
+# an availability window. None of these words are ever part of the expression.
+TITLES = [
+    "dentist", "team sync", "standup", "gym", "haircut", "yoga", "book club",
+    "all hands", "sprint planning", "design review", "board meeting", "retro",
+    "school pickup", "vet appointment", "parent teacher conference", "demo",
+    "1:1 with {name}", "lunch with {name}", "coffee with {name}", "class",
+    "call {name}", "interview with {name}", "flight to {place}", "shift",
+    "workout", "rehearsal", "checkin", "session", "practice", "report review",
+    "deep work", "focus time", "swim", "piano lesson", "therapy", "physio",
+]
+PLACES2 = ["sfo", "boston", "berlin", "the airport", "the clinic", "London"]
+REQUESTS = [
+    "can we push {event} to", "can we move {event} to", "move it to",
+    "actually make it", "let's do", "let's meet", "can we bump it to",
+    "change it to", "on second thought,", "scratch that,", "sorry i meant",
+    "wait, i meant", "revised:", "nope, make it", "hold on, make it",
+    "please move {event} to", "actually", "let's push to", "book it for",
+    "correction: {event} is at", "i'd like to reschedule to", "pencil me in for",
+]
+AVAILABILITY = [
+    "working hours", "available", "busy", "out of office", "ooo", "wfh",
+    "office hours", "focus block", "free", "unavailable", "away", "blocked",
+    "open", "booked", "on call", "reachable",
+]
+QUESTIONS = [
+    "are you free", "are you around", "do you have time", "can we do",
+    "can we meet", "can you do", "how about", "what about", "you free",
+    "any chance you're free", "should i book it for", "shall we say",
+    "are we still on for", "wanna hop on a call", "want to grab lunch",
+    "could we push it to", "is", "does", "would", "will",
+]
+# "does 10am on the 14th work for you?" needs a tail; the opener alone is not a
+# sentence. generate() forces one of these when the carrier opened with a verb.
+OPENERS_NEEDING_TAIL = frozenset({"is", "does", "would", "will"})
+COMPLETIONS = [
+    "work for you", "work", "still work", "sound good", "suit you", "be ok",
+    "work for everyone", "still suit you", "be too late", "be better",
+]
+QUESTION_WORDS = frozenset(
+    "are can could do does did how is shall should wanna want what when where "
+    "which who why will would any you".split()
+)
+# Never a carrier word: the model must read these as part of the expression.
+TIME_WORDS = frozenset(
+    "am pm noon midnight midday morning afternoon evening night today tomorrow "
+    "tonight tonite tmrw tmr yesterday hour hours minute minutes second seconds "
+    "day days week weeks month months year years weekday weekdays weekend "
+    "weekends every each other half quarter past until till through from next "
+    "last this coming previous upcoming sharp oclock clock daily weekly monthly "
+    "yearly annually nightly hourly biweekly bimonthly quarterly fortnightly "
+    "fortnight except excluding starting beginning ending start end before "
+    "after between around once twice thrice times occurrences per now "
+    "immediately noonish min mins hrs secs wks mos yrs january february march "
+    "april may june july august september october november december jan feb mar "
+    "apr jun jul aug sep sept oct nov dec monday tuesday wednesday thursday "
+    "friday saturday sunday mon tue tues wed weds thu thur thurs fri sat sun "
+    "zero one two three four five six seven eight nine ten eleven twelve "
+    "thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty "
+    "thirty forty fifty sixty seventy eighty ninety first second third fourth "
+    "fifth sixth seventh eighth ninth tenth eleventh twelfth christmas "
+    "halloween thanksgiving valentines eve".split()
+)
+# Cheap part of speech: the word after a determiner is a noun, the word after an
+# infinitive or modal is a verb. Good enough over fifty thousand sentences, and
+# it costs nothing next to a tagger dependency.
+_NOUN_CUES = frozenset(
+    "the a an my our your his her their its another one each every some no this "
+    "that".split()
+)
+_VERB_CUES = frozenset(
+    "to will would can could should must may might please let's i we they you "
+    "he she didn't don't doesn't won't can't".split()
+)
 
 
 def normal(text: str) -> str:
@@ -48,6 +124,32 @@ def borrowed() -> tuple[str, ...]:
         return ()
     # Carriers share the 32/64/128-token buckets train.py batches on.
     return tuple(line for line in map(str.strip, lines) if 0 < len(line) <= 120)
+
+
+@lru_cache(maxsize=1)
+def vocabulary() -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """Common nouns and verbs mined from the borrowed prose.
+
+    Carriers built from a handful of hand-written nouns teach the model those
+    nouns. Thousands of them teach it that an unknown word beside a time
+    expression is filler, which is the actual job.
+    """
+    nouns: Counter[str] = Counter()
+    verbs: Counter[str] = Counter()
+    for line in borrowed():
+        words = re.findall(r"[a-z']+", line.lower())
+        for left, right in zip(words, words[1:]):
+            if len(right) < 3 or "'" in right or right in TIME_WORDS:
+                continue
+            if left in _NOUN_CUES:
+                nouns[right] += 1
+            elif left in _VERB_CUES:
+                verbs[right] += 1
+    chosen = tuple(
+        tuple(sorted(word for word, count in counter.items() if count >= 3))
+        for counter in (nouns, verbs)
+    )
+    return (chosen[0] or ("meeting",), chosen[1] or ("call",))
 
 
 def _availability(rng: random.Random) -> tuple[str, tuple[str, ...]]:
@@ -71,14 +173,178 @@ def _request(rng: random.Random) -> tuple[str, tuple[str, ...]]:
     return f"{rng.choice(LEADS)} {ask}".strip(), ("for", "at", "on", "about")
 
 
-SHAPES = [_availability, _hours, _event, _request]
+def _title(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    """An event title with no verb. Mostly an ordinary noun, not a fixed list."""
+    nouns, _ = vocabulary()
+    if rng.random() < 0.25:
+        title = rng.choice(TITLES).format(
+            name=rng.choice(NAMES).lower(), place=rng.choice(PLACES2)
+        )
+    else:
+        noun = rng.choice(nouns)
+        title = rng.choice(
+            [
+                noun,
+                f"{noun} {rng.choice(nouns)}",
+                f"{noun} with {rng.choice(NAMES).lower()}",
+                f"{rng.choice(DETERMINERS)} {noun}",
+                f"{rng.choice(NAMES).lower()}'s {noun}",
+            ]
+        )
+    return title, ("at", "on")
+
+
+def _correction(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    nouns, _ = vocabulary()
+    event = rng.choice(EVENTS) if rng.random() < 0.3 else rng.choice(nouns)
+    return rng.choice(REQUESTS).format(event=event), ()
+
+
+def _availability_window(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    return rng.choice(AVAILABILITY), ("on", "from", "at")
+
+
+def _question(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    return rng.choice(QUESTIONS), ("at", "on")
+
+
+def _statement(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    """An ordinary declarative built from mined vocabulary."""
+    nouns, verbs = vocabulary()
+    noun, other, verb = rng.choice(nouns), rng.choice(nouns), rng.choice(verbs)
+    name = rng.choice(NAMES)
+    return (
+        rng.choice(
+            [
+                f"the {noun} is",
+                f"the {noun} starts",
+                f"our {noun} ends",
+                f"{name} said the {noun} moved",
+                f"{name} will {verb} the {noun}",
+                f"we {verb} the {noun}",
+                f"i {verb} the {noun} with {name}",
+                f"they moved the {noun}",
+                f"the {noun} and the {other} both happen",
+                f"{name} booked the {noun}",
+                f"my {noun} is confirmed",
+                f"the new {noun} goes live",
+            ]
+        ),
+        ("at", "on", "for"),
+    )
+
+
+def _ask(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    """A request or an instruction, any verb."""
+    nouns, verbs = vocabulary()
+    noun, verb, name = rng.choice(nouns), rng.choice(verbs), rng.choice(NAMES)
+    return (
+        rng.choice(
+            [
+                f"please {verb} the {noun}",
+                f"could you {verb} the {noun}",
+                f"remind me to {verb} the {noun}",
+                f"i need to {verb} the {noun}",
+                f"let {name} know we {verb} the {noun}",
+                f"don't forget to {verb} the {noun}",
+                f"{verb} the {noun}",
+                f"we should {verb} the {noun} with {name}",
+                f"someone has to {verb} the {noun}",
+            ]
+        ),
+        ("at", "on", "for", "about", "by"),
+    )
+
+
+def _broad_question(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    nouns, verbs = vocabulary()
+    noun, verb, name = rng.choice(nouns), rng.choice(verbs), rng.choice(NAMES)
+    return (
+        rng.choice(
+            [
+                f"when should we {verb} the {noun}",
+                f"did {name} {verb} the {noun}",
+                f"can you {verb} the {noun}",
+                f"is the {noun} still",
+                f"why did they move the {noun}",
+                f"who wants to {verb} the {noun}",
+                f"do we {verb} the {noun}",
+            ]
+        ),
+        ("at", "on", "to"),
+    )
+
+
+def _greeting(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    nouns, _ = vocabulary()
+    name = rng.choice(NAMES)
+    return (
+        rng.choice(
+            [
+                f"hi {name}, quick note about the {rng.choice(nouns)}",
+                f"hey! hope the {rng.choice(nouns)} went well",
+                f"thanks {name}. the {rng.choice(nouns)} is ready",
+                f"morning all, one update on the {rng.choice(nouns)}",
+                f"sorry for the slow reply about the {rng.choice(nouns)}",
+                f"good news, the {rng.choice(nouns)} is done",
+            ]
+        ),
+        ("at", "on", "for"),
+    )
+
+
+def _listing(rng: random.Random) -> tuple[str, tuple[str, ...]]:
+    nouns, _ = vocabulary()
+    items = ", ".join(rng.choice(nouns) for _ in range(rng.randint(2, 4)))
+    return rng.choice([f"agenda: {items} -", f"{items}:", f"todo: {items},"]), ()
+
+
+# One calendar frame among many. The model must learn English filler, not a
+# fixed set of event titles: _statement, _ask, _broad_question, _greeting and
+# _listing all draw from thousands of mined nouns and verbs.
+SHAPES = [
+    _availability,
+    _hours,
+    _event,
+    _request,
+    _title,
+    _correction,
+    _availability_window,
+    _question,
+    _statement,
+    _statement,
+    _ask,
+    _ask,
+    _broad_question,
+    _broad_question,
+    _greeting,
+    _listing,
+]
 
 
 def _compose(rng: random.Random, connector: bool) -> str:
     body, connectors = rng.choice(SHAPES)(rng)
-    if connector and rng.random() < 0.85:
+    if connector and connectors and rng.random() < 0.6:
         body += " " + rng.choice(connectors)
-    return f"{rng.choice(ASIDES)} {body}".strip()
+    # "please, does tuesday work" is not a sentence anyone types.
+    aside = "" if body.split(" ")[0] in QUESTION_WORDS else rng.choice(ASIDES)
+    return f"{aside} {body}".strip()
+
+
+def completion(rng: random.Random) -> str:
+    return rng.choice(COMPLETIONS)
+
+
+def terminator(rng: random.Random, text: str) -> str:
+    """Sentence-final punctuation, glued to the last token.
+
+    The tokenizer folds "? ! ) ] % # *" into one catch-all punctuation class and
+    the generator never used to place any of them next to an expression.
+    """
+    head = {word.strip(",:") for word in text.lower().split()[:3]}
+    if head & QUESTION_WORDS:
+        return rng.choice(["?", "?", "?", "?!"])
+    return rng.choice([".", ".", ".", "!", "?", ")", '"'])
 
 
 def _terminated(text: str) -> str:
@@ -105,6 +371,8 @@ def suffix(rng: random.Random) -> str:
         elif rng.random() < 0.3:
             text = f"and {_availability(rng)[0]}"
         else:
+            nouns, verbs = vocabulary()
+            noun, verb = rng.choice(nouns), rng.choice(verbs)
             text = rng.choice(
                 [
                     f"works for {rng.choice(RECIPIENTS)}",
@@ -112,16 +380,68 @@ def suffix(rng: random.Random) -> str:
                     f"if that works for {rng.choice(RECIPIENTS)}",
                     "is the deadline",
                     "please",
+                    f"for the {noun}",
+                    f"to {verb} the {noun}",
+                    f"in the {noun}",
+                    f"with {rng.choice(NAMES)} and the {noun}",
+                    f"so we can {verb}",
+                    f"about the {noun}",
+                    f"unless the {noun} changes",
+                    f"and {rng.choice(NAMES)} will {verb}",
+                    f"per the {noun}",
                 ]
             )
         if normal(text) not in RESERVED:
             return text
 
 
+def numeric(rng: random.Random) -> str:
+    """Number-heavy prose with no time expression in it at all.
+
+    The nouns and verbs come from the mined vocabulary, so a negative is not
+    recognisable by its handful of template words.
+    """
+    nouns, verbs = vocabulary()
+    noun, other, verb = rng.choice(nouns), rng.choice(nouns), rng.choice(verbs)
+    name = rng.choice(NAMES)
+    count = rng.randint(2, 99)
+    return rng.choice(
+        [
+            f"See section {rng.randint(1, 12)}.{rng.randint(1, 9)} of the {noun}.",
+            f"Chapter {rng.randint(1, 20)} of the {noun} runs to page {rng.randint(100, 400)}.",
+            f"The {noun} is in room {count} on floor {rng.randint(1, 9)}.",
+            f"Upgrade the {noun} to version {rng.randint(1, 9)}.{rng.randint(0, 20)}.{rng.randint(0, 9)}.",
+            f"The final score was {rng.randint(0, 5)} to {rng.randint(0, 5)}.",
+            f"Only {rng.randint(2, 90)} percent of the {other} matched the {noun}.",
+            f"{name} is {rng.randint(18, 80)} years old and owns a {noun}.",
+            f"The {noun} costs {rng.randint(2, 400)} dollars plus tax.",
+            f"Call {rng.randint(200, 999)}-{rng.randint(1000, 9999)} about the {noun}.",
+            f"{name} came in second in the {rng.randint(2, 10)}00 metres.",
+            f"She ran a quarter mile and then stopped to {verb}.",
+            f"Half of them never answered the {noun}.",
+            f"A quarter of the {rng.randint(20, 400)} {other} were blank.",
+            f"May and {name} split the {noun} evenly.",
+            f"March and August are both names in the {noun}.",
+            f"The second argument of the {noun} must be an integer, not {count}.",
+            f"Table {rng.randint(1, 9)} lists all {count} {other}.",
+            f"Invoice {rng.randint(1000, 9999)} totals {rng.randint(10, 900)} euros.",
+            f"Flight {rng.choice('ABDEFKLMNQRSUVWXZ')}{rng.randint(100, 999)} leaves from gate {rng.randint(1, 40)}.",
+            f"Our {noun} finished {rng.choice(['first', 'second', 'third', 'last'])} out of {count}.",
+            f"There are {count} {other} in the {noun}.",
+            f"{name} had to {verb} the {noun} {rng.randint(2, 9)} times.",
+            f"Page {count} of the {noun} explains the {other}.",
+            f"The {noun} weighs {rng.randint(2, 90)} kilos.",
+            f"Room {count} holds {rng.randint(4, 60)} {other}.",
+        ]
+    )
+
+
 def sentence(rng: random.Random) -> str:
     pool = borrowed()
     if pool and rng.random() < 0.15:
         return rng.choice(pool)
+    if rng.random() < 0.22:
+        return numeric(rng)
     if rng.random() < 0.12:
         subject = rng.choice(
             ["Our clinic", "The office", "The shop", "The team", "The library"]
@@ -147,45 +467,11 @@ def sentence(rng: random.Random) -> str:
         action = rng.choice(["open", "read", "review", "check", "copy", "close"])
         item = rng.choice(["file", "report", "document", "menu", "window"])
         return f"The {modifier} {subject} is to {action} the {item}."
-    noun = rng.choice(
-        [
-            "file",
-            "document",
-            "report",
-            "chapter",
-            "book",
-            "story",
-            "table",
-            "column",
-            "row",
-            "window",
-            "menu",
-            "program",
-            "list",
-            "paragraph",
-            "message",
-            "draft",
-            "page",
-            "section",
-            "option",
-            "example",
-            "step",
-        ]
-    )
-    verb = rng.choice(
-        [
-            "open",
-            "close",
-            "read",
-            "review",
-            "print",
-            "select",
-            "send",
-            "check",
-            "copy",
-            "approve",
-        ]
-    )
+    # Mined, not listed: a negative must not be identifiable by its vocabulary.
+    pool_nouns, pool_verbs = vocabulary()
+    noun = rng.choice(pool_nouns)
+    other = rng.choice(pool_nouns)
+    verb = rng.choice(pool_verbs)
     order = rng.choice(["first", "second", "third", "last", "next", "previous"])
     name = rng.choice(NAMES)
     count = rng.randint(1, 99)
@@ -196,7 +482,7 @@ def sentence(rng: random.Random) -> str:
             f"Could you {verb} the {noun} for {name}?",
             f"The {order} {noun} contains {count} examples.",
             f"The {noun} has {count} rows and {rng.randint(1, 31)} columns.",
-            f"The beginning of the {noun} explains the format.",
+            f"The beginning of the {noun} explains the {other}.",
             f"At the end of the {noun}, the author signs it.",
             f"We may {verb} another {noun}.",
             f"{name} wrote the {order} {noun}.",
@@ -204,7 +490,7 @@ def sentence(rng: random.Random) -> str:
             f"Build {version} failed with {count} warnings.",
             f"Choose option {count} from section {rng.randint(1, 12)}.",
             f"The {order} attempt succeeded.",
-            f"Each {noun} needs a title.",
+            f"Each {noun} needs a {other}.",
             f"Every {noun} in the list contains a number.",
             f"The field named {rng.choice(['year', 'timestamp', 'date', 'duration'])} contains a string.",
             f"The word {rng.choice(['midnight', 'tomorrow', 'morning', 'weekend'])} appears in the glossary.",

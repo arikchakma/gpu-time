@@ -88,6 +88,31 @@ HOLIDAYS = {
 }
 
 
+def weekday_word(rng: random.Random, name: str) -> str:
+    """Every spelling lexicon.weekday() accepts: it lowercases, then drops a
+    trailing "." and a trailing "s", and matches the name or its first three."""
+    short = name[:3]
+    forms = [name, name.lower(), short, short.lower(), name + "s", name.lower() + "s"]
+    forms += {
+        "Tuesday": ["tues"],
+        "Wednesday": ["weds"],
+        "Thursday": ["thu", "thur", "thurs"],
+    }.get(name, [])
+    return rng.choice(forms)
+
+
+def month_word(rng: random.Random, index: int | None = None) -> str:
+    """Spellings lexicon.month() accepts: the name, its first three, "sept"."""
+    name = MONTHS[rng.randrange(12) if index is None else index]
+    short = name[:3]
+    # No trailing "." here: callers that want one add it as its own GLUE token,
+    # and a period inside a MONTH span is not a month.
+    forms = [name, name.lower(), short, short.lower()]
+    if name == "September":
+        forms += ["sept", "Sept"]
+    return rng.choice(forms)
+
+
 @dataclass
 class Specification:
     family: str
@@ -627,7 +652,11 @@ def render_date(date: dict, sentence: Sentence, style: int) -> None:
         calendar(date, sentence, style)
     elif kind == "calendarRange":
         calendar(date["from"], sentence, 5)
-        sentence.add("to", "RANGE_END")
+        # A dash reads as a range too, and "17 August 2013 2pm - 19 August 2013
+        # 2pm" is the shape a hyphen-only corpus never showed the model.
+        sentence.add(
+            sentence.rng.choice(["to", "to", "through", "-", "\u2013"]), "RANGE_END"
+        )
         calendar(date["to"], sentence, 5)
     elif kind == "relativeUnit":
         if date.get("edge"):

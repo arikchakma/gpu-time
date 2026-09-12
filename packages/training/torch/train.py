@@ -16,6 +16,9 @@ from torch.nn import functional as F
 
 from model import PADDING_ROW, ROLE_CLASSES, TimeTagger
 
+LABEL_O = 0
+LABEL_GLUE = 32
+
 TORCH = Path(__file__).resolve().parent
 ROOT = TORCH.parent
 CORE = ROOT.parent / "core"
@@ -190,6 +193,8 @@ def main():
     parser.add_argument(
         "--device", default="mps" if torch.backends.mps.is_available() else "cpu"
     )
+    parser.add_argument("--identity-dropout", type=float, default=0.0)
+    parser.add_argument("--role-weighting", choices=["sqrt", "none"], default="sqrt")
     parser.add_argument("--log-every", type=int, default=50)
     parser.add_argument("--warmup-steps", type=int, default=500)
     parser.add_argument(
@@ -240,6 +245,21 @@ def main():
                     initial["model"]["output_bias"][index] = biases[source]
         model.load_state_dict(initial["model"])
         args.init = str(args.init)
+    role_weights = None
+    if args.role_weighting == "sqrt":
+        # COUNT and BOUND_START see ~2,000 tokens against O's ~2,000,000. Weight
+        # by 1/sqrt(count), normalised so the mean weight over labels is 1.
+        counts = np.array(
+            [max(count, 1) for count in training.manifest["labelCounts"].values()],
+            dtype=np.float64,
+        )
+        named = 1 / np.sqrt(counts)
+        named /= named.mean()
+        # The reserved output slots are never a target; leave them at the mean
+        # so they cannot skew the normalisation.
+        weights = np.ones(ROLE_CLASSES, dtype=np.float64)
+        weights[: len(named)] = named
+        role_weights = torch.tensor(weights, dtype=torch.float32, device=args.device)
     model.quantization_bits = args.quantization_bits
     model.row_scales = args.row_scales
     model.storage_f16 = args.storage == "f16"
@@ -303,11 +323,25 @@ def main():
             rows, labels, boundaries, valid, neighbors = training.batch(
                 indices, args.device
             )
+            if args.identity_dropout > 0:
+                # Filler only: "half past" and "quarter to" need their words.
+                filler = (labels == LABEL_O) | (labels == LABEL_GLUE)
+                identity = (rows >= 140) & (rows < 524)
+                hidden = (
+                    identity
+                    & filler.unsqueeze(-1)
+                    & (
+                        torch.rand(rows.shape, device=rows.device)
+                        < args.identity_dropout
+                    )
+                )
+                rows = rows.masked_fill(hidden, PADDING_ROW)
             logits, boundary_logits = model(rows, valid, neighbors)
             mask = labels >= 0
             role_loss = F.cross_entropy(
                 logits.reshape(-1, ROLE_CLASSES),
                 labels.reshape(-1),
+                weight=role_weights,
                 ignore_index=-100,
                 label_smoothing=0.05,
             )

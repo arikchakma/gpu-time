@@ -8,7 +8,7 @@ from __future__ import annotations
 import random
 from copy import deepcopy
 import background
-from semantic import DAYS, DAY_CODES, MONTHS, Specification
+from semantic import DAYS, DAY_CODES, Specification, month_word, weekday_word
 
 ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
 TENS = {20: "twenty", 30: "thirty", 40: "forty", 50: "fifty"}
@@ -29,7 +29,9 @@ FAMILIES = [
     "recurrence-bound",
     "monthly-exception",
     "shared-times",
+    "slot-request",
 ]
+RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
     "could you arrange a reminder for",
     "our rehearsal begins at",
@@ -49,6 +51,24 @@ def words(value, hyphen=False):
     return TENS[tens * 10] + (("-" if hyphen else " ") + ONES[ones] if ones else "")
 
 
+# A noun between the carrier and the clock is the shape "team sync tuesday 2pm"
+# takes; drawing it from all of Tatoeba taught vocabulary instead of position.
+FILLERS = (
+    "report meeting call sync standup review lunch dinner breakfast dentist gym "
+    "class shift appointment interview demo checkin retro session workout "
+    "practice rehearsal haircut flight commute briefing offsite kickoff "
+    "handover onboarding training walkthrough"
+).split()
+
+
+def join(s, connective="at"):
+    r = s.rng
+    if r.random() < 0.12:
+        s.add(r.choice(FILLERS))
+    if r.random() < 0.95:
+        s.add("@" if connective == "at" and r.random() < 0.12 else connective, "GLUE")
+
+
 def clock(s, mode=None, hour=None):
     r = s.rng
     h = hour if hour is not None else r.randint(1, 12)
@@ -66,7 +86,10 @@ def clock(s, mode=None, hour=None):
         target24 = target % 12 + (12 if meridiem == "pm" else 0)
         total = (target24 * 60 + (-15 if subtract else m)) % 1440
         return {"hour": total // 60, "minute": total % 60}
-    s.add(words(h) if mode == "spoken" or r.random() < 0.4 else str(h), "HOUR")
+    # Only a clock without digit minutes may spell its hour: "three:19 pm" is
+    # not a thing anyone writes.
+    spelled = mode == "spoken" or (mode == "qualified" and r.random() < 0.4)
+    s.add(words(h) if spelled else str(h), "HOUR")
     if mode == "spoken":
         if m:
             s.add(words(m, r.random() < 0.5), "MINUTE")
@@ -121,12 +144,7 @@ def calendar(s, date, numeric=False):
                 "",
             )
     else:
-        s.add(
-            MONTHS[date["month"] - 1]
-            if r.random() < 0.5
-            else MONTHS[date["month"] - 1][:3],
-            "MONTH",
-        )
+        s.add(month_word(r, date["month"] - 1), "MONTH")
         if r.random() < 0.3:
             s.add(".", "GLUE", "")
         s.add(str(date["day"]), "DOM")
@@ -141,6 +159,7 @@ def render(s, reserved=False, family=None, bare=False):
         "compound-duration",
         "compound-shift",
         "fraction-duration",
+        "slot-request",
     )
     if bare:
         prefix = ""
@@ -223,7 +242,7 @@ def render(s, reserved=False, family=None, bare=False):
             calendar(s, date, family == "numeric-date")
         clause = {"date": {"kind": "calendar", **date}}
         if r.random() < 0.65:
-            s.add("at", "GLUE")
+            join(s)
             clause["time"] = {"start": clock(s)}
     elif family == "date-range":
         month = r.randint(1, 12)
@@ -232,7 +251,7 @@ def render(s, reserved=False, family=None, bare=False):
         s.add("from", "RANGE_START")
         annotated = r.random() < 0.3
         if annotated:
-            s.add(r.choice(DAYS), "WEEKDAY")
+            s.add(weekday_word(r, r.choice(DAYS)), "WEEKDAY")
             s.add("the", "GLUE")
             s.add(str(start), "DOM")
             s.add(
@@ -244,9 +263,9 @@ def render(s, reserved=False, family=None, bare=False):
             )
         else:
             calendar(s, {"month": month, "day": start})
-        s.add(r.choice(["through", "until", "to"]), "RANGE_END")
+        s.add(r.choice(["through", "until", "to", "-", "\u2013"]), "RANGE_END")
         if annotated:
-            s.add(r.choice(DAYS), "WEEKDAY")
+            s.add(weekday_word(r, r.choice(DAYS)), "WEEKDAY")
             s.add("the", "GLUE")
             s.add(str(end), "DOM")
             s.add(
@@ -275,12 +294,12 @@ def render(s, reserved=False, family=None, bare=False):
             }
     elif family == "datetime-range":
         day = r.randint(0, 5)
-        s.add(DAYS[day], "WEEKDAY")
-        s.add("at", "GLUE")
+        s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+        join(s)
         begin = clock(s, "digits")
-        s.add(r.choice(["until", "to"]), "RANGE_END")
-        s.add(DAYS[day + 1], "WEEKDAY")
-        s.add("at", "GLUE")
+        s.add(r.choice(["until", "to", "-", "\u2013"]), "RANGE_END")
+        s.add(weekday_word(r, DAYS[day + 1]), "WEEKDAY")
+        join(s)
         end = clock(s, "digits")
         clause = {
             "date": {"kind": "weekday", "days": [DAY_CODES[day]]},
@@ -294,15 +313,49 @@ def render(s, reserved=False, family=None, bare=False):
             s.add(["first", "second", "third", "fourth"][week - 1], "ORD")
             s.add("week", "UNIT")
             s.add("of", "GLUE")
-            s.add(MONTHS[month - 1], "MONTH")
+            s.add(month_word(r, month - 1), "MONTH")
             clause = {"date": {"kind": "calendarPeriod", "month": month, "week": week}}
         else:
             modifier = r.choice(["this", "next", "last"])
             s.add(modifier, "DEICTIC")
-            s.add(MONTHS[month - 1], "MONTH")
+            s.add(month_word(r, month - 1), "MONTH")
             clause = {
                 "date": {"kind": "calendarPeriod", "month": month, "modifier": modifier}
             }
+    elif family == "slot-request":
+        # "30 min call thursday afternoon": a bare NUM+UNIT ahead of the anchor
+        # compiles to the clause duration.
+        amount = r.choice([1, 2, 3, 15, 20, 30, 45, 60, 90])
+        unit = "hour" if amount <= 3 else "minute"
+        # One word only: "forty five min" splits the quantity across two NUM
+        # tokens and the compiler reads the duration as five minutes.
+        spellable = amount < 20 or amount in TENS
+        s.add(words(amount) if spellable and r.random() < 0.25 else str(amount), "NUM")
+        s.add(
+            r.choice(["min", "mins", "minutes"] if unit == "minute" else ["hr", "hrs", "hours"])
+            if amount != 1
+            else r.choice(["hour", "hr"]),
+            "UNIT",
+        )
+        if r.random() < 0.5:
+            s.add(r.choice(FILLERS))
+        clause = {"duration": {"amount": amount, "unit": unit}}
+        if r.random() < 0.35:
+            name = r.choice(list(RELATIVE_DAYS))
+            s.add(name, "REL_DAY")
+            clause["date"] = {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}
+        else:
+            day = r.randrange(7)
+            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            clause["date"] = {"kind": "weekday", "days": [DAY_CODES[day]]}
+        choice = r.random()
+        if choice < 0.45:
+            part = r.choice(["morning", "afternoon", "evening"])
+            s.add(part, "DAYPART")
+            clause["time"] = {"start": {"part": part}}
+        elif choice < 0.8:
+            join(s)
+            clause["time"] = {"start": clock(s, "digits")}
     else:
         day = r.randrange(7)
         interval = 1
@@ -310,28 +363,33 @@ def render(s, reserved=False, family=None, bare=False):
             family in ("recurrence", "recurrence-bound", "shared-times")
             and r.random() < 0.5
         )
-        if not group or r.random() < 0.5:
-            s.add("every", "RECUR")
-        if family == "recurrence":
+        # Never optional: a bare "weekdays at 9" is a day group, not a series,
+        # and the sampled specification says recurrence.
+        s.add("each" if r.random() < 0.15 else "every", "RECUR")
+        if family == "recurrence" and not group:
             interval = r.randint(1, 3)
             if interval > 1:
-                s.add(
-                    "other" if interval == 2 and r.random() < 0.5 else words(interval),
-                    "NUM",
+                spelled = (
+                    "other" if interval == 2 and r.random() < 0.5 else words(interval)
                 )
-                if r.random() < 0.5:
-                    s.add("weeks", "UNIT")
+                s.add(spelled, "NUM")
+                # "every other weeks on weekday" was two defects at once: the
+                # plural after "other", and the period spelled out before a group
+                # that already names its own days. Only "other" stands alone;
+                # "every three Tuesday" is not English.
+                if spelled != "other" or r.random() < 0.5:
+                    s.add("week" if spelled == "other" else "weeks", "UNIT")
                     s.add("on", "GLUE")
         if group:
             s.add("weekday" if r.random() < 0.5 else "weekdays", "DAYGROUP")
         else:
-            s.add(DAYS[day], "WEEKDAY")
+            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
         rule = {"freq": "weekly", "interval": interval, "byDay": [DAY_CODES[day]]}
         if group:
             rule["byDay"] = DAY_CODES[:5]
         if group and family == "recurrence" and interval == 1 and r.random() < 0.3:
             return Specification(family, {"clauses": [{"recurrence": rule}]})
-        s.add("at", "GLUE")
+        join(s)
         start = clock(s)
         clause = {"recurrence": rule, "time": {"start": start}}
         if family == "recurrence-bound":
@@ -344,7 +402,7 @@ def render(s, reserved=False, family=None, bare=False):
             s.add("except", "EXCEPT")
             s.add("the", "GLUE")
             s.add({1: "first", 2: "second", -1: "last"}[ordinal], "ORD")
-            s.add(DAYS[day], "WEEKDAY")
+            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
             s.add("of", "GLUE")
             s.add("each", "RECUR")
             s.add("month", "UNIT")

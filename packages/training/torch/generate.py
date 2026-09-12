@@ -17,6 +17,7 @@ from signature import fingerprint
 import semantic
 import background
 import natural
+from semantic import month_word, weekday_word
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -71,19 +72,59 @@ HOLIDAYS = [
     "Valentine's Day",
 ]
 UNITS = ["minute", "hour", "day", "week", "month", "year"]
+# Roles whose own word is the preposition or marker that opens the clause, so a
+# carrier's trailing connector in front of one is a duplicate.
+CLAUSE_OPENERS = frozenset(
+    {
+        "RANGE_START",
+        "BOUND_START",
+        "BOUND_END",
+        "RECUR",
+        "FREQ",
+        "DEICTIC",
+        "DIR_AFTER",
+        "DIR_BEFORE",
+        "DUR",
+        "EXCEPT",
+        "EDGE",
+    }
+)
 
 
 class Sentence:
-    def __init__(self, rng: random.Random, augment: bool = True):
+    def __init__(self, rng: random.Random, augment: float | bool = True):
         self.rng = rng
-        self.augment = augment
+        # A probability scale, not a switch: the natural tier wants less casing
+        # and whitespace noise than the terse tier, and check-natural wants none.
+        self.augment = float(augment)
         self.text = ""
         self.spans: list[dict] = []
         self.clauses = 0
         self.pending_clause = False
         self.in_expression = False
 
+    def _trim_carrier_connector(self) -> None:
+        """Drop a carrier's dangling preposition before a clause supplies one.
+
+        The carrier ends in "at" and the clause opens with "from"/"every"/"last",
+        giving "the meeting is at from 9 to 5". Only the trailing word of a
+        carrier span (label O, written before clause()) is ever removed.
+        """
+        if not self.spans or self.spans[-1]["label"] != "O":
+            return
+        stripped = self.text.rstrip()
+        parts = stripped.rsplit(" ", 1)
+        if len(parts) != 2 or parts[1].lower() not in background.CONNECTORS:
+            return
+        span = self.spans[-1]
+        self.text = parts[0]
+        span["end"] = len(self.text.encode("utf-16-le")) // 2
+        if span["end"] <= span["start"]:
+            self.spans.pop()
+
     def add(self, text: str, label: str = "O", separator: str = " ") -> None:
+        if label in CLAUSE_OPENERS and self.in_expression:
+            self._trim_carrier_connector()
         if label in ("O", "GLUE") and self.in_expression:
             # A carrier ending in a preposition meeting a clause that opens with
             # one reads as "the appointment is at on the 18th".
@@ -101,18 +142,16 @@ class Sentence:
                 text = " ".join(words)
         if label == "O" and self.in_expression:
             if (
-                self.augment
-                and text in ("the", "at", "on", "of")
-                and self.rng.random() < 0.3
+                text in ("the", "at", "on", "of")
+                and self.rng.random() < 0.3 * self.augment
             ):
                 return
-            if self.augment and text == "on the":
+            if text == "on the" and self.rng.random() < self.augment:
                 text = self.rng.choice(["on", "the", "on the"])
             label = "GLUE"
         if (
-            self.augment
-            and any(character.isalpha() for character in text)
-            and self.rng.random() < 0.3
+            any(character.isalpha() for character in text)
+            and self.rng.random() < 0.3 * self.augment
         ):
             text = self.rng.choice([text.lower(), text.upper(), text.capitalize()])
         if self.text:
@@ -120,7 +159,7 @@ class Sentence:
             would_merge = (
                 (left.isalpha() or left == "_") and (right.isalpha() or right == "_")
             ) or (left.isdigit() and right.isdigit())
-            if self.augment and separator == " ":
+            if separator == " " and self.rng.random() < self.augment:
                 separator = self.rng.choice(
                     [" ", " ", "  ", "\t"] if would_merge else ["", " ", " ", "  "]
                 )
@@ -174,13 +213,7 @@ class Sentence:
         self.add(name if amount == 1 else name + "s", "UNIT")
 
     def day(self) -> None:
-        name = self.rng.choice(DAYS)
-        self.add(
-            self.rng.choice(
-                [name, name.lower(), name[:3], name[:3].lower(), name + "s"]
-            ),
-            "WEEKDAY",
-        )
+        self.add(weekday_word(self.rng, self.rng.choice(DAYS)), "WEEKDAY")
         if self.rng.random() < 0.08:
             self.add(".", separator="")
 
@@ -277,13 +310,13 @@ class Sentence:
         elif variant % 3 == 1:
             self.day_of_month(day)
             self.add(
-                self.rng.choice([MONTHS[month - 1], MONTHS[month - 1][:3]]), "MONTH"
+                month_word(self.rng, month - 1), "MONTH"
             )
             if self.rng.random() < 0.5:
                 self.add(str(year), "YEAR")
         else:
             self.add(
-                self.rng.choice([MONTHS[month - 1], MONTHS[month - 1][:3]]), "MONTH"
+                month_word(self.rng, month - 1), "MONTH"
             )
             self.day_of_month(day)
             if self.rng.random() < 0.5:
@@ -328,7 +361,7 @@ class Sentence:
 
 def render(family: int, variant: int, rng: random.Random) -> Sentence:
     sentence = Sentence(rng)
-    if rng.random() < 0.45:
+    if rng.random() < 0.6:
         sentence.add(background.prefix(rng))
     sentence.clause()
     if family == 0:  # A weekday list shares a clock or a window.
@@ -454,7 +487,7 @@ def render(family: int, variant: int, rng: random.Random) -> Sentence:
     elif family == 8:
         if variant == 8:
             sentence.add("every", "RECUR")
-            sentence.add(rng.choice(MONTHS), "MONTH")
+            sentence.add(month_word(rng), "MONTH")
             sentence.ordinal("DOM", day_of_month=True)
             return sentence
         sentence.add("every", "RECUR")
@@ -464,7 +497,7 @@ def render(family: int, variant: int, rng: random.Random) -> Sentence:
         sentence.add("on the")
         sentence.ordinal("DOM", day_of_month=True)
         sentence.add("of")
-        sentence.add(rng.choice(MONTHS), "MONTH")
+        sentence.add(month_word(rng), "MONTH")
     elif family == 9:
         if variant % 2:
             sentence.add(
@@ -501,7 +534,7 @@ def render(family: int, variant: int, rng: random.Random) -> Sentence:
             sentence.add(
                 rng.choice(["until", "till", "through", "ending"]), "BOUND_END"
             )
-            sentence.add(rng.choice(MONTHS), "MONTH")
+            sentence.add(month_word(rng), "MONTH")
             if rng.random() < 0.5:
                 sentence.quantity(rng.randint(1, 31), "DOM")
     elif family == 11:
@@ -573,12 +606,12 @@ def render(family: int, variant: int, rng: random.Random) -> Sentence:
     elif family == 15:
         if variant in (1, 3, 5):
             sentence.quantity(rng.randint(1, 28), "DOM")
-            sentence.add(rng.choice(MONTHS), "MONTH")
+            sentence.add(month_word(rng), "MONTH")
             sentence.add(rng.choice(["-", "–", "to", "through"]), "RANGE_END")
             sentence.quantity(rng.randint(1, 28), "DOM")
-            sentence.add(rng.choice(MONTHS), "MONTH")
+            sentence.add(month_word(rng), "MONTH")
             return sentence
-        sentence.add(rng.choice(MONTHS), "MONTH")
+        sentence.add(month_word(rng), "MONTH")
         if variant == 8:
             sentence.add("between", "RANGE_START")
         sentence.quantity(rng.randint(1, 14), "DOM")
@@ -666,8 +699,7 @@ def terse(sentence: Sentence, variant: int) -> str:
         dash(sentence, ["-", "\u2013", "to", "through"])
         sentence.day()
     elif shape == 2:
-        name = MONTHS[rng.randint(1, 12) - 1]
-        sentence.add(rng.choice([name, name[:3]]), "MONTH")
+        sentence.add(month_word(rng), "MONTH")
         first = rng.randint(1, 20)
         sentence.add(str(first), "DOM")
         dash(sentence, ["-", "\u2013", "to"])
@@ -681,14 +713,13 @@ def terse(sentence: Sentence, variant: int) -> str:
         sentence.day()
     elif shape == 5:
         day = rng.randint(1, 28)
-        name = MONTHS[rng.randint(1, 12) - 1]
         if rng.random() < 0.5:
             sentence.add(rng.choice(["the", "on the"]))
             sentence.day_of_month(day, spoken=True)
             sentence.add("of")
-            sentence.add(rng.choice([name, name[:3]]), "MONTH")
+            sentence.add(month_word(rng), "MONTH")
         else:
-            sentence.add(rng.choice([name, name[:3]]), "MONTH")
+            sentence.add(month_word(rng), "MONTH")
             sentence.day_of_month(day, spoken=True)
     elif shape == 6:
         sentence.add(rng.choice(["in", "for"]), "DIR_AFTER")
@@ -757,7 +788,7 @@ def render_heldout(family: int, rng: random.Random) -> Sentence:
     elif family == 4:
         sentence.ordinal("DOM", day_of_month=True)
         sentence.add("of")
-        sentence.add(rng.choice(MONTHS), "MONTH")
+        sentence.add(month_word(rng), "MONTH")
         sentence.add(str(rng.randint(2024, 2035)), "YEAR")
     elif family == 5:
         for clause in range(rng.randint(2, 3)):
@@ -781,7 +812,7 @@ def render_heldout(family: int, rng: random.Random) -> Sentence:
         sentence.add("monthly", "FREQ")
     elif family == 8:
         sentence.add("each", "RECUR")
-        sentence.add(rng.choice(MONTHS), "MONTH")
+        sentence.add(month_word(rng), "MONTH")
         sentence.ordinal("DOM", day_of_month=True)
     elif family == 9:
         sentence.clock()
@@ -815,7 +846,7 @@ def render_heldout(family: int, rng: random.Random) -> Sentence:
         sentence.add("week", "UNIT")
         sentence.add(rng.choice(["once", "twice", "thrice"]), "TIMES")
     elif family == 15:
-        sentence.add(rng.choice(MONTHS), "MONTH")
+        sentence.add(month_word(rng), "MONTH")
         sentence.add("from", "RANGE_START")
         sentence.quantity(rng.randint(1, 14), "DOM")
         sentence.add("to", "RANGE_END")
@@ -880,7 +911,7 @@ def generate(
                     7,
                     14,
                     10,
-                    12,
+                    18,
                     5,
                     4,
                     3,
@@ -908,7 +939,7 @@ def generate(
                 template = terse(sentence, variant)
                 spec = None
             elif rng.random() < 0.4:
-                sentence = Sentence(rng, augment=False)
+                sentence = Sentence(rng, augment=0.35)
                 spec = natural.render(sentence, reserved=split == "heldout")
                 template = f"natural-{spec.family}/" + ("reserved" if split == "heldout" else "train")
             elif spec:
@@ -924,12 +955,26 @@ def generate(
                 template = f"family-{family:02d}/" + (
                     "heldout-reordered" if split == "heldout" else f"surface-{variant}"
                 )
-            if sentence.clauses and rng.random() < 0.3:
+            opener = sentence.text.split(" ", 1)[0].lower() if sentence.text else ""
+            if opener in background.OPENERS_NEEDING_TAIL:
+                sentence.in_expression = False
+                sentence.add(background.completion(rng))
+            elif sentence.clauses and rng.random() < 0.45:
                 sentence.in_expression = False
                 tail = background.suffix(rng)
-                if tail[:1].isupper():
+                if tail[:1].isupper() and sentence.text[-1:] not in ".!?":
                     sentence.add(".", separator="")
                 sentence.add(tail)
+            # A second unrelated sentence pushes some sequences past 40 tokens;
+            # serving windows run to 128 while rendered clauses average 13.
+            if sentence.clauses and rng.random() < 0.12:
+                sentence.in_expression = False
+                sentence.add(background.sentence(rng))
+            # "next thursday?" is one token of punctuation away from a shape the
+            # generator never showed the tokenizer's catch-all punctuation class.
+            if rng.random() < 0.4 and sentence.text[-1:] not in ".!?)\"":
+                sentence.in_expression = False
+                sentence.add(background.terminator(rng, sentence.text), separator="")
             row = {
                 "id": f"{split}-{seed}-{index}",
                 "template": template,
