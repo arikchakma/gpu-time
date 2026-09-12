@@ -211,9 +211,10 @@ export function expandRecurrence(
   context = { ...context, recurring: true };
   const { reference, options } = context;
   const localReference = civil(reference, options.timeZone);
-  const requested = rule.start
-    ? resolveDates(rule.start, localReference, options)[0].start
-    : localReference;
+  const requestedPeriod = rule.start
+    ? resolveDates(rule.start, localReference, options)[0]
+    : undefined;
+  const requested = requestedPeriod?.start ?? localReference;
   const generatedClock =
     rule.freq === "hourly" || hoursForRule(rule) !== undefined;
   if (rule.freq === "daily" && rule.timesPer !== undefined && clause.time) {
@@ -221,10 +222,12 @@ export function expandRecurrence(
       "A daily frequency count needs distinct times; it cannot share one fixed clock.",
     );
   }
-  const requestedInstant =
+  let requestedInstant =
     rule.start || (!clause.time && !generatedClock)
       ? zonedToEpoch(startOfDay(requested), options.timeZone).epochMs
       : reference;
+  if (rule.start?.kind === "calendarRange")
+    requestedInstant = Math.max(requestedInstant, reference);
   const stepsPerDay = generatedClock ? 24 : 1;
   let beginning = rule.freq === "hourly" ? requested : startOfDay(requested);
   if (generatedClock && clause.time) {
@@ -244,12 +247,16 @@ export function expandRecurrence(
     context,
   );
   let until = Infinity;
+  if (rule.start?.kind === "calendarRange" && requestedPeriod?.end) {
+    until = zonedToEpoch(requestedPeriod.end, options.timeZone).epochMs;
+  }
   if (rule.until) {
     const period = resolveDates(rule.until, localReference, options)[0];
-    until = zonedToEpoch(
+    const independentUntil = zonedToEpoch(
       period.end ?? addDays(period.start, 1),
       options.timeZone,
     ).epochMs;
+    if (until === Infinity) until = independentUntil;
   }
   if (rule.span) {
     if (!Number.isInteger(rule.span.amount) || rule.span.amount <= 0)

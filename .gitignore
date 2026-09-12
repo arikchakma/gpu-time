@@ -20,12 +20,14 @@ packages/training/runs/*
 !packages/training/runs/terse-f32/
 !packages/training/runs/spoken2/
 !packages/training/runs/balanced-prose/
+!packages/training/runs/english-coverage-layer2-negative-blend-075/
 packages/training/runs/**/*.pt
 packages/training/exports/*
 !packages/training/exports/0195bf43c825edead571340824b9f71ed5cfbdb37d7181273af4a8cf36664aac/
 !packages/training/exports/0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6/
 !packages/training/exports/c69ab6c9be8ec854790c004b5d540dc6a41bececbacdbf34a4725de6b711d6d5/
 !packages/training/exports/2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467/
+!packages/training/exports/2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9/
 
 packages/benchmark/.venv/
 packages/benchmark/data/recognizers/raw/

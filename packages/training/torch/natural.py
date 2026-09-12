@@ -11,6 +11,7 @@ import background
 from semantic import DAYS, DAY_CODES, HOLIDAYS, Specification, month_word, weekday_word
 
 ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+ORDINALS = "first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth".split()
 TENS = {20: "twenty", 30: "thirty", 40: "forty", 50: "fifty"}
 FAMILIES = [
     "spoken-clock",
@@ -20,8 +21,11 @@ FAMILIES = [
     "compound-shift",
     "fraction-duration",
     "prose-date",
+    "prose-month",
     "numeric-date",
+    "compact-named-date",
     "date-range",
+    "shared-month-range",
     "datetime-range",
     "month-period",
     "month-week",
@@ -32,10 +36,35 @@ FAMILIES = [
     "slot-request",
     "carrier-date",
     "prose-shift",
+    "imperative-shift",
+    "anchored-shift",
+    "anchored-duration",
+    "daypart-clock",
+    "month-led-range",
+    "monthly-ordinal",
+    "idiom-date",
+    "contrast-date",
 ]
 # Prose dates and shifts stay balanced against their contrastive negatives.
 FAMILY_WEIGHTS = [
-    1 if name in ("carrier-date", "prose-shift") else 2 for name in FAMILIES
+    0.5
+    if name in (
+        "prose-month",
+        "compact-named-date",
+        "shared-month-range",
+        "anchored-shift",
+        "month-led-range",
+    )
+    else 1
+    if name in (
+        "monthly-ordinal",
+        "carrier-date",
+        "prose-shift",
+        "imperative-shift",
+        "daypart-clock",
+    )
+    else 2
+    for name in FAMILIES
 ]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
@@ -293,6 +322,49 @@ def render(s, reserved=False, family=None, bare=False):
         prefix = lead[0]
     elif reserved:
         prefix = r.choice(RESERVED if anchored else RESERVED_DURATION)
+    elif family == "prose-month":
+        prefix = r.choice([
+            "{name} will leave in",
+            "{name} expects to return in",
+            "the {event} should happen in",
+            "we plan to finish in",
+            "the {event} opens in",
+            "they expect the {event} in",
+            "{name} moved the {event} to",
+            "we postponed the {event} until",
+        ]).format(name=r.choice(background.NAMES), event=r.choice(PROSE_EVENTS))
+    elif family == "imperative-shift":
+        prefix = r.choice([
+            "check again",
+            "please try again",
+            "resume the review",
+            "contact the team",
+            "reopen the report",
+            "revisit the plan",
+            "return to the task",
+            "try the request again",
+            "try again",
+        ])
+    elif family == "daypart-clock":
+        prefix = ""
+    elif family == "idiom-date":
+        prefix = r.choice([
+            "after that last-minute change, move the meeting to",
+            "this is short notice, but schedule the review for",
+            "we made a last minute adjustment; try",
+            "despite the last-minute revision, book the room for",
+            "the change came at the last minute. use",
+            "we are doing this last minute. move the meeting to",
+            "sorry for handling this last minute. use",
+            "one final change at short notice. schedule it for",
+        ])
+    elif family == "contrast-date":
+        prefix = r.choice([
+            f"after visiting the office on {suffixed(r.randint(32, 99))} Street, schedule the review for",
+            f"after placing {suffixed(r.randint(2, 12))} in the contest, {r.choice(background.NAMES)} booked the meeting for",
+            f"from the historic Quarter, {r.choice(background.NAMES)} proposed",
+            f"send the second draft to {r.choice(background.MONTH_NAMES)} and set the deadline for",
+        ])
     elif (family == "prose-shift" or partial_date) and r.random() < 0.65:
         frames = (
             [
@@ -304,6 +376,12 @@ def render(s, reserved=False, family=None, bare=False):
                 "the {event} should start",
                 "we expect {name} to arrive",
                 "we can start the {event}",
+                "check the {event}",
+                "resume the {event}",
+                "contact {name}",
+                "reopen the {event}",
+                "revisit the {event}",
+                "return",
             ]
             if family == "prose-shift"
             else [
@@ -337,7 +415,9 @@ def render(s, reserved=False, family=None, bare=False):
         clause = {"time": {"start": clock(s, mode)}}
     elif family == "prose-shift":
         amount = 1 if r.random() < 0.15 else r.randint(1, 59)
-        unit = r.choice(["minute", "hour", "day", "week", "month", "year"])
+        unit = r.choice(
+            ["second", "minute", "hour", "day", "week", "month", "year"]
+        )
         s.add("in", "DIR_AFTER")
         if amount == 1 and r.random() < 0.5:
             s.add("an" if unit == "hour" else "a", "NUM")
@@ -345,6 +425,89 @@ def render(s, reserved=False, family=None, bare=False):
         else:
             quantity(s, amount, unit)
         clause = {"shift": {"amount": amount, "unit": unit, "direction": "after"}}
+    elif family == "imperative-shift":
+        s.add("in", "DIR_AFTER")
+        amount = r.choice([15, 30, 45, 60, 75, 90, 120])
+        unit = r.choice(["second", "minute", "hour"])
+        quantity(s, amount, unit)
+        clause = {"shift": {"amount": amount, "unit": unit, "direction": "after"}}
+        if r.random() < 0.4:
+            s.add(",", "GLUE", "")
+            s.in_expression = False
+            s.add(r.choice(["please", "if that works", "then let me know"]), "O")
+    elif family == "anchored-shift":
+        amount = (
+            r.choice([15, 30, 45, 60, 75, 90, 120])
+            if r.random() < 0.65
+            else r.randint(1, 120)
+        )
+        unit = r.choice(["second", "minute", "hour", "day", "week"])
+        quantity(s, amount, unit)
+        s.add(r.choice(["from", "after"]), "DIR_AFTER")
+        anchor = r.choice(["now", "today", "tomorrow"])
+        if anchor == "now":
+            s.add(anchor, "NOW")
+            date = {"kind": "now"}
+        else:
+            s.add(anchor, "REL_DAY")
+            date = {"kind": "relativeDay", "offset": RELATIVE_DAYS[anchor]}
+        clause = {
+            "date": date,
+            "shift": {"amount": amount, "unit": unit, "direction": "after"},
+        }
+    elif family == "anchored-duration":
+        amount = r.randint(1, 12) if r.random() < 0.7 else r.choice([15, 30, 45, 90])
+        unit = r.choice(["minute", "hour", "day", "week", "month"])
+        s.add(r.choice(["for", "within", "lasting"]), "DUR")
+        if amount == 1 and r.random() < 0.5:
+            s.add("an" if unit == "hour" else "a", "NUM")
+            s.add(unit, "UNIT")
+        else:
+            quantity(s, amount, unit)
+        if r.random() < 0.5:
+            s.add(",", "GLUE", "")
+        s.add(r.choice(["from", "starting", "beginning"]), "BOUND_START")
+        anchor = r.choice(["now", "today", "tomorrow", "weekday"])
+        if anchor == "now":
+            s.add(anchor, "NOW")
+            date = {"kind": "now"}
+        elif anchor == "weekday":
+            day = r.randrange(7)
+            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            date = {"kind": "weekday", "days": [DAY_CODES[day]]}
+        else:
+            s.add(anchor, "REL_DAY")
+            date = {"kind": "relativeDay", "offset": RELATIVE_DAYS[anchor]}
+        clause = {"duration": {"amount": amount, "unit": unit}, "date": date}
+    elif family == "daypart-clock":
+        part = r.choice(["morning", "afternoon", "evening"])
+        if r.random() < 0.65:
+            s.add("this")
+        s.add(part, "DAYPART")
+        s.add(r.choice(["at", "around", "by"]), "GLUE")
+        hour = r.randint(1, 11)
+        s.add(words(hour) if r.random() < 0.35 else str(hour), "HOUR")
+        clause = {
+            "time": {
+                "start": {
+                    "hour": hour + (12 if part in ("afternoon", "evening") else 0),
+                    "minute": 0,
+                }
+            },
+        }
+        if r.random() < 0.65:
+            s.add(",", "GLUE", "")
+            s.in_expression = False
+            s.add(
+                r.choice([
+                    "review the report",
+                    "call the team",
+                    "open the room",
+                    "start the session",
+                    "send the draft",
+                ]),
+                "O",
+            )
     elif family in ("compound-duration", "compound-shift"):
         shift = family == "compound-shift"
         s.add("in" if shift else "for", "DIR_AFTER" if shift else "DUR")
@@ -386,6 +549,23 @@ def render(s, reserved=False, family=None, bare=False):
         if shift:
             value["direction"] = "after"
         clause = {"shift" if shift else "duration": value}
+    elif family == "prose-month":
+        date = {"month": r.randint(1, 12)}
+        calendar(s, date)
+        clause = {"date": {"kind": "calendar", **date}}
+    elif family == "compact-named-date":
+        date = {
+            "year": r.randint(1990, 2040),
+            "month": r.randint(1, 12),
+            "day": r.randint(1, 28),
+        }
+        separator = r.choice(["-", "/"])
+        s.add(f'{date["day"]:02}', "DOM")
+        s.add(separator, "GLUE", "")
+        s.add(month_word(r, date["month"] - 1), "MONTH", "")
+        s.add(separator, "GLUE", "")
+        s.add(str(date["year"]), "YEAR", "")
+        clause = {"date": {"kind": "calendar", **date}}
     elif family in ("prose-date", "numeric-date"):
         date = {
             "year": r.randint(1990, 2040),
@@ -462,6 +642,67 @@ def render(s, reserved=False, family=None, bare=False):
                     "to": {"day": end},
                 }
             }
+    elif family == "shared-month-range":
+        month = r.randint(1, 12)
+        start = r.randint(1, 20)
+        end = r.randint(start + 1, 28)
+        s.add(str(start), "DOM")
+        separator = r.choice(["-", "-", "–", "to"])
+        s.add(separator, "RANGE_END", "" if separator != "to" else " ")
+        s.add(str(end), "DOM", "" if separator != "to" else " ")
+        s.add(month_word(r, month - 1), "MONTH")
+        clause = {
+            "date": {
+                "kind": "calendarRange",
+                "from": {"month": month, "day": start},
+                "to": {"month": month, "day": end},
+            }
+        }
+        if r.random() < 0.65:
+            join(s)
+            clause["time"] = {"start": clock(s, r.choice(["bare", "digits"]))}
+    elif family == "month-led-range":
+        month = r.randint(1, 12)
+        year = r.randint(1990, 2040)
+        start = r.randint(1, 20)
+        end = r.randint(start + 1, 28)
+        s.add(month_word(r, month - 1), "MONTH")
+        s.add(str(start), "DOM")
+        s.add(r.choice(["through", "to", "-"]), "RANGE_END")
+        s.add(str(end), "DOM")
+        s.add(",", "GLUE", "")
+        s.add(str(year), "YEAR")
+        clause = {
+            "date": {
+                "kind": "calendarRange",
+                "from": {"year": year, "month": month, "day": start},
+                "to": {"year": year, "month": month, "day": end},
+            }
+        }
+    elif family == "monthly-ordinal":
+        day = r.randint(1, len(ORDINALS))
+        s.add("every", "RECUR")
+        s.add("month", "UNIT")
+        s.add("on the", "GLUE")
+        s.add(ORDINALS[day - 1], "DOM")
+        clause = {
+            "recurrence": {"freq": "monthly", "interval": 1, "byMonthDay": [day]}
+        }
+    elif family == "idiom-date":
+        date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
+        calendar(s, date)
+        join(s)
+        clause = {
+            "date": {"kind": "calendar", **date},
+            "time": {"start": clock(s, r.choice(["bare", "digits"]))},
+        }
+    elif family == "contrast-date":
+        date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
+        calendar(s, date)
+        clause = {"date": {"kind": "calendar", **date}}
+        if r.random() < 0.6:
+            join(s)
+            clause["time"] = {"start": clock(s, r.choice(["bare", "digits"]))}
     elif family == "datetime-range" and r.random() < 0.45:
         # "17 August 2013 2pm - 19 August 2013 2pm": a full date on both sides,
         # so the number after the dash is a day of month and never an hour.

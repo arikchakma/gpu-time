@@ -1,8 +1,28 @@
 {
-  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
+  "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 6,
   "results": [
+    {
+      "checkpoint": "runs/english-coverage-layer2-negative-blend-075/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 1
+    },
+    {
+      "checkpoint": "runs/english-coverage-layer2-v2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/english-coverage-v10/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/english-coverage-v4/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
     {
       "checkpoint": "runs/balanced-prose/best.pt",
       "checkpointHashMatches": true,
@@ -61,6 +81,11 @@
     },
     {
       "checkpoint": "runs/carrier-consistent/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/english-coverage-layer2-negative-correction/epoch-2.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     }

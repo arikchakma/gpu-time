@@ -223,6 +223,127 @@ it("resolves shared weekend clocks and the following midnight with explicit offs
   ]);
 });
 
+it("resolves a bounded daily window differently from continuous endpoints", () => {
+  const daily = resolve(
+    {
+      clauses: [
+        {
+          recurrence: {
+            freq: "daily",
+            interval: 1,
+            start: {
+              kind: "calendarRange",
+              from: { month: 11, day: 3 },
+              to: { month: 11, day: 5 },
+            },
+            until: { kind: "calendar", month: 11, day: 5 },
+          },
+          time: {
+            start: { hour: 9, minute: 0 },
+            end: { hour: 11, minute: 0 },
+          },
+        },
+      ],
+    },
+    options,
+  );
+  expect(daily.occurrences.map(({ start, end }) => ({ start, end }))).toEqual([
+    {
+      start: "2026-11-03T09:00:00+06:00",
+      end: "2026-11-03T11:00:00+06:00",
+    },
+    {
+      start: "2026-11-04T09:00:00+06:00",
+      end: "2026-11-04T11:00:00+06:00",
+    },
+    {
+      start: "2026-11-05T09:00:00+06:00",
+      end: "2026-11-05T11:00:00+06:00",
+    },
+  ]);
+
+  const continuous = resolve(
+    {
+      clauses: [
+        {
+          date: { kind: "calendar", month: 11, day: 3 },
+          endDate: { kind: "calendar", month: 11, day: 5 },
+          time: {
+            start: { hour: 9, minute: 0 },
+            end: { hour: 11, minute: 0 },
+          },
+        },
+      ],
+    },
+    options,
+  );
+  expect(continuous.occurrences).toEqual([
+    {
+      start: "2026-11-03T09:00:00+06:00",
+      end: "2026-11-05T11:00:00+06:00",
+      allDay: false,
+      clause: 0,
+    },
+  ]);
+});
+
+it("keeps bounded daily windows coherent inside and across calendar years", () => {
+  const window = (
+    from: { year?: number; month: number; day: number },
+    to: { year?: number; month: number; day: number },
+  ): Schedule => ({
+    clauses: [
+      {
+        recurrence: {
+          freq: "daily",
+          interval: 1,
+          start: { kind: "calendarRange", from, to },
+          until: { kind: "calendar", ...to },
+        },
+        time: {
+          start: { hour: 9, minute: 0 },
+          end: { hour: 11, minute: 0 },
+        },
+      },
+    ],
+  });
+  const starts = (schedule: Schedule, reference: string) =>
+    resolve(schedule, {
+      reference,
+      timeZone: "Asia/Dhaka",
+      limit: 10,
+    }).occurrences.map((occurrence) => occurrence.start);
+
+  expect(
+    starts(
+      window({ month: 11, day: 3 }, { month: 11, day: 5 }),
+      "2026-11-04T08:00:00+06:00",
+    ),
+  ).toEqual(["2026-11-04T09:00:00+06:00", "2026-11-05T09:00:00+06:00"]);
+
+  const crossYear = [
+    window({ month: 12, day: 30 }, { month: 1, day: 2 }),
+    window(
+      { year: 2026, month: 12, day: 30 },
+      { year: 2027, month: 1, day: 2 },
+    ),
+  ];
+  for (const schedule of crossYear)
+    expect(starts(schedule, "2026-12-31T08:00:00+06:00")).toEqual([
+      "2026-12-31T09:00:00+06:00",
+      "2027-01-01T09:00:00+06:00",
+      "2027-01-02T09:00:00+06:00",
+    ]);
+
+  expect(starts(crossYear[0], "2027-01-03T08:00:00+06:00")).toEqual([
+    "2027-12-30T09:00:00+06:00",
+    "2027-12-31T09:00:00+06:00",
+    "2028-01-01T09:00:00+06:00",
+    "2028-01-02T09:00:00+06:00",
+  ]);
+  expect(starts(crossYear[1], "2027-01-03T08:00:00+06:00")).toEqual([]);
+});
+
 it("applies an elapsed shift to its explicit local date and clock anchor", () => {
   const schedule: Schedule = {
     clauses: [
@@ -820,6 +941,103 @@ it("resolves standalone clocks in the future and retains clock precision for rel
     allDay: false,
     clause: 0,
   });
+});
+
+it("uses anniversaries only for exact clocks on relative calendar periods", () => {
+  const reference = "2026-09-12T14:37:22+06:00";
+  const resolveClause = (clause: Schedule["clauses"][number]) =>
+    resolve({ clauses: [clause] }, { reference, timeZone: "Asia/Dhaka" })
+      .occurrences[0];
+
+  expect(
+    resolveClause({
+      date: { kind: "relativeUnit", unit: "week", modifier: "next" },
+      time: { start: { part: "morning" } },
+    }),
+  ).toEqual({
+    start: "2026-09-14T06:00:00+06:00",
+    end: "2026-09-14T12:00:00+06:00",
+    allDay: false,
+    clause: 0,
+  });
+  expect(
+    resolveClause({
+      date: { kind: "relativeUnit", unit: "year", modifier: "next" },
+      time: { start: { hour: 20, minute: 0 } },
+    })?.start,
+  ).toBe("2027-09-12T20:00:00+06:00");
+  expect(
+    resolveClause({
+      date: { kind: "relativeUnit", unit: "year", modifier: "next" },
+      time: { start: { named: "noon" } },
+    })?.start,
+  ).toBe("2027-09-12T12:00:00+06:00");
+});
+
+it("keeps the reference date and clock for same-time calendar shifts", () => {
+  const explicit = resolve(
+    {
+      clauses: [
+        {
+          date: { kind: "now" },
+          time: { start: { hour: 20, minute: 0 } },
+          shift: { amount: 1, unit: "year", direction: "after" },
+        },
+      ],
+    },
+    {
+      reference: "2026-09-12T14:37:22+06:00",
+      timeZone: "Asia/Dhaka",
+    },
+  );
+
+  expect(explicit.occurrences).toEqual([
+    {
+      start: "2027-09-12T20:00:00+06:00",
+      allDay: false,
+      clause: 0,
+    },
+  ]);
+
+  const implied = resolve(
+    {
+      clauses: [
+        {
+          date: { kind: "now" },
+          shift: { amount: 1, unit: "year", direction: "after" },
+        },
+      ],
+    },
+    {
+      reference: "2026-09-12T14:37:22+06:00",
+      timeZone: "Asia/Dhaka",
+    },
+  );
+  expect(implied.occurrences).toEqual([
+    {
+      start: "2027-09-12T14:37:22+06:00",
+      allDay: false,
+      clause: 0,
+    },
+  ]);
+});
+
+it("resolves an unqualified named month to its next first day without a range", () => {
+  expect(
+    resolve(
+      { clauses: [{ date: { kind: "calendar", month: 8 } }] },
+      {
+        reference: "2026-09-12T14:37:22+06:00",
+        timeZone: "Asia/Dhaka",
+      },
+    ).occurrences,
+  ).toEqual([
+    {
+      start: "2027-08-01T00:00:00+06:00",
+      allDay: true,
+      clause: 0,
+    },
+  ]);
 });
 
 it("still rejects an empty hourly recurrence clock window", () => {

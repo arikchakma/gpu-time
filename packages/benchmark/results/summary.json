@@ -1,6 +1,6 @@
 {
   "status": "development",
-  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
+  "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
   "environment": {
     "browser": "152.0.7977.83",
     "cpu": "Apple M4 Max",
@@ -24,29 +24,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.11000001430511475,
-        "p95Ms": 0.13500002026557922
+        "p50Ms": 0.15000000596046448,
+        "p95Ms": 0.20500001311302185
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 74.52000001072884,
-          "p95Ms": 74.76499998569489,
+          "ms": 100.90999999642372,
+          "p95Ms": 101.375,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 13419.216315835043
+          "inputsPerSecond": 9909.820632597763
         },
         {
           "size": 10000,
-          "ms": 728.5999999940395,
-          "p95Ms": 729.4050000011921,
+          "ms": 993.9400000274181,
+          "p95Ms": 998.1800000071526,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 13724.951962780411
+          "inputsPerSecond": 10060.969474741078
         }
       ],
-      "initializationMs": 18.625,
-      "firstParseMs": 14.040000021457672
+      "initializationMs": 18.855000019073486,
+      "firstParseMs": 10.25
     },
     {
       "library": "gpu-time-webgpu",
@@ -54,29 +54,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.3499999940395355,
-        "p95Ms": 0.6150000095367432
+        "p50Ms": 0.6550000011920929,
+        "p95Ms": 0.8449999988079071
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 14.50500002503395,
-          "p95Ms": 15.11499997973442,
+          "ms": 15.629999995231628,
+          "p95Ms": 15.925000011920929,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 68941.74410714344
+          "inputsPerSecond": 63979.526571022274
         },
         {
           "size": 10000,
-          "ms": 122.63999998569489,
-          "p95Ms": 122.7049999833107,
+          "ms": 122.39499998092651,
+          "p95Ms": 123,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 81539.46511061996
+          "inputsPerSecond": 81702.68394589938
         }
       ],
-      "initializationMs": 10.665000021457672,
-      "firstParseMs": 3.594999998807907
+      "initializationMs": 10.849999994039536,
+      "firstParseMs": 4.6700000166893005
     },
     {
       "library": "chrono",
@@ -90,23 +90,23 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 9.530000001192093,
-          "p95Ms": 9.974999994039536,
+          "ms": 9.715000003576279,
+          "p95Ms": 10.125,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 104931.79432055734
+          "inputsPerSecond": 102933.60778506236
         },
         {
           "size": 10000,
-          "ms": 86.06000000238419,
-          "p95Ms": 87.6700000166893,
+          "ms": 89.20999997854233,
+          "p95Ms": 93.16999998688698,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 116198.0013911569
+          "inputsPerSecond": 112095.0566349658
         }
       ],
-      "initializationMs": 12,
-      "firstParseMs": 9.450000017881393
+      "initializationMs": 13.034999996423721,
+      "firstParseMs": 9.659999996423721
     },
     {
       "library": "compromise",
@@ -115,28 +115,28 @@
         "text": "next Monday at 2pm",
         "samples": 100,
         "p50Ms": 1.4350000023841858,
-        "p95Ms": 1.969999998807907
+        "p95Ms": 1.8400000035762787
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 590,
-          "p95Ms": 600.0300000011921,
+          "ms": 610.955000013113,
+          "p95Ms": 646.6649999916553,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1694.915254237288
+          "inputsPerSecond": 1636.7817596689395
         },
         {
           "size": 10000,
-          "ms": 6017.8550000190735,
-          "p95Ms": 6040.185000002384,
+          "ms": 6265.189999997616,
+          "p95Ms": 6318.354999989271,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1661.7216599549683
+          "inputsPerSecond": 1596.120788037363
         }
       ],
-      "initializationMs": 66.93500000238419,
-      "firstParseMs": 16.540000021457672
+      "initializationMs": 65.76999998092651,
+      "firstParseMs": 17.80000001192093
     },
     {
       "library": "rrule",
@@ -150,22 +150,22 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 1.5,
-          "p95Ms": 1.6500000059604645,
+          "ms": 1.5350000262260437,
+          "p95Ms": 1.554999977350235,
           "samples": 3,
           "failures": 250,
-          "inputsPerSecond": 666666.6666666666
+          "inputsPerSecond": 651465.7869150683
         },
         {
           "size": 10000,
-          "ms": 13.219999998807907,
-          "p95Ms": 14.540000021457672,
+          "ms": 13.324999988079071,
+          "p95Ms": 14.844999998807907,
           "samples": 3,
           "failures": 2500,
-          "inputsPerSecond": 756429.6521105699
+          "inputsPerSecond": 750469.0438233612
         }
       ],
-      "initializationMs": 5.770000010728836,
+      "initializationMs": 5.314999997615814,
       "firstParseMs": 0.23999997973442078
     },
     {
@@ -174,29 +174,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.5499999821186066,
-        "p95Ms": 0.7099999785423279
+        "p50Ms": 0.5799999833106995,
+        "p95Ms": 0.7849999964237213
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 585.8550000190735,
-          "p95Ms": 597.9849999845028,
+          "ms": 611.3350000083447,
+          "p95Ms": 631.5349999964237,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1706.9069991165788
+          "inputsPerSecond": 1635.7643517651534
         },
         {
           "size": 10000,
-          "ms": 5895.8949999809265,
-          "p95Ms": 5956.510000020266,
+          "ms": 6043.194999992847,
+          "p95Ms": 6121.039999991655,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1696.0953341320276
+          "inputsPerSecond": 1654.7538181395496
         }
       ],
-      "initializationMs": 81.00499999523163,
-      "firstParseMs": 61.84000000357628
+      "initializationMs": 83.67500001192093,
+      "firstParseMs": 63.375
     },
     {
       "library": "later",
@@ -210,31 +210,31 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 0.8700000047683716,
-          "p95Ms": 0.875,
+          "ms": 0.8600000143051147,
+          "p95Ms": 0.8899999856948853,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1149425.2810564518
+          "inputsPerSecond": 1162790.6783327279
         },
         {
           "size": 10000,
-          "ms": 7.090000003576279,
-          "p95Ms": 7.125,
+          "ms": 7.229999989271164,
+          "p95Ms": 7.28999999165535,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1410437.2348315774
+          "inputsPerSecond": 1383125.8665061314
         }
       ],
-      "initializationMs": 4.780000001192093,
-      "firstParseMs": 0.28999999165534973
+      "initializationMs": 4.909999996423721,
+      "firstParseMs": 0.2849999964237213
     }
   ],
   "sizes": [
     {
       "library": "gpu-time",
-      "bytes": 103214,
-      "gzipBytes": 48228,
-      "brotliBytes": 41425,
+      "bytes": 110853,
+      "gzipBytes": 52547,
+      "brotliBytes": 45418,
       "name": "gpu-time"
     },
     {
@@ -276,7 +276,7 @@
   "sizeGate": {
     "limitBytes": 50000,
     "withinBudget": true,
-    "brotliBytes": 40784
+    "brotliBytes": 44795
   },
   "structure": [
     {
@@ -306,8 +306,8 @@
     {
       "name": "negatives",
       "total": 192,
-      "correct": 187,
-      "accuracy": 0.9739583333333334
+      "correct": 191,
+      "accuracy": 0.9947916666666666
     },
     {
       "name": "grammar-variations",
@@ -324,12 +324,12 @@
     {
       "name": "chat",
       "total": 330,
-      "correct": 273,
-      "accuracy": 0.8272727272727273
+      "correct": 276,
+      "accuracy": 0.8363636363636363
     }
   ],
   "parity": {
-    "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
+    "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
     "browser": "152.0.7977.83",
     "lifecycle": {
       "concurrent": true,
@@ -345,8 +345,8 @@
     },
     "sequences": 10000,
     "pythonSequences": 512,
-    "tokensCompared": 121678,
-    "maxError": 0.000015735626220703125,
+    "tokensCompared": 122839,
+    "maxError": 0.0000152587890625,
     "pythonMaxError": 0.0000095367431640625,
     "labelMismatches": 0,
     "boundaryMismatches": 0,
@@ -362,18 +362,18 @@
   "external": {
     "name": "Microsoft Recognizers development",
     "total": 563,
-    "correct": 202,
-    "accuracy": 0.35879218472468916,
+    "correct": 217,
+    "accuracy": 0.38543516873889877,
     "reservedTestCases": 134
   },
   "semantic": {
     "total": 5000,
-    "correct": 4999,
-    "accuracy": 0.9998
+    "correct": 4996,
+    "accuracy": 0.9992
   },
   "naturalSchedules": {
     "total": 1000,
-    "correct": 962,
+    "correct": 959,
     "sourceSha256": "51cb7ed304f1786d3c941cc35b3ba3e71ef5f2c736220cebcf59cff712a54011",
     "oracleCorrect": 976
   },

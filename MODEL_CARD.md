@@ -2,9 +2,11 @@
 
 ## Model
 
-The package embeds `balanced-prose`, with artifact SHA-256 `2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467`. It averages 75% of `step7-crf2` with 25% of the newly trained `prose-coverage` checkpoint. The model still has 34,553 parameters, 580 embedding rows, and 40 role slots (35 named roles plus five reserved), including a 40x40 CRF transition matrix decoded by Viterbi. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 19,036 Brotli bytes for the weights, 11 unique checkpoint artifacts, and 826,157,103 training tokens. Averaging itself adds no training tokens or inference cost.
+The package embeds `english-coverage-layer2-negative-blend-075`, with artifact SHA-256 `2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9`. It combines 25% of the two-layer warm checkpoint with 75% of its negative-correction checkpoint.
 
-The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 1.5, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
+The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,227 Brotli bytes for the weights, 16 unique checkpoint artifacts, and 890,783,110 training tokens. Averaging adds no training tokens. The complete package is 44,795 Brotli bytes, below the 50,000-byte limit.
+
+The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 0.75, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
 
 Timezone is not a model role. TypeScript handles calendar arithmetic, daylight saving time, the reference instant, and expansion limits after the model runs.
 
@@ -18,7 +20,7 @@ It is not suitable for parsing documents, extracting dates from long prose, lega
 
 Supervision is entirely generated. `packages/training/torch/generate.py` renders schedules, and `natural.py` adds natural-phrasing families, including negative prose containing no time expression. Labels come from the generator's structure, never from the runtime parser, so the model is not trained on its own predictions.
 
-The new training follows `step7-crf2` through `carrier-consistent`, `contrast-coverage`, and `prose-coverage`: four, six, and six epochs respectively, with 300,000 fresh examples per epoch, learning rate 0.0002, and quantization-aware training throughout. Each stage starts from its predecessor's selected checkpoint. The final average was chosen from fixed 25%, 50%, and 75% new-weight candidates using development checks. A fresh model can lose terse forms that earlier checkpoints learned.
+The earlier `balanced-prose` model followed `step7-crf2` through `carrier-consistent`, `contrast-coverage`, and `prose-coverage`. The current model warm-starts from that lineage and adds a second scan layer. Training adds prose months, compact dates, clock-qualified dayparts, shifts, idioms, and mixed temporal/non-temporal contexts. Imperative carriers and trailing actions remain `O`; only the time expression receives temporal roles. A targeted correction adds ordinal rankings, street addresses, and place-name contrasts. The final 75% correction average passed every existing export gate without `--force`. These fixtures guide development and are not an untouched test set.
 
 Generated corpora live under the ignored `packages/training/data/synth/` and include the training data built with `pnpm gen`. Hand-authored evaluation corpora are tracked in `packages/training/data/gold/`.
 
@@ -39,18 +41,23 @@ Carrier prepositions now consistently receive the background label `O`; `for` in
 The saved reports cover different model versions. Each result below describes its recorded run.
 
 - **Historical unseen carriers: 993/1000 for `terse-f32`.** This measured exact schedule structures, not token labels. Current reports identify their model artifact and frozen source corpus explicitly.
-- **Microsoft Recognizers development agreement: 202/563 (35.9%), down one from `step7-crf2`.** This is a secondary check against independent third-party specifications with different interpretation policies. Its 134-case test split remains unused. Policy differences still count as failures.
+- **Microsoft Recognizers development agreement: 217/563 (38.5%), previously 202/563 for `balanced-prose`.** Its 134-case test split remains unused. Policy differences still count as failures.
 
-  Of the 361 non-matching cases, 130 fail interpretation and 182 return a different value. Interpretation failures can come from wrong model roles or missing compiler support. The failure stage alone does not identify the cause. The weakest family is `DatePeriodParser` at 23/190.
+  This comparison includes interpretation-policy differences and is not a promotion gate. The weakest family is `DatePeriodParser`, at 16/190, **down from 23/190**.
 
-- **Hand-authored chat gold: 273/330, up from 268/330 for `step7-crf2`.** Per family: question 26/27, tatoeba 70/86, calendar 44/51, abbrev 24/28, correction 14/16, prose 20/22, relative 19/22, recognizers 45/62, negation 11/16. No family loses accuracy against that baseline. Two individual cases newly fail (`chat-084` and `chat-116`), while seven recover. Chat guides development and is not an untouched test set.
-- **Non-temporal negatives: 187/192, up from 183/192.** Four cases recover, with no newly failing negative. On the older `step3-580b` weights the same 192-row file scored 150/192. Five remaining negatives run under `it.fails` in `packages/core/test/grammar-model.test.ts`.
+  **Known regression.** Seven `DatePeriodParser` cases lost their end date and now return a single instant. All seven share one shape: a duration carrier followed by an anchor, as in `set OOO for 3 days from today` (May 23 to May 26 before, May 26 now) and `set ooo for a week starting tomorrow`. The cause is the `anchored-shift` training family, which teaches `<N> <unit> from <anchor>` as a shift and never shows a leading `for`, `within`, or `lasting`. The model therefore labels those carriers `O` and reads every such phrase as a shift. Three further cases lost a range because `qualifiedRelativeUnit` in `occurrence.ts` drops the end date when a relative unit carries a clock; that is deliberate, so `this week 8am` returns one instant.
+
+  A fix is prepared but not promoted. `natural.py` gains an `anchored-duration` family that contrasts the carrier against `anchored-shift`, with eight matching prose negatives in `background.py` and three tests. Trained alone it corrects all four sentences above. Every checkpoint average against the promoted weights either dilutes the correction away or regresses the reserved-carrier set from 1000/1000 to 991/1000. Promotion waits on joint training rather than post-hoc averaging. Candidate runs are under `runs/anchored-duration-v4` and `runs/adv4-*`.
+
+- **Authored English coverage: 56/56, up from 37/56 before these changes.** The 56 independent cases cover 12 families and include both user-reported examples. The copied Chrono tests and their comparison runner were removed. `pnpm test:english` runs these cases through the built package and is part of `pnpm test`.
+- **Hand-authored chat gold: 276/330, compared with 273/330 before these changes.** Per family: question 26/27, tatoeba 71/86, calendar 44/51, abbrev 24/28, correction 14/16, prose 20/22, relative 19/22, recognizers 46/62, negation 12/16. The promotion comparison uses the same compiler for both models and records no gold set or family regression. Individual examples can still change within a family.
+- **Non-temporal negatives: 191/192, up from 187/192.** Four existing failures recover without new negative failures. Only `negative-096` remains under `it.fails` in `packages/core/test/grammar-model.test.ts`.
 - **Prose gold: 73/73, preserved.** The date-carrier and non-date contrast examples preserve "The meeting is scheduled for next week" in all three casings.
-- **Frozen generated schedules: 4999/5000 semantic and 962/1000 natural**, compared with 4998/5000 and 961/1000 when `step7-crf2` is measured on the same files. These are development checks. The natural corpus contains 24 legacy rows whose supplied labels also fail compiler equality because a recurrence marker is missing. `natural-roundtrip.json` records them; the corpus remains unchanged. The complete `pnpm benchmark` command still stops at this oracle failure.
+- **Frozen generated schedules: 4996/5000 semantic and 959/1000 natural**, down three each from `balanced-prose`. These development checks expose a small synthetic-coverage tradeoff despite the authored-case improvements and successful promotion gate. The natural corpus contains 24 legacy rows whose supplied labels fail compiler equality because a recurrence marker is missing. The corpus remains unchanged. The complete `pnpm benchmark` command still stops at this oracle failure.
 - The saved reports record 18/18 packaged public-result fixtures and 25/25 adversarial schedules. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
 - Unit tests cover tokenization, compilation, calendar resolution, DST, RFC 5545 export, and inference workspace reuse.
 - CPU/WebGPU comparison covers 10,000 sequences, 512 fixtures directly against PyTorch, and 1,000 source-versus-packaged shader sequences. The report identifies the tested artifact.
-- Warm medians over 10,000 inputs: WebGPU 122.6 ms, CPU 728.6 ms, Chrono 86.1 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison. Exact predecessor pruning reduces Viterbi work without changing paths.
+- Warm medians over 10,000 inputs: WebGPU 122.4 ms, CPU 993.9 ms, Chrono 89.2 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison. Exact predecessor pruning reduces Viterbi work without changing paths.
 
 ## Limitations
 
@@ -69,7 +76,7 @@ The saved reports cover different model versions. Each result below describes it
 
 `parity.texts.json` preserves the 10,000 input strings used by `pnpm test:browser`. Once these inputs and the binary fixtures are committed, a clean clone can verify inference parity without a training corpus or ancestor generator. This does not reproduce training, checkpoint averaging, or the full provenance audit.
 
-`packages/training/runs/balanced-prose/` keeps the averaging report and source snapshot. The report records both parents, their hashes, and coefficients; the lineage counts shared ancestors once. Training runs retain their own generator/tokenizer snapshots locally. The export source directory keeps the exporter, model, training, averaging, calibration, and lockfile snapshots. Checkpoints are not tracked, so re-export requires those local files.
+`packages/training/runs/english-coverage-layer2-negative-blend-075/` keeps the averaging report and source snapshot. The report records both parents, their hashes, and coefficients; the lineage counts shared ancestors once. Training runs retain their own generator/tokenizer snapshots locally. The export source directory keeps the exporter, model, training, averaging, calibration, and lockfile snapshots. Checkpoints are not tracked, so re-export requires those local files.
 
 New export snapshots are keyed by both the weight artifact hash and the source-set hash. Identical source snapshots are reused; changed sources create a new directory and cannot overwrite an earlier snapshot. Legacy snapshot paths remain valid. A candidate `--out` defaults its report, parity fixtures, and snapshots beside that output, and mixed candidate/active destinations are rejected before loading a checkpoint.
 

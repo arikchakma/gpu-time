@@ -5,7 +5,7 @@ import type {
   ResolveOptions,
   Shift,
 } from "./types.js";
-import { resolveDates, type LocalPeriod } from "./calendar.js";
+import { addCivil, resolveDates, type LocalPeriod } from "./calendar.js";
 import { resolveTime } from "./clock.js";
 import {
   addDays,
@@ -147,8 +147,27 @@ export function resolveOccurrence(
     (clause.date.unit === "hour" ||
       clause.date.unit === "minute" ||
       clause.date.unit === "second");
+  const relativeDate =
+    clause.date?.kind === "relativeUnit" && !clause.date.edge
+      ? clause.date
+      : undefined;
+  const qualifiedRelativeUnit = Boolean(
+    clause.time && !("part" in clause.time.start) && relativeDate,
+  );
+  const occurrenceDate =
+    qualifiedRelativeUnit && relativeDate
+      ? addCivil(
+          civil(reference, options.timeZone),
+          relativeDate.modifier === "this"
+            ? 0
+            : relativeDate.modifier === "last"
+              ? -1
+              : 1,
+          relativeDate.unit,
+        )
+      : period.start;
   const time = clause.time ? resolveTime(clause.time, options) : undefined;
-  const startSeconds = time?.start ?? secondsOfDay(period.start);
+  const startSeconds = time?.start ?? secondsOfDay(occurrenceDate);
   const endSeconds =
     clause.duration && !clause.time?.end ? undefined : time?.end;
 
@@ -173,8 +192,8 @@ export function resolveOccurrence(
       ? endSeconds
       : startSeconds;
   const { date, start: searched } = usesReferenceClock
-    ? { date: period.start, start: reference }
-    : futureStart(period.start, searchSeconds, step, context);
+    ? { date: occurrenceDate, start: reference }
+    : futureStart(occurrenceDate, searchSeconds, step, context);
   const start =
     searchSeconds === startSeconds
       ? searched
@@ -198,7 +217,12 @@ export function resolveOccurrence(
     occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }
 
-  if (endSeconds === undefined && period.end && clause.time?.open !== "end") {
+  if (
+    endSeconds === undefined &&
+    period.end &&
+    !qualifiedRelativeUnit &&
+    clause.time?.open !== "end"
+  ) {
     const end = atTime(period.end, secondsOfDay(period.end), options.timeZone);
     occurrence.end = seconds(applyShift(end, clause.shift, options.timeZone));
   }

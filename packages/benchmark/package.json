@@ -14,7 +14,10 @@
     "profile": "node --experimental-strip-types src/profile.ts",
     "trace": "node --experimental-strip-types src/trace.ts",
     "fetch:recognizers": "node --experimental-strip-types src/fetch-recognizers.ts",
-    "test": "vitest run"
+    "test": "pnpm --filter gpu-time build && vitest run",
+    "evaluate:english": "node --experimental-strip-types src/evaluate-english.ts",
+    "evaluate:compatibility": "pnpm --filter gpu-time build && node --experimental-strip-types src/evaluate-compatibility.ts",
+    "test:compatibility": "pnpm run evaluate:compatibility --require-all"
   },
   "dependencies": {
     "@breejs/later": "4.2.0",

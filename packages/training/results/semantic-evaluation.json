@@ -1,9 +1,9 @@
 {
-  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
+  "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
   "source": "data/synth/semantic-checks.jsonl",
   "sourceSha256": "5b3bf5e9413f50813afa0bda4bc41d173a7f046e4539889e0b5e80bbbf1dd8a0",
   "total": 5000,
-  "correct": 4999,
+  "correct": 4996,
   "families": {
     "yearly": {
       "total": 169,
@@ -27,11 +27,11 @@
     },
     "weekday-range": {
       "total": 185,
-      "correct": 185
+      "correct": 184
     },
     "calendar": {
       "total": 181,
-      "correct": 181
+      "correct": 179
     },
     "weekday": {
       "total": 170,
@@ -63,7 +63,7 @@
     },
     "holiday": {
       "total": 229,
-      "correct": 229
+      "correct": 228
     },
     "duration": {
       "total": 184,
@@ -71,7 +71,7 @@
     },
     "relative": {
       "total": 206,
-      "correct": 205
+      "correct": 206
     },
     "frequency-count": {
       "total": 198,
@@ -112,43 +112,152 @@
   },
   "failures": [
     {
-      "id": "semantic-271828-4010",
-      "family": "relative",
-      "text": "why did they move the miracle a  year  before  tomorrow  please",
+      "id": "semantic-271828-1244",
+      "family": "calendar",
+      "text": "could you check this: book room 41 10.12",
       "spans": [
         {
           "start": 0,
-          "end": 29,
+          "end": 34,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 35,
+          "end": 37,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 38,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 40,
+          "label": "DOM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "calendar",
+              "month": 10,
+              "day": 12
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 38,
+          "end": 40,
+          "text": "12",
+          "confidence": 0.9854592680931091,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "calendar",
+                  "day": 12
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-1489",
+      "family": "holiday",
+      "text": "Tom is sending Mary a message.Christmas Eve",
+      "spans": [
+        {
+          "start": 0,
+          "end": 30,
           "label": "O",
           "clauseStart": false
         },
         {
           "start": 30,
-          "end": 31,
-          "label": "NUM",
+          "end": 43,
+          "label": "HOLIDAY",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "holiday",
+              "name": "christmas-eve"
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 7,
+          "end": 43,
+          "text": "sending Mary a message.Christmas Eve",
+          "confidence": 0.9952048659324646,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-date",
+              "message": "Unknown month.",
+              "start": 7,
+              "end": 14,
+              "severity": "error"
+            },
+            {
+              "code": "filler-ignored",
+              "message": "Ignored Mary message inside the expression.",
+              "start": 15,
+              "end": 29,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-4593",
+      "family": "calendar",
+      "text": "rehearsal 4 of November\tplease",
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "O",
           "clauseStart": false
         },
         {
-          "start": 33,
-          "end": 37,
-          "label": "UNIT",
+          "start": 10,
+          "end": 11,
+          "label": "DOM",
           "clauseStart": false
         },
         {
-          "start": 39,
-          "end": 45,
-          "label": "DIR_BEFORE",
+          "start": 12,
+          "end": 14,
+          "label": "GLUE",
           "clauseStart": false
         },
         {
-          "start": 47,
-          "end": 55,
-          "label": "REL_DAY",
+          "start": 15,
+          "end": 23,
+          "label": "MONTH",
           "clauseStart": false
         },
         {
-          "start": 57,
-          "end": 63,
+          "start": 24,
+          "end": 30,
           "label": "O",
           "clauseStart": false
         }
@@ -156,34 +265,102 @@
       "schedule": {
         "clauses": [
           {
-            "shift": {
-              "amount": 1,
-              "unit": "year",
-              "direction": "before"
-            },
             "date": {
-              "kind": "relativeDay",
-              "offset": 1
+              "kind": "calendar",
+              "month": 11,
+              "day": 4
             }
           }
         ]
       },
       "actual": [
         {
-          "start": 30,
-          "end": 55,
-          "text": "a  year  before  tomorrow",
-          "confidence": 0.8916743397712708,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unsupported",
-              "message": "Unknown relative day.",
-              "start": 39,
-              "end": 45,
-              "severity": "error"
+          "start": 15,
+          "end": 23,
+          "text": "November",
+          "confidence": 0.9996073842048645,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "calendar",
+                  "month": 11
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "semantic-271828-4804",
+      "family": "weekday-range",
+      "text": "Wfh from Monday\tto Tuesday",
+      "spans": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 4,
+          "end": 8,
+          "label": "RANGE_START",
+          "clauseStart": false
+        },
+        {
+          "start": 9,
+          "end": 15,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 16,
+          "end": 18,
+          "label": "RANGE_END",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 26,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "date": {
+              "kind": "weekdayRange",
+              "from": "MO",
+              "to": "TU"
             }
-          ]
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 9,
+          "end": 26,
+          "text": "Monday\tto Tuesday",
+          "confidence": 0.9998993873596191,
+          "schedule": {
+            "clauses": [
+              {
+                "recurrence": {
+                  "freq": "weekly",
+                  "interval": 1,
+                  "byDay": [
+                    "MO",
+                    "TU"
+                  ]
+                }
+              }
+            ]
+          },
+          "diagnostics": []
         }
       ]
     }

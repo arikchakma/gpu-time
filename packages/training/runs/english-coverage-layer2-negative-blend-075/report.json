@@ -1,0 +1,64 @@
+{
+  "run": "english-coverage-layer2-negative-blend-075",
+  "status": "completed",
+  "selectionCriterion": "Derived checkpoint; evaluation and promotion are performed by export.py.",
+  "sourceHashes": {
+    "training/average.py": "86910a99c1d12deb48e70b34168cb64b0801070f5bb7e6eaa935af10dca51ee8"
+  },
+  "datasetHashes": {},
+  "config": {
+    "epochs": 0,
+    "quantization_bits": 6,
+    "row_scales": false,
+    "samples": 300000,
+    "eval_samples": 10000,
+    "batch": 1024,
+    "seed": 20260929,
+    "qat_start": 0,
+    "run": "english-coverage-layer2-negative-blend-075",
+    "init": null,
+    "learning_rate": 5e-05,
+    "storage": "f32",
+    "feature_rows": 580,
+    "layers": 2,
+    "transitions": true,
+    "freeze_transitions": true,
+    "device": "mps",
+    "identity_dropout": 0.0,
+    "role_weighting": "sqrt",
+    "log_every": 150,
+    "save_epochs": true,
+    "warmup_steps": 100,
+    "fresh_each_epoch": true,
+    "evaluation_run": "english-coverage-layer2-negative-correction",
+    "provenanceParents": [
+      {
+        "checkpoint": "runs/english-coverage-layer2-v2/best.pt",
+        "sha256": "094abe6dfc7fbd79b892ec44a3c623585d0713f3825ff6532c365cae965600ca",
+        "coefficient": 0.25
+      },
+      {
+        "checkpoint": "runs/english-coverage-layer2-negative-correction/epoch-2.pt",
+        "sha256": "6276c3d45c6ab8bfeadd292feee204c8fb14a18dda0a5df84fa29dae9d87d4cf",
+        "coefficient": 0.75
+      }
+    ]
+  },
+  "tokensSeen": 0,
+  "derivation": {
+    "method": "weighted-checkpoint-average",
+    "parents": [
+      {
+        "checkpoint": "runs/english-coverage-layer2-v2/best.pt",
+        "sha256": "094abe6dfc7fbd79b892ec44a3c623585d0713f3825ff6532c365cae965600ca",
+        "coefficient": 0.25
+      },
+      {
+        "checkpoint": "runs/english-coverage-layer2-negative-correction/epoch-2.pt",
+        "sha256": "6276c3d45c6ab8bfeadd292feee204c8fb14a18dda0a5df84fa29dae9d87d4cf",
+        "coefficient": 0.75
+      }
+    ]
+  },
+  "checkpointSha256": "616f3ba0cb05438e3663eeabd85dac569ff2de7c3858d2b5871db193ab656e7b"
+}
