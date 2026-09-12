@@ -1,10 +1,20 @@
 {
-  "model": "4b4fd652e9dac4c32c60a13dab18b2708f0e87477ee7131af21411c233f71f4f",
+  "model": "b1dfa50dc6fa5cca7f710b06bf64e48af0ec138852d5ddf0fb093e76d9e9018e",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
     {
-      "checkpoint": "runs/step3-580b/best.pt",
+      "checkpoint": "runs/step5-keepo-crf3/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step3-580b/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },

@@ -1,25 +1,25 @@
 {
-  "checkpoint": "runs/step3-580b/best.pt",
-  "checkpointSha256": "a08402a20a2197ac3c5936a4986ac01599ac4dd6b0924de32ee83ae185bcfdf6",
-  "artifactSha256": "4b4fd652e9dac4c32c60a13dab18b2708f0e87477ee7131af21411c233f71f4f",
-  "boundaryThreshold": 0.0,
+  "checkpoint": "runs/step5-keepo-crf3/best.pt",
+  "checkpointSha256": "87d12f6d54f961a898da71737d292e245c00ba47e4562f90f497f62a5d232997",
+  "artifactSha256": "b1dfa50dc6fa5cca7f710b06bf64e48af0ec138852d5ddf0fb093e76d9e9018e",
+  "boundaryThreshold": 1.25,
   "calibration": {
-    "threshold": 0.0,
+    "threshold": 1.25,
     "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
     "grid": [
       {
         "threshold": 0.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
-            "falsePositive": 0,
+            "f1": 0.9992383853769993,
+            "truePositive": 656,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 0.9974853310980721,
+            "truePositive": 595,
+            "falsePositive": 3,
             "falseNegative": 0
           }
         }
@@ -28,15 +28,15 @@
         "threshold": 0.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
-            "falsePositive": 0,
+            "f1": 0.9992383853769993,
+            "truePositive": 656,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 0.9983221476510067,
+            "truePositive": 595,
+            "falsePositive": 2,
             "falseNegative": 0
           }
         }
@@ -45,15 +45,15 @@
         "threshold": 0.5,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
-            "falsePositive": 0,
+            "f1": 0.9992383853769993,
+            "truePositive": 656,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 0.9983221476510067,
+            "truePositive": 595,
+            "falsePositive": 2,
             "falseNegative": 0
           }
         }
@@ -62,15 +62,15 @@
         "threshold": 0.75,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
-            "falsePositive": 0,
-            "falseNegative": 0
+            "f1": 0.9984756097560976,
+            "truePositive": 655,
+            "falsePositive": 1,
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 0.9983221476510067,
+            "truePositive": 595,
+            "falsePositive": 2,
             "falseNegative": 0
           }
         }
@@ -79,14 +79,14 @@
         "threshold": 1.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9992372234935164,
+            "truePositive": 655,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
+            "f1": 0.9991603694374476,
+            "truePositive": 595,
             "falsePositive": 1,
             "falseNegative": 0
           }
@@ -96,15 +96,15 @@
         "threshold": 1.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9992372234935164,
+            "truePositive": 655,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -113,15 +113,15 @@
         "threshold": 1.5,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9992372234935164,
+            "truePositive": 655,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -130,15 +130,15 @@
         "threshold": 1.75,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9992372234935164,
+            "truePositive": 655,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -147,15 +147,15 @@
         "threshold": 2.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9992372234935164,
+            "truePositive": 655,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -164,15 +164,15 @@
         "threshold": 2.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -181,15 +181,15 @@
         "threshold": 2.5,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -198,15 +198,15 @@
         "threshold": 2.75,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -215,15 +215,15 @@
         "threshold": 3.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 580,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991431019708654,
-            "truePositive": 583,
-            "falsePositive": 1,
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
             "falseNegative": 0
           }
         }
@@ -232,16 +232,16 @@
         "threshold": 3.25,
         "metrics": {
           "validation": {
-            "f1": 0.999137187230371,
-            "truePositive": 579,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9982847341337907,
-            "truePositive": 582,
-            "falsePositive": 1,
-            "falseNegative": 1
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
+            "falseNegative": 0
           }
         }
       },
@@ -249,16 +249,16 @@
         "threshold": 3.5,
         "metrics": {
           "validation": {
-            "f1": 0.998272884283247,
-            "truePositive": 578,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
             "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9982847341337907,
-            "truePositive": 582,
-            "falsePositive": 1,
-            "falseNegative": 1
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
+            "falseNegative": 0
           }
         }
       },
@@ -266,16 +266,16 @@
         "threshold": 3.75,
         "metrics": {
           "validation": {
-            "f1": 0.998272884283247,
-            "truePositive": 578,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
             "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991416309012876,
-            "truePositive": 582,
+            "f1": 1.0,
+            "truePositive": 595,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 0
           }
         }
       },
@@ -283,16 +283,16 @@
         "threshold": 4.0,
         "metrics": {
           "validation": {
-            "f1": 0.9974070872947277,
-            "truePositive": 577,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991416309012876,
-            "truePositive": 582,
+            "f1": 1.0,
+            "truePositive": 595,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 0
           }
         }
       },
@@ -300,16 +300,16 @@
         "threshold": 4.25,
         "metrics": {
           "validation": {
-            "f1": 0.9956709956709957,
-            "truePositive": 575,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 5
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9991416309012876,
-            "truePositive": 582,
+            "f1": 1.0,
+            "truePositive": 595,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 0
           }
         }
       },
@@ -317,16 +317,16 @@
         "threshold": 4.5,
         "metrics": {
           "validation": {
-            "f1": 0.9948006932409013,
-            "truePositive": 574,
-            "falsePositive": 0,
-            "falseNegative": 6
-          },
-          "heldoutDevelopment": {
-            "f1": 0.9982817869415808,
-            "truePositive": 581,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
             "falseNegative": 2
+          },
+          "heldoutDevelopment": {
+            "f1": 1.0,
+            "truePositive": 595,
+            "falsePositive": 0,
+            "falseNegative": 0
           }
         }
       },
@@ -334,16 +334,16 @@
         "threshold": 4.75,
         "metrics": {
           "validation": {
-            "f1": 0.9948006932409013,
-            "truePositive": 574,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 6
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9956933677863911,
-            "truePositive": 578,
+            "f1": 1.0,
+            "truePositive": 595,
             "falsePositive": 0,
-            "falseNegative": 5
+            "falseNegative": 0
           }
         }
       },
@@ -351,26 +351,38 @@
         "threshold": 5.0,
         "metrics": {
           "validation": {
-            "f1": 0.9939288811795317,
-            "truePositive": 573,
+            "f1": 0.9984732824427481,
+            "truePositive": 654,
             "falsePositive": 0,
-            "falseNegative": 7
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.9956933677863911,
-            "truePositive": 578,
+            "f1": 1.0,
+            "truePositive": 595,
             "falsePositive": 0,
-            "falseNegative": 5
+            "falseNegative": 0
           }
         }
       }
     ]
   },
   "epoch": 16,
-  "tokensSeenAtCheckpoint": 357388658,
+  "tokensSeenAtCheckpoint": 614862955,
   "lineage": [
     {
-      "checkpoint": "runs/step3-580b/best.pt",
+      "checkpoint": "runs/step5-keepo-crf3/best.pt",
+      "sha256": "87d12f6d54f961a898da71737d292e245c00ba47e4562f90f497f62a5d232997",
+      "epoch": 16,
+      "trainingTokens": 117829340
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf/best.pt",
+      "sha256": "8af1652365e0b1ed30ef32c202755e9c2e82431921cc6590ab3a6df3f4962994",
+      "epoch": 19,
+      "trainingTokens": 139644957
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step3-580b/best.pt",
       "sha256": "a08402a20a2197ac3c5936a4986ac01599ac4dd6b0924de32ee83ae185bcfdf6",
       "epoch": 16,
       "trainingTokens": 121173596
@@ -394,14 +406,19 @@
       "trainingTokens": 48927140
     }
   ],
-  "parameters": 32953,
+  "parameters": 34553,
   "quantizationBits": 6,
   "quantizationScheme": "tensor",
-  "logicalPackedBytes": 24715,
-  "encodedCharacters": 32953,
-  "moduleBytes": 35248,
-  "moduleGzipBytes": 20768,
-  "moduleBrotliBytes": 17854,
+  "options": {
+    "featureRows": 580,
+    "layers": 1,
+    "transitions": true
+  },
+  "logicalPackedBytes": 25915,
+  "encodedCharacters": 34553,
+  "moduleBytes": 36977,
+  "moduleGzipBytes": 21966,
+  "moduleBrotliBytes": 19089,
   "labels": [
     "O",
     "NUM",
@@ -441,38 +458,38 @@
   ],
   "metrics": {
     "validation": {
-      "tokens": 144073,
+      "tokens": 141652,
       "sequences": 10000,
-      "tokenAccuracy": 0.9994239031602035,
-      "exactLabelAndBoundarySequence": 0.9918,
+      "tokenAccuracy": 0.9995128907463361,
+      "exactLabelAndBoundarySequence": 0.9931,
+      "boundaryPrecision": 1.0,
+      "boundaryRecall": 0.9984756097560976,
+      "boundaryF1": 0.9992372234935164,
+      "boundaryCounts": {
+        "truePositive": 655,
+        "falsePositive": 0,
+        "falseNegative": 1
+      }
+    },
+    "heldout": {
+      "tokens": 122975,
+      "sequences": 10000,
+      "tokenAccuracy": 0.996665989022159,
+      "exactLabelAndBoundarySequence": 0.9655,
       "boundaryPrecision": 1.0,
       "boundaryRecall": 1.0,
       "boundaryF1": 1.0,
       "boundaryCounts": {
-        "truePositive": 580,
+        "truePositive": 595,
         "falsePositive": 0,
-        "falseNegative": 0
-      }
-    },
-    "heldout": {
-      "tokens": 126484,
-      "sequences": 10000,
-      "tokenAccuracy": 0.9958809019322602,
-      "exactLabelAndBoundarySequence": 0.9563,
-      "boundaryPrecision": 0.9982876712328768,
-      "boundaryRecall": 1.0,
-      "boundaryF1": 0.9991431019708655,
-      "boundaryCounts": {
-        "truePositive": 583,
-        "falsePositive": 1,
         "falseNegative": 0
       }
     }
   },
   "corpora": {
-    "validation": "2f4e44e10fe601a1a4b4894b77be262afccb79583e3b4a3cc7e60b1615500eae",
-    "heldout": "b56489d61e8717f70dd554689d07108bc091768d862621cc1069e532be9745a6",
-    "reservedCarrier": "41c2e065631dad715af4141550e17730d05e4191419b1cdc6098c2d9aba23350"
+    "validation": "dbfc3bd9b29dfc85d9aa07a07b0520a30b9ed14ec8b98a60e36d13a99779e5f8",
+    "heldout": "f558a83fde843ac9b7bbbd95ba58838e186ae95ee83a431808f2e6ccf052e7fc",
+    "reservedCarrier": "08dac1e495d0dc25ce32793de03e969bb9861264a482983797edd48dcb11998a"
   },
   "promotion": {
     "criterion": "gold-schedule-accuracy",
@@ -484,8 +501,116 @@
       "user-cases"
     ],
     "candidate": {
-      "total": 563,
-      "correct": 482,
+      "total": 623,
+      "correct": 554,
+      "sets": {
+        "chat": {
+          "total": 330,
+          "correct": 270,
+          "sha256": "47232edf013120ea798dda185eeda4af47a958dfb6e589b1281a86d02d839a3d",
+          "failures": [
+            "chat-004",
+            "chat-007",
+            "chat-009",
+            "chat-016",
+            "chat-017",
+            "chat-020",
+            "chat-027",
+            "chat-029",
+            "chat-030",
+            "chat-038",
+            "chat-044",
+            "chat-050",
+            "chat-051",
+            "chat-057",
+            "chat-059",
+            "chat-064",
+            "chat-069",
+            "chat-075",
+            "chat-076",
+            "chat-079",
+            "chat-084",
+            "chat-086",
+            "chat-087",
+            "chat-115",
+            "chat-117",
+            "chat-119",
+            "chat-120",
+            "chat-128",
+            "chat-130",
+            "chat-132",
+            "chat-133",
+            "chat-134",
+            "chat-135",
+            "chat-139",
+            "chat-140",
+            "chat-141",
+            "chat-145",
+            "chat-148",
+            "chat-154",
+            "chat-183",
+            "chat-184",
+            "chat-185",
+            "chat-205",
+            "chat-218",
+            "chat-221",
+            "chat-225",
+            "chat-226",
+            "chat-229",
+            "chat-231",
+            "chat-236",
+            "chat-240",
+            "chat-245",
+            "chat-262",
+            "chat-275",
+            "chat-306",
+            "chat-321",
+            "chat-322",
+            "chat-324",
+            "chat-328",
+            "chat-329"
+          ]
+        },
+        "prose": {
+          "total": 73,
+          "correct": 70,
+          "sha256": "71b6fe587878fae9c569ce0b6d2eb70956eb3bf0643603eb32b923ee4fb66173",
+          "failures": [
+            "prose-017-authored",
+            "prose-017-lowercase",
+            "prose-017-uppercase"
+          ]
+        },
+        "user-cases": {
+          "total": 3,
+          "correct": 3,
+          "sha256": "adea458231f5a8a1e2b63bc2845d8fd05d76e9a9a410242a3c2ca56064736925",
+          "failures": []
+        },
+        "negatives": {
+          "total": 192,
+          "correct": 186,
+          "sha256": "08afe5bf7ddfb403ce61398cb0e8fd86171c34ac3697be48c53f72e323bb1a6e",
+          "failures": [
+            "negative-096",
+            "negative-100",
+            "negative-106",
+            "negative-107",
+            "negative-139",
+            "negative-140"
+          ]
+        },
+        "adversarial": {
+          "total": 25,
+          "correct": 25,
+          "sha256": "3baedd93a54513a64b526f0c2cc3ed81eb1863fddb4c4ee7cc33d26386c71d33",
+          "failures": []
+        }
+      }
+    },
+    "baseline": {
+      "total": 623,
+      "correct": 521,
       "sets": {
         "chat": {
           "total": 330,
@@ -567,9 +692,9 @@
           "failures": []
         },
         "negatives": {
-          "total": 132,
-          "correct": 111,
-          "sha256": "9a5769937314798f7996cc30a0b2b6e6cc56db3aa0137ed9121c2c656189a2ee",
+          "total": 192,
+          "correct": 150,
+          "sha256": "08afe5bf7ddfb403ce61398cb0e8fd86171c34ac3697be48c53f72e323bb1a6e",
           "failures": [
             "negative-034",
             "negative-041",
@@ -591,121 +716,28 @@
             "negative-106",
             "negative-120",
             "negative-122",
-            "negative-124"
-          ]
-        },
-        "adversarial": {
-          "total": 25,
-          "correct": 25,
-          "sha256": "3baedd93a54513a64b526f0c2cc3ed81eb1863fddb4c4ee7cc33d26386c71d33",
-          "failures": []
-        }
-      }
-    },
-    "baseline": {
-      "total": 563,
-      "correct": 487,
-      "sets": {
-        "chat": {
-          "total": 330,
-          "correct": 271,
-          "sha256": "47232edf013120ea798dda185eeda4af47a958dfb6e589b1281a86d02d839a3d",
-          "failures": [
-            "chat-001",
-            "chat-004",
-            "chat-007",
-            "chat-016",
-            "chat-017",
-            "chat-027",
-            "chat-029",
-            "chat-030",
-            "chat-044",
-            "chat-047",
-            "chat-051",
-            "chat-056",
-            "chat-069",
-            "chat-075",
-            "chat-076",
-            "chat-079",
-            "chat-081",
-            "chat-083",
-            "chat-084",
-            "chat-087",
-            "chat-103",
-            "chat-115",
-            "chat-117",
-            "chat-120",
-            "chat-121",
-            "chat-128",
-            "chat-130",
-            "chat-132",
-            "chat-133",
-            "chat-134",
-            "chat-135",
-            "chat-139",
-            "chat-140",
-            "chat-141",
-            "chat-145",
-            "chat-148",
-            "chat-154",
-            "chat-183",
-            "chat-184",
-            "chat-185",
-            "chat-186",
-            "chat-205",
-            "chat-217",
-            "chat-218",
-            "chat-221",
-            "chat-229",
-            "chat-231",
-            "chat-236",
-            "chat-240",
-            "chat-245",
-            "chat-262",
-            "chat-268",
-            "chat-273",
-            "chat-275",
-            "chat-306",
-            "chat-321",
-            "chat-322",
-            "chat-328",
-            "chat-329"
-          ]
-        },
-        "prose": {
-          "total": 73,
-          "correct": 73,
-          "sha256": "71b6fe587878fae9c569ce0b6d2eb70956eb3bf0643603eb32b923ee4fb66173",
-          "failures": []
-        },
-        "user-cases": {
-          "total": 3,
-          "correct": 3,
-          "sha256": "adea458231f5a8a1e2b63bc2845d8fd05d76e9a9a410242a3c2ca56064736925",
-          "failures": []
-        },
-        "negatives": {
-          "total": 132,
-          "correct": 115,
-          "sha256": "9a5769937314798f7996cc30a0b2b6e6cc56db3aa0137ed9121c2c656189a2ee",
-          "failures": [
-            "negative-034",
-            "negative-041",
-            "negative-050",
-            "negative-059",
-            "negative-064",
-            "negative-065",
-            "negative-067",
-            "negative-068",
-            "negative-074",
-            "negative-086",
-            "negative-091",
-            "negative-096",
-            "negative-100",
-            "negative-106",
-            "negative-120",
-            "negative-122",
-            "negative-124"
+            "negative-124",
+            "negative-133",
+            "negative-135",
+            "negative-136",
+            "negative-139",
+            "negative-140",
+            "negative-141",
+            "negative-142",
+            "negative-143",
+            "negative-145",
+            "negative-146",
+            "negative-147",
+            "negative-148",
+            "negative-155",
+            "negative-158",
+            "negative-160",
+            "negative-161",
+            "negative-162",
+            "negative-166",
+            "negative-178",
+            "negative-182",
+            "negative-184"
           ]
         },
         "adversarial": {
@@ -719,19 +751,19 @@
     "guard": {
       "passed": true,
       "reason": null,
-      "support": 563,
-      "delta": 0.008880994671403197,
-      "tolerance": 0.040617336429147485
+      "support": 623,
+      "delta": -0.052969502407704656,
+      "tolerance": 0.038236227842720696
     },
-    "improvement": -0.008880994671403197,
+    "improvement": 0.052969502407704656,
     "failures": [],
     "accepted": true,
     "missingSets": [],
     "baselineIdentity": {
       "report": "active/export-report.json",
-      "checkpoint": "runs/step3-580/best.pt",
-      "checkpointSha256": "9e63c7b1ace37417c5f92ec626fe7f647b83bea997e2be3dc99fa75a9af1f463",
-      "artifactSha256": "bbf6d2c7910d9bcd82fef2ab5ec12f57d76713a00625aa84ae61740896bff918",
+      "checkpoint": "runs/step3-580b/best.pt",
+      "checkpointSha256": "a08402a20a2197ac3c5936a4986ac01599ac4dd6b0924de32ee83ae185bcfdf6",
+      "artifactSha256": "4b4fd652e9dac4c32c60a13dab18b2708f0e87477ee7131af21411c233f71f4f",
       "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
     },
     "synthetic": {
@@ -740,286 +772,302 @@
       "reserved": {
         "corpus": {
           "path": "data/synth/natural-reserved.jsonl",
-          "sha256": "d548e0ee5a5ad63e458b642815fb99a73011a80a02e9c49a08660e38f2729181",
-          "featurizedSha256": "41c2e065631dad715af4141550e17730d05e4191419b1cdc6098c2d9aba23350",
+          "sha256": "ed9778e18f6aed9894bf26d1b46a367e3c6583bd0b40598815110f3e71b3ddb7",
+          "featurizedSha256": "08dac1e495d0dc25ce32793de03e969bb9861264a482983797edd48dcb11998a",
           "sequences": 1000,
-          "families": 16
+          "families": 17
         },
         "criterion": "reserved-carrier-exact-sequence",
         "candidate": {
-          "boundaryThreshold": 0.0,
+          "boundaryThreshold": 1.25,
           "total": 1000,
-          "correct": 930,
+          "correct": 999,
           "families": {
             "compound-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "compound-shift": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "date-range": {
-              "total": 62,
-              "correct": 58
+              "total": 59,
+              "correct": 59
             },
             "datetime-range": {
-              "total": 62,
-              "correct": 57
+              "total": 59,
+              "correct": 59
             },
             "fraction-clock": {
-              "total": 63,
-              "correct": 57
+              "total": 59,
+              "correct": 59
             },
             "fraction-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "month-period": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "month-week": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "monthly-exception": {
-              "total": 62,
-              "correct": 57
+              "total": 58,
+              "correct": 58
             },
             "numeric-date": {
-              "total": 63,
+              "total": 59,
               "correct": 59
             },
             "prose-date": {
-              "total": 63,
-              "correct": 61
+              "total": 59,
+              "correct": 59
             },
             "qualified-clock": {
-              "total": 63,
-              "correct": 47
+              "total": 59,
+              "correct": 59
             },
             "recurrence": {
-              "total": 62,
-              "correct": 43
+              "total": 59,
+              "correct": 59
             },
             "recurrence-bound": {
-              "total": 62,
-              "correct": 60
+              "total": 59,
+              "correct": 59
             },
             "shared-times": {
-              "total": 62,
-              "correct": 61
+              "total": 58,
+              "correct": 58
+            },
+            "slot-request": {
+              "total": 58,
+              "correct": 58
             },
             "spoken-clock": {
-              "total": 63,
-              "correct": 57
+              "total": 59,
+              "correct": 58
             }
           }
         },
         "baseline": {
-          "boundaryThreshold": 2.25,
+          "boundaryThreshold": 0.0,
           "total": 1000,
-          "correct": 928,
+          "correct": 970,
           "families": {
             "compound-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "compound-shift": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "date-range": {
-              "total": 62,
-              "correct": 58
+              "total": 59,
+              "correct": 59
             },
             "datetime-range": {
-              "total": 62,
-              "correct": 56
+              "total": 59,
+              "correct": 59
             },
             "fraction-clock": {
-              "total": 63,
-              "correct": 57
+              "total": 59,
+              "correct": 52
             },
             "fraction-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "month-period": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "month-week": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "monthly-exception": {
-              "total": 62,
+              "total": 58,
               "correct": 58
             },
             "numeric-date": {
-              "total": 63,
+              "total": 59,
               "correct": 59
             },
             "prose-date": {
-              "total": 63,
-              "correct": 58
+              "total": 59,
+              "correct": 59
             },
             "qualified-clock": {
-              "total": 63,
-              "correct": 47
+              "total": 59,
+              "correct": 42
             },
             "recurrence": {
-              "total": 62,
-              "correct": 46
+              "total": 59,
+              "correct": 59
             },
             "recurrence-bound": {
-              "total": 62,
+              "total": 59,
               "correct": 59
             },
             "shared-times": {
-              "total": 62,
-              "correct": 61
+              "total": 58,
+              "correct": 58
+            },
+            "slot-request": {
+              "total": 58,
+              "correct": 58
             },
             "spoken-clock": {
-              "total": 63,
-              "correct": 56
+              "total": 59,
+              "correct": 53
             }
           },
           "report": "active/export-report.json",
-          "checkpoint": "runs/step3-580/best.pt",
-          "checkpointSha256": "9e63c7b1ace37417c5f92ec626fe7f647b83bea997e2be3dc99fa75a9af1f463",
-          "artifactSha256": "bbf6d2c7910d9bcd82fef2ab5ec12f57d76713a00625aa84ae61740896bff918",
+          "checkpoint": "runs/step3-580b/best.pt",
+          "checkpointSha256": "a08402a20a2197ac3c5936a4986ac01599ac4dd6b0924de32ee83ae185bcfdf6",
+          "artifactSha256": "4b4fd652e9dac4c32c60a13dab18b2708f0e87477ee7131af21411c233f71f4f",
           "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
         },
-        "improvement": 0.002,
+        "improvement": 0.029,
         "guards": [
           {
             "family": "compound-duration",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "compound-shift",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "date-range",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.09447268497108124,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "datetime-range",
-            "support": 62,
-            "delta": -0.016129032258064516,
-            "tolerance": 0.10630178410749033,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "fraction-clock",
-            "support": 63,
-            "delta": 0.0,
-            "tolerance": 0.10825562073829362,
+            "support": 59,
+            "delta": -0.11864406779661017,
+            "tolerance": 0.09202862035234631,
             "passed": true,
             "reason": null
           },
           {
             "family": "fraction-duration",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "month-period",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.043658169754243276,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "month-week",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.043658169754243276,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "monthly-exception",
-            "support": 62,
-            "delta": 0.016129032258064516,
-            "tolerance": 0.09862470997340732,
+            "support": 58,
+            "delta": 0.0,
+            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
           {
             "family": "numeric-date",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.09305678951560004,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "prose-date",
-            "support": 63,
-            "delta": -0.047619047619047616,
-            "tolerance": 0.08828142198365194,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "qualified-clock",
-            "support": 63,
-            "delta": 0.0,
-            "tolerance": 0.15347318894147563,
+            "support": 59,
+            "delta": -0.288135593220339,
+            "tolerance": 0.12080453996397715,
             "passed": true,
             "reason": null
           },
           {
             "family": "recurrence",
-            "support": 62,
-            "delta": 0.04838709677419355,
-            "tolerance": 0.15936964333186482,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "recurrence-bound",
-            "support": 62,
-            "delta": -0.016129032258064516,
-            "tolerance": 0.07999271482705926,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "shared-times",
-            "support": 62,
+            "support": 58,
             "delta": 0.0,
-            "tolerance": 0.06125,
+            "tolerance": 0.04659419660309771,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "slot-request",
+            "support": 58,
+            "delta": 0.0,
+            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
           {
             "family": "spoken-clock",
-            "support": 63,
-            "delta": -0.015873015873015872,
-            "tolerance": 0.1115388269961593,
+            "support": 59,
+            "delta": -0.0847457627118644,
+            "tolerance": 0.09316248595603772,
             "passed": true,
             "reason": null
           }
@@ -1028,151 +1076,159 @@
       "bare": {
         "corpus": {
           "path": "data/synth/natural-bare.jsonl",
-          "sha256": "5be866c8cb9ac4ae3f9d87a2a21365ea4e8b9cf69b7226ac1aeabcf9fb40f6f1",
-          "featurizedSha256": "062c944a181d4085346659da6bf1089d359da3734404b771068142ee7c5b8ef5",
+          "sha256": "beed95f8a5f56b39bcb28b28255394238cf37ff1a2b5f8b8dc3c8a42646c729a",
+          "featurizedSha256": "b5799438108134d2402b3b1218c246f493ece1102b13952c4a1bb2a5a77ff752",
           "sequences": 1000,
-          "families": 16
+          "families": 17
         },
         "criterion": "reserved-carrier-exact-sequence",
         "candidate": {
-          "boundaryThreshold": 0.0,
+          "boundaryThreshold": 1.25,
           "total": 1000,
-          "correct": 967,
+          "correct": 1000,
           "families": {
             "compound-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "compound-shift": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "date-range": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "datetime-range": {
-              "total": 62,
-              "correct": 55
+              "total": 59,
+              "correct": 59
             },
             "fraction-clock": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "fraction-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "month-period": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "month-week": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "monthly-exception": {
-              "total": 62,
+              "total": 58,
               "correct": 58
             },
             "numeric-date": {
-              "total": 63,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "prose-date": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "qualified-clock": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "recurrence": {
-              "total": 62,
-              "correct": 47
+              "total": 59,
+              "correct": 59
             },
             "recurrence-bound": {
-              "total": 62,
-              "correct": 58
+              "total": 59,
+              "correct": 59
             },
             "shared-times": {
-              "total": 62,
-              "correct": 60
+              "total": 58,
+              "correct": 58
+            },
+            "slot-request": {
+              "total": 58,
+              "correct": 58
             },
             "spoken-clock": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             }
           }
         },
         "baseline": {
-          "boundaryThreshold": 2.25,
+          "boundaryThreshold": 0.0,
           "total": 1000,
-          "correct": 967,
+          "correct": 1000,
           "families": {
             "compound-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "compound-shift": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "date-range": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "datetime-range": {
-              "total": 62,
-              "correct": 55
+              "total": 59,
+              "correct": 59
             },
             "fraction-clock": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "fraction-duration": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "month-period": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "month-week": {
-              "total": 62,
-              "correct": 62
+              "total": 59,
+              "correct": 59
             },
             "monthly-exception": {
-              "total": 62,
-              "correct": 56
+              "total": 58,
+              "correct": 58
             },
             "numeric-date": {
-              "total": 63,
-              "correct": 61
+              "total": 59,
+              "correct": 59
             },
             "prose-date": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "qualified-clock": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             },
             "recurrence": {
-              "total": 62,
-              "correct": 48
+              "total": 59,
+              "correct": 59
             },
             "recurrence-bound": {
-              "total": 62,
+              "total": 59,
               "correct": 59
             },
             "shared-times": {
-              "total": 62,
-              "correct": 61
+              "total": 58,
+              "correct": 58
+            },
+            "slot-request": {
+              "total": 58,
+              "correct": 58
             },
             "spoken-clock": {
-              "total": 63,
-              "correct": 63
+              "total": 59,
+              "correct": 59
             }
           }
         },
@@ -1180,129 +1236,137 @@
         "guards": [
           {
             "family": "compound-duration",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "compound-shift",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "date-range",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.043658169754243276,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "datetime-range",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.1164217860113154,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "fraction-clock",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "fraction-duration",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "month-period",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.043658169754243276,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "month-week",
-            "support": 62,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.043658169754243276,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "monthly-exception",
-            "support": 62,
-            "delta": -0.03225806451612903,
-            "tolerance": 0.10246132974318621,
+            "support": 58,
+            "delta": 0.0,
+            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
           {
             "family": "numeric-date",
-            "support": 63,
-            "delta": -0.015873015873015872,
-            "tolerance": 0.06710420522571114,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "prose-date",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "qualified-clock",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "recurrence",
-            "support": 62,
-            "delta": 0.016129032258064516,
-            "tolerance": 0.15078555641100846,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "recurrence-bound",
-            "support": 62,
-            "delta": 0.016129032258064516,
-            "tolerance": 0.0899615943481511,
+            "support": 59,
+            "delta": 0.0,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
           {
             "family": "shared-times",
-            "support": 62,
-            "delta": 0.016129032258064516,
-            "tolerance": 0.0681474234330581,
+            "support": 58,
+            "delta": 0.0,
+            "tolerance": 0.04659419660309771,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "slot-request",
+            "support": 58,
+            "delta": 0.0,
+            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
           {
             "family": "spoken-clock",
-            "support": 63,
+            "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04298108998140322,
+            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           }
@@ -1312,7 +1376,7 @@
           "reason": null,
           "support": 1000,
           "delta": 0.0,
-          "tolerance": 0.015870130019898974
+          "tolerance": 0.0027677087477377266
         }
       }
     },
@@ -1322,17 +1386,19 @@
   "parity": {
     "prefix": "active/parity",
     "sequences": 512,
-    "tokens": 11492,
+    "tokens": 11097,
     "rowsPerToken": 17,
     "rolesPerToken": 40,
-    "boundaryThreshold": 0.0
+    "boundaryThreshold": 1.25,
+    "layers": 1,
+    "transitions": true
   },
-  "exportSourceDirectory": "exports/4b4fd652e9dac4c32c60a13dab18b2708f0e87477ee7131af21411c233f71f4f/source",
+  "exportSourceDirectory": "exports/b1dfa50dc6fa5cca7f710b06bf64e48af0ec138852d5ddf0fb093e76d9e9018e/source",
   "exportSourceHashes": {
-    "training/export.py": "3a6b18ae7c6706efc9d170f2d10e9aa50397907d1a05215f3ef4f6449f2facba",
+    "training/export.py": "81313580b3dccfd8fc0ece66bb7f4f71428c94f2270cfabff903113d929653f0",
     "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
-    "training/model.py": "4df9943a6d9ddfe4525cd9925bc79e74003d30c1d537bfddca1f44b2db8b22de",
-    "training/train.py": "dc7f3ec4b6b736c3a0fbd19f538c9795772cb74cea6f002f481902ead2971d90",
+    "training/model.py": "3d0a543ef7e8bbdb5748fc1c78f1d33caf9be47a2ce4a69bae19233e6ec72d09",
+    "training/train.py": "5ce377e2d2433f4c32a9adf53ec985a6ddc383b880774ecc2fc5080b34636ddf",
     "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
   }
 }
