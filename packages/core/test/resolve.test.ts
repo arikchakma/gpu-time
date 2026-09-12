@@ -888,3 +888,47 @@ it("omits the open field for a fully bounded occurrence", () => {
   }).occurrences;
   expect(occurrence).not.toHaveProperty("open");
 });
+
+it("rolls a yearless calendar date forward instead of into the past", () => {
+  const dates = (
+    [
+      [{ month: 1, day: 2 }, "2027-01-02"],
+      [{ day: 3 }, "2026-10-03"],
+      [{ month: 12, day: 25 }, "2026-12-25"],
+      [{ day: 30 }, "2026-09-30"],
+    ] as const
+  ).map(([date, expected]) => [
+    resolve(
+      { clauses: [{ date: { kind: "calendar", ...date } }] },
+      options,
+    ).occurrences[0].start.slice(0, 10),
+    expected,
+  ]);
+  for (const [actual, expected] of dates) expect(actual).toBe(expected);
+});
+
+it("shifts by elapsed seconds", () => {
+  const result = resolve(
+    {
+      clauses: [{ shift: { amount: 90, unit: "second", direction: "after" } }],
+    },
+    options,
+  );
+  expect(result.occurrences[0]).toMatchObject({
+    start: "2026-09-09T12:01:30+06:00",
+  });
+});
+
+it("resolves thanksgiving as the fourth Thursday of November", () => {
+  const schedule: Schedule = {
+    clauses: [{ date: { kind: "holiday", name: "thanksgiving" } }],
+  };
+  expect(resolve(schedule, options).occurrences[0]).toMatchObject({
+    start: "2026-11-26T00:00:00+06:00",
+    allDay: true,
+  });
+  expect(
+    resolve(schedule, { ...options, reference: "2026-12-01T12:00:00+06:00" })
+      .occurrences[0],
+  ).toMatchObject({ start: "2027-11-25T00:00:00+06:00", allDay: true });
+});

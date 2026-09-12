@@ -51,6 +51,7 @@ export function addDuration(
     return result;
   }
   const { amount, unit } = duration;
+  if (unit === "second") return epoch + amount * 1000;
   if (unit === "minute") return epoch + amount * 60_000;
   if (unit === "hour") return epoch + amount * 3_600_000;
 
@@ -143,7 +144,9 @@ export function resolveOccurrence(
       clause.date?.kind === "now");
   const impliedClock =
     clause.date?.kind === "relativeUnit" &&
-    (clause.date.unit === "hour" || clause.date.unit === "minute");
+    (clause.date.unit === "hour" ||
+      clause.date.unit === "minute" ||
+      clause.date.unit === "second");
   const time = clause.time ? resolveTime(clause.time, options) : undefined;
   const startSeconds = time?.start ?? secondsOfDay(period.start);
   const endSeconds =

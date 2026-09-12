@@ -525,7 +525,165 @@ it("marks a bare range start as open rather than returning a bare instant", () =
     )[0].schedule,
   ).toEqual({
     clauses: [
-      { time: { start: { hour: 20, minute: 0 }, end: { hour: 22, minute: 0 } } },
+      {
+        time: { start: { hour: 20, minute: 0 }, end: { hour: 22, minute: 0 } },
+      },
     ],
+  });
+});
+
+it("keeps a short unknown aside inside one expression and reports it", () => {
+  const text = "friday, say, around 3";
+  const result = compile(
+    text,
+    oracle(text, ["WEEKDAY", "O", "O", "O", "O", "HOUR"]),
+  );
+  expect(result).toHaveLength(1);
+  expect(result[0].schedule).toEqual({
+    clauses: [
+      {
+        date: { kind: "weekday", days: ["FR"] },
+        time: { start: { hour: 3, minute: 0 } },
+      },
+    ],
+  });
+  expect(result[0].diagnostics.map((value) => value.code)).toContain(
+    "filler-ignored",
+  );
+
+  const long = "friday well anyway who knows 3";
+  expect(
+    compile(long, oracle(long, ["WEEKDAY", "O", "O", "O", "O", "HOUR"])),
+  ).toHaveLength(2);
+});
+
+it("warns about a bare hour and minute the same way as a bare hour", () => {
+  const text = "4:30";
+  const result = compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0];
+  expect(result.schedule).toEqual({
+    clauses: [{ time: { start: { hour: 4, minute: 30 } } }],
+  });
+  expect(result.diagnostics.map((value) => value.code)).toContain(
+    "ambiguous-meridiem",
+  );
+});
+
+it("repeats a plural day group but keeps a singular one as a single date", () => {
+  const plural = "weekends";
+  expect(compile(plural, oracle(plural, ["DAYGROUP"]))[0].schedule).toEqual({
+    clauses: [
+      { recurrence: { freq: "weekly", interval: 1, byDay: ["SA", "SU"] } },
+    ],
+  });
+  const singular = "over the weekend";
+  expect(
+    compile(singular, oracle(singular, ["O", "O", "DAYGROUP"]))[0].schedule,
+  ).toEqual({ clauses: [{ date: { kind: "dayGroup", group: "weekend" } }] });
+  const every = "every weekend";
+  expect(
+    compile(every, oracle(every, ["RECUR", "DAYGROUP"]))[0].schedule,
+  ).toEqual({
+    clauses: [
+      { recurrence: { freq: "weekly", interval: 1, byDay: ["SA", "SU"] } },
+    ],
+  });
+});
+
+it("reads a quantity before from as a shifted anchor, not a span", () => {
+  const text = "a week from tuesday";
+  expect(
+    compile(text, oracle(text, ["NUM", "UNIT", "RANGE_START", "WEEKDAY"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "weekday", days: ["TU"] },
+        shift: { amount: 1, unit: "week", direction: "after" },
+      },
+    ],
+  });
+});
+
+it("keeps a clock stated inside a bound and reports a modifier it cannot place", () => {
+  const bounded = "every monday until friday at 5pm";
+  expect(
+    compile(
+      bounded,
+      oracle(bounded, [
+        "RECUR",
+        "WEEKDAY",
+        "BOUND_END",
+        "WEEKDAY",
+        "O",
+        "HOUR",
+        "MERIDIEM",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          byDay: ["MO"],
+          until: { kind: "weekday", days: ["FR"] },
+        },
+        time: { start: { hour: 17, minute: 0 } },
+      },
+    ],
+  });
+
+  const deictic = "this afternoon";
+  expect(
+    compile(
+      deictic,
+      oracle(deictic, ["DEICTIC", "DAYPART"]),
+    )[0].diagnostics.map((value) => value.code),
+  ).toContain("dropped-constraint");
+});
+
+it("reads the widened unit, frequency, day-group, and clock spellings", () => {
+  const examples: [string, Label[], object][] = [
+    [
+      "in a fortnight",
+      ["DIR_AFTER", "NUM", "UNIT"],
+      { shift: { amount: 2, unit: "week", direction: "after" } },
+    ],
+    ["quarterly", ["FREQ"], { recurrence: { freq: "monthly", interval: 3 } }],
+    ["nightly", ["FREQ"], { recurrence: { freq: "daily", interval: 1 } }],
+    [
+      "every business day",
+      ["RECUR", "DAYGROUP", "DAYGROUP"],
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          byDay: ["MO", "TU", "WE", "TH", "FR"],
+        },
+      },
+    ],
+    [
+      "9.30pm",
+      ["HOUR", "GLUE", "HOUR", "MERIDIEM"],
+      { time: { start: { hour: 21, minute: 30 } } },
+    ],
+    [
+      "for sixty five minutes",
+      ["DUR", "NUM", "NUM", "UNIT"],
+      { duration: { amount: 65, unit: "minute" } },
+    ],
+  ];
+  for (const [text, labels, clause] of examples)
+    expect(compile(text, oracle(text, labels))[0].schedule, text).toEqual({
+      clauses: [clause],
+    });
+});
+
+it("compiles seconds as a shift unit", () => {
+  const text = "in 30 seconds";
+  expect(
+    compile(text, oracle(text, ["DIR_AFTER", "NUM", "UNIT"]))[0].schedule,
+  ).toEqual({
+    clauses: [{ shift: { amount: 30, unit: "second", direction: "after" } }],
   });
 });

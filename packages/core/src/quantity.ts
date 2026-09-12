@@ -51,6 +51,7 @@ export function readDuration(
     )
       return;
     let amount = quantity.value;
+    if (/^fortnights?$/i.test(tokens[next].text)) amount *= 2;
     next++;
     if (tokens[next]?.text.toLowerCase() === "and") {
       let tail = next + 1;
@@ -64,7 +65,10 @@ export function readDuration(
       }
     }
     // Fractions of calendar months/days need a separate policy. Clock units are exact.
-    if (!Number.isInteger(amount) && !["hour", "minute"].includes(durationUnit))
+    if (
+      !Number.isInteger(amount) &&
+      !["hour", "minute", "second"].includes(durationUnit)
+    )
       return;
     components.push({ amount, unit: durationUnit });
     const candidate =

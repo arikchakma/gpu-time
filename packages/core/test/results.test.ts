@@ -36,7 +36,9 @@ it("keeps resolution failures local to expressions when sharing a context", asyn
     ["May I have your second opinion?", "tomorrow"],
     { ...context, until: "2020-01-01" },
   );
-  expect(results[0].diagnostics).toEqual([]);
+  expect(
+    results[0].diagnostics.filter((value) => value.severity === "error"),
+  ).toEqual([]);
   expect(
     results[1].diagnostics.some((value) => value.code === "resolution-error"),
   ).toBe(true);
@@ -121,4 +123,14 @@ it("returns diagnostics instead of dates for invalid clock values", async () => 
   expect(
     result.diagnostics.some((value) => value.code === "invalid-time"),
   ).toBe(true);
+});
+
+it("flags temporal input that produced no expression and stays quiet otherwise", async () => {
+  const missed = await parser.parse("mid october", context);
+  expect(missed.occurrences).toEqual([]);
+  expect(missed.diagnostics.map((value) => value.code)).toContain(
+    "no-expression",
+  );
+  const prose = await parser.parse("the meeting was long", context);
+  expect(prose.diagnostics).toEqual([]);
 });
