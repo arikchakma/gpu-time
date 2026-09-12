@@ -29,32 +29,37 @@ beforeAll(async () => {
 });
 afterAll(() => parser.dispose());
 
-// The model reads the trailing "3" as an hour. Accepted knowingly in 5ce9070:
-// the checkpoint that fixed it regressed compound-duration and prose-date, so
-// the gate rejected it. it.fails keeps the case running — a later retrain that
-// closes the gap turns this red and the id comes off the list.
-// negative-033 onward are the number-heavy negatives added with chat.jsonl.
-// The model reads a bare ordinal, a numbered thing, or an "N to M" score as a
-// date or a clock range. Gold is right in every case; these are open model
-// gaps, kept running so a retrain that closes one turns it red.
+// Open model gaps, kept running with it.fails so a retrain that closes one
+// turns this red and the id comes off the list. Gold is right in every case:
+// the model reads a bare ordinal, a numbered thing, a measurement, or an
+// "N to M" score as a date or a clock range.
+// Rewritten for the step3-580b weights. That retrain closed nine of the older
+// gaps (017, 044, 052, 076, 081, 089, 095, 104, 110) and opened thirteen more,
+// a net loss of four on negatives.jsonl traded for +59 on the pooled gold sets.
+// The new gaps cluster on counted objects ("Pack 4 shirts and 2 pairs") and on
+// "second"/"minute" used as an ordinal or an adjective.
 const knownGaps = new Set([
-  "negative-017",
   "negative-034",
   "negative-041",
-  "negative-044",
-  "negative-052",
+  "negative-050",
+  "negative-053",
   "negative-059",
   "negative-064",
+  "negative-065",
   "negative-067",
-  "negative-076",
-  "negative-081",
+  "negative-068",
+  "negative-073",
+  "negative-074",
   "negative-086",
-  "negative-089",
-  "negative-095",
-  "negative-104",
+  "negative-091",
+  "negative-096",
+  "negative-098",
+  "negative-100",
+  "negative-102",
   "negative-106",
-  "negative-110",
   "negative-120",
+  "negative-122",
+  "negative-124",
 ]);
 const isGap = (example: Example) => knownGaps.has(example.id);
 

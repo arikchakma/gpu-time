@@ -2,9 +2,9 @@
 
 ## Model
 
-The package embeds checkpoint `spoken2`, epoch index 9, with artifact SHA-256 `c69ab6c9be8ec854790c004b5d540dc6a41bececbacdbf34a4725de6b711d6d5`. It has 24,761 parameters, 324 embedding rows, and 40 role slots (35 named roles plus five reserved). Weights use 6-bit symmetric per-tensor quantization, with f32 intermediate calculations. The active report records 13,888 Brotli bytes for the weights, 22 checkpoints, and 457,005,477 training tokens.
+The package embeds checkpoint `step3-580b`, epoch index 16, with artifact SHA-256 `4b4fd652e9dac4c32c60a13dab18b2708f0e87477ee7131af21411c233f71f4f`. It has 32,953 parameters, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). Weights use 6-bit symmetric per-tensor quantization, with f32 intermediate calculations. The active report records 17,854 Brotli bytes for the weights, four checkpoints, and 357,388,658 training tokens.
 
-The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 1.75. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
+The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 0.0, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
 
 Timezone is not a model role. TypeScript handles calendar arithmetic, daylight saving time, the reference instant, and expansion limits after the model runs.
 
@@ -18,13 +18,15 @@ It is not suitable for parsing documents, extracting dates from long prose, lega
 
 Supervision is entirely generated. `packages/training/torch/generate.py` renders schedules, and `natural.py` adds natural-phrasing families, including negative prose containing no time expression. Labels come from the generator's structure, never from the runtime parser, so the model is not trained on its own predictions.
 
-The active weights have a 22-checkpoint history with 457,005,477 training tokens. The final run starts from `terse-f32` and draws 300,000 fresh examples per epoch. A fresh model can lose terse forms that earlier checkpoints learned.
+The active weights have a four-checkpoint history with 357,388,658 training tokens. The final run starts from `rows580` and draws 300,000 fresh examples per epoch. A fresh model can lose terse forms that earlier checkpoints learned.
 
 Generated corpora live under the ignored `packages/training/data/synth/` and include the training data built with `pnpm gen`. Hand-authored evaluation corpora are tracked in `packages/training/data/gold/`.
 
 The training data reflect the generators, so these scores do not establish accuracy on real user language.
 
 The generators combine surrounding phrases and use filtered Tatoeba sentences as background text. They also generate terse forms, including bare day groups, abbreviated weekday ranges, month-day ranges, and bare clock ranges.
+
+Carrier words are mined from the borrowed prose rather than listed: `background.vocabulary()` collects roughly 2,300 nouns and 1,000 verbs by the word that follows a determiner or an infinitive, minus the time vocabulary. The same expression therefore appears beside thousands of different filler words, in statements, questions, requests, verbless event titles, lists, and two-sentence messages. Sentence-final `?`, `!`, `.`, `)` and quotes are glued to the last token of many carriers, and the weekday and month abbreviations the lexicon accepts (`tues`, `weds`, `thurs`, `thu`, `sept`) are emitted alongside the three-letter forms.
 
 ## Evaluation
 
@@ -35,6 +37,8 @@ The saved reports cover different model versions. Each result below describes it
 
   Of the 396 non-matching cases, 194 fail interpretation and 137 return a different value. Interpretation failures can come from wrong model roles or missing compiler support. The failure stage alone does not identify the cause. The weakest family is `DatePeriodParser` at 24/190.
 
+- **Hand-authored chat gold: 270/330 for `step3-580b`, up from 211/330.** Per family: question 26/27 (was 7/27), tatoeba 69/86 (was 49/86), calendar 46/51 (was 35/51), abbrev 25/28 (was 16/28), correction 13/16, prose 18/22, relative 19/22, recognizers 44/62, negation 10/16 (was 11/16). Chat is hand-written for this project, so it is a development set, not held-out data.
+- **Non-temporal negatives: 111/132, down from 115/132.** The gain on real phrasing traded away four abstentions on number-heavy prose: counted objects, bare ordinals, and `second`/`minute` used as an ordinal or an adjective. `packages/core/test/grammar-model.test.ts` keeps all 21 as running `it.fails` cases.
 - Recorded `terse-f32` results: 4,972/5,000 generated interpretations and 999/1,000 natural phrasings. Both share training families and are development metrics, not real-user language accuracy.
 - The saved reports record 18/18 packaged public-result fixtures and 25/25 adversarial schedules. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
 - Unit tests cover tokenization, compilation, calendar resolution, DST, RFC 5545 export, and inference workspace reuse.
@@ -54,9 +58,11 @@ The saved reports cover different model versions. Each result below describes it
 
 ## Reproducibility
 
-`packages/training/active/` holds `export-report.json` (selected weights, lineage, calibration, source hashes, token metrics), `provenance.json` (the 22-entry checkpoint chain with hash verification), and the `parity.*` fixtures that check decoded int6 inference against PyTorch logits.
+`packages/training/active/` holds `export-report.json` (selected weights, lineage, calibration, source hashes, token metrics), `provenance.json` (the checkpoint chain with hash verification), and the `parity.*` fixtures that check decoded int6 inference against PyTorch logits.
 
-`packages/training/runs/spoken2/` keeps the promoted run's report and a source snapshot of the exact generator, tokenizer, and label set used to produce it. The export source directory recorded in `export-report.json` keeps the export-time snapshot and lockfile. The `.pt` checkpoint itself is not tracked, so re-export requires the local checkpoint.
+`packages/training/runs/step3-580b/` keeps the promoted run's report and a source snapshot of the exact generator, tokenizer, and label set used to produce it. The export source directory recorded in `export-report.json` keeps the export-time snapshot and lockfile. The `.pt` checkpoint itself is not tracked, so re-export requires the local checkpoint.
+
+`pnpm --filter @gpu-time/training audit:model` currently stops on this chain. The ancestor run `carrier-int5` lists `data/prose/sentences.txt` in its `sourceHashes` but never snapshotted the file, and the prose corpus has changed since that run, so the recorded hash can no longer be satisfied by any file on disk. Later runs record the prose under `datasetHashes` instead, which the audit does not try to open. `active/provenance.json` therefore still describes the previous artifact.
 
 `pnpm --filter @gpu-time/training audit:model` re-verifies the weight file hash and the training source hashes against the recorded chain. Superseded runs and exports were untracked during the monorepo restructure and remain recoverable from Git history.
 
