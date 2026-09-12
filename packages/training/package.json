@@ -8,6 +8,7 @@
     "gen": "uv run --project . python torch/generate.py",
     "gen:semantic": "uv run --project . python torch/generate-semantic.py",
     "train": "uv run --project . python torch/train.py",
+    "average": "uv run --project . python torch/average.py",
     "export": "uv run --project . python torch/export.py",
     "check:natural": "uv run --project . python torch/check-natural.py",
     "check:semantic": "tsx src/check-semantic.ts",
@@ -20,7 +21,7 @@
     "seed:negatives": "tsx src/seed-negatives.ts",
     "seed:prose": "tsx src/seed-prose.ts",
     "seed:variations": "tsx src/grammar-variations.ts",
-    "test": "uv run --project . python torch/test_model.py"
+    "test": "uv run --project . python -m unittest discover -s torch -p 'test_*.py'"
   },
   "dependencies": {
     "gpu-time": "workspace:*"

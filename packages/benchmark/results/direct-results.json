@@ -1,5 +1,5 @@
 {
-  "model": "c69ab6c9be8ec854790c004b5d540dc6a41bececbacdbf34a4725de6b711d6d5",
+  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
   "sourceSha256": "560e2762d900aef72fefd60f15e5aa62e6b5c50208e6c6d59f18c23a3c788b5b",
   "total": 18,
   "correct": 18,
@@ -29,9 +29,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.49962500000000176,
-          "inferMs": 1.2708750000000038,
-          "resolveMs": 0.8836670000000026
+          "tokenizeMs": 0.5627909999999972,
+          "inferMs": 1.6290829999999943,
+          "resolveMs": 0.9339590000000015
         }
       },
       "correct": true
@@ -61,9 +61,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.015584000000004039,
-          "inferMs": 0.20049999999999812,
-          "resolveMs": 0.289082999999998
+          "tokenizeMs": 0.0192909999999884,
+          "inferMs": 0.2887500000000003,
+          "resolveMs": 0.2928750000000093
         }
       },
       "correct": true
@@ -93,9 +93,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.04512499999999875,
-          "inferMs": 0.9305000000000021,
-          "resolveMs": 0.22208399999998818
+          "tokenizeMs": 0.04291700000000276,
+          "inferMs": 1.0500830000000008,
+          "resolveMs": 0.3650829999999985
         }
       },
       "correct": true
@@ -125,9 +125,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.015999999999998238,
-          "inferMs": 1.0580420000000004,
-          "resolveMs": 0.10620899999999978
+          "tokenizeMs": 0.023208000000003892,
+          "inferMs": 1.0919170000000022,
+          "resolveMs": 0.14729100000000273
         }
       },
       "correct": true
@@ -159,9 +159,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.01304100000000119,
-          "inferMs": 0.290458000000001,
-          "resolveMs": 0.0991250000000008
+          "tokenizeMs": 0.03583300000000378,
+          "inferMs": 0.45566699999999116,
+          "resolveMs": 0.13262499999999022
         }
       },
       "correct": true
@@ -193,9 +193,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.00808399999999665,
-          "inferMs": 0.2497499999999988,
-          "resolveMs": 0.23829200000000128
+          "tokenizeMs": 0.010458000000014067,
+          "inferMs": 0.3752089999999981,
+          "resolveMs": 0.17274999999999352
         }
       },
       "correct": true
@@ -225,9 +225,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.014666999999995767,
-          "inferMs": 0.8525409999999951,
-          "resolveMs": 0.09783299999999429
+          "tokenizeMs": 0.013834000000002789,
+          "inferMs": 0.3465829999999954,
+          "resolveMs": 0.09070800000000645
         }
       },
       "correct": true
@@ -279,9 +279,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.02891699999999986,
-          "inferMs": 0.3862090000000009,
-          "resolveMs": 0.290458000000001
+          "tokenizeMs": 0.030040999999997098,
+          "inferMs": 0.4485420000000033,
+          "resolveMs": 0.32474999999999454
         }
       },
       "correct": true
@@ -330,9 +330,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.009209000000005574,
-          "inferMs": 0.1683749999999975,
-          "resolveMs": 0.4816239999999965
+          "tokenizeMs": 0.00941699999999912,
+          "inferMs": 0.19624999999999204,
+          "resolveMs": 0.5213330000000127
         }
       },
       "correct": true
@@ -381,9 +381,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.011333000000007587,
-          "inferMs": 0.19991699999999923,
-          "resolveMs": 0.2849170000000072
+          "tokenizeMs": 0.011123999999995249,
+          "inferMs": 0.24208400000000552,
+          "resolveMs": 0.40625
         }
       },
       "correct": true
@@ -413,9 +413,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.008748999999994567,
-          "inferMs": 0.2382910000000038,
-          "resolveMs": 0.08908400000001393
+          "tokenizeMs": 0.017876000000001113,
+          "inferMs": 0.2071250000000049,
+          "resolveMs": 0.08483299999998906
         }
       },
       "correct": true
@@ -446,9 +446,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0073330000000026985,
-          "inferMs": 0.15708300000000008,
-          "resolveMs": 0.057916999999989116
+          "tokenizeMs": 0.0058339999999930114,
+          "inferMs": 0.18054200000000264,
+          "resolveMs": 0.057583000000008155
         }
       },
       "correct": true
@@ -478,9 +478,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0049169999999918446,
-          "inferMs": 0.10912500000000591,
-          "resolveMs": 0.058041000000002896
+          "tokenizeMs": 0.004500000000007276,
+          "inferMs": 0.15008400000000677,
+          "resolveMs": 0.06841699999999662
         }
       },
       "correct": true
@@ -510,9 +510,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.017042000000003554,
-          "inferMs": 0.15825000000000955,
-          "resolveMs": 0.05462499999998727
+          "tokenizeMs": 0.02370899999999665,
+          "inferMs": 0.20216700000000287,
+          "resolveMs": 0.06999999999999318
         }
       },
       "correct": true
@@ -541,9 +541,9 @@
         ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0029590000000041528,
-          "inferMs": 0.16312500000000796,
-          "resolveMs": 0.08620799999999917
+          "tokenizeMs": 0.003290999999990163,
+          "inferMs": 0.2204579999999936,
+          "resolveMs": 0.1367089999999962
         }
       },
       "correct": true
@@ -584,9 +584,9 @@
         "diagnostics": [],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.0035829999999918982,
-          "inferMs": 0.20345899999999517,
-          "resolveMs": 0.0914590000000004
+          "tokenizeMs": 0.00666599999999562,
+          "inferMs": 0.32108299999998735,
+          "resolveMs": 0.1546249999999958
         }
       },
       "correct": true
@@ -615,9 +615,9 @@
         ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.003917000000001281,
-          "inferMs": 0.057332999999999856,
-          "resolveMs": 0.050125000000022624
+          "tokenizeMs": 0.008292000000011512,
+          "inferMs": 0.08308300000000202,
+          "resolveMs": 0.07554299999999614
         }
       },
       "correct": true
@@ -634,12 +634,20 @@
         "occurrences": [],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"May I have your second opinion?\".",
+            "start": 0,
+            "end": 31
+          }
+        ],
         "backend": "cpu",
         "timings": {
-          "tokenizeMs": 0.012625999999997362,
-          "inferMs": 0.24920899999999335,
-          "resolveMs": 0.0040420000000125356
+          "tokenizeMs": 0.014958000000007132,
+          "inferMs": 0.2821249999999935,
+          "resolveMs": 0.3845010000000002
         }
       },
       "correct": true

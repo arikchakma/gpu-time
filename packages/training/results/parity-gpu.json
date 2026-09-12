@@ -1,5 +1,5 @@
 {
-  "model": "a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d",
+  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
   "browser": "152.0.7977.83",
   "lifecycle": {
     "concurrent": true,
@@ -15,9 +15,9 @@
   },
   "sequences": 10000,
   "pythonSequences": 512,
-  "tokensCompared": 122991,
-  "maxError": 0.0000171661376953125,
-  "pythonMaxError": 0.000011444091796875,
+  "tokensCompared": 121678,
+  "maxError": 0.000015735626220703125,
+  "pythonMaxError": 0.0000095367431640625,
   "labelMismatches": 0,
   "boundaryMismatches": 0,
   "pythonLabelMismatches": 0,

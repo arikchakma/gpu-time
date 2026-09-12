@@ -413,7 +413,6 @@ SPOKEN_COUNTS = [
     "ten", "eleven", "twelve", "twenty", "thirty", "twenty two", "forty five",
     "ninety", "a hundred",
 ]
-DURATION_UNITS = ["seconds", "minutes", "hours", "days", "weeks"]
 NUMBERED = [
     "section", "chapter", "page", "room", "floor", "aisle", "gate", "line",
     "seat", "row", "track", "version", "build", "table", "figure", "exhibit",
@@ -479,6 +478,22 @@ def _suffixed(value: int) -> str:
     return f"{value}{tail}"
 
 
+def measured_duration(rng: random.Random) -> str:
+    """A measured elapsed time, including the same compound units as requests."""
+    first, second = rng.choice(
+        [("second", None), ("minute", "second"), ("hour", "minute"), ("day", "hour"), ("week", "day")]
+    )
+
+    def quantity(unit: str) -> str:
+        amount = rng.choice(SPOKEN_COUNTS) if rng.random() < 0.6 else str(rng.randint(1, 59))
+        return f"{amount} {unit if amount in ('one', '1') else unit + 's'}"
+
+    duration = quantity(first)
+    if second and rng.random() < 0.3:
+        duration += " and " + quantity(second)
+    return duration
+
+
 def numeric(rng: random.Random) -> str:
     """Number-heavy prose with no time expression in it at all.
 
@@ -497,19 +512,20 @@ def numeric(rng: random.Random) -> str:
     ordinal_value = rng.randint(2, 12)
     ordinal_noun = rng.choice(ORDINAL_NOUNS)
     numbered = rng.choice(NUMBERED)
-    spoken = rng.choice(SPOKEN_COUNTS)
-    unit = rng.choice(DURATION_UNITS)
+    duration = measured_duration(rng)
     low = rng.randint(1, 20)
     high = low + rng.randint(1, 40)
+    address = f"{rng.randint(1, 499)} {rng.choice(nouns).title()} {rng.choice(['Street', 'Road', 'Avenue', 'Lane', 'Drive', 'Way'])}"
+    numbered_plural = rng.choice(["seats", "rooms", "pages", "tracks", "tables", "gates"])
     groups = [
         # Measured duration, all O. Keep "in N units" to 2 of 6 frames or real shifts regress.
         [
-            f"{name} {rng.choice(COMPLETED)} the {rng.choice(DISTANCES)} in {spoken} {unit}.",
-            f"They {rng.choice(PRODUCED)} the whole {noun} in {spoken} {unit} flat.",
-            f"The {noun} took {spoken} {unit} to {verb} start to finish.",
-            f"Our fastest {rng.choice(DISTANCES)} was {spoken} {unit}.",
-            f"{name} held the record at just over {spoken} {unit}.",
-            f"The {noun} is {spoken} {unit} long end to end.",
+            f"{name} {rng.choice(COMPLETED)} the {rng.choice(DISTANCES)} in {duration}.",
+            f"They {rng.choice(PRODUCED)} the whole {noun} in {duration} flat.",
+            f"The {noun} took {duration} to {verb} start to finish.",
+            f"Our fastest {rng.choice(DISTANCES)} was {duration}.",
+            f"{name} held the record at just over {duration}.",
+            f"The {noun} is {duration} long end to end.",
         ],
         # An ordinal sitting on an ordinary noun, never on a day of the month.
         [
@@ -534,6 +550,26 @@ def numeric(rng: random.Random) -> str:
             f"The stack trace points to line {count}.",
             f"{numbered.capitalize()} {count} is at the far end of the {noun}.",
             f"Dial {rng.randint(200, 999)} {rng.randint(1000, 9999)} about the {noun}.",
+            f"We booked {numbered_plural} {low} and {high}.",
+            f"{name} requested {numbered_plural} {low} and {high} for the {noun}.",
+        ],
+        # Street numbers and arithmetic share clock-sized numbers and connectors.
+        [
+            f"You can find the {noun} at {address}.",
+            f"Send the {noun} to {address}.",
+            f"{name} lives at {address}.",
+            f"The address on the {noun} is {address}.",
+            f"Our new location is {address}.",
+        ],
+        [
+            f"Multiply {count} by {low} to get the {noun}.",
+            f"Divide {count} by {low} for the {noun}.",
+            f"Subtract {low} from {count}.",
+            f"Add {low} to {count} and check the {noun}.",
+            f"Write the {noun} in base {rng.choice([2, 8, 10, 16, 32])}.",
+            f"The {noun} uses base {rng.choice([2, 8, 10, 16, 32])} notation.",
+            f"Only {low} of the {high} {other} passed inspection.",
+            f"The {noun} affects {low} out of {high} {other}.",
         ],
         # Scores and tallies: "3 to 1" is not a clock range.
         [
@@ -625,7 +661,7 @@ def numeric(rng: random.Random) -> str:
         ],
     ]
     # Uniform over groups, not over templates: the last group has twenty-five
-    # frames and would otherwise swamp the nine categories that actually fail.
+    # frames and would otherwise swamp the focused contrast categories.
     return rng.choice(rng.choice(groups))
 
 

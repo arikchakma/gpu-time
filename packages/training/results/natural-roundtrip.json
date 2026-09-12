@@ -1,75 +1,7 @@
 {
-  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
   "source": "data/synth/natural-evaluation.jsonl",
-  "sourceSha256": "51cb7ed304f1786d3c941cc35b3ba3e71ef5f2c736220cebcf59cff712a54011",
   "total": 1000,
-  "correct": 962,
-  "families": {
-    "spoken-clock": {
-      "total": 63,
-      "correct": 63
-    },
-    "fraction-clock": {
-      "total": 63,
-      "correct": 63
-    },
-    "qualified-clock": {
-      "total": 63,
-      "correct": 63
-    },
-    "compound-duration": {
-      "total": 63,
-      "correct": 63
-    },
-    "compound-shift": {
-      "total": 63,
-      "correct": 63
-    },
-    "fraction-duration": {
-      "total": 63,
-      "correct": 63
-    },
-    "prose-date": {
-      "total": 63,
-      "correct": 63
-    },
-    "numeric-date": {
-      "total": 63,
-      "correct": 63
-    },
-    "date-range": {
-      "total": 62,
-      "correct": 62
-    },
-    "datetime-range": {
-      "total": 62,
-      "correct": 62
-    },
-    "month-period": {
-      "total": 62,
-      "correct": 62
-    },
-    "month-week": {
-      "total": 62,
-      "correct": 62
-    },
-    "recurrence": {
-      "total": 62,
-      "correct": 38
-    },
-    "recurrence-bound": {
-      "total": 62,
-      "correct": 53
-    },
-    "monthly-exception": {
-      "total": 62,
-      "correct": 62
-    },
-    "shared-times": {
-      "total": 62,
-      "correct": 57
-    }
-  },
+  "correct": 976,
   "failures": [
     {
       "id": "natural-424242-12",
@@ -141,100 +73,14 @@
           "start": 60,
           "end": 95,
           "text": "three weekday at ten in the evening",
-          "confidence": 0.9980292320251465,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 77,
-              "end": 80,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-44",
-      "family": "recurrence",
-      "text": "could you check this: we'll be available for every three Tuesday at 5 in the morning",
-      "spans": [
-        {
-          "start": 0,
-          "end": 44,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 45,
-          "end": 50,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 51,
-          "end": 56,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 57,
-          "end": 64,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 65,
-          "end": 67,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 68,
-          "end": 69,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 70,
-          "end": 84,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "TU"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 5,
-                "minute": 0
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 45,
-          "end": 84,
-          "text": "every three Tuesday at 5 in the morning",
-          "confidence": 0.9989520311355591,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 68,
-              "end": 69,
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 60,
+              "end": 65,
               "severity": "error"
             }
           ]
@@ -354,7 +200,7 @@
           "start": 30,
           "end": 71,
           "text": "weekday at half past six pm and three ten",
-          "confidence": 0.9997119903564453,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -477,7 +323,7 @@
           "start": 27,
           "end": 69,
           "text": "other weekday shift at four fifty eight pm",
-          "confidence": 0.984091579914093,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -592,7 +438,7 @@
           "start": 21,
           "end": 68,
           "text": "weekday at ten twelve and five in the afternoon",
-          "confidence": 0.9777757525444031,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -673,7 +519,7 @@
           "start": 51,
           "end": 58,
           "text": "weekday",
-          "confidence": 0.9999963641166687,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -770,106 +616,14 @@
           "start": 33,
           "end": 56,
           "text": "two weekday at 10:39 pm",
-          "confidence": 0.8312961459159851,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 48,
-              "end": 50,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-140",
-      "family": "recurrence",
-      "text": "my standup starts on every two Friday at ten four pm",
-      "spans": [
-        {
-          "start": 0,
-          "end": 20,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 21,
-          "end": 26,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 27,
-          "end": 30,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 31,
-          "end": 37,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 38,
-          "end": 40,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 41,
-          "end": 44,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 45,
-          "end": 49,
-          "label": "MINUTE",
-          "clauseStart": false
-        },
-        {
-          "start": 50,
-          "end": 52,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "FR"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 22,
-                "minute": 4
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 21,
-          "end": 52,
-          "text": "every two Friday at ten four pm",
-          "confidence": 0.9998785853385925,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 41,
-              "end": 44,
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 33,
+              "end": 36,
               "severity": "error"
             }
           ]
@@ -976,7 +730,7 @@
           "start": 22,
           "end": 69,
           "text": "weekday at twelve in morning until July. 2 2036",
-          "confidence": 0.999372124671936,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -984,178 +738,6 @@
               "message": "This bound requires recurrence.",
               "start": 51,
               "end": 56,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-332",
-      "family": "recurrence",
-      "text": "every two Wednesday at eight eighteen",
-      "spans": [
-        {
-          "start": 0,
-          "end": 5,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 6,
-          "end": 9,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 10,
-          "end": 19,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 20,
-          "end": 22,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 23,
-          "end": 28,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 29,
-          "end": 37,
-          "label": "MINUTE",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "WE"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 8,
-                "minute": 18
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 0,
-          "end": 37,
-          "text": "every two Wednesday at eight eighteen",
-          "confidence": 0.9994263052940369,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 23,
-              "end": 28,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-348",
-      "family": "recurrence",
-      "text": "the backup starts every three Saturday at eleven:20",
-      "spans": [
-        {
-          "start": 0,
-          "end": 17,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 18,
-          "end": 23,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 24,
-          "end": 29,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 30,
-          "end": 38,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 39,
-          "end": 41,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 42,
-          "end": 48,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 48,
-          "end": 49,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 49,
-          "end": 51,
-          "label": "MINUTE",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "SA"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 11,
-                "minute": 20
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 18,
-          "end": 51,
-          "text": "every three Saturday at eleven:20",
-          "confidence": 0.9999762177467346,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 42,
-              "end": 48,
               "severity": "error"
             }
           ]
@@ -1268,7 +850,7 @@
           "start": 31,
           "end": 79,
           "text": "weekday at quarter to ten pm until August 5 2036",
-          "confidence": 0.9999397397041321,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -1370,7 +952,7 @@
           "start": 0,
           "end": 51,
           "text": "weekday at 1 in the afternoon until October 25 2036",
-          "confidence": 0.9852170348167419,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -1490,7 +1072,7 @@
           "start": 36,
           "end": 84,
           "text": "weekday at quarter past four pm until Mar 2 2036",
-          "confidence": 0.9998857378959656,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -1498,86 +1080,6 @@
               "message": "This bound requires recurrence.",
               "start": 68,
               "end": 73,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-524",
-      "family": "recurrence",
-      "text": "every three Friday at eight eighteen",
-      "spans": [
-        {
-          "start": 0,
-          "end": 5,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 6,
-          "end": 11,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 12,
-          "end": 18,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 19,
-          "end": 21,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 22,
-          "end": 27,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 28,
-          "end": 36,
-          "label": "MINUTE",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "FR"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 8,
-                "minute": 18
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 0,
-          "end": 36,
-          "text": "every three Friday at eight eighteen",
-          "confidence": 0.9987071752548218,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 22,
-              "end": 27,
               "severity": "error"
             }
           ]
@@ -1678,7 +1180,7 @@
           "start": 0,
           "end": 59,
           "text": "weekday appointment at 1 in the afternoon until Nov 22 2036",
-          "confidence": 0.9943405985832214,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -1811,7 +1313,7 @@
           "start": 57,
           "end": 95,
           "text": "weekday at five:31 pm and ten eight am",
-          "confidence": 0.9949881434440613,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -1841,92 +1343,6 @@
             ]
           },
           "diagnostics": []
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-556",
-      "family": "recurrence",
-      "text": "Tom says Mary is a good student. every three Wednesday at twelve in the morning",
-      "spans": [
-        {
-          "start": 0,
-          "end": 32,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 33,
-          "end": 38,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 39,
-          "end": 44,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 45,
-          "end": 54,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 55,
-          "end": 57,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 58,
-          "end": 64,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 65,
-          "end": 79,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "WE"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 0,
-                "minute": 0
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 33,
-          "end": 79,
-          "text": "every three Wednesday at twelve in the morning",
-          "confidence": 0.9996691942214966,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 58,
-              "end": 64,
-              "severity": "error"
-            }
-          ]
         }
       ]
     },
@@ -2037,7 +1453,7 @@
           "start": 0,
           "end": 52,
           "text": "weekday at eight seventeen pm and six forty-seven am",
-          "confidence": 0.999907374382019,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -2146,7 +1562,7 @@
           "start": 30,
           "end": 51,
           "text": "weekday at four:22 pm",
-          "confidence": 0.999926745891571,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -2249,7 +1665,7 @@
           "start": 45,
           "end": 85,
           "text": "two weeks on weekday at 3 in the morning",
-          "confidence": 0.9991809725761414,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -2350,7 +1766,7 @@
           "start": 21,
           "end": 50,
           "text": "weekday at half past three am",
-          "confidence": 0.9997767806053162,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -2368,92 +1784,6 @@
             ]
           },
           "diagnostics": []
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-668",
-      "family": "recurrence",
-      "text": "please, we should be back at every three Sunday at twelve twenty-five",
-      "spans": [
-        {
-          "start": 0,
-          "end": 28,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 29,
-          "end": 34,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 35,
-          "end": 40,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 41,
-          "end": 47,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 48,
-          "end": 50,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 51,
-          "end": 57,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 58,
-          "end": 69,
-          "label": "MINUTE",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "SU"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 12,
-                "minute": 25
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 29,
-          "end": 69,
-          "text": "every three Sunday at twelve twenty-five",
-          "confidence": 0.9997161626815796,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 51,
-              "end": 57,
-              "severity": "error"
-            }
-          ]
         }
       ]
     },
@@ -2551,7 +1881,7 @@
           "start": 40,
           "end": 87,
           "text": "weekday at 5 in the afternoon until May 20 2036",
-          "confidence": 0.9984682202339172,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -2559,200 +1889,6 @@
               "message": "This bound requires recurrence.",
               "start": 70,
               "end": 75,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-716",
-      "family": "recurrence",
-      "text": "please, the store is closed at three weekdays at 5:56 am",
-      "spans": [
-        {
-          "start": 0,
-          "end": 30,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 31,
-          "end": 36,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 37,
-          "end": 45,
-          "label": "DAYGROUP",
-          "clauseStart": false
-        },
-        {
-          "start": 46,
-          "end": 48,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 49,
-          "end": 50,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 50,
-          "end": 51,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 51,
-          "end": 53,
-          "label": "MINUTE",
-          "clauseStart": false
-        },
-        {
-          "start": 54,
-          "end": 56,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 5,
-                "minute": 56
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 31,
-          "end": 56,
-          "text": "three weekdays at 5:56 am",
-          "confidence": 0.9998157024383545,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 49,
-              "end": 50,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-732",
-      "family": "recurrence",
-      "text": "note: please remind me to call Riley at every two Wednesday at half past eight am",
-      "spans": [
-        {
-          "start": 0,
-          "end": 39,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 40,
-          "end": 45,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 46,
-          "end": 49,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 50,
-          "end": 59,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 60,
-          "end": 62,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 63,
-          "end": 67,
-          "label": "CLOCK_OFFSET",
-          "clauseStart": false
-        },
-        {
-          "start": 68,
-          "end": 72,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 73,
-          "end": 78,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 79,
-          "end": 81,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "WE"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 8,
-                "minute": 30
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 40,
-          "end": 81,
-          "text": "every two Wednesday at half past eight am",
-          "confidence": 0.999699056148529,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 73,
-              "end": 78,
               "severity": "error"
             }
           ]
@@ -2799,7 +1935,7 @@
           "start": 28,
           "end": 35,
           "text": "weekday",
-          "confidence": 0.9999983310699463,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -2920,7 +2056,7 @@
           "start": 19,
           "end": 56,
           "text": "weekday at two:03 pm until May 2 2036",
-          "confidence": 0.9998897910118103,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -2928,206 +2064,6 @@
               "message": "This bound requires recurrence.",
               "start": 40,
               "end": 45,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-764",
-      "family": "recurrence",
-      "text": "can you set an alarm on every two Monday report at eight four pm",
-      "spans": [
-        {
-          "start": 0,
-          "end": 23,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 24,
-          "end": 29,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 30,
-          "end": 33,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 34,
-          "end": 40,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 41,
-          "end": 47,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 48,
-          "end": 50,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 51,
-          "end": 56,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 57,
-          "end": 61,
-          "label": "MINUTE",
-          "clauseStart": false
-        },
-        {
-          "start": 62,
-          "end": 64,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "MO"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 20,
-                "minute": 4
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 24,
-          "end": 64,
-          "text": "every two Monday report at eight four pm",
-          "confidence": 0.9988842606544495,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 51,
-              "end": 56,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-780",
-      "family": "recurrence",
-      "text": "please book room 34 about two weekdays report at 10:23 am",
-      "spans": [
-        {
-          "start": 0,
-          "end": 25,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 26,
-          "end": 29,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 30,
-          "end": 38,
-          "label": "DAYGROUP",
-          "clauseStart": false
-        },
-        {
-          "start": 39,
-          "end": 45,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 46,
-          "end": 48,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 49,
-          "end": 51,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 51,
-          "end": 52,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 52,
-          "end": 54,
-          "label": "MINUTE",
-          "clauseStart": false
-        },
-        {
-          "start": 55,
-          "end": 57,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "MO",
-                "TU",
-                "WE",
-                "TH",
-                "FR"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 10,
-                "minute": 23
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 26,
-          "end": 57,
-          "text": "two weekdays report at 10:23 am",
-          "confidence": 0.9987717866897583,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 49,
-              "end": 51,
               "severity": "error"
             }
           ]
@@ -3240,7 +2176,7 @@
           "start": 40,
           "end": 95,
           "text": "weekday meeting at eleven eighteen pm until Aug 19 2036",
-          "confidence": 0.9992886185646057,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -3373,7 +2309,7 @@
           "start": 45,
           "end": 96,
           "text": "weekday at half past two pm and eight twenty-six am",
-          "confidence": 0.9999189972877502,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -3500,7 +2436,7 @@
           "start": 24,
           "end": 69,
           "text": "three weeks on weekday at quarter to eight pm",
-          "confidence": 0.9974158406257629,
+          "confidence": 1,
           "schedule": {
             "clauses": [
               {
@@ -3522,98 +2458,6 @@
             ]
           },
           "diagnostics": []
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-892",
-      "family": "recurrence",
-      "text": "note: the library closes on every three Tuesday at one four am",
-      "spans": [
-        {
-          "start": 0,
-          "end": 27,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 28,
-          "end": 33,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 34,
-          "end": 39,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 40,
-          "end": 47,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 48,
-          "end": 50,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 51,
-          "end": 54,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 55,
-          "end": 59,
-          "label": "MINUTE",
-          "clauseStart": false
-        },
-        {
-          "start": 60,
-          "end": 62,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 3,
-              "byDay": [
-                "TU"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 1,
-                "minute": 4
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 28,
-          "end": 62,
-          "text": "every three Tuesday at one four am",
-          "confidence": 0.9997439384460449,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 51,
-              "end": 54,
-              "severity": "error"
-            }
-          ]
         }
       ]
     },
@@ -3690,208 +2534,17 @@
       },
       "actual": [
         {
-          "start": 34,
+          "start": 28,
           "end": 62,
-          "text": "weekday at six fifty four pm",
-          "confidence": 0.9999869465827942,
-          "schedule": {
-            "clauses": [
-              {
-                "date": {
-                  "kind": "dayGroup",
-                  "group": "weekday"
-                },
-                "time": {
-                  "start": {
-                    "hour": 18,
-                    "minute": 54
-                  }
-                }
-              }
-            ]
-          },
-          "diagnostics": []
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-940",
-      "family": "recurrence",
-      "text": "our backup is on every two Tuesday at eight:34 pm",
-      "spans": [
-        {
-          "start": 0,
-          "end": 16,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 17,
-          "end": 22,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 23,
-          "end": 26,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 27,
-          "end": 34,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 35,
-          "end": 37,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 38,
-          "end": 43,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 43,
-          "end": 44,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 44,
-          "end": 46,
-          "label": "MINUTE",
-          "clauseStart": false
-        },
-        {
-          "start": 47,
-          "end": 49,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "TU"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 20,
-                "minute": 34
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 17,
-          "end": 49,
-          "text": "every two Tuesday at eight:34 pm",
-          "confidence": 0.9998939633369446,
+          "text": "other weekday at six fifty four pm",
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 38,
-              "end": 43,
-              "severity": "error"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "natural-424242-956",
-      "family": "recurrence",
-      "text": "I might be out for every two Saturday at four in the morning",
-      "spans": [
-        {
-          "start": 0,
-          "end": 18,
-          "label": "O",
-          "clauseStart": false
-        },
-        {
-          "start": 19,
-          "end": 24,
-          "label": "RECUR",
-          "clauseStart": false
-        },
-        {
-          "start": 25,
-          "end": 28,
-          "label": "NUM",
-          "clauseStart": false
-        },
-        {
-          "start": 29,
-          "end": 37,
-          "label": "WEEKDAY",
-          "clauseStart": false
-        },
-        {
-          "start": 38,
-          "end": 40,
-          "label": "GLUE",
-          "clauseStart": false
-        },
-        {
-          "start": 41,
-          "end": 45,
-          "label": "HOUR",
-          "clauseStart": false
-        },
-        {
-          "start": 46,
-          "end": 60,
-          "label": "MERIDIEM",
-          "clauseStart": false
-        }
-      ],
-      "schedule": {
-        "clauses": [
-          {
-            "recurrence": {
-              "freq": "weekly",
-              "interval": 2,
-              "byDay": [
-                "SA"
-              ]
-            },
-            "time": {
-              "start": {
-                "hour": 4,
-                "minute": 0
-              }
-            }
-          }
-        ]
-      },
-      "actual": [
-        {
-          "start": 19,
-          "end": 60,
-          "text": "every two Saturday at four in the morning",
-          "confidence": 0.9995846748352051,
-          "schedule": null,
-          "diagnostics": [
-            {
-              "code": "unlinked-times",
-              "message": "Two clocks need a range separator or separate clauses.",
-              "start": 41,
-              "end": 45,
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 28,
+              "end": 33,
               "severity": "error"
             }
           ]
@@ -4004,7 +2657,7 @@
           "start": 31,
           "end": 93,
           "text": "weekday meeting at seven thirty eight pm until October 13 2036",
-          "confidence": 0.9998793601989746,
+          "confidence": 1,
           "schedule": null,
           "diagnostics": [
             {
@@ -4019,5 +2672,5 @@
       ]
     }
   ],
-  "scope": "Exact AST equality from neural predictions against independently sampled specifications. Fresh values use the same rendering families as part of training; this is a synthetic development check, not unseen-language accuracy."
+  "scope": "Compiler equality using independently sampled ASTs and renderer slot labels. This validates training supervision, not neural prediction accuracy."
 }

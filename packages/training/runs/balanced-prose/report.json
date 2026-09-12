@@ -1,0 +1,62 @@
+{
+  "run": "balanced-prose",
+  "status": "completed",
+  "selectionCriterion": "Derived checkpoint; evaluation and promotion are performed by export.py.",
+  "sourceHashes": {
+    "training/average.py": "86910a99c1d12deb48e70b34168cb64b0801070f5bb7e6eaa935af10dca51ee8"
+  },
+  "datasetHashes": {},
+  "config": {
+    "epochs": 0,
+    "quantization_bits": 6,
+    "row_scales": false,
+    "samples": 300000,
+    "eval_samples": 10000,
+    "batch": 1024,
+    "seed": 20260920,
+    "qat_start": 0,
+    "run": "balanced-prose",
+    "init": null,
+    "learning_rate": 0.0002,
+    "storage": "f32",
+    "feature_rows": 580,
+    "layers": 1,
+    "transitions": true,
+    "device": "mps",
+    "identity_dropout": 0.0,
+    "role_weighting": "none",
+    "log_every": 50,
+    "warmup_steps": 100,
+    "fresh_each_epoch": true,
+    "evaluation_run": "prose-coverage",
+    "provenanceParents": [
+      {
+        "checkpoint": "runs/step7-crf2/best.pt",
+        "sha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
+        "coefficient": 0.75
+      },
+      {
+        "checkpoint": "runs/prose-coverage/best.pt",
+        "sha256": "85d4ea59e7fd9f264b60ef83f461fd84a4f9b6d2a0f6834485e1e18661ec3263",
+        "coefficient": 0.25
+      }
+    ]
+  },
+  "tokensSeen": 0,
+  "derivation": {
+    "method": "weighted-checkpoint-average",
+    "parents": [
+      {
+        "checkpoint": "runs/step7-crf2/best.pt",
+        "sha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
+        "coefficient": 0.75
+      },
+      {
+        "checkpoint": "runs/prose-coverage/best.pt",
+        "sha256": "85d4ea59e7fd9f264b60ef83f461fd84a4f9b6d2a0f6834485e1e18661ec3263",
+        "coefficient": 0.25
+      }
+    ]
+  },
+  "checkpointSha256": "d08aace000bce08b5b5a56a31646b0326c1607a52fd104d4f6a61295cd80e895"
+}

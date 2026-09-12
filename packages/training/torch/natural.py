@@ -8,7 +8,7 @@ from __future__ import annotations
 import random
 from copy import deepcopy
 import background
-from semantic import DAYS, DAY_CODES, Specification, month_word, weekday_word
+from semantic import DAYS, DAY_CODES, HOLIDAYS, Specification, month_word, weekday_word
 
 ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
 TENS = {20: "twenty", 30: "thirty", 40: "forty", 50: "fifty"}
@@ -31,10 +31,12 @@ FAMILIES = [
     "shared-times",
     "slot-request",
     "carrier-date",
+    "prose-shift",
 ]
-# Half weight for carrier-date: date-after-prose pressure has to stay balanced
-# against background's contrastive carrier negatives.
-FAMILY_WEIGHTS = [2] * (len(FAMILIES) - 1) + [1]
+# Prose dates and shifts stay balanced against their contrastive negatives.
+FAMILY_WEIGHTS = [
+    1 if name in ("carrier-date", "prose-shift") else 2 for name in FAMILIES
+]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
     "could you arrange a reminder for",
@@ -63,6 +65,11 @@ FILLERS = (
     "practice rehearsal haircut flight commute briefing offsite kickoff "
     "handover onboarding training walkthrough"
 ).split()
+# New narrative frames must not reuse nouns from reserved carriers.
+PROSE_EVENTS = [
+    word for word in FILLERS
+    if word not in set(" ".join(RESERVED + RESERVED_DURATION).split())
+]
 
 
 def join(s, connective="at"):
@@ -134,6 +141,11 @@ def quantity(s, amount, name):
 
 def calendar(s, date, numeric=False, day_first=False):
     r = s.rng
+    if "day" not in date:
+        s.add(month_word(r, date["month"] - 1), "MONTH")
+        if date.get("year"):
+            s.add(str(date["year"]), "YEAR")
+        return
     if day_first and not numeric:
         s.add(str(date["day"]), "DOM")
         s.add(month_word(r, date["month"] - 1), "MONTH")
@@ -166,7 +178,7 @@ def calendar(s, date, numeric=False, day_first=False):
             s.add(str(date["year"]), "YEAR")
 
 
-# "scheduled for next week" is a date: the preposition is glue, not a duration.
+# "scheduled for next week" is a date: its preposition belongs to the carrier.
 CARRIERS = [
     ("the {event} is scheduled", "for"),
     ("{name}'s {event} is scheduled", "for"),
@@ -248,7 +260,11 @@ def target(s):
         clause = {"date": {"kind": "calendar", "day": day}}
     else:
         date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
-        if r.random() < 0.3:
+        if r.random() < 0.25:
+            del date["day"]
+            if r.random() < 0.5:
+                date["year"] = r.randint(1600, 2040)
+        elif r.random() < 0.3:
             date["year"] = r.randint(2024, 2040)
         calendar(s, date)
         clause = {"date": {"kind": "calendar", **date}}
@@ -261,11 +277,13 @@ def target(s):
 def render(s, reserved=False, family=None, bare=False):
     r = s.rng
     family = family or r.choices(FAMILIES, FAMILY_WEIGHTS)[0]
+    partial_date = family == "prose-date" and r.random() < 0.25
     # The carrier is this family's own prefix; reserved and bare get none.
     lead = carrier(r) if family == "carrier-date" and not (reserved or bare) else None
     anchored = family not in (
         "compound-duration",
         "compound-shift",
+        "prose-shift",
         "fraction-duration",
         "slot-request",
     )
@@ -275,6 +293,33 @@ def render(s, reserved=False, family=None, bare=False):
         prefix = lead[0]
     elif reserved:
         prefix = r.choice(RESERVED if anchored else RESERVED_DURATION)
+    elif (family == "prose-shift" or partial_date) and r.random() < 0.65:
+        frames = (
+            [
+                "{name} will be here",
+                "{name} is coming back",
+                "the {event} will begin",
+                "we will be ready",
+                "{name} will join us",
+                "the {event} should start",
+                "we expect {name} to arrive",
+                "we can start the {event}",
+            ]
+            if family == "prose-shift"
+            else [
+                "{name} will return in",
+                "the {event} took place in",
+                "we agreed on",
+                "the {event} is planned for",
+                "{name} remembers",
+                "they moved here in",
+                "we expect the {event} in",
+                "the {event} happened in",
+            ]
+        )
+        prefix = r.choice(frames).format(
+            name=r.choice(background.NAMES), event=r.choice(PROSE_EVENTS)
+        )
     elif r.random() < 0.85:
         prefix = background.prefix(r, connector=anchored)
     else:
@@ -290,6 +335,16 @@ def render(s, reserved=False, family=None, bare=False):
             "qualified-clock": "qualified",
         }[family]
         clause = {"time": {"start": clock(s, mode)}}
+    elif family == "prose-shift":
+        amount = 1 if r.random() < 0.15 else r.randint(1, 59)
+        unit = r.choice(["minute", "hour", "day", "week", "month", "year"])
+        s.add("in", "DIR_AFTER")
+        if amount == 1 and r.random() < 0.5:
+            s.add("an" if unit == "hour" else "a", "NUM")
+            s.add(unit, "UNIT")
+        else:
+            quantity(s, amount, unit)
+        clause = {"shift": {"amount": amount, "unit": unit, "direction": "after"}}
     elif family in ("compound-duration", "compound-shift"):
         shift = family == "compound-shift"
         s.add("in" if shift else "for", "DIR_AFTER" if shift else "DUR")
@@ -337,7 +392,12 @@ def render(s, reserved=False, family=None, bare=False):
             "month": r.randint(1, 12),
             "day": r.randint(13, 28),
         }
-        if family == "prose-date" and r.random() < 0.35:
+        if partial_date:
+            date = {"month": date["month"]}
+            if r.random() < 0.5:
+                date["year"] = r.randint(1600, 2040)
+            calendar(s, date)
+        elif family == "prose-date" and r.random() < 0.35:
             date = {"day": r.randint(1, 28)}
             s.add("on the", "GLUE")
             s.add(str(date["day"]), "DOM")
@@ -496,9 +556,16 @@ def render(s, reserved=False, family=None, bare=False):
             quantity(s, amount, unit)
             clause = {"duration": {"amount": amount, "unit": unit}}
         else:
+            connector_span = None
             if connector:
                 s.add(connector, "GLUE")
+                connector_span = s.spans[-1]
             clause = target(s)
+            # Keep the explicit connector while rendering the target, then give
+            # it the same background label as every other carrier preposition.
+            # Marking it O earlier lets Sentence trim it before "next week".
+            if connector_span:
+                connector_span["label"] = "O"
     else:
         day = r.randrange(7)
         interval = 1
@@ -529,32 +596,57 @@ def render(s, reserved=False, family=None, bare=False):
             rule["byDay"] = DAY_CODES[:5]
         if group and family == "recurrence" and interval == 1 and r.random() < 0.3:
             return Specification(family, {"clauses": [{"recurrence": rule}]})
-        join(s)
-        start = clock(s)
-        clause = {"recurrence": rule, "time": {"start": start}}
+        clause = {"recurrence": rule}
+        if family != "monthly-exception" or r.random() < 0.65:
+            join(s)
+            clause["time"] = {"start": clock(s)}
         if family == "recurrence-bound":
             s.add("until", "BOUND_END")
             date = {"year": 2036, "month": r.randint(1, 12), "day": r.randint(1, 28)}
             calendar(s, date)
             rule["until"] = {"kind": "calendar", **date}
         elif family == "monthly-exception":
-            ordinal = r.choice([1, 2, -1])
             s.add("except", "EXCEPT")
-            s.add("the", "GLUE")
-            s.add({1: "first", 2: "second", -1: "last"}[ordinal], "ORD")
-            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
-            s.add("of", "GLUE")
-            s.add("each", "RECUR")
-            s.add("month", "UNIT")
-            rule["except"] = [
-                {
+            # Keep the original ordinal shape while varying what is excluded.
+            # Otherwise EXCEPT is learned only before another weekday.
+            shape = r.choice(["ordinal"] * 4 + ["day", "month", "date", "holiday"])
+            if shape == "ordinal":
+                ordinal = r.choice([1, 2, -1])
+                s.add("the", "GLUE")
+                s.add({1: "first", 2: "second", -1: "last"}[ordinal], "ORD")
+                s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+                s.add("of", "GLUE")
+                s.add("each", "RECUR")
+                s.add("month", "UNIT")
+                excluded = {
                     "kind": "ordinalWeekday",
                     "ordinal": ordinal,
                     "day": DAY_CODES[day],
                     "of": {"kind": "calendar"},
                     "recurring": True,
                 }
-            ]
+            elif shape == "holiday":
+                name = r.choice(list(HOLIDAYS))
+                s.add(HOLIDAYS[name], "HOLIDAY")
+                excluded = {"kind": "holiday", "name": name}
+            else:
+                excluded = {"kind": "calendar"}
+                if shape == "day":
+                    value = r.randint(1, 28)
+                    s.add("the", "GLUE")
+                    s.add(str(value), "DOM")
+                    s.add(suffixed(value), "GLUE", "")
+                    excluded["day"] = value
+                elif shape == "month":
+                    value = r.randint(1, 12)
+                    s.add(month_word(r, value - 1), "MONTH")
+                    excluded["month"] = value
+                else:
+                    excluded.update(month=r.randint(1, 12), day=r.randint(1, 28))
+                    if r.random() < 0.5:
+                        excluded["year"] = r.randint(2024, 2040)
+                    calendar(s, excluded)
+            rule["except"] = [excluded]
         elif family == "shared-times":
             s.add("and", "JOIN")
             end = clock(s)

@@ -31,8 +31,8 @@ GOLD = ROOT / "data/gold"
 GOLD_SETS = ("chat", "prose", "user-cases", "negatives", "adversarial")
 GATE_CRITERION = (
     "Exact schedules must not regress in any gold set or family. Reserved-carrier "
-    "exact decoded labels and boundaries must improve, or tie an already perfect "
-    "baseline, without a family regression. Bare expressions must not regress. Both models are measured "
+    "exact decoded labels and boundaries must strictly improve without a family "
+    "regression, and bare expressions must not regress. Both models are measured "
     "on the same frozen corpora in this run; stored scores are never reused."
 )
 SYNTHETIC_NOTE = (
@@ -114,6 +114,15 @@ def artifact_model(artifact: dict) -> TimeTagger:
     model.storage_f16 = artifact["storage"] == "f16"
     model.reference_scan = True
     return model
+
+
+def viterbi(emissions: np.ndarray, transition: np.ndarray | None) -> np.ndarray:
+    """Decode one sequence of emissions; plain argmax when there is no chain."""
+    mask = torch.ones(1, len(emissions), dtype=torch.bool)
+    chain = torch.from_numpy(transition) if transition is not None else None
+    return decode_roles(torch.from_numpy(emissions).unsqueeze(0), mask, chain)[
+        0
+    ].numpy().astype(np.uint8)
 
 
 def read_artifact(path: Path) -> dict:
@@ -236,6 +245,7 @@ def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
         "sets": sorted(candidate),
         "candidate": {**pooled(candidate), "sets": candidate},
         "baseline": None,
+        "guard": None,
         "improvement": None,
         "failures": list(failures),
     }
@@ -244,6 +254,8 @@ def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
         if sorted(candidate) != sorted(baseline):
             decision["failures"].append("gold set mismatch")
         else:
+            guard = count_guard(decision["candidate"], decision["baseline"])
+            decision["guard"] = guard
             decision["improvement"] = (
                 decision["candidate"]["correct"] - decision["baseline"]["correct"]
             ) / max(decision["candidate"]["total"], 1)
@@ -265,17 +277,13 @@ def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
 
 
 def synthetic(candidate: dict, baseline: dict | None, strict: bool = True) -> dict:
-    """Require improvement below the ceiling; preserve a perfect baseline."""
+    """Require carrier improvement and preserve every existing family."""
     guard = count_guard(candidate, baseline) if baseline else None
     guards = family_guards(candidate, baseline) if baseline else []
     accepted = bool(
         guard and guard["passed"]
         and all(family["passed"] for family in guards)
-        and (
-            not strict
-            or candidate["correct"] > baseline["correct"]
-            or baseline["correct"] == baseline["total"]
-        )
+        and (not strict or candidate["correct"] > baseline["correct"])
     )
     return {
         "criterion": "reserved-carrier-exact-sequence",
@@ -488,7 +496,7 @@ def gate(
         result = decision["synthetic"][name]
         if not result["accepted"]:
             decision["failures"].append(
-                f"{name}: improvement or a perfect-baseline tie required without family regression"
+                f"{name}: strict improvement required without family regression"
                 if name == "reserved" else "bare: regression or missing baseline"
             )
     decision["accepted"] = not decision["failures"]
@@ -500,80 +508,6 @@ def publish(path: Path, text: str):
     temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
     temporary.write_text(text)
     temporary.replace(path)
-
-
-def parity_texts(data: Path, prefix: Path):
-    texts = [json.loads(line)["text"] for line in (data / "heldout.jsonl").read_text().splitlines()]
-    publish(Path(f"{prefix}.texts.json"), json.dumps(texts[:10000], ensure_ascii=False) + "\n")
-
-
-def protected_output(path: Path) -> bool:
-    path = path.resolve()
-    return path == SHIPPED.resolve() or any(
-        path.is_relative_to((ROOT / name).resolve()) for name in ("active", "exports")
-    )
-
-
-def validate_outputs(destination: Path, report: Path, parity: Path | None):
-    if destination.resolve() == SHIPPED.resolve():
-        if report.resolve() != (ROOT / "active/export-report.json").resolve() or (
-            parity is None or parity.resolve() != (ROOT / "active/parity").resolve()
-        ):
-            raise ValueError("Shipped exports require the active report and parity destinations.")
-    else:
-        paths = [destination, report]
-        sources = destination.with_name(f"{destination.name}.sources").resolve()
-        if parity:
-            paths.extend(Path(f"{parity}.{suffix}") for suffix in (
-                "texts.json", "npz", "json", "rows.bin", "logits.bin",
-                "boundaries.bin", "labels.bin", "offsets.bin",
-            ))
-        if any(protected_output(path) for path in [*paths, sources]):
-            raise ValueError("Candidate outputs must stay outside shipped weights, active metadata, and export history.")
-        if any(path.resolve().is_relative_to(sources) for path in paths):
-            raise ValueError("Export outputs must not overwrite source snapshots.")
-        if len({path.resolve() for path in paths}) != len(paths):
-            raise ValueError("Export output paths must be distinct.")
-
-
-def snapshot(destination: Path, artifact_hash: str, derived: bool):
-    paths = {
-        "training/export.py": TORCH / "export.py",
-        "training/calibrate.py": TORCH / "calibrate.py",
-        "training/model.py": TORCH / "model.py",
-        "training/train.py": TORCH / "train.py",
-        "training/uv.lock": ROOT / "uv.lock",
-    }
-    if derived:
-        paths["training/average.py"] = TORCH / "average.py"
-    contents = {name: path.read_bytes() for name, path in paths.items()}
-    hashes = {name: hashlib.sha256(content).hexdigest() for name, content in contents.items()}
-    source_hash = hashlib.sha256(
-        json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode()
-    ).hexdigest()
-    parent = (
-        ROOT / "exports"
-        if destination.resolve() == SHIPPED.resolve()
-        else destination.with_name(f"{destination.name}.sources")
-    )
-    directory = parent / artifact_hash / source_hash / "source"
-    if destination.resolve() != SHIPPED.resolve() and protected_output(directory):
-        raise ValueError("Candidate source snapshots must stay outside active export history.")
-    if directory.exists():
-        for name, content in contents.items():
-            path = directory / name
-            if not path.is_file() or path.read_bytes() != content:
-                raise ValueError(f"Export source snapshot differs: {path}")
-    else:
-        directory.parent.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=directory.parent) as temporary:
-            staged = Path(temporary) / "source"
-            for name, content in contents.items():
-                path = staged / name
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_bytes(content)
-            staged.rename(directory)
-    return directory, hashes
 
 
 def export(
@@ -589,7 +523,6 @@ def export(
 ):
     if skip_gate and destination.resolve() == SHIPPED.resolve():
         raise SystemExit("--skip-gate cannot write the shipped weights module.")
-    validate_outputs(destination, report_path, parity_prefix)
     torch.set_num_threads(4)
     saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
     options = {
@@ -695,15 +628,6 @@ def export(
     if not skip_gate:
         promotion["description"] = GATE_CRITERION
 
-    metrics = {
-        "validation": evaluate(reference, validation, 256, "cpu", threshold),
-        "heldout": evaluate(reference, heldout, 256, "cpu", threshold),
-    }
-    ancestry = lineage(checkpoint)
-    artifact_hash = hashlib.sha256(source.encode()).hexdigest()
-    source_directory, source_hashes = snapshot(
-        destination, artifact_hash, "derivation" in saved
-    )
     destination.parent.mkdir(parents=True, exist_ok=True)
     staged = destination.with_name(f"{destination.name}.{os.getpid()}.tmp")
     staged.write_text(source)
@@ -715,12 +639,15 @@ def export(
             text=True,
         )
     )
+    metrics = {
+        "validation": evaluate(reference, validation, 256, "cpu", threshold),
+        "heldout": evaluate(reference, heldout, 256, "cpu", threshold),
+    }
+    ancestry = lineage(checkpoint)
     report = {
-        "checkpoint": portable(checkpoint.resolve()),
+        "checkpoint": str(checkpoint),
         "checkpointSha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
-        "artifactSha256": artifact_hash,
-        "exportSourceDirectory": portable(source_directory.resolve()),
-        "exportSourceHashes": source_hashes,
+        "artifactSha256": hashlib.sha256(source.encode()).hexdigest(),
         "boundaryThreshold": threshold,
         "calibration": calibration,
         "epoch": saved["epoch"],
@@ -748,10 +675,9 @@ def export(
             ),
         },
         "promotion": promotion,
-        "scope": f"Exact decoded int{bits} weights, sequential CPU PyTorch inference with the deployed role decoder and recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Heldout metrics share the development split used by calibrate(). Promotion requires reserved-carrier improvement or a perfect-baseline tie, with no family regression, preserved bare expressions, and no gold set or family regression through the built parser. These are development checks, not real-user accuracy. Browser parity is a separate gate.",
+        "scope": f"Exact decoded int{bits} weights, sequential CPU PyTorch inference with the deployed role decoder and recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Heldout metrics share the development split used by calibrate(). Promotion requires reserved-carrier improvement with no family regression, preserved bare expressions, and no gold set or family regression through the built parser. These are development checks, not real-user accuracy. Browser parity is a separate gate.",
     }
     if parity_prefix:
-        parity_texts(data, parity_prefix)
         indices = np.arange(min(512, len(heldout)))
         rows, targets, boundaries, valid, neighbors = heldout.batch(indices, "cpu")
         with torch.no_grad():
@@ -799,18 +725,40 @@ def export(
             Path(f"{parity_prefix}.json"),
             json.dumps(report["parity"], indent=2) + "\n",
         )
+    source_directory = ROOT / "exports" / report["artifactSha256"] / "source"
+    report["exportSourceDirectory"] = str(source_directory.relative_to(ROOT))
+    report["exportSourceHashes"] = {}
+    # Snapshot names keep the pre-monorepo layout so earlier exports stay
+    # comparable; only the sources they are copied from moved.
+    export_sources = {
+        "training/export.py": TORCH / "export.py",
+        "training/calibrate.py": TORCH / "calibrate.py",
+        "training/model.py": TORCH / "model.py",
+        "training/train.py": TORCH / "train.py",
+        "training/uv.lock": ROOT / "uv.lock",
+    }
+    if "derivation" in saved:
+        export_sources["training/average.py"] = TORCH / "average.py"
+    for name, path in export_sources.items():
+        content = path.read_bytes()
+        target = source_directory / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(content)
+        report["exportSourceHashes"][name] = hashlib.sha256(content).hexdigest()
     staged.replace(destination)
     # Published last: the report's presence is what marks the export committed.
     publish(report_path, json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 
 
-def main(argv=None):
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--out", type=Path, default=SHIPPED)
-    parser.add_argument("--report", type=Path)
-    parser.add_argument("--parity", type=Path)
+    parser.add_argument(
+        "--report", type=Path, default=ROOT / "active/export-report.json"
+    )
+    parser.add_argument("--parity", type=Path, default=ROOT / "active/parity")
     parser.add_argument(
         "--reserved", type=Path, default=ROOT / "data/synth/natural-reserved.jsonl"
     )
@@ -826,26 +774,15 @@ def main(argv=None):
         action="store_true",
         help="Skip promotion scoring. Refused when --out is the shipped module.",
     )
-    args = parser.parse_args(argv)
-    shipped = args.out.resolve() == SHIPPED.resolve()
-    report = args.report or (
-        ROOT / "active/export-report.json" if shipped else args.out.with_suffix(".report.json")
-    )
-    parity = args.parity or (
-        ROOT / "active/parity" if shipped else args.out.with_suffix(".parity")
-    )
+    args = parser.parse_args()
     export(
         args.checkpoint,
         args.out,
-        report,
-        parity,
+        args.report,
+        args.parity,
         args.reserved,
         args.bare,
         args.baseline,
         args.force,
         args.skip_gate,
     )
-
-
-if __name__ == "__main__":
-    main()

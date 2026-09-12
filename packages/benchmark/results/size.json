@@ -20,9 +20,9 @@
   "results": [
     {
       "library": "gpu-time",
-      "bytes": 102896,
-      "gzipBytes": 48135,
-      "brotliBytes": 41337
+      "bytes": 103214,
+      "gzipBytes": 48228,
+      "brotliBytes": 41425
     },
     {
       "library": "chrono",

@@ -1,6 +1,6 @@
 {
   "status": "development",
-  "model": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
+  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
   "environment": {
     "browser": "152.0.7977.83",
     "cpu": "Apple M4 Max",
@@ -15,7 +15,7 @@
     "The four-input batch workload includes unsupported inputs. Reported thrown-error counts do not include silent partial parses or abstentions.",
     "Internal interpretation checks and direct-result fixtures are development checks. Sets overlap and are not a final independent accuracy benchmark.",
     "Cross-library resolved-date correctness, remaining external corpora, a broader gold set and Python batch throughput remain incomplete. Microsoft development agreement is reported separately; its test split remains reserved.",
-    "The complete gpu-time library exceeds its 30,000-byte Brotli budget."
+    "The frozen natural corpus has 24 oracle failures; pnpm benchmark stops at that check. These component results were refreshed separately without changing the corpus."
   ],
   "performance": [
     {
@@ -30,23 +30,23 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 71.81000000238419,
-          "p95Ms": 72.43999999761581,
+          "ms": 74.52000001072884,
+          "p95Ms": 74.76499998569489,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 13925.63709743488
+          "inputsPerSecond": 13419.216315835043
         },
         {
           "size": 10000,
-          "ms": 702.4450000226498,
-          "p95Ms": 707.2899999916553,
+          "ms": 728.5999999940395,
+          "p95Ms": 729.4050000011921,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 14235.990005875987
+          "inputsPerSecond": 13724.951962780411
         }
       ],
-      "initializationMs": 23.354999989271164,
-      "firstParseMs": 14.849999994039536
+      "initializationMs": 18.625,
+      "firstParseMs": 14.040000021457672
     },
     {
       "library": "gpu-time-webgpu",
@@ -54,29 +54,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.28999999165534973,
-        "p95Ms": 0.6099999845027924
+        "p50Ms": 0.3499999940395355,
+        "p95Ms": 0.6150000095367432
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 9.034999996423721,
-          "p95Ms": 10.895000010728836,
+          "ms": 14.50500002503395,
+          "p95Ms": 15.11499997973442,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 110680.68626406475
+          "inputsPerSecond": 68941.74410714344
         },
         {
           "size": 10000,
-          "ms": 82.6550000011921,
-          "p95Ms": 86.62000000476837,
+          "ms": 122.63999998569489,
+          "p95Ms": 122.7049999833107,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 120984.8164037962
+          "inputsPerSecond": 81539.46511061996
         }
       ],
-      "initializationMs": 19.875,
-      "firstParseMs": 4.419999986886978
+      "initializationMs": 10.665000021457672,
+      "firstParseMs": 3.594999998807907
     },
     {
       "library": "chrono",
@@ -84,29 +84,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.010000020265579224,
-        "p95Ms": 0.02000001072883606
+        "p50Ms": 0.014999985694885254,
+        "p95Ms": 0.025000005960464478
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 8.949999988079071,
-          "p95Ms": 9.549999982118607,
+          "ms": 9.530000001192093,
+          "p95Ms": 9.974999994039536,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 111731.84372423992
+          "inputsPerSecond": 104931.79432055734
         },
         {
           "size": 10000,
-          "ms": 82.81000000238419,
-          "p95Ms": 83.16499999165535,
+          "ms": 86.06000000238419,
+          "p95Ms": 87.6700000166893,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 120758.36251312752
+          "inputsPerSecond": 116198.0013911569
         }
       ],
-      "initializationMs": 176.80000001192093,
-      "firstParseMs": 9.389999985694885
+      "initializationMs": 12,
+      "firstParseMs": 9.450000017881393
     },
     {
       "library": "compromise",
@@ -114,29 +114,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 1.2900000214576721,
-        "p95Ms": 1.6149999797344208
+        "p50Ms": 1.4350000023841858,
+        "p95Ms": 1.969999998807907
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 561.3700000047684,
-          "p95Ms": 570.1399999856949,
+          "ms": 590,
+          "p95Ms": 600.0300000011921,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1781.3563246904998
+          "inputsPerSecond": 1694.915254237288
         },
         {
           "size": 10000,
-          "ms": 5685.780000001192,
-          "p95Ms": 5715.450000017881,
+          "ms": 6017.8550000190735,
+          "p95Ms": 6040.185000002384,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1758.773642314318
+          "inputsPerSecond": 1661.7216599549683
         }
       ],
-      "initializationMs": 248.24500000476837,
-      "firstParseMs": 16.205000013113022
+      "initializationMs": 66.93500000238419,
+      "firstParseMs": 16.540000021457672
     },
     {
       "library": "rrule",
@@ -150,23 +150,23 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 1.4350000023841858,
-          "p95Ms": 1.5349999964237213,
+          "ms": 1.5,
+          "p95Ms": 1.6500000059604645,
           "samples": 3,
           "failures": 250,
-          "inputsPerSecond": 696864.1103404505
+          "inputsPerSecond": 666666.6666666666
         },
         {
           "size": 10000,
-          "ms": 12.944999992847443,
-          "p95Ms": 14.03999999165535,
+          "ms": 13.219999998807907,
+          "p95Ms": 14.540000021457672,
           "samples": 3,
           "failures": 2500,
-          "inputsPerSecond": 772499.0348030393
+          "inputsPerSecond": 756429.6521105699
         }
       ],
-      "initializationMs": 193.10499998927116,
-      "firstParseMs": 0.23499998450279236
+      "initializationMs": 5.770000010728836,
+      "firstParseMs": 0.23999997973442078
     },
     {
       "library": "recognizers",
@@ -174,29 +174,29 @@
       "single": {
         "text": "next Monday at 2pm",
         "samples": 100,
-        "p50Ms": 0.5300000011920929,
-        "p95Ms": 0.6649999916553497
+        "p50Ms": 0.5499999821186066,
+        "p95Ms": 0.7099999785423279
       },
       "batches": [
         {
           "size": 1000,
-          "ms": 572.0900000035763,
-          "p95Ms": 572.9650000035763,
+          "ms": 585.8550000190735,
+          "p95Ms": 597.9849999845028,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1747.976716939203
+          "inputsPerSecond": 1706.9069991165788
         },
         {
           "size": 10000,
-          "ms": 5704.170000016689,
-          "p95Ms": 5719.504999995232,
+          "ms": 5895.8949999809265,
+          "p95Ms": 5956.510000020266,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1753.103431344217
+          "inputsPerSecond": 1696.0953341320276
         }
       ],
-      "initializationMs": 305.2849999964237,
-      "firstParseMs": 59.50499999523163
+      "initializationMs": 81.00499999523163,
+      "firstParseMs": 61.84000000357628
     },
     {
       "library": "later",
@@ -210,31 +210,31 @@
       "batches": [
         {
           "size": 1000,
-          "ms": 0.875,
-          "p95Ms": 0.8850000202655792,
+          "ms": 0.8700000047683716,
+          "p95Ms": 0.875,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1142857.142857143
+          "inputsPerSecond": 1149425.2810564518
         },
         {
           "size": 10000,
-          "ms": 6.805000007152557,
-          "p95Ms": 6.8299999833106995,
+          "ms": 7.090000003576279,
+          "p95Ms": 7.125,
           "samples": 3,
           "failures": 0,
-          "inputsPerSecond": 1469507.713370942
+          "inputsPerSecond": 1410437.2348315774
         }
       ],
-      "initializationMs": 257.0150000154972,
-      "firstParseMs": 0.2849999964237213
+      "initializationMs": 4.780000001192093,
+      "firstParseMs": 0.28999999165534973
     }
   ],
   "sizes": [
     {
       "library": "gpu-time",
-      "bytes": 87370,
-      "gzipBytes": 41379,
-      "brotliBytes": 35562,
+      "bytes": 103214,
+      "gzipBytes": 48228,
+      "brotliBytes": 41425,
       "name": "gpu-time"
     },
     {
@@ -273,6 +273,11 @@
       "name": "Later"
     }
   ],
+  "sizeGate": {
+    "limitBytes": 50000,
+    "withinBudget": true,
+    "brotliBytes": 40784
+  },
   "structure": [
     {
       "name": "adversarial",
@@ -300,9 +305,9 @@
     },
     {
       "name": "negatives",
-      "total": 32,
-      "correct": 32,
-      "accuracy": 1
+      "total": 192,
+      "correct": 187,
+      "accuracy": 0.9739583333333334
     },
     {
       "name": "grammar-variations",
@@ -312,13 +317,19 @@
     },
     {
       "name": "prose",
-      "total": 72,
-      "correct": 72,
+      "total": 73,
+      "correct": 73,
       "accuracy": 1
+    },
+    {
+      "name": "chat",
+      "total": 330,
+      "correct": 273,
+      "accuracy": 0.8272727272727273
     }
   ],
   "parity": {
-    "model": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
+    "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
     "browser": "152.0.7977.83",
     "lifecycle": {
       "concurrent": true,
@@ -334,8 +345,8 @@
     },
     "sequences": 10000,
     "pythonSequences": 512,
-    "tokensCompared": 115136,
-    "maxError": 0.000014394521713256836,
+    "tokensCompared": 121678,
+    "maxError": 0.000015735626220703125,
     "pythonMaxError": 0.0000095367431640625,
     "labelMismatches": 0,
     "boundaryMismatches": 0,
@@ -351,13 +362,24 @@
   "external": {
     "name": "Microsoft Recognizers development",
     "total": 563,
-    "correct": 167,
-    "accuracy": 0.2966252220248668,
+    "correct": 202,
+    "accuracy": 0.35879218472468916,
     "reservedTestCases": 134
   },
   "semantic": {
     "total": 5000,
-    "correct": 4972,
-    "accuracy": 0.9944
+    "correct": 4999,
+    "accuracy": 0.9998
+  },
+  "naturalSchedules": {
+    "total": 1000,
+    "correct": 962,
+    "sourceSha256": "51cb7ed304f1786d3c941cc35b3ba3e71ef5f2c736220cebcf59cff712a54011",
+    "oracleCorrect": 976
+  },
+  "reservedSchedules": {
+    "total": 1000,
+    "correct": 1000,
+    "sourceSha256": "ed9778e18f6aed9894bf26d1b46a367e3c6583bd0b40598815110f3e71b3ddb7"
   }
 }

@@ -1,4 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { expect, it } from "vitest";
 import { inferRows } from "../src/model/cpu.js";
 import { roundHalfFallback } from "../src/model/half.js";
@@ -78,6 +79,11 @@ it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
     `${import.meta.dirname}/../../training/results/parity-cpu.json`,
     JSON.stringify(
       {
+        model: createHash("sha256")
+          .update(
+            readFileSync(`${import.meta.dirname}/../src/model/weights.gen.ts`),
+          )
+          .digest("hex"),
         sequences: offsets.length - 1,
         tokens: offsets.at(-1),
         labelMismatches,

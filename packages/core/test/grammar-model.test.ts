@@ -32,14 +32,10 @@ afterAll(() => parser.dispose());
 // Gold is right, model is behind. Runs under it.fails so a retrain that
 // closes one turns red and the id comes off the list.
 const knownGaps = new Set([
-  "negative-050",
   "negative-068",
   "negative-074",
-  "negative-086",
   "negative-096",
-  "negative-106",
   "negative-121",
-  "negative-139",
   "negative-140",
 ]);
 const isGap = (example: Example) => knownGaps.has(example.id);

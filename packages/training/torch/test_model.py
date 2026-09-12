@@ -2,7 +2,7 @@ import unittest
 
 import torch
 
-from export import decide, override
+from export import decide, override, family_guards, synthetic
 from model import PADDING_ROW, TimeTagger, affine_scan, crf_nll
 
 
@@ -143,7 +143,7 @@ class ModelTests(unittest.TestCase):
 
 
 class PromotionGateTests(unittest.TestCase):
-    """Promotion is decided by pooled hand-authored gold accuracy."""
+    """A gain cannot hide a regression in another development set or family."""
 
     def gold(self, correct, total=100):
         return {"prose": {"total": total, "correct": correct}}
@@ -158,14 +158,59 @@ class PromotionGateTests(unittest.TestCase):
         self.assertTrue(decision["accepted"])
         self.assertAlmostEqual(decision["improvement"], 0.05)
 
-    def test_noise_sized_regression_ships(self):
+    def test_one_lost_example_is_rejected(self):
         decision = decide(self.gold(89), self.gold(90), [])
-        self.assertTrue(decision["accepted"])
+        self.assertFalse(decision["accepted"])
+
+    def test_pooled_gain_cannot_hide_a_set_regression(self):
+        candidate = {**self.gold(100), "chat": {"total": 330, "correct": 269}}
+        baseline = {**self.gold(90), "chat": {"total": 330, "correct": 270}}
+        self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_small_set_regression_is_rejected(self):
+        self.assertFalse(decide(self.gold(2, 3), self.gold(3, 3), [])["accepted"])
+
+    def test_family_regression_is_rejected_even_when_set_improves(self):
+        candidate, baseline = self.gold(95), self.gold(90)
+        candidate["prose"]["families"] = {"question": {"total": 20, "correct": 18}}
+        baseline["prose"]["families"] = {"question": {"total": 20, "correct": 19}}
+        self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_changed_corpus_is_rejected(self):
+        candidate, baseline = self.gold(95), self.gold(90)
+        candidate["prose"]["sha256"] = "new"
+        baseline["prose"]["sha256"] = "old"
+        self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_reserved_carriers_require_strict_improvement(self):
+        counts = {"total": 1000, "correct": 983, "families": {}}
+        self.assertFalse(synthetic(counts, counts)["accepted"])
+
+    def test_reserved_carriers_allow_a_tie_at_the_ceiling(self):
+        counts = {"total": 1000, "correct": 1000, "families": {
+            "clock": {"total": 1000, "correct": 1000},
+        }}
+        self.assertTrue(synthetic(counts, counts)["accepted"])
+
+    def test_perfect_baseline_still_rejects_regressions_and_changed_corpora(self):
+        baseline = {"total": 1000, "correct": 1000, "families": {}, "sha256": "same"}
+        for candidate in (
+            {**baseline, "correct": 999},
+            {**baseline, "sha256": "different"},
+            {**baseline, "total": 1001},
+        ):
+            with self.subTest(candidate=candidate):
+                self.assertFalse(synthetic(candidate, baseline)["accepted"])
+
+    def test_reserved_family_cannot_regress(self):
+        candidate = {"families": {"clock": {"total": 59, "correct": 58}}}
+        baseline = {"families": {"clock": {"total": 59, "correct": 59}}}
+        self.assertFalse(family_guards(candidate, baseline)[0]["passed"])
 
     def test_significant_regression_is_rejected(self):
         decision = decide(self.gold(60), self.gold(90), [])
         self.assertFalse(decision["accepted"])
-        self.assertEqual(decision["failures"], ["gold schedules: regression"])
+        self.assertIn("gold prose: regression", decision["failures"])
 
     def test_changed_row_counts_are_rejected(self):
         decision = decide(self.gold(90, 100), self.gold(90, 99), [])
@@ -174,13 +219,13 @@ class PromotionGateTests(unittest.TestCase):
     def test_a_missing_baseline_blocks(self):
         decision = decide(self.gold(90), None, ["no pinned baseline"])
         self.assertFalse(decision["accepted"])
-        self.assertIsNone(decision["guard"])
+        self.assertNotIn("guard", decision)
 
     def test_force_records_what_it_overrode(self):
         forced = override(decide(self.gold(60), self.gold(90), []))
         self.assertTrue(forced["accepted"])
         self.assertEqual(forced["failures"], [])
-        self.assertEqual(forced["overriddenFailures"], ["gold schedules: regression"])
+        self.assertIn("gold prose: regression", forced["overriddenFailures"])
         self.assertEqual(forced["overriddenCriterion"], "gold-schedule-accuracy")
 
 

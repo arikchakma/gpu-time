@@ -23,7 +23,7 @@ The promoted model has 34,553 parameters, int6 weights, and f32 intermediates. 1
 1. Sparse token features are summed into one learned vector per token.
 2. Learned affine state updates scan the sequence in both directions, giving every token context within its input window. The browser kernel evaluates these scans in parallel blocks and carries exact block prefixes, so block boundaries do not reset context.
 3. A classifier produces 40 output slots: 35 named semantic roles plus 5 reserved. The roles cover clock hours and minutes, meridiem, weekday, month, ordinal, year, quantity and unit, recurrence markers, range separators, bounds, exceptions, and filler. A `CLOCK_OFFSET` role distinguishes half and quarter clock arithmetic.
-4. A boundary score per token cuts the sequence into independent expressions at threshold 0.0, so one input can yield several schedules.
+4. A boundary score per token cuts the sequence into independent expressions at threshold 1.5, so one input can yield several schedules.
 
 Timezone has no role in the model. TypeScript computes timezone arithmetic after the model runs.
 
@@ -39,7 +39,7 @@ The resolver then turns a schedule into instants. Calendar days and weeks preser
 
 ## Model representation
 
-The training exporter writes 6-bit symmetric per-tensor weights to `packages/core/src/model/weights.gen.ts`. Its SHA-256 hash must match `packages/training/active/export-report.json`. The active report records 25,915 logical packed bytes and 19,051 Brotli bytes for the weight module. The full package must pass the 50,000-byte Brotli release limit.
+The training exporter writes 6-bit symmetric per-tensor weights to `packages/core/src/model/weights.gen.ts`. Its SHA-256 hash must match `packages/training/active/export-report.json`. The active report records 25,915 logical packed bytes and 19,036 Brotli bytes for the weight module. The full package must pass the 50,000-byte Brotli release limit.
 
 The WGSL kernel in `src/model/kernel.wgsl` is specialized at build time: `src/model/shader-source.ts` splices model constants into it, `wgslender` minifies the result, and the build inlines the minified shader and the trimmed weight table directly into the JavaScript bundle. The `.wgsl` file never ships. For f16 storage the build emits two shader variants, with and without native half support.
 
@@ -55,10 +55,10 @@ Each epoch draws fresh examples. The structural holdout and the unseen-sentence-
 
 The model learns to distinguish time expressions from surrounding prose. `background.py` combines carrier phrases, and filtered Tatoeba sentences supply additional background. Every borrowed token receives the filler label `O`. The filter removes known time words and number patterns that resemble dates or times.
 
-Every run snapshots its source files and their hashes into `runs/<run>/source/`, so an exported checkpoint can be traced to the exact generator and tokenizer that produced it. Export records that lineage in `active/export-report.json` and `active/provenance.json`; `pnpm --filter @gpu-time/training audit:model` re-verifies the chain. Export is also gated, and the gate is deliberately not generated data: a candidate ships only if its pooled exact-schedule accuracy on the hand-authored gold sets, scored through the built TypeScript package against the shipped weights, is no worse than the baseline's within a two-proportion tolerance. A tie ships. The reserved-carrier and bare-expression scores are still recorded on every export as non-blocking telemetry. See `MODEL_CARD.md` for the decision and the metrics involved.
+Every run snapshots its sources and hashes. Export records lineage in `active/export-report.json` and `active/provenance.json`; `pnpm model:audit` checks it when the local checkpoints and history are available. A clean clone can check inference parity from committed fixtures, but cannot reproduce the full checkpoint audit. The promoted `balanced-prose` averages compatible old and retrained weights, recording both parent hashes and coefficients and counting shared ancestors once. Evaluation uses Viterbi, including quantized transitions. Export requires no gold set or family regression through the built package, reserved-carrier improvement (or a tie at a perfect baseline) without family loss, and preserved bare expressions. These development gates do not establish real-user accuracy. See `MODEL_CARD.md` for metrics and remaining tradeoffs.
 
 ## Performance boundaries
 
 WebGPU helps for warm, large, or batched inputs. Explicit WebGPU mode initializes the device during parser creation. Automatic mode waits until a batch needs it. Later calls reuse GPU resources. The runtime returns values to JavaScript, so it pays one readback synchronization per dispatch.
 
-Automatic mode keeps small inputs on the CPU to reduce dispatch overhead. The recorded warm medians over 10,000 inputs are 163.4 ms on WebGPU and 755.5 ms on CPU. Tokenization, inference, and resolution are timed separately and reported in the `timings` field.
+Automatic mode keeps small inputs on the CPU to reduce dispatch overhead. The recorded warm medians over 10,000 inputs are 122.6 ms on WebGPU and 728.6 ms on CPU. Viterbi discards a predecessor only when its best possible transition loses to a proven lower bound; ties and f32 step rounding are preserved. Tokenization, inference, and resolution are timed separately and reported in the `timings` field.

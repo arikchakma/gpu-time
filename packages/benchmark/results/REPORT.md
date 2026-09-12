@@ -1,6 +1,6 @@
 # gpu-time benchmark results
 
-Recorded development measurements. The source reports identify different model versions, so these results do not describe one current-model run.
+Development measurements from real executions. This report does not establish a general accuracy ranking.
 Public date/range fixtures: **18/18** exact results, including recurrence and daylight-saving transitions.
 gpu-time timing includes its public date-resolution and recurrence-preview work. Other libraries retain their native output contracts.
 
@@ -14,43 +14,43 @@ Each batch size has one warmup and three measurements. The table reports median 
 
 | Library | Single p50 (µs) | Single p95 (µs) | 1,000 inputs (ms) | 10,000 inputs (ms) | Throws / 10,000 | Single returned output |
 |---|---:|---:|---:|---:|---:|---|
-| gpu-time CPU | 110.0 | 135.0 | 71.81 | 702.45 | 0 | Yes |
-| gpu-time WebGPU | 290.0 | 610.0 | 9.03 | 82.66 | 0 | Yes |
-| Chrono (English) | 10.0 | 20.0 | 8.95 | 82.81 | 0 | Yes |
-| Compromise + dates | 1290.0 | 1615.0 | 561.37 | 5685.78 | 0 | Yes |
-| rrule | <5 | 5.0 | 1.44 | 12.94 | 2500 | No |
-| Microsoft Recognizers | 530.0 | 665.0 | 572.09 | 5704.17 | 0 | Yes |
-| Later | <5 | 5.0 | 0.88 | 6.81 | 0 | No |
+| gpu-time CPU | 110.0 | 135.0 | 74.52 | 728.60 | 0 | Yes |
+| gpu-time WebGPU | 350.0 | 615.0 | 14.51 | 122.64 | 0 | Yes |
+| Chrono (English) | 15.0 | 25.0 | 9.53 | 86.06 | 0 | Yes |
+| Compromise + dates | 1435.0 | 1970.0 | 590.00 | 6017.86 | 0 | Yes |
+| rrule | <5 | 5.0 | 1.50 | 13.22 | 2500 | No |
+| Microsoft Recognizers | 550.0 | 710.0 | 585.86 | 5895.89 | 0 | Yes |
+| Later | <5 | 5.0 | 0.87 | 7.09 | 0 | No |
 
 A zero-duration sample is below the isolated browser timer's 5 µs resolution, displayed as <5. Native caches remain enabled. Returning output does not imply correctness.
 
 ## Independent source cases
 
-Microsoft Recognizers development: **167/563 (29.66%)** strict agreement with upstream future civil dates and intervals. These expected values come from upstream specifications, not gpu-time.
+Microsoft Recognizers development: **202/563 (35.88%)** strict agreement with upstream future civil dates and intervals. These expected values come from upstream specifications, not gpu-time.
 
 The corpus is pinned to [da7edcff59f6](https://github.com/microsoft/Recognizers-Text/tree/da7edcff59f669b2a460ab9d400e36298f0d658e/Specs/DateTime/English). 134 grouped cases remain reserved and are not evaluated here. No mismatches are removed as policy differences. Component-specific empty results are not treated as global negative sentences. Symbolic SET/duration values without concrete dates are listed among exclusions.
 
 | Source component | Exact resolved results |
 |---|---:|
-| DateParser | 49/113 |
-| TimeParser | 29/73 |
-| TimePeriodParser | 38/60 |
-| DateTimeParser | 13/53 |
-| DatePeriodParser | 24/190 |
-| DateTimePeriodParser | 14/74 |
+| DateParser | 65/113 |
+| TimeParser | 36/73 |
+| TimePeriodParser | 39/60 |
+| DateTimeParser | 22/53 |
+| DatePeriodParser | 23/190 |
+| DateTimePeriodParser | 17/74 |
 
 | Failure stage | Cases |
 |---|---:|
-| value-mismatch | 137 |
-| matches-upstream-past | 22 |
-| correct | 167 |
-| interpretation-failed | 194 |
-| no-result | 39 |
-| resolution-error | 4 |
+| value-mismatch | 182 |
+| correct | 202 |
+| interpretation-failed | 130 |
+| matches-upstream-past | 1 |
+| no-result | 43 |
+| resolution-error | 5 |
 
-Matches to an upstream past interpretation remain failures in the strict future score. Interpretation failures can come from wrong model roles or missing compiler support. The failure stage alone does not identify the cause.
+Matches to an upstream past interpretation remain failures in the strict future score. Assembly failures can come from incorrect model roles or missing assembler support; the stage alone does not attribute the cause.
 
-The separate synthetic AST check scores **4972/5000**. Its expected ASTs are sampled before rendering, and all 5000 renderer/oracle pairs pass compiler equality. Fresh values share training rendering families, so this is a development check rather than independent language accuracy.
+The separate synthetic AST check scores **4999/5000**. Its expected ASTs are sampled before rendering, and all 5000 renderer/oracle pairs pass compiler equality. Fresh values share training rendering families, so this is a development check rather than independent language accuracy.
 
 
 ## Python parsing time
@@ -59,10 +59,10 @@ In-process native parsing, ten warmups and 100 samples. Exceptions are captured,
 
 | Library | Version | Single p50 (µs) | Single p95 (µs) |
 |---|---|---:|---:|
-| dateparser | 1.4.3 | 4155.1 | 4515.4 |
-| parsedatetime | 2.6 | 18.5 | 19.8 |
-| recurrent | 0.4.1 | 152.6 | 166.0 |
-| timefhuman | 0.1.5 | 5.3 | 5.9 |
+| dateparser | 1.4.3 | 4238.4 | 4781.4 |
+| parsedatetime | 2.6 | 18.7 | 20.1 |
+| recurrent | 0.4.1 | 153.8 | 191.5 |
+| timefhuman | 0.1.5 | 5.2 | 5.5 |
 
 ## Browser bundle size
 
@@ -70,9 +70,11 @@ Standalone minified browser ESM bundles, gzip level 9, Brotli quality 11. Exact 
 
 All gpu-time runtime exports, its resolver and trained weights are included. Different libraries provide different language coverage and output contracts. Exact imports and locked dependencies are recorded in [size.json](size.json).
 
+The release artifact uses 40,784 of its 50,000-byte Brotli budget (passed). This gate measures the published entry directly; comparison bundles below are rebundled with the recorded import expressions.
+
 | Library | Minified bytes | Gzip bytes | Brotli bytes |
 |---|---:|---:|---:|
-| gpu-time | 87370 | 41379 | 35562 |
+| gpu-time | 103214 | 48228 | 41425 |
 | Chrono (English) | 45491 | 13258 | 11848 |
 | Compromise + dates | 487957 | 179679 | 156071 |
 | rrule | 45944 | 13663 | 12380 |
@@ -89,11 +91,12 @@ Exact AST equality from the shipped CPU model, without oracle labels. These fixt
 | user-cases | 3 / 3 |
 | labels | 26 / 26 |
 | grammar | 115 / 115 |
-| negatives | 32 / 32 |
+| negatives | 187 / 192 |
 | grammar-variations | 314 / 314 |
-| prose | 72 / 72 |
+| prose | 73 / 73 |
+| chat | 273 / 330 |
 
-The recorded `terse-f32` WebGPU results match CPU labels and clause boundaries on 10,000 sequences (115,136 non-space tokens), with 0 role mismatches and 0 boundary mismatches. Direct PyTorch comparison covers 512 sequences. Maximum GPU/PyTorch logit error: 0.0000095367431640625. Real device destruction and recovery also passed.
+WebGPU matches CPU labels and clause boundaries on 10,000 sequences (121,678 non-space tokens), with 0 role mismatches and 0 boundary mismatches. Direct PyTorch comparison covers 512 sequences. Maximum GPU/PyTorch logit error: 0.0000095367431640625. Real device destruction and recovery also passed.
 
 ## Actual adversarial outputs
 
@@ -266,7 +269,7 @@ Normalized occurrences/rules are shown when the adapter can represent them. Othe
 | gpu-time CPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | gpu-time WebGPU | `{"occurrences":[{"start":"2026-09-10T09:00:00+06:00","allDay":false,"end":"2026-09-10T12:00:00+06:00"}],"rrules":[]}` |
 | Chrono (English) | `{"occurrences":[{"start":"2026-09-09T06:00:00.000Z","end":"2026-09-10T03:00:00.000Z"}],"rrules":null}` |
-| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:15:25.839+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":15},"unit":"time"}],"rrules":null}` |
+| Compromise + dates | `{"occurrences":[{"start":"2026-09-09T09:00:00.000+06:00","end":"2026-09-09T18:51:08.059+06:00","timezone":"Etc/GMT-6","duration":{"years":0,"months":0,"days":0,"hours":9,"minutes":51},"unit":"time"}],"rrules":null}` |
 | rrule | `"Error: expected every but found friday"` |
 | Microsoft Recognizers | `[{"start":0,"end":15,"resolution":{"values":[{"timex":"(T09,T12,PT3H)","type":"timerange","start":"09:00:00","end":"12:00:00"}]},"text":"from 9am to noon","typeName":"datetimeV2.timerange"}]` |
 | Later | `{"schedules":[],"exceptions":[],"error":0}` |
@@ -505,4 +508,4 @@ Normalized occurrences/rules are shown when the adapter can represent them. Othe
 - The four-input batch workload includes unsupported inputs. Reported thrown-error counts do not include silent partial parses or abstentions.
 - Internal interpretation checks and direct-result fixtures are development checks. Sets overlap and are not a final independent accuracy benchmark.
 - Cross-library resolved-date correctness, remaining external corpora, a broader gold set and Python batch throughput remain incomplete. Microsoft development agreement is reported separately; its test split remains reserved.
-- The current release limit is 50,000 Brotli bytes. The table preserves the recorded size measurement.
+- The frozen natural corpus has 24 oracle failures; pnpm benchmark stops at that check. These component results were refreshed separately without changing the corpus.

@@ -1,40 +1,45 @@
 {
-  "model": "a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d",
+  "model": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
   "generatedWeightsHashMatches": true,
-  "matchingExportFiles": 5,
+  "matchingExportFiles": 6,
   "results": [
+    {
+      "checkpoint": "runs/balanced-prose/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 1
+    },
     {
       "checkpoint": "runs/step7-crf2/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf3/best.pt",
+      "checkpoint": "runs/step5-keepo-crf3/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf/best.pt",
+      "checkpoint": "runs/step5-keepo-crf/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step3-580b/best.pt",
+      "checkpoint": "runs/step3-580b/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/rows580/best.pt",
+      "checkpoint": "runs/rows580/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/carrier-warm580/best.pt",
+      "checkpoint": "runs/carrier-warm580/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/carrier-int5/best.pt",
+      "checkpoint": "runs/carrier-int5/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10,
       "skippedDatasetInputs": [
@@ -43,6 +48,21 @@
           "recordedSha256": "fe2d10f8fba16adcfd579c30b025deafccf2e12975c5f482be1f27fca7f12f69"
         }
       ]
+    },
+    {
+      "checkpoint": "runs/prose-coverage/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/contrast-coverage/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/carrier-consistent/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
     }
   ]
 }

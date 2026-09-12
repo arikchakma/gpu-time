@@ -1,24 +1,24 @@
 {
-  "checkpoint": "runs/step7-crf2/best.pt",
-  "checkpointSha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
-  "artifactSha256": "a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d",
-  "boundaryThreshold": 0.0,
+  "checkpoint": "packages/training/runs/balanced-prose/best.pt",
+  "checkpointSha256": "d08aace000bce08b5b5a56a31646b0326c1607a52fd104d4f6a61295cd80e895",
+  "artifactSha256": "2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467",
+  "boundaryThreshold": 1.5,
   "calibration": {
-    "threshold": 0.0,
+    "threshold": 1.5,
     "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
     "grid": [
       {
         "threshold": 0.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 640,
-            "falsePositive": 0,
+            "f1": 0.9992684711046086,
+            "truePositive": 683,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -28,14 +28,14 @@
         "threshold": 0.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 640,
-            "falsePositive": 0,
+            "f1": 0.9992684711046086,
+            "truePositive": 683,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -45,14 +45,14 @@
         "threshold": 0.5,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 640,
-            "falsePositive": 0,
+            "f1": 0.9992684711046086,
+            "truePositive": 683,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -62,14 +62,14 @@
         "threshold": 0.75,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 640,
-            "falsePositive": 0,
+            "f1": 0.9992684711046086,
+            "truePositive": 683,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -79,14 +79,14 @@
         "threshold": 1.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 640,
-            "falsePositive": 0,
+            "f1": 0.9992684711046086,
+            "truePositive": 683,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -96,14 +96,14 @@
         "threshold": 1.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 640,
-            "falsePositive": 0,
+            "f1": 0.9992684711046086,
+            "truePositive": 683,
+            "falsePositive": 1,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -114,13 +114,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -131,13 +131,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -148,13 +148,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -165,13 +165,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -182,13 +182,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -199,13 +199,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -216,13 +216,13 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 640,
+            "truePositive": 683,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -232,14 +232,14 @@
         "threshold": 3.25,
         "metrics": {
           "validation": {
-            "f1": 0.9992181391712275,
-            "truePositive": 639,
+            "f1": 1.0,
+            "truePositive": 683,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -249,14 +249,14 @@
         "threshold": 3.5,
         "metrics": {
           "validation": {
-            "f1": 0.9992181391712275,
-            "truePositive": 639,
+            "f1": 1.0,
+            "truePositive": 683,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -266,14 +266,14 @@
         "threshold": 3.75,
         "metrics": {
           "validation": {
-            "f1": 0.9984350547730829,
-            "truePositive": 638,
+            "f1": 1.0,
+            "truePositive": 683,
             "falsePositive": 0,
-            "falseNegative": 2
+            "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -283,14 +283,14 @@
         "threshold": 4.0,
         "metrics": {
           "validation": {
-            "f1": 0.9984350547730829,
-            "truePositive": 638,
+            "f1": 1.0,
+            "truePositive": 683,
             "falsePositive": 0,
-            "falseNegative": 2
+            "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -300,14 +300,14 @@
         "threshold": 4.25,
         "metrics": {
           "validation": {
-            "f1": 0.9984350547730829,
-            "truePositive": 638,
+            "f1": 1.0,
+            "truePositive": 683,
             "falsePositive": 0,
-            "falseNegative": 2
+            "falseNegative": 0
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -317,14 +317,14 @@
         "threshold": 4.5,
         "metrics": {
           "validation": {
-            "f1": 0.9984350547730829,
-            "truePositive": 638,
+            "f1": 0.9992673992673993,
+            "truePositive": 682,
             "falsePositive": 0,
-            "falseNegative": 2
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -334,14 +334,14 @@
         "threshold": 4.75,
         "metrics": {
           "validation": {
-            "f1": 0.9976507439310884,
-            "truePositive": 637,
+            "f1": 0.9992673992673993,
+            "truePositive": 682,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -351,14 +351,14 @@
         "threshold": 5.0,
         "metrics": {
           "validation": {
-            "f1": 0.9976507439310884,
-            "truePositive": 637,
+            "f1": 0.9992673992673993,
+            "truePositive": 682,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
             "f1": 1.0,
-            "truePositive": 571,
+            "truePositive": 607,
             "falsePositive": 0,
             "falseNegative": 0
           }
@@ -366,9 +366,15 @@
       }
     ]
   },
-  "epoch": 15,
-  "tokensSeenAtCheckpoint": 724460578,
+  "epoch": 0,
+  "tokensSeenAtCheckpoint": 826157103,
   "lineage": [
+    {
+      "checkpoint": "runs/balanced-prose/best.pt",
+      "sha256": "d08aace000bce08b5b5a56a31646b0326c1607a52fd104d4f6a61295cd80e895",
+      "epoch": 0,
+      "trainingTokens": 0
+    },
     {
       "checkpoint": "runs/step7-crf2/best.pt",
       "sha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
@@ -376,42 +382,75 @@
       "trainingTokens": 109597623
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf3/best.pt",
+      "checkpoint": "runs/step5-keepo-crf3/best.pt",
       "sha256": "87d12f6d54f961a898da71737d292e245c00ba47e4562f90f497f62a5d232997",
       "epoch": 16,
       "trainingTokens": 117829340
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf/best.pt",
+      "checkpoint": "runs/step5-keepo-crf/best.pt",
       "sha256": "8af1652365e0b1ed30ef32c202755e9c2e82431921cc6590ab3a6df3f4962994",
       "epoch": 19,
       "trainingTokens": 139644957
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step3-580b/best.pt",
+      "checkpoint": "runs/step3-580b/best.pt",
       "sha256": "a08402a20a2197ac3c5936a4986ac01599ac4dd6b0924de32ee83ae185bcfdf6",
       "epoch": 16,
       "trainingTokens": 121173596
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/rows580/best.pt",
+      "checkpoint": "runs/rows580/best.pt",
       "sha256": "424cc4946ae47930304603acbad046429270486637ba37c396dd22c486a24cce",
       "epoch": 18,
       "trainingTokens": 124053478
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/carrier-warm580/best.pt",
+      "checkpoint": "runs/carrier-warm580/best.pt",
       "sha256": "0bea26fa7d4b1de10dc40ab226f7c229d04e6a0111ace28319b583cbc184f6c7",
       "epoch": 9,
       "trainingTokens": 63234444
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/carrier-int5/best.pt",
+      "checkpoint": "runs/carrier-int5/best.pt",
       "sha256": "b17543faa038fdd62654852998afb56cface06159a5b1658ffcdeed65972efa8",
       "epoch": 7,
       "trainingTokens": 48927140
+    },
+    {
+      "checkpoint": "runs/prose-coverage/best.pt",
+      "sha256": "85d4ea59e7fd9f264b60ef83f461fd84a4f9b6d2a0f6834485e1e18661ec3263",
+      "epoch": 6,
+      "trainingTokens": 43396862
+    },
+    {
+      "checkpoint": "runs/contrast-coverage/best.pt",
+      "sha256": "73d7a906f4bfeae8cae97490895665a817f31f61fd4c3fdc9be6d91cc045ba82",
+      "epoch": 4,
+      "trainingTokens": 29063447
+    },
+    {
+      "checkpoint": "runs/carrier-consistent/best.pt",
+      "sha256": "c42c6fa2cbb4ea1d7a59deedd9e9062c7fd26ba8751dbf78335f28c70034a087",
+      "epoch": 4,
+      "trainingTokens": 29236216
     }
   ],
+  "derivation": {
+    "method": "weighted-checkpoint-average",
+    "parents": [
+      {
+        "checkpoint": "runs/step7-crf2/best.pt",
+        "sha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
+        "coefficient": 0.75
+      },
+      {
+        "checkpoint": "runs/prose-coverage/best.pt",
+        "sha256": "85d4ea59e7fd9f264b60ef83f461fd84a4f9b6d2a0f6834485e1e18661ec3263",
+        "coefficient": 0.25
+      }
+    ]
+  },
   "parameters": 34553,
   "quantizationBits": 6,
   "quantizationScheme": "tensor",
@@ -423,8 +462,8 @@
   "logicalPackedBytes": 25915,
   "encodedCharacters": 34553,
   "moduleBytes": 36975,
-  "moduleGzipBytes": 21974,
-  "moduleBrotliBytes": 19051,
+  "moduleGzipBytes": 21944,
+  "moduleBrotliBytes": 19036,
   "labels": [
     "O",
     "NUM",
@@ -464,37 +503,37 @@
   ],
   "metrics": {
     "validation": {
-      "tokens": 137981,
+      "tokens": 139316,
       "sequences": 10000,
-      "tokenAccuracy": 0.9994854364006639,
-      "exactLabelAndBoundarySequence": 0.9933,
+      "tokenAccuracy": 0.998069137787476,
+      "exactLabelAndBoundarySequence": 0.9804,
       "boundaryPrecision": 1.0,
       "boundaryRecall": 1.0,
       "boundaryF1": 1.0,
       "boundaryCounts": {
-        "truePositive": 640,
+        "truePositive": 683,
         "falsePositive": 0,
         "falseNegative": 0
       }
     },
     "heldout": {
-      "tokens": 122991,
+      "tokens": 121678,
       "sequences": 10000,
-      "tokenAccuracy": 0.9957720483612622,
-      "exactLabelAndBoundarySequence": 0.9547,
+      "tokenAccuracy": 0.9957428623087164,
+      "exactLabelAndBoundarySequence": 0.9622,
       "boundaryPrecision": 1.0,
       "boundaryRecall": 1.0,
       "boundaryF1": 1.0,
       "boundaryCounts": {
-        "truePositive": 571,
+        "truePositive": 607,
         "falsePositive": 0,
         "falseNegative": 0
       }
     }
   },
   "corpora": {
-    "validation": "2912631a9c895ed757f4d60ca437c792f94455189ab731f8a2b8557c710cf1f6",
-    "heldout": "cf6eeb742d8650d58a02c03e9d02f1ff281788ab6b3e4a5f70fc6b60879c35c3",
+    "validation": "72b1be7caaf524fb4ecb8208cdbae3b3dc0bc3f097c655a5443b5868f78a760f",
+    "heldout": "ea3e37421c37f828e7f99dc1c62268d373dfe6ca280978b96d2abc5bc483cb32",
     "reservedCarrier": "08dac1e495d0dc25ce32793de03e969bb9861264a482983797edd48dcb11998a"
   },
   "promotion": {
@@ -507,6 +546,272 @@
       "user-cases"
     ],
     "candidate": {
+      "total": 623,
+      "correct": 561,
+      "sets": {
+        "chat": {
+          "total": 330,
+          "correct": 273,
+          "sha256": "47232edf013120ea798dda185eeda4af47a958dfb6e589b1281a86d02d839a3d",
+          "failures": [
+            "chat-004",
+            "chat-007",
+            "chat-009",
+            "chat-016",
+            "chat-017",
+            "chat-029",
+            "chat-038",
+            "chat-044",
+            "chat-050",
+            "chat-051",
+            "chat-057",
+            "chat-069",
+            "chat-075",
+            "chat-076",
+            "chat-079",
+            "chat-084",
+            "chat-087",
+            "chat-115",
+            "chat-116",
+            "chat-117",
+            "chat-119",
+            "chat-120",
+            "chat-121",
+            "chat-128",
+            "chat-130",
+            "chat-132",
+            "chat-133",
+            "chat-134",
+            "chat-135",
+            "chat-140",
+            "chat-141",
+            "chat-145",
+            "chat-148",
+            "chat-154",
+            "chat-183",
+            "chat-184",
+            "chat-185",
+            "chat-186",
+            "chat-205",
+            "chat-218",
+            "chat-221",
+            "chat-225",
+            "chat-226",
+            "chat-229",
+            "chat-231",
+            "chat-236",
+            "chat-240",
+            "chat-245",
+            "chat-262",
+            "chat-275",
+            "chat-306",
+            "chat-321",
+            "chat-322",
+            "chat-323",
+            "chat-324",
+            "chat-328",
+            "chat-329"
+          ],
+          "families": {
+            "chat-abbrev": {
+              "total": 28,
+              "correct": 24
+            },
+            "chat-calendar": {
+              "total": 51,
+              "correct": 44
+            },
+            "chat-correction": {
+              "total": 16,
+              "correct": 14
+            },
+            "chat-negation": {
+              "total": 16,
+              "correct": 11
+            },
+            "chat-prose": {
+              "total": 22,
+              "correct": 20
+            },
+            "chat-question": {
+              "total": 27,
+              "correct": 26
+            },
+            "chat-recognizers": {
+              "total": 62,
+              "correct": 45
+            },
+            "chat-relative": {
+              "total": 22,
+              "correct": 19
+            },
+            "chat-tatoeba": {
+              "total": 86,
+              "correct": 70
+            }
+          }
+        },
+        "prose": {
+          "total": 73,
+          "correct": 73,
+          "sha256": "71b6fe587878fae9c569ce0b6d2eb70956eb3bf0643603eb32b923ee4fb66173",
+          "failures": [],
+          "families": {
+            "prose-carrier": {
+              "total": 55,
+              "correct": 55
+            },
+            "prose-negative": {
+              "total": 18,
+              "correct": 18
+            }
+          }
+        },
+        "user-cases": {
+          "total": 3,
+          "correct": 3,
+          "sha256": "adea458231f5a8a1e2b63bc2845d8fd05d76e9a9a410242a3c2ca56064736925",
+          "failures": [],
+          "families": {
+            "multi-clause": {
+              "total": 2,
+              "correct": 2
+            },
+            "relative-quantity": {
+              "total": 1,
+              "correct": 1
+            }
+          }
+        },
+        "negatives": {
+          "total": 192,
+          "correct": 187,
+          "sha256": "08afe5bf7ddfb403ce61398cb0e8fd86171c34ac3697be48c53f72e323bb1a6e",
+          "failures": [
+            "negative-068",
+            "negative-074",
+            "negative-096",
+            "negative-121",
+            "negative-140"
+          ],
+          "families": {
+            "non-temporal": {
+              "total": 192,
+              "correct": 187
+            }
+          }
+        },
+        "adversarial": {
+          "total": 25,
+          "correct": 25,
+          "sha256": "3baedd93a54513a64b526f0c2cc3ed81eb1863fddb4c4ee7cc33d26386c71d33",
+          "failures": [],
+          "families": {
+            "ambiguous-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "anchored-relative": {
+              "total": 1,
+              "correct": 1
+            },
+            "calendar-bound": {
+              "total": 1,
+              "correct": 1
+            },
+            "calendar-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "day-part": {
+              "total": 1,
+              "correct": 1
+            },
+            "duration": {
+              "total": 1,
+              "correct": 1
+            },
+            "exceptions": {
+              "total": 1,
+              "correct": 1
+            },
+            "frequency-count": {
+              "total": 1,
+              "correct": 1
+            },
+            "modified-weekday": {
+              "total": 1,
+              "correct": 1
+            },
+            "monthly-list": {
+              "total": 1,
+              "correct": 1
+            },
+            "multi-clause": {
+              "total": 1,
+              "correct": 1
+            },
+            "named-clock": {
+              "total": 1,
+              "correct": 1
+            },
+            "ordinal-date": {
+              "total": 1,
+              "correct": 1
+            },
+            "overnight": {
+              "total": 1,
+              "correct": 1
+            },
+            "period-bound": {
+              "total": 1,
+              "correct": 1
+            },
+            "recurrence-bounds": {
+              "total": 1,
+              "correct": 1
+            },
+            "relative-period": {
+              "total": 1,
+              "correct": 1
+            },
+            "relative-quantity": {
+              "total": 1,
+              "correct": 1
+            },
+            "relative-window": {
+              "total": 1,
+              "correct": 1
+            },
+            "shared-month-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "shared-weekdays": {
+              "total": 1,
+              "correct": 1
+            },
+            "start-bound": {
+              "total": 1,
+              "correct": 1
+            },
+            "weekday-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "weekly": {
+              "total": 1,
+              "correct": 1
+            },
+            "yearly": {
+              "total": 1,
+              "correct": 1
+            }
+          }
+        }
+      }
+    },
+    "baseline": {
       "total": 623,
       "correct": 552,
       "sets": {
@@ -577,19 +882,77 @@
             "chat-324",
             "chat-328",
             "chat-329"
-          ]
+          ],
+          "families": {
+            "chat-abbrev": {
+              "total": 28,
+              "correct": 24
+            },
+            "chat-calendar": {
+              "total": 51,
+              "correct": 44
+            },
+            "chat-correction": {
+              "total": 16,
+              "correct": 13
+            },
+            "chat-negation": {
+              "total": 16,
+              "correct": 9
+            },
+            "chat-prose": {
+              "total": 22,
+              "correct": 20
+            },
+            "chat-question": {
+              "total": 27,
+              "correct": 26
+            },
+            "chat-recognizers": {
+              "total": 62,
+              "correct": 44
+            },
+            "chat-relative": {
+              "total": 22,
+              "correct": 19
+            },
+            "chat-tatoeba": {
+              "total": 86,
+              "correct": 69
+            }
+          }
         },
         "prose": {
           "total": 73,
           "correct": 73,
           "sha256": "71b6fe587878fae9c569ce0b6d2eb70956eb3bf0643603eb32b923ee4fb66173",
-          "failures": []
+          "failures": [],
+          "families": {
+            "prose-carrier": {
+              "total": 55,
+              "correct": 55
+            },
+            "prose-negative": {
+              "total": 18,
+              "correct": 18
+            }
+          }
         },
         "user-cases": {
           "total": 3,
           "correct": 3,
           "sha256": "adea458231f5a8a1e2b63bc2845d8fd05d76e9a9a410242a3c2ca56064736925",
-          "failures": []
+          "failures": [],
+          "families": {
+            "multi-clause": {
+              "total": 2,
+              "correct": 2
+            },
+            "relative-quantity": {
+              "total": 1,
+              "correct": 1
+            }
+          }
         },
         "negatives": {
           "total": 192,
@@ -605,121 +968,121 @@
             "negative-121",
             "negative-139",
             "negative-140"
-          ]
+          ],
+          "families": {
+            "non-temporal": {
+              "total": 192,
+              "correct": 183
+            }
+          }
         },
         "adversarial": {
           "total": 25,
           "correct": 25,
           "sha256": "3baedd93a54513a64b526f0c2cc3ed81eb1863fddb4c4ee7cc33d26386c71d33",
-          "failures": []
-        }
-      }
-    },
-    "baseline": {
-      "total": 623,
-      "correct": 554,
-      "sets": {
-        "chat": {
-          "total": 330,
-          "correct": 270,
-          "sha256": "47232edf013120ea798dda185eeda4af47a958dfb6e589b1281a86d02d839a3d",
-          "failures": [
-            "chat-004",
-            "chat-007",
-            "chat-009",
-            "chat-016",
-            "chat-017",
-            "chat-020",
-            "chat-027",
-            "chat-029",
-            "chat-030",
-            "chat-038",
-            "chat-044",
-            "chat-050",
-            "chat-051",
-            "chat-057",
-            "chat-059",
-            "chat-064",
-            "chat-069",
-            "chat-075",
-            "chat-076",
-            "chat-079",
-            "chat-084",
-            "chat-086",
-            "chat-087",
-            "chat-115",
-            "chat-117",
-            "chat-119",
-            "chat-120",
-            "chat-128",
-            "chat-130",
-            "chat-132",
-            "chat-133",
-            "chat-134",
-            "chat-135",
-            "chat-139",
-            "chat-140",
-            "chat-141",
-            "chat-145",
-            "chat-148",
-            "chat-154",
-            "chat-183",
-            "chat-184",
-            "chat-185",
-            "chat-205",
-            "chat-218",
-            "chat-221",
-            "chat-225",
-            "chat-226",
-            "chat-229",
-            "chat-231",
-            "chat-236",
-            "chat-240",
-            "chat-245",
-            "chat-262",
-            "chat-275",
-            "chat-306",
-            "chat-321",
-            "chat-322",
-            "chat-324",
-            "chat-328",
-            "chat-329"
-          ]
-        },
-        "prose": {
-          "total": 73,
-          "correct": 70,
-          "sha256": "71b6fe587878fae9c569ce0b6d2eb70956eb3bf0643603eb32b923ee4fb66173",
-          "failures": [
-            "prose-017-authored",
-            "prose-017-lowercase",
-            "prose-017-uppercase"
-          ]
-        },
-        "user-cases": {
-          "total": 3,
-          "correct": 3,
-          "sha256": "adea458231f5a8a1e2b63bc2845d8fd05d76e9a9a410242a3c2ca56064736925",
-          "failures": []
-        },
-        "negatives": {
-          "total": 192,
-          "correct": 186,
-          "sha256": "08afe5bf7ddfb403ce61398cb0e8fd86171c34ac3697be48c53f72e323bb1a6e",
-          "failures": [
-            "negative-096",
-            "negative-100",
-            "negative-106",
-            "negative-107",
-            "negative-139",
-            "negative-140"
-          ]
-        },
-        "adversarial": {
-          "total": 25,
-          "correct": 25,
-          "sha256": "3baedd93a54513a64b526f0c2cc3ed81eb1863fddb4c4ee7cc33d26386c71d33",
-          "failures": []
+          "failures": [],
+          "families": {
+            "ambiguous-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "anchored-relative": {
+              "total": 1,
+              "correct": 1
+            },
+            "calendar-bound": {
+              "total": 1,
+              "correct": 1
+            },
+            "calendar-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "day-part": {
+              "total": 1,
+              "correct": 1
+            },
+            "duration": {
+              "total": 1,
+              "correct": 1
+            },
+            "exceptions": {
+              "total": 1,
+              "correct": 1
+            },
+            "frequency-count": {
+              "total": 1,
+              "correct": 1
+            },
+            "modified-weekday": {
+              "total": 1,
+              "correct": 1
+            },
+            "monthly-list": {
+              "total": 1,
+              "correct": 1
+            },
+            "multi-clause": {
+              "total": 1,
+              "correct": 1
+            },
+            "named-clock": {
+              "total": 1,
+              "correct": 1
+            },
+            "ordinal-date": {
+              "total": 1,
+              "correct": 1
+            },
+            "overnight": {
+              "total": 1,
+              "correct": 1
+            },
+            "period-bound": {
+              "total": 1,
+              "correct": 1
+            },
+            "recurrence-bounds": {
+              "total": 1,
+              "correct": 1
+            },
+            "relative-period": {
+              "total": 1,
+              "correct": 1
+            },
+            "relative-quantity": {
+              "total": 1,
+              "correct": 1
+            },
+            "relative-window": {
+              "total": 1,
+              "correct": 1
+            },
+            "shared-month-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "shared-weekdays": {
+              "total": 1,
+              "correct": 1
+            },
+            "start-bound": {
+              "total": 1,
+              "correct": 1
+            },
+            "weekday-range": {
+              "total": 1,
+              "correct": 1
+            },
+            "weekly": {
+              "total": 1,
+              "correct": 1
+            },
+            "yearly": {
+              "total": 1,
+              "correct": 1
+            }
+          }
         }
       }
     },
@@ -727,23 +1090,22 @@
       "passed": true,
       "reason": null,
       "support": 623,
-      "delta": 0.0032102728731942215,
-      "tolerance": 0.035239161382208686
+      "delta": -0.014446227929373997
     },
-    "improvement": -0.0032102728731942215,
+    "improvement": 0.014446227929373997,
     "failures": [],
     "accepted": true,
     "missingSets": [],
     "baselineIdentity": {
       "report": "active/export-report.json",
-      "checkpoint": "runs/step5-keepo-crf3/best.pt",
-      "checkpointSha256": "87d12f6d54f961a898da71737d292e245c00ba47e4562f90f497f62a5d232997",
-      "artifactSha256": "b1dfa50dc6fa5cca7f710b06bf64e48af0ec138852d5ddf0fb093e76d9e9018e",
+      "checkpoint": "runs/step7-crf2/best.pt",
+      "checkpointSha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
+      "artifactSha256": "a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d",
       "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
     },
     "synthetic": {
-      "blocking": false,
-      "note": "Non-blocking telemetry. The reserved-carrier and bare corpora come from the same renderers as part of training, so they measure the generator against itself. Recorded for comparison only; promotion is decided by the gold sets above.",
+      "blocking": true,
+      "note": "Regression gates for generated language coverage, not estimates of real-user accuracy. Scores use the deployed decoder and include filler labels.",
       "reserved": {
         "corpus": {
           "path": "data/synth/natural-reserved.jsonl",
@@ -754,311 +1116,7 @@
         },
         "criterion": "reserved-carrier-exact-sequence",
         "candidate": {
-          "boundaryThreshold": 0.0,
-          "total": 1000,
-          "correct": 935,
-          "families": {
-            "compound-duration": {
-              "total": 59,
-              "correct": 59
-            },
-            "compound-shift": {
-              "total": 59,
-              "correct": 59
-            },
-            "date-range": {
-              "total": 59,
-              "correct": 59
-            },
-            "datetime-range": {
-              "total": 59,
-              "correct": 35
-            },
-            "fraction-clock": {
-              "total": 59,
-              "correct": 53
-            },
-            "fraction-duration": {
-              "total": 59,
-              "correct": 59
-            },
-            "month-period": {
-              "total": 59,
-              "correct": 59
-            },
-            "month-week": {
-              "total": 59,
-              "correct": 59
-            },
-            "monthly-exception": {
-              "total": 58,
-              "correct": 58
-            },
-            "numeric-date": {
-              "total": 59,
-              "correct": 59
-            },
-            "prose-date": {
-              "total": 59,
-              "correct": 54
-            },
-            "qualified-clock": {
-              "total": 59,
-              "correct": 40
-            },
-            "recurrence": {
-              "total": 59,
-              "correct": 59
-            },
-            "recurrence-bound": {
-              "total": 59,
-              "correct": 59
-            },
-            "shared-times": {
-              "total": 58,
-              "correct": 58
-            },
-            "slot-request": {
-              "total": 58,
-              "correct": 58
-            },
-            "spoken-clock": {
-              "total": 59,
-              "correct": 48
-            }
-          }
-        },
-        "baseline": {
-          "boundaryThreshold": 1.25,
-          "total": 1000,
-          "correct": 999,
-          "families": {
-            "compound-duration": {
-              "total": 59,
-              "correct": 59
-            },
-            "compound-shift": {
-              "total": 59,
-              "correct": 59
-            },
-            "date-range": {
-              "total": 59,
-              "correct": 59
-            },
-            "datetime-range": {
-              "total": 59,
-              "correct": 59
-            },
-            "fraction-clock": {
-              "total": 59,
-              "correct": 59
-            },
-            "fraction-duration": {
-              "total": 59,
-              "correct": 59
-            },
-            "month-period": {
-              "total": 59,
-              "correct": 59
-            },
-            "month-week": {
-              "total": 59,
-              "correct": 59
-            },
-            "monthly-exception": {
-              "total": 58,
-              "correct": 58
-            },
-            "numeric-date": {
-              "total": 59,
-              "correct": 59
-            },
-            "prose-date": {
-              "total": 59,
-              "correct": 59
-            },
-            "qualified-clock": {
-              "total": 59,
-              "correct": 59
-            },
-            "recurrence": {
-              "total": 59,
-              "correct": 59
-            },
-            "recurrence-bound": {
-              "total": 59,
-              "correct": 59
-            },
-            "shared-times": {
-              "total": 58,
-              "correct": 58
-            },
-            "slot-request": {
-              "total": 58,
-              "correct": 58
-            },
-            "spoken-clock": {
-              "total": 59,
-              "correct": 58
-            }
-          },
-          "report": "active/export-report.json",
-          "checkpoint": "runs/step5-keepo-crf3/best.pt",
-          "checkpointSha256": "87d12f6d54f961a898da71737d292e245c00ba47e4562f90f497f62a5d232997",
-          "artifactSha256": "b1dfa50dc6fa5cca7f710b06bf64e48af0ec138852d5ddf0fb093e76d9e9018e",
-          "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
-        },
-        "improvement": -0.064,
-        "guards": [
-          {
-            "family": "compound-duration",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "compound-shift",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "date-range",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "datetime-range",
-            "support": 59,
-            "delta": 0.4067796610169492,
-            "tolerance": 0.12960920509057533,
-            "passed": false,
-            "reason": "regression"
-          },
-          {
-            "family": "fraction-clock",
-            "support": 59,
-            "delta": 0.1016949152542373,
-            "tolerance": 0.0875461971342627,
-            "passed": false,
-            "reason": "regression"
-          },
-          {
-            "family": "fraction-duration",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "month-period",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "month-week",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "monthly-exception",
-            "support": 58,
-            "delta": 0.0,
-            "tolerance": 0.04659419660309771,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "numeric-date",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "prose-date",
-            "support": 59,
-            "delta": 0.0847457627118644,
-            "tolerance": 0.08260998323726162,
-            "passed": false,
-            "reason": "regression"
-          },
-          {
-            "family": "qualified-clock",
-            "support": 59,
-            "delta": 0.3220338983050847,
-            "tolerance": 0.12409136636846761,
-            "passed": false,
-            "reason": "regression"
-          },
-          {
-            "family": "recurrence",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "recurrence-bound",
-            "support": 59,
-            "delta": 0.0,
-            "tolerance": 0.04582377391187191,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "shared-times",
-            "support": 58,
-            "delta": 0.0,
-            "tolerance": 0.04659419660309771,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "slot-request",
-            "support": 58,
-            "delta": 0.0,
-            "tolerance": 0.04659419660309771,
-            "passed": true,
-            "reason": null
-          },
-          {
-            "family": "spoken-clock",
-            "support": 59,
-            "delta": 0.1694915254237288,
-            "tolerance": 0.11114823766790026,
-            "passed": false,
-            "reason": "regression"
-          }
-        ]
-      },
-      "bare": {
-        "corpus": {
-          "path": "data/synth/natural-bare.jsonl",
-          "sha256": "beed95f8a5f56b39bcb28b28255394238cf37ff1a2b5f8b8dc3c8a42646c729a",
-          "featurizedSha256": "b5799438108134d2402b3b1218c246f493ece1102b13952c4a1bb2a5a77ff752",
-          "sequences": 1000,
-          "families": 17
-        },
-        "criterion": "reserved-carrier-exact-sequence",
-        "candidate": {
-          "boundaryThreshold": 0.0,
+          "boundaryThreshold": 1.5,
           "total": 1000,
           "correct": 1000,
           "families": {
@@ -1133,7 +1191,301 @@
           }
         },
         "baseline": {
-          "boundaryThreshold": 1.25,
+          "boundaryThreshold": 0.0,
+          "total": 1000,
+          "correct": 983,
+          "families": {
+            "compound-duration": {
+              "total": 59,
+              "correct": 59
+            },
+            "compound-shift": {
+              "total": 59,
+              "correct": 59
+            },
+            "date-range": {
+              "total": 59,
+              "correct": 59
+            },
+            "datetime-range": {
+              "total": 59,
+              "correct": 45
+            },
+            "fraction-clock": {
+              "total": 59,
+              "correct": 59
+            },
+            "fraction-duration": {
+              "total": 59,
+              "correct": 59
+            },
+            "month-period": {
+              "total": 59,
+              "correct": 59
+            },
+            "month-week": {
+              "total": 59,
+              "correct": 59
+            },
+            "monthly-exception": {
+              "total": 58,
+              "correct": 58
+            },
+            "numeric-date": {
+              "total": 59,
+              "correct": 59
+            },
+            "prose-date": {
+              "total": 59,
+              "correct": 56
+            },
+            "qualified-clock": {
+              "total": 59,
+              "correct": 59
+            },
+            "recurrence": {
+              "total": 59,
+              "correct": 59
+            },
+            "recurrence-bound": {
+              "total": 59,
+              "correct": 59
+            },
+            "shared-times": {
+              "total": 58,
+              "correct": 58
+            },
+            "slot-request": {
+              "total": 58,
+              "correct": 58
+            },
+            "spoken-clock": {
+              "total": 59,
+              "correct": 59
+            }
+          },
+          "report": "active/export-report.json",
+          "checkpoint": "runs/step7-crf2/best.pt",
+          "checkpointSha256": "b7cac206211fa6c841b40684887d977bcb76ffa7073c6a0f32e10df48ad39bb8",
+          "artifactSha256": "a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d",
+          "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
+        },
+        "improvement": 0.017,
+        "guard": {
+          "passed": true,
+          "reason": null,
+          "support": 1000,
+          "delta": -0.017
+        },
+        "guards": [
+          {
+            "family": "compound-duration",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "compound-shift",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "date-range",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "datetime-range",
+            "support": 59,
+            "delta": -0.23728813559322035,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "fraction-clock",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "fraction-duration",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "month-period",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "month-week",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "monthly-exception",
+            "support": 58,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "numeric-date",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "prose-date",
+            "support": 59,
+            "delta": -0.05084745762711865,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "qualified-clock",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "recurrence",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "recurrence-bound",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "shared-times",
+            "support": 58,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "slot-request",
+            "support": 58,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          },
+          {
+            "family": "spoken-clock",
+            "support": 59,
+            "delta": 0.0,
+            "passed": true,
+            "reason": null
+          }
+        ],
+        "accepted": true
+      },
+      "bare": {
+        "corpus": {
+          "path": "data/synth/natural-bare.jsonl",
+          "sha256": "beed95f8a5f56b39bcb28b28255394238cf37ff1a2b5f8b8dc3c8a42646c729a",
+          "featurizedSha256": "b5799438108134d2402b3b1218c246f493ece1102b13952c4a1bb2a5a77ff752",
+          "sequences": 1000,
+          "families": 17
+        },
+        "criterion": "reserved-carrier-exact-sequence",
+        "candidate": {
+          "boundaryThreshold": 1.5,
+          "total": 1000,
+          "correct": 1000,
+          "families": {
+            "compound-duration": {
+              "total": 59,
+              "correct": 59
+            },
+            "compound-shift": {
+              "total": 59,
+              "correct": 59
+            },
+            "date-range": {
+              "total": 59,
+              "correct": 59
+            },
+            "datetime-range": {
+              "total": 59,
+              "correct": 59
+            },
+            "fraction-clock": {
+              "total": 59,
+              "correct": 59
+            },
+            "fraction-duration": {
+              "total": 59,
+              "correct": 59
+            },
+            "month-period": {
+              "total": 59,
+              "correct": 59
+            },
+            "month-week": {
+              "total": 59,
+              "correct": 59
+            },
+            "monthly-exception": {
+              "total": 58,
+              "correct": 58
+            },
+            "numeric-date": {
+              "total": 59,
+              "correct": 59
+            },
+            "prose-date": {
+              "total": 59,
+              "correct": 59
+            },
+            "qualified-clock": {
+              "total": 59,
+              "correct": 59
+            },
+            "recurrence": {
+              "total": 59,
+              "correct": 59
+            },
+            "recurrence-bound": {
+              "total": 59,
+              "correct": 59
+            },
+            "shared-times": {
+              "total": 58,
+              "correct": 58
+            },
+            "slot-request": {
+              "total": 58,
+              "correct": 58
+            },
+            "spoken-clock": {
+              "total": 59,
+              "correct": 59
+            }
+          }
+        },
+        "baseline": {
+          "boundaryThreshold": 0.0,
           "total": 1000,
           "correct": 1000,
           "families": {
@@ -1208,12 +1560,17 @@
           }
         },
         "improvement": 0.0,
+        "guard": {
+          "passed": true,
+          "reason": null,
+          "support": 1000,
+          "delta": 0.0
+        },
         "guards": [
           {
             "family": "compound-duration",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1221,7 +1578,6 @@
             "family": "compound-shift",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1229,7 +1585,6 @@
             "family": "date-range",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1237,7 +1592,6 @@
             "family": "datetime-range",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1245,7 +1599,6 @@
             "family": "fraction-clock",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1253,7 +1606,6 @@
             "family": "fraction-duration",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1261,7 +1613,6 @@
             "family": "month-period",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1269,7 +1620,6 @@
             "family": "month-week",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1277,7 +1627,6 @@
             "family": "monthly-exception",
             "support": 58,
             "delta": 0.0,
-            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
@@ -1285,7 +1634,6 @@
             "family": "numeric-date",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1293,7 +1641,6 @@
             "family": "prose-date",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1301,7 +1648,6 @@
             "family": "qualified-clock",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1309,7 +1655,6 @@
             "family": "recurrence",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1317,7 +1662,6 @@
             "family": "recurrence-bound",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           },
@@ -1325,7 +1669,6 @@
             "family": "shared-times",
             "support": 58,
             "delta": 0.0,
-            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
@@ -1333,7 +1676,6 @@
             "family": "slot-request",
             "support": 58,
             "delta": 0.0,
-            "tolerance": 0.04659419660309771,
             "passed": true,
             "reason": null
           },
@@ -1341,39 +1683,33 @@
             "family": "spoken-clock",
             "support": 59,
             "delta": 0.0,
-            "tolerance": 0.04582377391187191,
             "passed": true,
             "reason": null
           }
         ],
-        "guard": {
-          "passed": true,
-          "reason": null,
-          "support": 1000,
-          "delta": 0.0,
-          "tolerance": 0.0027677087477377266
-        }
+        "accepted": true
       }
     },
-    "description": "Pooled exact-schedule accuracy on the hand-authored gold sets (chat, prose, user-cases, negatives, adversarial), candidate against the shipped baseline, through the built TypeScript package. The candidate must not be worse beyond a two-proportion z=1.96 tolerance; a tie ships and an improvement is not required. Both sides are built from their own weights module and scored by packages/benchmark/src/evaluate-model.ts in this run; stored scores are never read."
+    "description": "Exact schedules must not regress in any gold set or family. Reserved-carrier exact decoded labels and boundaries must strictly improve without a family regression, and bare expressions must not regress. Both models are measured on the same frozen corpora in this run; stored scores are never reused."
   },
-  "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. The heldout metrics share the split calibrate() fitted the boundary threshold on and gate nothing, as do the reserved-carrier and bare corpora under promotion.synthetic. Promotion is decided by end-to-end schedule accuracy on the hand-authored gold sets. Browser parity is a separate gate.",
+  "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference with the deployed role decoder and recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Heldout metrics share the development split used by calibrate(). Promotion requires reserved-carrier improvement with no family regression, preserved bare expressions, and no gold set or family regression through the built parser. These are development checks, not real-user accuracy. Browser parity is a separate gate.",
   "parity": {
     "prefix": "active/parity",
     "sequences": 512,
-    "tokens": 10925,
+    "tokens": 11175,
     "rowsPerToken": 17,
     "rolesPerToken": 40,
-    "boundaryThreshold": 0.0,
+    "boundaryThreshold": 1.5,
     "layers": 1,
     "transitions": true
   },
-  "exportSourceDirectory": "exports/a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d/source",
+  "exportSourceDirectory": "exports/2e4f8df10908a532a7175320de81a6c33b9b2f8725cccb9ca7507d3aed7b6467/source",
   "exportSourceHashes": {
-    "training/export.py": "81313580b3dccfd8fc0ece66bb7f4f71428c94f2270cfabff903113d929653f0",
+    "training/export.py": "190531772345e26613c27e2b65e034ea9fa49e2ec91d1c8a57f5b4edb38de612",
     "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
-    "training/model.py": "3d0a543ef7e8bbdb5748fc1c78f1d33caf9be47a2ce4a69bae19233e6ec72d09",
-    "training/train.py": "5ce377e2d2433f4c32a9adf53ec985a6ddc383b880774ecc2fc5080b34636ddf",
-    "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
+    "training/model.py": "ba17ad3bf1906863c3008cb954a5ea495bf60c4f03b53098093082540bbce335",
+    "training/train.py": "c24e15bffea7d85493ae9ab4d1fb09987b4775104e2100a2c476c9ec51334f36",
+    "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f",
+    "training/average.py": "86910a99c1d12deb48e70b34168cb64b0801070f5bb7e6eaa935af10dca51ee8"
   }
 }

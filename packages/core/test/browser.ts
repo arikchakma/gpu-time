@@ -14,37 +14,47 @@ const trainingRoot = `${workspaceRoot}/packages/training`;
 const report = JSON.parse(
   await readFile(`${trainingRoot}/active/export-report.json`, "utf8"),
 );
-const run = report.checkpoint.split("/").at(-2);
-const dataPath = `${trainingRoot}/data/synth/${run}/heldout.jsonl`;
-if (!existsSync(dataPath)) {
-  const config = JSON.parse(
-    await readFile(`${trainingRoot}/runs/${run}/report.json`, "utf8"),
+const selectedRun = report.checkpoint.split("/").at(-2);
+const fixturePath = `${trainingRoot}/active/parity.texts.json`;
+let texts: string[];
+if (existsSync(fixturePath)) {
+  texts = JSON.parse(await readFile(fixturePath, "utf8")).slice(0, 10_000);
+} else {
+  const selectedConfig = JSON.parse(
+    await readFile(`${trainingRoot}/runs/${selectedRun}/report.json`, "utf8"),
   ).config;
-  execFileSync(
-    "uv",
-    [
-      "run",
-      "--project",
-      trainingRoot,
-      "python",
-      `${trainingRoot}/runs/${run}/source/training/generate.py`,
-      "--count",
-      String(config.eval_samples),
-      "--seed",
-      String(config.seed + 2),
-      "--split",
-      "heldout",
-      "--out",
-      dataPath,
-    ],
-    { stdio: "inherit" },
-  );
+  const run = selectedConfig.evaluation_run ?? selectedRun;
+  const dataPath = `${trainingRoot}/data/synth/${run}/heldout.jsonl`;
+  if (!existsSync(dataPath)) {
+    const config = JSON.parse(
+      await readFile(`${trainingRoot}/runs/${run}/report.json`, "utf8"),
+    ).config;
+    execFileSync(
+      "uv",
+      [
+        "run",
+        "--project",
+        trainingRoot,
+        "python",
+        `${trainingRoot}/runs/${run}/source/training/generate.py`,
+        "--count",
+        String(config.eval_samples),
+        "--seed",
+        String(config.seed + 2),
+        "--split",
+        "heldout",
+        "--out",
+        dataPath,
+      ],
+      { stdio: "inherit" },
+    );
+  }
+  texts = (await readFile(dataPath, "utf8"))
+    .trim()
+    .split("\n")
+    .map((line) => JSON.parse(line).text as string)
+    .slice(0, 10_000);
 }
-const texts = (await readFile(dataPath, "utf8"))
-  .trim()
-  .split("\n")
-  .map((line) => JSON.parse(line).text as string)
-  .slice(0, 10_000);
 const server = await createServer({
   configFile: false,
   root: workspaceRoot,
