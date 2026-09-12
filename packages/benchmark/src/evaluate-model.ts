@@ -1,7 +1,8 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { isDeepStrictEqual } from "node:util";
 import { createHash } from "node:crypto";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import type { Schedule } from "../../core/src/types.ts";
 
 const packageRoot = join(import.meta.dirname, "..");
@@ -10,13 +11,27 @@ const training = join(packageRoot, "..", "training");
 const gold = join(training, "data", "gold");
 const exportReport = join(training, "active", "export-report.json");
 
+// The export gate points these at a build of a candidate's weights; the default
+// is the checked-out dist that `pnpm evaluate` reports on.
+const argument = (name: string) => {
+  const index = process.argv.indexOf(name);
+  if (index < 0) return undefined;
+  const value = process.argv[index + 1];
+  if (!value || value.startsWith("--"))
+    throw new Error(`Missing value for ${name}.`);
+  return value;
+};
+const dist = argument("--dist");
+
 // Evaluate the distributed parser. Importing source here would bypass the shader
 // bundler and would not test the package users actually receive.
 const { defineParser } = await import(
-  new URL("../../core/dist/schedule.js", import.meta.url).href
+  dist
+    ? pathToFileURL(resolve(dist)).href
+    : new URL("../../core/dist/schedule.js", import.meta.url).href
 );
 const parser = await defineParser({ backend: "cpu", tokens: true });
-const sets = [
+const sets = argument("--sets")?.split(",") ?? [
   "adversarial",
   "user-cases",
   "labels",
@@ -24,6 +39,7 @@ const sets = [
   "negatives",
   "grammar-variations",
   "prose",
+  "chat",
 ];
 const results = [];
 try {
@@ -86,14 +102,17 @@ try {
 } finally {
   parser.dispose();
 }
-await mkdir(join(packageRoot, "results"), { recursive: true });
+const output =
+  argument("--out") ?? join(packageRoot, "results", "model-structure.json");
+await mkdir(dirname(output), { recursive: true });
 await writeFile(
-  join(packageRoot, "results", "model-structure.json"),
+  output,
   JSON.stringify(
     {
       scope:
         "Exact AST equality from trained CPU predictions. Development fixtures overlap across sets; do not combine totals or describe these as untouched test data.",
-      model: JSON.parse(await readFile(exportReport, "utf8")).artifactSha256,
+      model:
+        dist ?? JSON.parse(await readFile(exportReport, "utf8")).artifactSha256,
       results,
     },
     null,

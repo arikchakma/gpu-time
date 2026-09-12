@@ -22,17 +22,30 @@ from calibrate import calibrate
 TORCH = Path(__file__).resolve().parent
 ROOT = TORCH.parent
 CORE = ROOT.parent / "core"
+BENCH = ROOT.parent / "benchmark"
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 SHIPPED = CORE / "src/model/weights.gen.ts"
+GOLD = ROOT / "data/gold"
+# Hand-authored, not rendered by the training generators. Sets seeded from the
+# grammar (labels, grammar, grammar-variations) measure the generator against
+# itself and stay out of the gate.
+GOLD_SETS = ("chat", "prose", "user-cases", "negatives", "adversarial")
 GUARD_Z = 1.96
 GUARD_MINIMUM_SUPPORT = 30
 GATE_CRITERION = (
-    "Strict improvement in exact label-and-boundary sequences on the reserved "
-    "carrier corpus, with no per-family regression beyond a two-proportion "
-    f"z={GUARD_Z} tolerance. Both sides are decoded from their wire artifacts and "
-    "re-scored in this process on this corpus; stored scores are never read. "
-    "The heldout split is excluded because calibrate() fits the boundary "
-    "threshold on it."
+    "Pooled exact-schedule accuracy on the hand-authored gold sets "
+    f"({', '.join(GOLD_SETS)}), candidate against the shipped baseline, through "
+    "the built TypeScript package. The candidate must not be worse beyond a "
+    f"two-proportion z={GUARD_Z} tolerance; a tie ships and an improvement is "
+    "not required. Both sides are built from their own weights module and "
+    "scored by packages/benchmark/src/evaluate-model.ts in this run; stored "
+    "scores are never read."
+)
+SYNTHETIC_NOTE = (
+    "Non-blocking telemetry. The reserved-carrier and bare corpora come from "
+    "the same renderers as part of training, so they measure the generator "
+    "against itself. Recorded for comparison only; promotion is decided by the "
+    "gold sets above."
 )
 
 
@@ -203,34 +216,56 @@ def family_guards(candidate: dict, baseline: dict) -> list[dict]:
     return guards
 
 
+def pooled(scores: dict) -> dict:
+    # ponytail: one guard over the pooled sets. Per-set guards are impossible
+    # here (user-cases has three rows); split them once a set clears
+    # GUARD_MINIMUM_SUPPORT on its own and deserves its own veto.
+    return {
+        "total": sum(counts["total"] for counts in scores.values()),
+        "correct": sum(counts["correct"] for counts in scores.values()),
+    }
+
+
 def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
+    """Blocking rule: hand-authored gold schedules must not regress."""
     decision = {
+        "criterion": "gold-schedule-accuracy",
+        "sets": sorted(candidate),
+        "candidate": {**pooled(candidate), "sets": candidate},
+        "baseline": None,
+        "guard": None,
+        "improvement": None,
+        "failures": list(failures),
+    }
+    if baseline is not None:
+        decision["baseline"] = {**pooled(baseline), "sets": baseline}
+        if sorted(candidate) != sorted(baseline):
+            decision["failures"].append("gold set mismatch")
+        else:
+            guard = proportion_guard(decision["candidate"], decision["baseline"])
+            decision["guard"] = guard
+            decision["improvement"] = (
+                decision["candidate"]["correct"] - decision["baseline"]["correct"]
+            ) / max(decision["candidate"]["total"], 1)
+            if not guard["passed"]:
+                decision["failures"].append(f"gold schedules: {guard['reason']}")
+    decision["accepted"] = not decision["failures"]
+    return decision
+
+
+def synthetic(candidate: dict, baseline: dict | None) -> dict:
+    """Reserved-carrier telemetry, recorded but no longer able to block."""
+    return {
         "criterion": "reserved-carrier-exact-sequence",
         "candidate": candidate,
         "baseline": baseline,
-        "improvement": None,
-        "guards": [],
-        "failures": list(failures),
+        "improvement": (
+            (candidate["correct"] - baseline["correct"]) / candidate["total"]
+            if baseline and candidate["total"] == baseline["total"]
+            else None
+        ),
+        "guards": family_guards(candidate, baseline) if baseline else [],
     }
-    if baseline:
-        if candidate["total"] != baseline["total"]:
-            decision["failures"].append("evaluation support mismatch")
-        else:
-            decision["improvement"] = (
-                candidate["correct"] - baseline["correct"]
-            ) / candidate["total"]
-            if candidate["correct"] <= baseline["correct"]:
-                decision["failures"].append(
-                    "reserved-carrier exact sequences did not improve"
-                )
-        decision["guards"] = family_guards(candidate, baseline)
-        decision["failures"].extend(
-            f"{guard['family']}: {guard['reason']}"
-            for guard in decision["guards"]
-            if not guard["passed"]
-        )
-    decision["accepted"] = not decision["failures"]
-    return decision
 
 
 def override(decision: dict) -> dict:
@@ -282,9 +317,65 @@ def score_corpus(
     return corpus, candidate, baseline
 
 
+def gold_scores(weights_module: Path, scratch: Path, sets: list[str]) -> dict:
+    """Exact-schedule accuracy of one weights module on the hand-authored sets.
+
+    Builds the distributed package from that module, because the gold sets are
+    scored through the parser users receive, not through core's sources.
+    """
+    scratch.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [
+            "node",
+            "--experimental-strip-types",
+            str(CORE / "scripts/build.ts"),
+            "--weights",
+            str(weights_module),
+            "--outdir",
+            str(scratch / "dist"),
+            # Size is a separate gate; do not fail promotion on the byte budget.
+            "--report-only",
+        ],
+        cwd=CORE,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
+    measured = scratch / "gold.json"
+    subprocess.run(
+        [
+            "node",
+            "--experimental-strip-types",
+            str(BENCH / "src/evaluate-model.ts"),
+            "--dist",
+            str(scratch / "dist/schedule.js"),
+            "--sets",
+            ",".join(sets),
+            "--out",
+            str(measured),
+        ],
+        cwd=BENCH,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
+    return {
+        result["name"]: {
+            "total": result["total"],
+            "correct": result["correct"],
+            "sha256": result["sha256"],
+            "failures": [
+                example["id"]
+                for example in result["examples"]
+                if not example["correct"]
+            ],
+        }
+        for result in json.loads(measured.read_text())["results"]
+    }
+
+
 def gate(
     reference: TimeTagger,
     threshold: float,
+    source: str,
     reserved: Path,
     bare: Path,
     baseline_report: Path,
@@ -322,23 +413,39 @@ def gate(
         bare, "bare", reference, threshold, artifact
     )
 
-    decision = decide(candidate, baseline, failures)
-    if baseline is None and pinned:
+    sets = [name for name in GOLD_SETS if (GOLD / f"{name}.jsonl").exists()]
+    if not sets:
+        failures.append(f"no gold sets under {portable(GOLD)}")
+    with tempfile.TemporaryDirectory() as scratch:
+        scratch = Path(scratch)
+        module = scratch / "candidate/weights.gen.ts"
+        module.parent.mkdir(parents=True, exist_ok=True)
+        module.write_text(source)
+        gold_candidate = (
+            gold_scores(module, scratch / "candidate", sets) if sets else {}
+        )
+        gold_baseline = (
+            gold_scores(SHIPPED, scratch / "baseline", sets)
+            if sets and artifact
+            else None
+        )
+
+    decision = decide(gold_candidate, gold_baseline, failures)
+    decision["missingSets"] = [name for name in GOLD_SETS if name not in sets]
+    if pinned:
         decision["baselineIdentity"] = pinned
-    decision["corpus"] = corpus
     # Carrier-rich sentences cannot expose an over-splitting regression on terse
     # input: "Mon-Fri" collapsing to two occurrences still scores well in prose.
-    decision["bare"] = {
-        "corpus": bare_corpus,
-        "candidate": bare_candidate,
-        "baseline": bare_baseline,
+    decision["synthetic"] = {
+        "blocking": False,
+        "note": SYNTHETIC_NOTE,
+        "reserved": {"corpus": corpus, **synthetic(candidate, baseline)},
+        "bare": {"corpus": bare_corpus, **synthetic(bare_candidate, bare_baseline)},
     }
     if bare_baseline:
-        guard = proportion_guard(bare_candidate, bare_baseline)
-        decision["bare"]["guard"] = guard
-        if not guard["passed"]:
-            decision["failures"].append(f"bare expressions: {guard['reason']}")
-            decision["accepted"] = not decision["failures"]
+        decision["synthetic"]["bare"]["guard"] = proportion_guard(
+            bare_candidate, bare_baseline
+        )
     return decision
 
 
@@ -423,17 +530,6 @@ def export(
     )
     threshold = calibration["threshold"]
 
-    promotion = gate(reference, threshold, reserved, bare, baseline_report)
-    if not promotion["accepted"]:
-        if not force:
-            raise SystemExit(
-                "Export rejected: " + "; ".join(promotion["failures"]) + "\n"
-                "Pass --force to override and record the override in the report."
-            )
-        promotion = override(promotion)
-        print("Forcing export despite: " + "; ".join(promotion["overriddenFailures"]))
-    promotion["description"] = GATE_CRITERION
-
     artifact = {
         "version": 1,
         "hidden": 32,
@@ -444,11 +540,25 @@ def export(
         "labels": labels,
         **wire,
     }
+    # Built before the gate: the gold sets are scored through a package built
+    # from this exact module.
     source = (
         "// Generated by training/export.py. The encoded string is model data, not source logic.\nexport const weights = "
         + json.dumps(artifact, separators=(",", ":"))
         + " as const;\n"
     )
+
+    promotion = gate(reference, threshold, source, reserved, bare, baseline_report)
+    if not promotion["accepted"]:
+        if not force:
+            raise SystemExit(
+                "Export rejected: " + "; ".join(promotion["failures"]) + "\n"
+                "Pass --force to override and record the override in the report."
+            )
+        promotion = override(promotion)
+        print("Forcing export despite: " + "; ".join(promotion["overriddenFailures"]))
+    promotion["description"] = GATE_CRITERION
+
     destination.parent.mkdir(parents=True, exist_ok=True)
     staged = destination.with_name(f"{destination.name}.{os.getpid()}.tmp")
     staged.write_text(source)
@@ -487,10 +597,12 @@ def export(
         "corpora": {
             "validation": corpus_digest(data / "validation"),
             "heldout": corpus_digest(data / "heldout"),
-            "reservedCarrier": promotion["corpus"]["featurizedSha256"],
+            "reservedCarrier": promotion["synthetic"]["reserved"]["corpus"][
+                "featurizedSha256"
+            ],
         },
         "promotion": promotion,
-        "scope": f"Exact decoded int{bits} weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. The heldout metrics share the split calibrate() fitted the boundary threshold on and gate nothing. Browser parity and end-to-end schedule accuracy are separate gates.",
+        "scope": f"Exact decoded int{bits} weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. The heldout metrics share the split calibrate() fitted the boundary threshold on and gate nothing, as do the reserved-carrier and bare corpora under promotion.synthetic. Promotion is decided by end-to-end schedule accuracy on the hand-authored gold sets. Browser parity is a separate gate.",
     }
     if parity_prefix:
         indices = np.arange(min(512, len(heldout)))

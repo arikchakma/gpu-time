@@ -2,6 +2,7 @@ import unittest
 
 import torch
 
+from export import decide, override
 from model import PADDING_ROW, TimeTagger, affine_scan
 
 
@@ -91,6 +92,48 @@ class ModelTests(unittest.TestCase):
         for name, parameter in model.named_parameters():
             self.assertIsNotNone(parameter.grad, name)
             self.assertTrue(torch.isfinite(parameter.grad).all(), name)
+
+
+class PromotionGateTests(unittest.TestCase):
+    """Promotion is decided by pooled hand-authored gold accuracy."""
+
+    def gold(self, correct, total=100):
+        return {"prose": {"total": total, "correct": correct}}
+
+    def test_a_tie_ships(self):
+        decision = decide(self.gold(90), self.gold(90), [])
+        self.assertTrue(decision["accepted"])
+        self.assertEqual(decision["improvement"], 0)
+
+    def test_improvement_is_recorded_but_not_required(self):
+        decision = decide(self.gold(95), self.gold(90), [])
+        self.assertTrue(decision["accepted"])
+        self.assertAlmostEqual(decision["improvement"], 0.05)
+
+    def test_noise_sized_regression_ships(self):
+        decision = decide(self.gold(89), self.gold(90), [])
+        self.assertTrue(decision["accepted"])
+
+    def test_significant_regression_is_rejected(self):
+        decision = decide(self.gold(60), self.gold(90), [])
+        self.assertFalse(decision["accepted"])
+        self.assertEqual(decision["failures"], ["gold schedules: regression"])
+
+    def test_changed_row_counts_are_rejected(self):
+        decision = decide(self.gold(90, 100), self.gold(90, 99), [])
+        self.assertFalse(decision["accepted"])
+
+    def test_a_missing_baseline_blocks(self):
+        decision = decide(self.gold(90), None, ["no pinned baseline"])
+        self.assertFalse(decision["accepted"])
+        self.assertIsNone(decision["guard"])
+
+    def test_force_records_what_it_overrode(self):
+        forced = override(decide(self.gold(60), self.gold(90), []))
+        self.assertTrue(forced["accepted"])
+        self.assertEqual(forced["failures"], [])
+        self.assertEqual(forced["overriddenFailures"], ["gold schedules: regression"])
+        self.assertEqual(forced["overriddenCriterion"], "gold-schedule-accuracy")
 
 
 if __name__ == "__main__":
