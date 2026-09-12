@@ -32,6 +32,9 @@ FAMILIES = [
     "slot-request",
     "carrier-date",
 ]
+# Half weight for carrier-date: date-after-prose pressure has to stay balanced
+# against background's contrastive carrier negatives.
+FAMILY_WEIGHTS = [2] * (len(FAMILIES) - 1) + [1]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
     "could you arrange a reminder for",
@@ -76,6 +79,10 @@ def clock(s, mode=None, hour=None):
     m = r.randrange(60)
     meridiem = r.choice(["am", "pm"])
     mode = mode or r.choice(["digits", "spoken", "qualified", "fraction"])
+    if mode == "bare":
+        s.add(str(h), "HOUR")
+        s.add(meridiem, "MERIDIEM", "" if r.random() < 0.7 else " ")
+        return {"hour": h % 12 + (12 if meridiem == "pm" else 0), "minute": 0}
     if mode == "fraction":
         m = r.choice([15, 30, 45])
         subtract = m == 45
@@ -125,8 +132,14 @@ def quantity(s, amount, name):
     s.add(name if amount == 1 else name + "s", "UNIT")
 
 
-def calendar(s, date, numeric=False):
+def calendar(s, date, numeric=False, day_first=False):
     r = s.rng
+    if day_first and not numeric:
+        s.add(str(date["day"]), "DOM")
+        s.add(month_word(r, date["month"] - 1), "MONTH")
+        if date.get("year"):
+            s.add(str(date["year"]), "YEAR")
+        return
     if numeric:
         order = r.choice(["MDY", "DMY"])
         sep = r.choice(["/", "-"])
@@ -247,7 +260,7 @@ def target(s):
 
 def render(s, reserved=False, family=None, bare=False):
     r = s.rng
-    family = family or r.choice(FAMILIES)
+    family = family or r.choices(FAMILIES, FAMILY_WEIGHTS)[0]
     # The carrier is this family's own prefix; reserved and bare get none.
     lead = carrier(r) if family == "carrier-date" and not (reserved or bare) else None
     anchored = family not in (
@@ -389,6 +402,26 @@ def render(s, reserved=False, family=None, bare=False):
                     "to": {"day": end},
                 }
             }
+    elif family == "datetime-range" and r.random() < 0.45:
+        # "17 August 2013 2pm - 19 August 2013 2pm": a full date on both sides,
+        # so the number after the dash is a day of month and never an hour.
+        month = r.randint(1, 12)
+        year = r.randint(2013, 2040)
+        first = r.randint(1, 20)
+        day_first = r.random() < 0.5
+        # Always clocked: two bare dates collapse to a calendarRange instead.
+        mode = r.choice(["bare", "bare", "digits"])
+        clause = {}
+        for key, day in (("date", first), ("endDate", first + r.randint(1, 8))):
+            if key == "endDate":
+                s.add(r.choice(["-", "–", "to", "until"]), "RANGE_END")
+            date = {"year": year, "month": month, "day": day}
+            calendar(s, date, day_first=day_first)
+            if r.random() < 0.35:
+                s.add("at", "GLUE")
+            edge = "start" if key == "date" else "end"
+            clause.setdefault("time", {})[edge] = clock(s, mode)
+            clause[key] = {"kind": "calendar", **date}
     elif family == "datetime-range":
         day = r.randint(0, 5)
         s.add(weekday_word(r, DAYS[day]), "WEEKDAY")

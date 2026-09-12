@@ -446,6 +446,28 @@ SPORTS = [
     "match", "final", "semifinal", "derby", "opener", "friendly", "rematch",
     "tie", "playoff", "scrimmage",
 ]
+# The scheduling verbs natural.py's carrier-date family uses, aimed at something
+# that is not a date: the verb and its preposition alone must not trigger.
+CARRIER_VERBS = [
+    "is scheduled for", "has been rescheduled for", "is planned for",
+    "is booked for", "is set for", "is slated for", "is penciled in for",
+    "is pencilled in for", "is down for", "was postponed for",
+    "is earmarked for", "is queued for", "is lined up for", "is up for",
+]
+CARRIER_MOVES = [("push", "pushed"), ("move", "moved"), ("bump", "bumped"),
+                 ("shift", "shifted"), ("hand", "handed"), ("put", "put")]
+NON_DATES = [
+    "review", "approval", "release", "discussion", "signoff", "repair",
+    "translation", "testing", "demolition", "auction", "resale", "inspection",
+    "recycling", "further notice", "the next sprint", "the back burner",
+    "a second opinion", "a rewrite", "two people", "a promotion", "a refund",
+    "spare parts", "the archive", "scrap", "adoption", "a vote", "safekeeping",
+]
+CALENDAR_MONTHS = [
+    "January", "February", "March", "April", "May", "June", "July", "August",
+    "September", "October", "November", "December",
+]
+MONTH_PARTS = ["mid", "mid-", "early", "late"]
 
 
 def _suffixed(value: int) -> str:
@@ -607,10 +629,64 @@ def numeric(rng: random.Random) -> str:
     return rng.choice(rng.choice(groups))
 
 
+def carrier_contrast(rng: random.Random) -> str:
+    """A scheduling verb whose preposition points at something that is not a date.
+
+    The carrier-date family teaches "scheduled for next week"; without the same
+    frames ending in a noun the model learns the verb rather than the date.
+    """
+    nouns, _ = vocabulary()
+    noun, other = rng.choice(nouns), rng.choice(nouns)
+    name = rng.choice(NAMES)
+    target = rng.choice(NON_DATES)
+    present, past = rng.choice(CARRIER_MOVES)
+    return rng.choice(
+        [
+            f"The {noun} {rng.choice(CARRIER_VERBS)} {target}.",
+            f"{name}'s {noun} {rng.choice(CARRIER_VERBS)} {target}.",
+            f"Our {noun} {rng.choice(CARRIER_VERBS)} {target}.",
+            f"{present.capitalize()} the {noun} to {target}.",
+            f"{name} {past} the {noun} to {target}.",
+            f"We are aiming for {target}.",
+            f"{name} booked the {noun} for {target}.",
+            f"They put the {noun} off until further notice.",
+            f"The {noun} is on hold pending {target}.",
+            f"{name} pencilled the {other} in for {target}.",
+            f"The {noun} was set aside for {target}.",
+            f"Everything is riding on {target}.",
+            f"{name} is holding the {noun} for {target}.",
+            f"The {other} has been earmarked for {target}.",
+        ]
+    )
+
+
+def month_part(rng: random.Random) -> str:
+    """"mid october" names no supported sub-period, so every token stays O."""
+    month = rng.choice(CALENDAR_MONTHS)
+    part = rng.choice(MONTH_PARTS)
+    phrase = f"{part}{month}" if part.endswith("-") else f"{part} {month}"
+    nouns, verbs = vocabulary()
+    return rng.choice(
+        [
+            phrase,
+            phrase,
+            f"{phrase}?",
+            f"The {rng.choice(nouns)} lands {phrase}.",
+            f"We should {rng.choice(verbs)} the {rng.choice(nouns)} {phrase}.",
+            f"{phrase} is my best guess for the {rng.choice(nouns)}.",
+            f"Aiming for {phrase} at the latest.",
+        ]
+    )
+
+
 def sentence(rng: random.Random) -> str:
     pool = borrowed()
     if pool and rng.random() < 0.15:
         return rng.choice(pool)
+    if rng.random() < 0.10:
+        return carrier_contrast(rng)
+    if rng.random() < 0.05:
+        return month_part(rng)
     if rng.random() < 0.35:
         return numeric(rng)
     if rng.random() < 0.12:
