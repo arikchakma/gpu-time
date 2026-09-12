@@ -4,7 +4,7 @@
 
 The package embeds `english-coverage-layer2-negative-blend-075`, with artifact SHA-256 `2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9`. It combines 25% of the two-layer warm checkpoint with 75% of its negative-correction checkpoint.
 
-The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,227 Brotli bytes for the weights, 16 unique checkpoint artifacts, and 890,783,110 training tokens. Averaging adds no training tokens. The complete package is 44,795 Brotli bytes, below the 50,000-byte limit.
+The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,227 Brotli bytes for the weights, 16 unique checkpoint artifacts, and 890,783,110 training tokens. Averaging adds no training tokens. The release gate measures the published entry directly and records 44,795 Brotli bytes, below the 50,000-byte limit; `size.json` records 45,418 for the same code rebundled with the comparison imports, so the two numbers are not expected to match.
 
 The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 0.75, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
 

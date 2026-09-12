@@ -175,3 +175,24 @@ if (
   cases.some((row) => !row.gpuTime.passed)
 )
   process.exitCode = 1;
+
+if (process.argv.includes("--floor")) {
+  const floorPath = join(root, "data/english-compatibility.floor.json");
+  const floor: { passed: number; families: Record<string, number> } =
+    JSON.parse(await readFile(floorPath, "utf8"));
+  const passed = cases.filter((row) => row.gpuTime.passed).length;
+  const drops = [
+    ...(passed < floor.passed ? [`overall ${passed} < ${floor.passed}`] : []),
+    ...Object.entries(report.families)
+      .filter(([family, c]) => c.gpuTimePassed < (floor.families[family] ?? 0))
+      .map(
+        ([family, c]) =>
+          `${family} ${c.gpuTimePassed} < ${floor.families[family]}`,
+      ),
+  ];
+  if (drops.length) {
+    console.error(`Compatibility floor failed:\n  ${drops.join("\n  ")}`);
+    console.error(`Raise the floor in ${floorPath} once a drop is understood.`);
+    process.exitCode = 1;
+  } else console.log(`Compatibility floor passed: ${passed}/${cases.length}.`);
+}

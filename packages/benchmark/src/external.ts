@@ -133,7 +133,7 @@ await writeFile(
       scope:
         "Strict match to independent upstream FutureResolution values, including the entire input and returned interval ends. No mismatches are removed as policy differences. This development evaluation is separate from synthetic training metrics; the reserved test split is not evaluated by default.",
     },
-    null,
+    (key, value) => (key === "timings" ? undefined : value),
     2,
   ) + "\n",
 );
