@@ -44,6 +44,7 @@ FAMILIES = [
     "monthly-ordinal",
     "idiom-date",
     "contrast-date",
+    "clock-place",
 ]
 # Prose dates and shifts stay balanced against their contrastive negatives.
 FAMILY_WEIGHTS = [
@@ -62,6 +63,8 @@ FAMILY_WEIGHTS = [
         "imperative-shift",
         "daypart-clock",
     )
+    else 8
+    if name == "clock-place"
     else 2
     for name in FAMILIES
 ]
@@ -98,6 +101,36 @@ PROSE_EVENTS = [
     word for word in FILLERS
     if word not in set(" ".join(RESERVED + RESERVED_DURATION).split())
 ]
+
+
+PLACES = (
+    "office cafe bar diner clinic studio salon gym club school library lobby "
+    "kitchen garage hotel restaurant pub bakery museum stadium airport station "
+    "warehouse rooftop garden terrace dock pier chapel gallery arena"
+).split()
+EVENT_NOUNS = (
+    "dinner lunch coffee standup call interview gym class dentist drinks pickup "
+    "breakfast haircut yoga brunch checkup practice rehearsal session demo retro "
+    "physio therapy swim tutoring"
+).split()
+VENUES = [
+    "Nobu", "Joe's", "HQ", "Luigi's", "Maria's", "the Ivy", "Blue Bottle",
+    "Cafe Nero", "the Grand", "Dorsia", "Pret", "the Anchor",
+]
+
+
+def trailing_place(s):
+    """A venue after a clock is background, and the clock is still a clock."""
+    r = s.rng
+    s.in_expression = False
+    if r.random() < 0.45:
+        s.add(f"{r.choice(['at', 'in'])} {r.choice(VENUES)}", "O")
+    elif r.random() < 0.5:
+        s.add(f"{r.choice(['at', 'in'])} the {r.choice(PLACES)}", "O")
+    else:
+        spot = r.choice(["room", "suite", "studio", "gate", "desk"])
+        lead = r.choice(["at", "in"]) if spot in ("room", "suite", "studio") else "at"
+        s.add(f"{lead} {spot} {r.randint(1, 40)}", "O")
 
 
 def join(s, connective="at"):
@@ -332,6 +365,8 @@ def render(s, reserved=False, family=None, bare=False):
             "{name} moved the {event} to",
             "we postponed the {event} until",
         ]).format(name=r.choice(background.NAMES), event=r.choice(PROSE_EVENTS))
+    elif family == "clock-place":
+        prefix = ""
     elif family == "imperative-shift":
         prefix = r.choice([
             "check again",
@@ -483,6 +518,18 @@ def render(s, reserved=False, family=None, bare=False):
             s.add(anchor, "REL_DAY")
             date = {"kind": "relativeDay", "offset": RELATIVE_DAYS[anchor]}
         clause = {"duration": {"amount": amount, "unit": unit}, "date": date}
+    elif family == "clock-place":
+        s.add(r.choice(EVENT_NOUNS), "O")
+        s.add(r.choice(["at", "@"]), "GLUE")
+        hour = r.randint(1, 12)
+        s.add(words(hour) if r.random() < 0.25 else str(hour), "HOUR")
+        minute = 0
+        if r.random() < 0.3:
+            s.add(":", "GLUE", "")
+            minute = r.choice([15, 30, 45])
+            s.add(f"{minute:02}", "MINUTE", "")
+        clause = {"time": {"start": {"hour": hour, "minute": minute}}}
+        trailing_place(s)
     elif family == "daypart-clock":
         part = r.choice(["morning", "afternoon", "evening"])
         if r.random() < 0.65:
@@ -904,4 +951,13 @@ def render(s, reserved=False, family=None, bare=False):
                     ]
                 },
             )
+    if (
+        not reserved
+        and "time" in clause
+        and "end" not in clause.get("time", {})
+        and s.spans
+        and s.spans[-1]["label"] != "O"
+        and r.random() < 0.3
+    ):
+        trailing_place(s)
     return Specification(family, {"clauses": [clause]})

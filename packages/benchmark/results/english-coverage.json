@@ -1,15 +1,19 @@
 {
   "model": "95647e7e0a3c4c3f998281a6de389d26908b12e042913f1dacb477a04dcabff2",
   "runtimeSha256": "341bbe79976a30050b0fae6e1afd5fc47b2118fdad89a35eda9f03e981de717a",
-  "sourceSha256": "29eace28492a0658571f5bbf9d1e08f147d195ef53e54b4edfa0635c36a1fb94",
+  "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
-  "total": 56,
-  "correct": 56,
-  "accuracy": 1,
+  "total": 71,
+  "correct": 58,
+  "accuracy": 0.8169014084507042,
   "families": {
     "calendar-edge-shift": {
       "correct": 3,
       "total": 3
+    },
+    "clock-with-place": {
+      "correct": 2,
+      "total": 15
     },
     "compact-named-date": {
       "correct": 4,
@@ -1408,6 +1412,406 @@
       ],
       "diagnostics": [],
       "correct": true
+    },
+    {
+      "id": "english-057",
+      "family": "clock-with-place",
+      "text": "Dinner at 8 at Nobu",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T08:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"Dinner at 8 at Nobu\".",
+          "start": 0,
+          "end": 19
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-058",
+      "family": "clock-with-place",
+      "text": "Lunch at 12 at Joe's",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-12T12:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"Lunch at 12 at Joe's\".",
+          "start": 0,
+          "end": 20
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-059",
+      "family": "clock-with-place",
+      "text": "Coffee at 3 at the cafe",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T03:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"Coffee at 3 at the cafe\".",
+          "start": 0,
+          "end": 23
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-060",
+      "family": "clock-with-place",
+      "text": "standup at 9 at the office",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"standup at 9 at the office\".",
+          "start": 0,
+          "end": 26
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-061",
+      "family": "clock-with-place",
+      "text": "call at 3 at the office",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T03:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"call at 3 at the office\".",
+          "start": 0,
+          "end": 23
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-062",
+      "family": "clock-with-place",
+      "text": "interview at 10 at HQ",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T10:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"interview at 10 at HQ\".",
+          "start": 0,
+          "end": 21
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-063",
+      "family": "clock-with-place",
+      "text": "gym at 7 at the club",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T07:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"gym at 7 at the club\".",
+          "start": 0,
+          "end": 20
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-064",
+      "family": "clock-with-place",
+      "text": "class at 6 at the studio",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T06:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"class at 6 at the studio\".",
+          "start": 0,
+          "end": 24
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-065",
+      "family": "clock-with-place",
+      "text": "dentist at 4 at the clinic",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T04:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"dentist at 4 at the clinic\".",
+          "start": 0,
+          "end": 26
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-066",
+      "family": "clock-with-place",
+      "text": "drinks at 9 at the bar",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"drinks at 9 at the bar\".",
+          "start": 0,
+          "end": 22
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-067",
+      "family": "clock-with-place",
+      "text": "pickup at 5 at school",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T05:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"pickup at 5 at school\".",
+          "start": 0,
+          "end": 21
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-068",
+      "family": "clock-with-place",
+      "text": "meeting at 11 in room 3",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T11:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [
+        {
+          "start": "2026-09-13T11:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 11,
+          "end": 13,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "english-069",
+      "family": "clock-with-place",
+      "text": "yoga at 6 in the studio",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T06:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [
+        {
+          "start": "2026-09-13T06:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 8,
+          "end": 9,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "english-070",
+      "family": "clock-with-place",
+      "text": "breakfast at 9 at the diner",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"breakfast at 9 at the diner\".",
+          "start": 0,
+          "end": 27
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "english-071",
+      "family": "clock-with-place",
+      "text": "haircut at 2 at the salon",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T02:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"haircut at 2 at the salon\".",
+          "start": 0,
+          "end": 25
+        }
+      ],
+      "correct": false
     }
   ],
   "scope": "Independently authored English schedule regression cases with hand-written expected occurrences. This is targeted coverage, not general-language accuracy."

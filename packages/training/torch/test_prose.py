@@ -216,8 +216,26 @@ class ProseTests(unittest.TestCase):
             self.assertIn("HOUR", labels)
             if labels[-1] == "O":
                 found += 1
-                self.assertEqual(labels[-2], "GLUE")
+                self.assertNotEqual(labels[-2], "O")
         self.assertGreater(found, 100)
+
+    def test_a_place_after_a_clock_stays_background(self):
+        shapes = set()
+        for seed in range(600):
+            sentence = Sentence(random.Random(seed), augment=False)
+            specification = natural.render(sentence)
+            if sentence.spans[-1]["label"] != "O":
+                continue
+            tail = sentence.text[sentence.spans[-1]["start"] :]
+            if not tail.startswith(("at ", "in ")):
+                continue
+            shapes.add(tail.split()[0])
+            clause = specification.schedule["clauses"][0]
+            self.assertIn("time", clause)
+            for span in sentence.spans:
+                if span["start"] >= sentence.spans[-1]["start"]:
+                    self.assertEqual(span["label"], "O")
+        self.assertEqual(shapes, {"at", "in"})
 
     def test_last_minute_idiom_stays_background_before_a_real_date(self):
         forms = set()

@@ -26,6 +26,7 @@ describe("English coverage fixtures", () => {
         "daypart-clock",
         "relative-date",
         "shifted-time",
+        "clock-with-place",
         "same-time",
         "range",
         "negative",

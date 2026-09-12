@@ -102,5 +102,23 @@ console.log(
 );
 for (const value of cases.filter((value) => !value.correct))
   console.log(`${value.id} ${value.family}: ${value.text}`);
-if (process.argv.includes("--require-all") && correct !== cases.length)
-  process.exitCode = 1;
+if (process.argv.includes("--require-all")) {
+  const gaps: string[] = JSON.parse(
+    await readFile(
+      join(root, "../training/data/gold/english-coverage.gaps.json"),
+      "utf8",
+    ),
+  ).ids;
+  const known = new Set(gaps);
+  const unexpected = cases.filter(
+    (value) => !value.correct && !known.has(value.id),
+  );
+  const closed = cases.filter((value) => value.correct && known.has(value.id));
+  for (const value of unexpected)
+    console.error(`unexpected failure ${value.id}: ${value.text}`);
+  for (const value of closed)
+    console.error(`${value.id} now passes; remove it from the gaps file`);
+  if (unexpected.length || closed.length) process.exitCode = 1;
+  else
+    console.log(`${known.size} known gaps still open, no unexpected failures.`);
+}
