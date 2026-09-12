@@ -942,11 +942,7 @@ def generate(
             variant = rng.choice(variants)
             spec = semantic.sample(rng) if family != 23 and rng.random() < 0.8 else None
             if family == 23:
-                # Family 23 is the negative family. It used to lose roughly half
-                # its draws to the terse and natural branches below, which emit
-                # labelled expressions, so negatives were ~8% of the corpus
-                # against its 15% weight. Take the branch first and the weight
-                # means what it says.
+                # Negatives branch first so its weight is the real share.
                 sentence = (
                     render_heldout(family, rng)
                     if split == "heldout"

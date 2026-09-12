@@ -395,10 +395,7 @@ def suffix(rng: random.Random) -> str:
             return text
 
 
-# Vocabulary for the contrastive negatives below. Every surface form here also
-# appears inside a labelled expression elsewhere in the generator -- "in four
-# minutes", "on the 3rd", "at 5", "May 3", "a couple of" -- so the pair is what
-# teaches the model that the carrier decides, not the number.
+# Contrastive negatives: same surface forms as labelled expressions, different carrier.
 DISTANCES = [
     "mile", "5k", "10k", "lap", "marathon", "half marathon", "course",
     "circuit", "final leg", "sprint", "climb", "descent", "relay", "length",
@@ -483,11 +480,7 @@ def numeric(rng: random.Random) -> str:
     low = rng.randint(1, 20)
     high = low + rng.randint(1, 40)
     groups = [
-        # A measured duration after a completion verb. "in four minutes" here is
-        # every token O; "call me in four minutes" is a labelled shift. Only two
-        # of the six frames use that exact "in N units" surface: at a higher
-        # share the model stops reading the real shift as a shift, and "in ten
-        # minutes" on its own is far commoner input than a race time.
+        # Measured duration, all O. Keep "in N units" to 2 of 6 frames or real shifts regress.
         [
             f"{name} {rng.choice(COMPLETED)} the {rng.choice(DISTANCES)} in {spoken} {unit}.",
             f"They {rng.choice(PRODUCED)} the whole {noun} in {spoken} {unit} flat.",
@@ -550,10 +543,7 @@ def numeric(rng: random.Random) -> str:
             f"Take {rng.choice(SPOKEN_COUNTS[:4])} {rng.choice(CONTAINERS)} with the {noun}.",
             f"Add {rng.choice(SPOKEN_COUNTS[:5])} {rng.choice(CONTAINERS)} and stir.",
         ],
-        # Percentages and fractions. "half" and "quarter" appear in only two of
-        # the eight frames on purpose: they are also the CLOCK_OFFSET words in
-        # "half past eight" and "a quarter to 8", and a heavier share of them as
-        # filler costs that role outright.
+        # Keep "half"/"quarter" to 2 of 8 frames or CLOCK_OFFSET regresses.
         [
             f"A {rng.randint(2, 60)} percent raise on the {noun} is unrealistic.",
             f"Turnout on the {noun} was up {rng.randint(2, 60)} percent.",

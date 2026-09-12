@@ -103,10 +103,7 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
   storageBarrier();
   workgroupBarrier();
 
-  // Layer 0 reads the encoder (stage 1) and parks its gate in stage 2; later
-  // layers read the previous combine (stage 2) and park their gate in the now
-  // dead stage 1. The combine step only ever reads its own lane's residual, so
-  // writing the result back over stage 2 races nothing.
+  // Layer 0: read stage 1, gate in stage 2. Later layers: read stage 2, gate in stage 1.
   var sum = 0.0;
   for (var layer = 0u; layer < SCAN_LAYERS; layer++) {
     let input = select(2u, 1u, layer == 0u);

@@ -276,11 +276,7 @@ def main():
         )
         named = 1 / np.sqrt(counts)
         if args.role_weighting == "sqrt-keep-o":
-            # Plain sqrt hands O the smallest weight of every label, because O
-            # is the most frequent one, which is a standing push towards
-            # predicting a role. Normalise over the non-O roles only and pin O
-            # at 1.0, so rare roles still get their lift and abstaining costs
-            # full price.
+            # Pin O at 1.0; plain sqrt makes abstaining the cheapest label.
             named[LABEL_O] = 0
             named /= named[named > 0].mean()
             named[LABEL_O] = 1.0
