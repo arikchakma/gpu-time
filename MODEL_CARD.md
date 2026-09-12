@@ -37,9 +37,9 @@ Carrier words are mined from the borrowed prose rather than listed: `background.
 The saved reports cover different model versions. Each result below describes its recorded run.
 
 - **Unseen carriers: 993/1000 for `terse-f32`.** The reserved surrounding words are absent from training. The score requires exact schedule structures. `packages/training/results/natural-reserved-evaluation.json` identifies the older artifact, not the current `spoken2` weights.
-- **Microsoft Recognizers development agreement: 167/563 (29.7%), up from 156.** Independent third-party date/time specifications, and the only measure here that is not our own distribution. Its reserved test split — all 134 grouped test cases — is not used for model selection. Policy differences count as failures rather than being excused.
+- **Microsoft Recognizers development agreement: 203/563 (36.1%), up from 167.** Independent third-party date/time specifications, and the only measure here that is not our own distribution. Its reserved test split — all 134 grouped test cases — is not used for model selection. Policy differences count as failures rather than being excused.
 
-  Of the 396 non-matching cases, 194 fail interpretation and 137 return a different value. Interpretation failures can come from wrong model roles or missing compiler support. The failure stage alone does not identify the cause. The weakest family is `DatePeriodParser` at 24/190.
+  Of the 360 non-matching cases, 136 fail interpretation and 181 return a different value. Interpretation failures can come from wrong model roles or missing compiler support. The failure stage alone does not identify the cause. The weakest family is `DatePeriodParser` at 22/190.
 
 - **Hand-authored chat gold: 268/330 for `step7-crf2`, down two from `step5-keepo-crf3`.** Per family: question 26/27, tatoeba 69/86 (was 64/86), calendar 44/51 (was 45/51), abbrev 24/28 (was 25/28), correction 13/16 (was 14/16), prose 20/22, relative 19/22, recognizers 44/62 (was 46/62), negation 9/16 (was 11/16). Chat is hand-written for this project, so it is a development set, not held-out data.
 - **Non-temporal negatives: 183/192, and 125/132 on the original 132 rows, up from 111/132 before the negatives work.** `negatives.jsonl` grew by sixty rows (133-192) covering measurement durations after a completion verb, ordinals on nouns, numbered things, scores, numeric ranges, ages, percents, month names used as people, fractions and vague counts. On the older `step3-580b` weights that 192-row file scored 150/192. Nine negatives still fail and `packages/core/test/grammar-model.test.ts` keeps them as running `it.fails` cases.
@@ -48,7 +48,7 @@ The saved reports cover different model versions. Each result below describes it
 - The saved reports record 18/18 packaged public-result fixtures and 25/25 adversarial schedules. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
 - Unit tests cover tokenization, compilation, calendar resolution, DST, RFC 5545 export, and inference workspace reuse.
 - The recorded `terse-f32` CPU/WebGPU comparison covers 10,000 sequences, 512 fixtures directly against PyTorch, and 1,000 source-versus-packaged shader sequences.
-- Warm medians over 10,000 inputs: WebGPU 82.7 ms, CPU 702.5 ms, Chrono 82.8 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison.
+- Warm medians over 10,000 inputs: WebGPU 163.4 ms, CPU 755.5 ms, Chrono 81.8 ms. Other parsers return different structures; this is a timing comparison, not a capability comparison.
 
 ## Limitations
 

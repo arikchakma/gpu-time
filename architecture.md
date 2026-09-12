@@ -61,4 +61,4 @@ Every run snapshots its source files and their hashes into `runs/<run>/source/`,
 
 WebGPU helps for warm, large, or batched inputs. Explicit WebGPU mode initializes the device during parser creation. Automatic mode waits until a batch needs it. Later calls reuse GPU resources. The runtime returns values to JavaScript, so it pays one readback synchronization per dispatch.
 
-Automatic mode keeps small inputs on the CPU to reduce dispatch overhead. The recorded warm medians over 10,000 inputs are 82.7 ms on WebGPU and 702.5 ms on CPU. Tokenization, inference, and resolution are timed separately and reported in the `timings` field.
+Automatic mode keeps small inputs on the CPU to reduce dispatch overhead. The recorded warm medians over 10,000 inputs are 163.4 ms on WebGPU and 755.5 ms on CPU. Tokenization, inference, and resolution are timed separately and reported in the `timings` field.
