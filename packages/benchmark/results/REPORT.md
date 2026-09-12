@@ -70,7 +70,7 @@ Standalone minified browser ESM bundles, gzip level 9, Brotli quality 11. Exact 
 
 All gpu-time runtime exports, its resolver and trained weights are included. Different libraries provide different language coverage and output contracts. Exact imports and locked dependencies are recorded in [size.json](size.json).
 
-The release artifact uses 44,795 of its 50,000-byte Brotli budget (passed). This gate measures the published entry directly; comparison bundles below are rebundled with the recorded import expressions.
+The release artifact uses 44,730 of its 50,000-byte Brotli budget (passed). The gpu-time row below is that same published file; every other library is rebundled from the recorded import expression.
 
 | Library | Minified bytes | Gzip bytes | Brotli bytes |
 |---|---:|---:|---:|

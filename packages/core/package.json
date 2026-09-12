@@ -22,6 +22,7 @@
     "build": "node --experimental-strip-types scripts/build.ts --report-only",
     "build:release": "node --experimental-strip-types scripts/build.ts",
     "prepack": "pnpm build",
+    "release": "bumpp",
     "test": "vitest run",
     "test:browser": "node --experimental-strip-types scripts/build.ts --report-only && node --experimental-strip-types test/browser.ts",
     "check": "tsc --noEmit",

@@ -1,7 +1,7 @@
 {
-  "method": "Standalone minified browser ESM bundles, gzip level 9, Brotli quality 11. Exact import expressions included. Chrono uses its English entry; Recognizers' public entry includes its shipped language coverage.",
+  "method": "Gzip level 9, Brotli quality 11. gpu-time is measured as published, so these bytes are the same artifact the release gate scores. Every other library is a standalone minified browser ESM bundle built from the import expression recorded below. Chrono uses its English entry; Recognizers' public entry includes its shipped language coverage.",
   "imports": {
-    "gpu-time": "export * from \"gpu-time\"",
+    "gpu-time": "packages/core/dist/index.js",
     "chrono": "export { en } from \"chrono-node\"",
     "compromise": "import nlp from \"compromise\"; import dates from \"compromise-dates\"; export default nlp.extend(dates)",
     "rrule": "export { RRule } from \"rrule\"",
@@ -20,9 +20,9 @@
   "results": [
     {
       "library": "gpu-time",
-      "bytes": 110853,
-      "gzipBytes": 52547,
-      "brotliBytes": 45418
+      "bytes": 110210,
+      "gzipBytes": 51721,
+      "brotliBytes": 44730
     },
     {
       "library": "chrono",

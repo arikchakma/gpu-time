@@ -7,10 +7,9 @@ import { brotliCompressSync, gzipSync, constants } from "node:zlib";
 
 const packageRoot = join(import.meta.dirname, "..");
 
-// Resolved from this package, so "gpu-time" reaches the built artifact through
-// the package's own exports map — the same entry point consumers get.
+const shipped = join(packageRoot, "..", "core", "dist", "index.js");
 const entries = {
-  "gpu-time": 'export * from "gpu-time"',
+  "gpu-time": "packages/core/dist/index.js",
   chrono: 'export { en } from "chrono-node"',
   compromise:
     'import nlp from "compromise"; import dates from "compromise-dates"; export default nlp.extend(dates)',
@@ -23,18 +22,22 @@ const results = [];
 const temporary = await mkdtemp(join(tmpdir(), "gpu-time-size-"));
 try {
   for (const [library, contents] of Object.entries(entries)) {
-    const output = await build({
-      stdin: { contents, resolveDir: packageRoot },
-      bundle: true,
-      minify: true,
-      format: "esm",
-      platform: "browser",
-      mainFields: ["module", "main"],
-      target: "es2022",
-      legalComments: "none",
-      write: false,
-    });
-    const source = output.outputFiles[0].contents;
+    const source =
+      library === "gpu-time"
+        ? await readFile(shipped)
+        : (
+            await build({
+              stdin: { contents, resolveDir: packageRoot },
+              bundle: true,
+              minify: true,
+              format: "esm",
+              platform: "browser",
+              mainFields: ["module", "main"],
+              target: "es2022",
+              legalComments: "none",
+              write: false,
+            })
+          ).outputFiles[0].contents;
     const path = join(temporary, `${library}.mjs`);
     await writeFile(path, source);
     const namespace = await import(pathToFileURL(path).href);
@@ -60,7 +63,7 @@ await writeFile(
   JSON.stringify(
     {
       method:
-        "Standalone minified browser ESM bundles, gzip level 9, Brotli quality 11. Exact import expressions included. Chrono uses its English entry; Recognizers' public entry includes its shipped language coverage.",
+        "Gzip level 9, Brotli quality 11. gpu-time is measured as published, so these bytes are the same artifact the release gate scores. Every other library is a standalone minified browser ESM bundle built from the import expression recorded below. Chrono uses its English entry; Recognizers' public entry includes its shipped language coverage.",
       imports: entries,
       versions: JSON.parse(
         await readFile(join(packageRoot, "package.json"), "utf8"),
