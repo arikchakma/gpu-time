@@ -2,13 +2,13 @@
   "note": "Ratchet for the Microsoft Recognizers development split. A run with --floor fails if the overall score or any family falls below these numbers. Raise them when a run beats them; lower one only with the cause recorded in MODEL_CARD.md.",
   "split": "development",
   "total": 563,
-  "correct": 217,
+  "correct": 220,
   "families": {
     "DateParser": 71,
-    "DatePeriodParser": 16,
+    "DatePeriodParser": 18,
     "DateTimeParser": 34,
     "DateTimePeriodParser": 18,
-    "TimeParser": 42,
+    "TimeParser": 43,
     "TimePeriodParser": 36
   }
 }

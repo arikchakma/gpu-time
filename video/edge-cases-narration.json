@@ -1,0 +1,32 @@
+[
+  {
+    "start": 0.9,
+    "end": 8.7,
+    "text": "GPU time now reads more everyday English. Tomorrow morning at eight becomes a date and a time."
+  },
+  {
+    "start": 11.0,
+    "end": 18.7,
+    "text": "Short date formats work too. Seven, Jan, twenty twenty-seven becomes January seventh."
+  },
+  {
+    "start": 21.0,
+    "end": 28.7,
+    "text": "Date ranges stay together. June eighth through tenth includes all three days."
+  },
+  {
+    "start": 31.0,
+    "end": 38.7,
+    "text": "And fewer numbers become false dates. A film's length stays a description."
+  },
+  {
+    "start": 41.0,
+    "end": 48.7,
+    "text": "The update improves monthly schedules, expands training, and adds stronger tests."
+  },
+  {
+    "start": 50.8,
+    "end": 53.8,
+    "text": "GPU time, zero point two."
+  }
+]

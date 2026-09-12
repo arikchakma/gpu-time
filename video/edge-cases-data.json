@@ -1,0 +1,100 @@
+{
+  "source": {
+    "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
+    "coverage": "packages/benchmark/results/english-coverage.json",
+    "baseline": "packages/benchmark/results/english-coverage-baseline.json"
+  },
+  "positives": [
+    {
+      "id": "english-001",
+      "family": "month-only",
+      "text": "She is leaving in August.",
+      "occurrences": [
+        {
+          "start": "2027-08-01T00:00:00+06:00",
+          "allDay": true
+        }
+      ]
+    },
+    {
+      "id": "english-041",
+      "family": "compact-named-date",
+      "text": "The filing date is 07-JAN-2027.",
+      "occurrences": [
+        {
+          "start": "2027-01-07T00:00:00+06:00",
+          "allDay": true
+        }
+      ]
+    },
+    {
+      "id": "english-049",
+      "family": "daypart-clock",
+      "text": "Tomorrow morning at 8, unlock the office.",
+      "occurrences": [
+        {
+          "start": "2026-09-13T08:00:00+06:00",
+          "allDay": false
+        }
+      ]
+    },
+    {
+      "id": "english-045",
+      "family": "shared-month-range",
+      "text": "The retreat runs June 8-10, 2027.",
+      "occurrences": [
+        {
+          "start": "2027-06-08T00:00:00+06:00",
+          "allDay": true,
+          "end": "2027-06-11T00:00:00+06:00"
+        }
+      ]
+    },
+    {
+      "id": "english-052",
+      "family": "calendar-edge-shift",
+      "text": "Bill again one month after January 31, 2027.",
+      "occurrences": [
+        {
+          "start": "2027-02-28T00:00:00+06:00",
+          "allDay": true
+        }
+      ]
+    },
+    {
+      "id": "english-053",
+      "family": "calendar-edge-shift",
+      "text": "Renew one year after February 29, 2028.",
+      "occurrences": [
+        {
+          "start": "2029-02-28T00:00:00+06:00",
+          "allDay": true
+        }
+      ]
+    }
+  ],
+  "negatives": [
+    "Our office is at 15 Baker Street.",
+    "She placed 2nd in the race.",
+    "May is my sister's name.",
+    "The invoice total came to 2400 dollars.",
+    "The film is two hours and ten minutes long."
+  ],
+  "metrics": {
+    "authoredEnglish": {
+      "before": 37,
+      "after": 56,
+      "total": 56
+    },
+    "nonTemporalNegatives": {
+      "before": 187,
+      "after": 191,
+      "total": 192
+    },
+    "floors": {
+      "recognizers": 217,
+      "compatibility": 73
+    },
+    "knownDurationRangeRegressions": 7
+  }
+}

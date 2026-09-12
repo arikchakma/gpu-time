@@ -129,7 +129,7 @@ class ProseTests(unittest.TestCase):
             anchors.add(sentence.spans[-1]["label"])
         self.assertEqual(units, {"second", "minute", "hour", "day", "week"})
         self.assertEqual(written, {False, True})
-        self.assertEqual(anchors, {"NOW", "REL_DAY"})
+        self.assertEqual(anchors, {"NOW", "REL_DAY", "WEEKDAY"})
         self.assertIn(45, amounts)
         self.assertTrue(any(amount >= 90 for amount in amounts))
 
@@ -145,12 +145,15 @@ class ProseTests(unittest.TestCase):
             self.assertNotIn("shift", clause)
             labels = [span["label"] for span in sentence.spans]
             self.assertEqual(labels[0], "DUR")
-            self.assertEqual(labels[-2:], ["BOUND_START", labels[-1]])
             carriers.add(sentence.text.split()[0].lower())
-            openers.add(sentence.spans[-2]["label"])
+            opener = sentence.spans[-2]
+            openers.add((opener["label"], sentence.text[opener["start"]:opener["end"]].lower()))
             anchors.add(labels[-1])
         self.assertEqual(carriers, {"for", "within", "lasting"})
-        self.assertEqual(openers, {"BOUND_START"})
+        self.assertEqual(
+            openers,
+            {("GLUE", "from"), ("BOUND_START", "starting"), ("BOUND_START", "beginning")},
+        )
         self.assertEqual(anchors, {"NOW", "REL_DAY", "WEEKDAY"})
 
     def test_anchored_shift_and_duration_differ_only_by_the_carrier(self):

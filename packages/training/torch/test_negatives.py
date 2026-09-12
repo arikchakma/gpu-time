@@ -64,15 +64,14 @@ class NumericNegativeTests(unittest.TestCase):
 
     def test_span_carriers_keep_their_plain_senses_as_background(self):
         rng = random.Random(881204)
-        found = {"lasting": False, "within": False, "starting": False, "plain-for": False}
+        found = {"lasting": False, "starting": False, "plain-for": False}
         for _ in range(8000):
             text = background.sentence(rng)
             low = text.lower()
             found["lasting"] |= "lasting" in low
-            found["within"] |= "within" in low
             found["starting"] |= "starting" in low
             found["plain-for"] |= bool(re.search(r"\bargued for\b|\bis for \w+, not for\b", low))
-            if not any(word in low for word in ("lasting", "within", "starting")):
+            if not any(word in low for word in ("lasting", "starting")):
                 continue
             sentence = Sentence(rng, augment=False)
             sentence.add(text, "O")

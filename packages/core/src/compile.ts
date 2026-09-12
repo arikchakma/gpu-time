@@ -887,6 +887,17 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
   const unitIndex = tokens.findIndex((token) => token.label === Role.UNIT);
   if (amountIndex < 0 || unitIndex < 0) return { tokens };
 
+  // "for 3 days from today" spans from an anchor, so a forward direction after
+  // an explicit duration introduces that anchor. "ago" never does.
+  const durationIndex = tokens.findIndex((token) => token.label === Role.DUR);
+  if (
+    tokens[directionIndex].label === Role.DIR_AFTER &&
+    durationIndex >= 0 &&
+    durationIndex < amountIndex &&
+    amountIndex < directionIndex
+  )
+    return { tokens: tokens.filter((_, index) => index !== directionIndex) };
+
   const amountToken = tokens[amountIndex];
   const quantity = readDuration(tokens, amountIndex);
   const amount = quantity?.duration.amount ?? number(amountToken.text);
