@@ -21,7 +21,7 @@ var<workgroup> pooled: array<f32, 32>;
 var<workgroup> context: array<f32, 32>;
 var<workgroup> headGate: array<f32, 16>;
 var<workgroup> headHidden: array<f32, 64>;
-var<workgroup> output: array<f32, 41>;
+var<workgroup> output: array<f32, OUTPUTS>;
 
 fn rounded(value: f32) -> f32 { ROUND_BODY }
 fn sigmoid(value: f32) -> f32 { return 1.0 / (1.0 + exp(-value)); }
@@ -103,43 +103,57 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
   storageBarrier();
   workgroupBarrier();
 
-  var state = 0.0;
-  for (var position = 0u; position < count; position++) {
-    let token = start + position;
-    var gateValue = modelWeights[GATE_BIAS_OFFSET + lane];
-    var candidateValue = modelWeights[CANDIDATE_BIAS_OFFSET + lane];
-    for (var channel = 0u; channel < 32u; channel++) {
-      let encoded = readState(1u, token, channel);
-      gateValue += encoded * modelWeights[GATE_WEIGHT_OFFSET + lane * 32u + channel];
-      candidateValue += encoded * modelWeights[CANDIDATE_WEIGHT_OFFSET + lane * 32u + channel];
-    }
-    let gate = rounded(sigmoid(gateValue));
-    let candidate = rounded((1.0 - gate) * tanh(candidateValue));
-    writeState(2u, token, lane, gate);
-    writeState(3u, token, lane, candidate);
-    state = gate * state + candidate;
-    writeState(0u, token, lane, state);
-  }
-  state = 0.0;
-  for (var position = i32(count) - 1; position >= 0; position--) {
-    let token = start + u32(position);
-    state = readState(2u, token, lane) * state + readState(3u, token, lane);
-    writeState(3u, token, lane, state);
-  }
-  storageBarrier();
-  workgroupBarrier();
-
+  // Layer 0: read stage 1, gate in stage 2. Later layers: read stage 2, gate in stage 1.
   var sum = 0.0;
-  for (var position = 0u; position < count; position++) {
-    let token = start + position;
-    var value = modelWeights[COMBINE_BIAS_OFFSET + lane];
-    for (var channel = 0u; channel < 32u; channel++) {
-      value += readState(0u, token, channel) * modelWeights[COMBINE_WEIGHT_OFFSET + lane * 64u + channel];
-      value += readState(3u, token, channel) * modelWeights[COMBINE_WEIGHT_OFFSET + lane * 64u + 32u + channel];
+  for (var layer = 0u; layer < SCAN_LAYERS; layer++) {
+    let input = select(2u, 1u, layer == 0u);
+    let gateStage = select(1u, 2u, layer == 0u);
+    let gateWeights = select(GATE2_WEIGHT_OFFSET, GATE_WEIGHT_OFFSET, layer == 0u);
+    let gateBias = select(GATE2_BIAS_OFFSET, GATE_BIAS_OFFSET, layer == 0u);
+    let candidateWeights = select(CANDIDATE2_WEIGHT_OFFSET, CANDIDATE_WEIGHT_OFFSET, layer == 0u);
+    let candidateBias = select(CANDIDATE2_BIAS_OFFSET, CANDIDATE_BIAS_OFFSET, layer == 0u);
+    let combineWeights = select(COMBINE2_WEIGHT_OFFSET, COMBINE_WEIGHT_OFFSET, layer == 0u);
+    let combineBias = select(COMBINE2_BIAS_OFFSET, COMBINE_BIAS_OFFSET, layer == 0u);
+    var state = 0.0;
+    for (var position = 0u; position < count; position++) {
+      let token = start + position;
+      var gateValue = modelWeights[gateBias + lane];
+      var candidateValue = modelWeights[candidateBias + lane];
+      for (var channel = 0u; channel < 32u; channel++) {
+        let encoded = readState(input, token, channel);
+        gateValue += encoded * modelWeights[gateWeights + lane * 32u + channel];
+        candidateValue += encoded * modelWeights[candidateWeights + lane * 32u + channel];
+      }
+      let gate = rounded(sigmoid(gateValue));
+      let candidate = rounded((1.0 - gate) * tanh(candidateValue));
+      writeState(gateStage, token, lane, gate);
+      writeState(3u, token, lane, candidate);
+      state = gate * state + candidate;
+      writeState(0u, token, lane, state);
     }
-    let combined = rounded(tanh(readState(1u, token, lane) + value));
-    writeState(2u, token, lane, combined);
-    sum += combined;
+    state = 0.0;
+    for (var position = i32(count) - 1; position >= 0; position--) {
+      let token = start + u32(position);
+      state = readState(gateStage, token, lane) * state + readState(3u, token, lane);
+      writeState(3u, token, lane, state);
+    }
+    storageBarrier();
+    workgroupBarrier();
+
+    sum = 0.0;
+    for (var position = 0u; position < count; position++) {
+      let token = start + position;
+      var value = modelWeights[combineBias + lane];
+      for (var channel = 0u; channel < 32u; channel++) {
+        value += readState(0u, token, channel) * modelWeights[combineWeights + lane * 64u + channel];
+        value += readState(3u, token, channel) * modelWeights[combineWeights + lane * 64u + 32u + channel];
+      }
+      let combined = rounded(tanh(readState(input, token, lane) + value));
+      writeState(2u, token, lane, combined);
+      sum += combined;
+    }
+    storageBarrier();
+    workgroupBarrier();
   }
   pooled[lane] = sum / f32(count);
   storageBarrier();
@@ -182,13 +196,13 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
     workgroupBarrier();
 
     if (hasToken) {
-      for (var label = lane; label < 41u; label += 32u) {
+      for (var label = lane; label < OUTPUTS; label += 32u) {
         var value = modelWeights[OUTPUT_BIAS_OFFSET + label];
         for (var channel = 0u; channel < 64u; channel++) {
           value += headHidden[channel] * modelWeights[OUTPUT_WEIGHT_OFFSET + label * 64u + channel];
         }
         output[label] = value;
-        if (parameters.debug != 0u) { debugData[token * 41u + label] = value; }
+        if (parameters.debug != 0u) { debugData[token * OUTPUTS + label] = value; }
       }
     }
     workgroupBarrier();
@@ -197,13 +211,13 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
       if (hasToken) {
         var best = 0u;
         var second = -1e30;
-        for (var label = 1u; label < 40u; label++) {
+        for (var label = 1u; label < ROLE_CLASSES; label++) {
           if (output[label] > output[best]) { second = output[best]; best = label; }
           else { second = max(second, output[label]); }
         }
         var denominator = 0.0;
-        for (var label = 0u; label < 40u; label++) { denominator += exp(output[label] - output[best]); }
-        let code = best | select(0u, 128u, output[40u] >= BOUNDARY_THRESHOLD);
+        for (var label = 0u; label < ROLE_CLASSES; label++) { denominator += exp(output[label] - output[best]); }
+        let code = best | select(0u, 128u, output[ROLE_CLASSES] >= BOUNDARY_THRESHOLD);
         atomicOr(&packedLabels[token / 4u], code << ((token & 3u) * 8u));
         scores[token] = (1.0 - exp(second - output[best])) / denominator;
       } else { scores[token] = 0.0; }

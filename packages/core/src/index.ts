@@ -1,6 +1,7 @@
 import { defineParser as defineScheduleParser } from "./schedule.js";
 import { createResolver } from "./resolve.js";
 import { civil, instant } from "./zoned.js";
+import { mentionsTime } from "./lexicon.js";
 import type {
   Diagnostic,
   Occurrence,
@@ -46,6 +47,7 @@ export async function defineParser(options: ParserOptions = {}) {
     parsed: ScheduleResult,
     resolveSchedule: ReturnType<typeof createResolver>,
     limit: number,
+    text: string,
   ): ParseResult {
     const started = performance.now();
     const occurrences: TimeRange[] = [];
@@ -54,6 +56,14 @@ export async function defineParser(options: ParserOptions = {}) {
       (expression) => expression.diagnostics,
     );
     let truncated = false;
+    if (!parsed.expressions.length && mentionsTime(text))
+      diagnostics.push({
+        code: "no-expression",
+        severity: "warning",
+        message: `No time expression was recognized in ${JSON.stringify(text)}.`,
+        start: 0,
+        end: text.length,
+      });
     for (const expression of parsed.expressions) {
       if (!expression.schedule) continue;
       try {
@@ -102,7 +112,12 @@ export async function defineParser(options: ParserOptions = {}) {
   return {
     async parse(text: string, context: ParseContext): Promise<ParseResult> {
       const limit = validate(context);
-      return finish(await parser.parse(text), createResolver(context), limit);
+      return finish(
+        await parser.parse(text),
+        createResolver(context),
+        limit,
+        text,
+      );
     },
     async parseMany(
       texts: string[],
@@ -112,7 +127,9 @@ export async function defineParser(options: ParserOptions = {}) {
       const limit = validate(context);
       const parsed = await parser.parseMany(texts);
       const resolveSchedule = createResolver(context);
-      return parsed.map((result) => finish(result, resolveSchedule, limit));
+      return parsed.map((result, index) =>
+        finish(result, resolveSchedule, limit, texts[index]),
+      );
     },
     dispose: parser.dispose,
   };

@@ -1,117 +1,93 @@
 {
-  "model": "c69ab6c9be8ec854790c004b5d540dc6a41bececbacdbf34a4725de6b711d6d5",
+  "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
   "generatedWeightsHashMatches": true,
-  "matchingExportFiles": 5,
+  "matchingExportFiles": 6,
   "results": [
     {
-      "checkpoint": "runs/spoken2/best.pt",
+      "checkpoint": "runs/english-coverage-layer2-negative-blend-075/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 1
+    },
+    {
+      "checkpoint": "runs/english-coverage-layer2-v2/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/terse-f32/best.pt",
+      "checkpoint": "runs/english-coverage-v10/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-language-final/best.pt",
+      "checkpoint": "runs/english-coverage-v4/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-language-v2/best.pt",
+      "checkpoint": "runs/balanced-prose/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 1
+    },
+    {
+      "checkpoint": "runs/step7-crf2/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/direct-results/best.pt",
+      "checkpoint": "runs/step5-keepo-crf3/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/clock-periods/last.pt",
+      "checkpoint": "runs/step5-keepo-crf/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-casing/last.pt",
+      "checkpoint": "runs/step3-580b/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-durations/last.pt",
+      "checkpoint": "runs/rows580/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/prose-context/last.pt",
+      "checkpoint": "runs/carrier-warm580/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/timezone-free/best.pt",
+      "checkpoint": "runs/carrier-int5/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10,
+      "skippedDatasetInputs": [
+        {
+          "source": "data/prose/sentences.txt",
+          "recordedSha256": "fe2d10f8fba16adcfd579c30b025deafccf2e12975c5f482be1f27fca7f12f69"
+        }
+      ]
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/caller-timezone/best.pt",
+      "checkpoint": "runs/prose-coverage/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/natural-grammar/best.pt",
+      "checkpoint": "runs/contrast-coverage/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/timezone-grammar/best.pt",
+      "checkpoint": "runs/carrier-consistent/best.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
+      "matchingSourceFiles": 10
     },
     {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/range-grammar/best.pt",
+      "checkpoint": "runs/english-coverage-layer2-negative-correction/epoch-2.pt",
       "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/written-time/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/complete-grammar/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/modifier-context/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-contrasts/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-context/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 9
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/core-grammar/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 8
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/grammar-coverage/best.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 8
-    },
-    {
-      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/compact/last.pt",
-      "checkpointHashMatches": true,
-      "matchingSourceFiles": 8
+      "matchingSourceFiles": 10
     }
   ]
 }

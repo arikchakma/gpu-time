@@ -32,6 +32,8 @@ const holidays = {
   "new-years-eve": [12, 31],
   halloween: [10, 31],
   valentines: [2, 14],
+  "july-4th": [7, 4],
+  thanksgiving: { month: 11, day: "TH", ordinal: 4 },
 } as const;
 
 export function weekBeginning(
@@ -89,6 +91,8 @@ function calendarDate(spec: CalendarDate, reference: Civil): Civil {
 
 export function addCivil(date: Civil, amount: number, unit: Unit): Civil {
   switch (unit) {
+    case "second":
+      return fromUTC(utc(date) + amount * 1000);
     case "minute":
       return fromUTC(utc(date) + amount * 60_000);
     case "hour":
@@ -116,6 +120,7 @@ function relativePeriod(
   if (spec.unit === "year") beginning = { ...beginning, month: 1, day: 1 };
   if (spec.unit === "hour") beginning = { ...reference, minute: 0, second: 0 };
   if (spec.unit === "minute") beginning = { ...reference, second: 0 };
+  if (spec.unit === "second") beginning = { ...reference };
 
   const offset =
     spec.modifier === "next" ? 1 : spec.modifier === "last" ? -1 : 0;
@@ -124,7 +129,8 @@ function relativePeriod(
 
   if (spec.edge === "start") return { start };
   if (spec.edge === "end") {
-    const isClockUnit = spec.unit === "minute" || spec.unit === "hour";
+    const isClockUnit =
+      spec.unit === "second" || spec.unit === "minute" || spec.unit === "hour";
     return { start: isClockUnit ? fromUTC(utc(end) - 1000) : addDays(end, -1) };
   }
   return { start, end };
@@ -177,8 +183,24 @@ export function resolveDates(
       }));
     }
 
-    case "calendar":
-      return [{ start: calendarDate(spec, reference) }];
+    case "calendar": {
+      const date = calendarDate(spec, reference);
+      // Without a year, "January 2" and "the 3rd" name the next such date.
+      if (spec.year === undefined && utc(date) < utc(today))
+        return [
+          {
+            start: calendarDate(
+              spec,
+              addCivil(
+                reference,
+                1,
+                spec.month === undefined ? "month" : "year",
+              ),
+            ),
+          },
+        ];
+      return [{ start: date }];
+    }
 
     case "calendarPeriod": {
       let year = spec.year ?? reference.year;
@@ -207,9 +229,21 @@ export function resolveDates(
       return [relativePeriod(spec, reference, options)];
 
     case "holiday": {
-      const [month, day] = holidays[spec.name];
-      let date = calendarDate({ month, day }, reference);
-      if (utc(date) < utc(today)) date = { ...date, year: date.year + 1 };
+      const entry = holidays[spec.name];
+      const inYear = (year: number): Civil =>
+        "ordinal" in entry
+          ? resolveDates(
+              {
+                kind: "ordinalWeekday",
+                ...entry,
+                of: { kind: "calendar", year, month: entry.month },
+              },
+              reference,
+              options,
+            )[0].start
+          : calendarDate({ year, month: entry[0], day: entry[1] }, reference);
+      let date = inYear(reference.year);
+      if (utc(date) < utc(today)) date = inYear(reference.year + 1);
       return [{ start: date }];
     }
 

@@ -50,7 +50,7 @@ it("validates schedule structure and rejects empty clauses or invalid clock comp
 it("accepts every hand-authored adversarial and oracle schedule", () => {
   const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
   const validate = new Ajv2020({ strict: true }).compile(schema);
-  for (const file of ["adversarial", "user-cases", "labels"]) {
+  for (const file of ["adversarial", "user-cases", "labels", "chat"]) {
     const records = readFileSync(goldPath(file), "utf8").trim().split("\n");
     for (const line of records) {
       const record = JSON.parse(line);

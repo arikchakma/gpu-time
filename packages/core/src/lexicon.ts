@@ -54,6 +54,10 @@ export const quantities: Record<string, number> = {
   thirty: 30,
   forty: 40,
   fifty: 50,
+  sixty: 60,
+  seventy: 70,
+  eighty: 80,
+  ninety: 90,
   half: 0.5,
   quarter: 0.25,
   couple: 2,
@@ -84,12 +88,27 @@ export const quantities: Record<string, number> = {
   nineteenth: 19,
   twentieth: 20,
   thirtieth: 30,
+  fortieth: 40,
+  fiftieth: 50,
+  sixtieth: 60,
+  seventieth: 70,
+  eightieth: 80,
+  ninetieth: 90,
   last: -1,
 };
 
 // "twenty-first" reaches the compiler as three tokens, so the tens word and the
 // ones ordinal are combined rather than listed as thirty more entries.
-const tensWords: Record<string, number> = { twenty: 20, thirty: 30 };
+const tensWords: Record<string, number> = {
+  twenty: 20,
+  thirty: 30,
+  forty: 40,
+  fifty: 50,
+  sixty: 60,
+  seventy: 70,
+  eighty: 80,
+  ninety: 90,
+};
 
 export function compoundOrdinal(tens: string, ones: string): number {
   const base = tensWords[tens.toLowerCase()];
@@ -98,8 +117,19 @@ export function compoundOrdinal(tens: string, ones: string): number {
     return NaN;
   return base + unit;
 }
-const unitNames = ["minute", "hour", "day", "week", "month", "year"] as const;
+const unitNames = [
+  "second",
+  "minute",
+  "hour",
+  "day",
+  "week",
+  "month",
+  "year",
+] as const;
 const unitAbbreviations: Record<string, Unit> = {
+  // No bare "s": the tokenizer leaves one behind from possessives like "Monday's".
+  sec: "second",
+  secs: "second",
   min: "minute",
   mins: "minute",
   hr: "hour",
@@ -112,8 +142,12 @@ const unitAbbreviations: Record<string, Unit> = {
   m: "minute",
   h: "hour",
   mo: "month",
+  mos: "month",
   yr: "year",
   yrs: "year",
+  // A fortnight is two weeks; readDuration doubles the amount.
+  fortnight: "week",
+  fortnights: "week",
 };
 
 export function number(text: string): number {
@@ -156,6 +190,50 @@ export function unit(text: string): Unit | undefined {
   return unitNames.find((name) => name === singular);
 }
 
+// Relative days, day parts, and recurrence words live in the compiler's own
+// tables; these are the ones that make a bare string look like it is about time.
+const timeWords = new Set([
+  "today",
+  "tonight",
+  "tonite",
+  "tomorrow",
+  "tmrw",
+  "tmr",
+  "yesterday",
+  "now",
+  "noon",
+  "midday",
+  "midnight",
+  "morning",
+  "afternoon",
+  "evening",
+  "night",
+  "weekend",
+  "weekends",
+  "weekday",
+  "weekdays",
+  "every",
+  "am",
+  "pm",
+]);
+
+/** A cheap check for input that mentions time but compiled to no expression. */
+export function mentionsTime(text: string): boolean {
+  return text
+    .toLowerCase()
+    .split(/[^\p{L}\p{N}]+/u)
+    .some(
+      (word) =>
+        word !== "" &&
+        (/\d/.test(word) ||
+          timeWords.has(word) ||
+          weekday(word) !== undefined ||
+          month(word) !== undefined ||
+          unit(word) !== undefined ||
+          Object.hasOwn(holidayNames, word)),
+    );
+}
+
 export const holidayNames: Record<
   string,
   Extract<DateSpec, { kind: "holiday" }>["name"]
@@ -168,4 +246,10 @@ export const holidayNames: Record<
   halloween: "halloween",
   valentinesday: "valentines",
   valentines: "valentines",
+  july4th: "july-4th",
+  julyfourth: "july-4th",
+  fourthofjuly: "july-4th",
+  independenceday: "july-4th",
+  thanksgiving: "thanksgiving",
+  thanksgivingday: "thanksgiving",
 };

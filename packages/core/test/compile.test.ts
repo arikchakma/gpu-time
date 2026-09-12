@@ -18,6 +18,47 @@ export function oracle(
   }));
 }
 
+it("keeps an explicit duration before its clock anchor", () => {
+  const text = "May 6 for two hours from 10am";
+  expect(
+    compile(
+      text,
+      oracle(text, [
+        "MONTH",
+        "DOM",
+        "DUR",
+        "NUM",
+        "UNIT",
+        "RANGE_START",
+        "HOUR",
+        "MERIDIEM",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "calendar", month: 5, day: 6 },
+        time: { start: { hour: 10, minute: 0 } },
+        duration: { amount: 2, unit: "hour" },
+      },
+    ],
+  });
+  const shifted = "two hours from 10am";
+  expect(
+    compile(
+      shifted,
+      oracle(shifted, ["NUM", "UNIT", "RANGE_START", "HOUR", "MERIDIEM"]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        time: { start: { hour: 10, minute: 0 } },
+        shift: { amount: 2, unit: "hour", direction: "after" },
+      },
+    ],
+  });
+});
+
 it("composes a quantity and unit as a duration without an introducer", () => {
   const text = "90 days";
   expect(compile(text, oracle(text, ["NUM", "UNIT"]))[0].schedule).toEqual({
@@ -61,6 +102,321 @@ it.each([
     .map((_, index): Label => (index === 0 ? "HOUR" : "MERIDIEM"));
   expect(compile(text, oracle(text, labels))[0].schedule).toEqual({
     clauses: [{ time: { start: { hour, minute: 0 } } }],
+  });
+});
+
+it("uses a daypart to disambiguate a clock on the named day", () => {
+  const text = "this afternoon at 3";
+  expect(
+    compile(text, oracle(text, ["O", "DAYPART", "O", "HOUR"]))[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "relativeDay", offset: 0 },
+        time: { start: { hour: 15, minute: 0 } },
+      },
+    ],
+  });
+});
+
+it("deduplicates a repeated daypart but rejects conflicting dayparts", () => {
+  const repeated = "Friday evening is music evening";
+  expect(
+    compile(
+      repeated,
+      oracle(repeated, ["WEEKDAY", "DAYPART", "O", "O", "DAYPART"]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "weekday", days: ["FR"] },
+        time: { start: { part: "evening" } },
+      },
+    ],
+  });
+
+  const conflicting = "Friday morning is music evening";
+  const result = compile(
+    conflicting,
+    oracle(conflicting, ["WEEKDAY", "DAYPART", "O", "O", "DAYPART"]),
+  )[0];
+  expect(result.schedule).toBeNull();
+  expect(result.diagnostics.map((diagnostic) => diagnostic.code)).toContain(
+    "conflicting-daypart",
+  );
+});
+
+it("compiles last weekday of the month", () => {
+  const text = "last Friday of the month at 4pm";
+  expect(
+    compile(
+      text,
+      oracle(text, [
+        "ORD",
+        "WEEKDAY",
+        "GLUE",
+        "GLUE",
+        "UNIT",
+        "O",
+        "HOUR",
+        "MERIDIEM",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "monthly",
+          interval: 1,
+          byDay: ["FR"],
+          bySetPos: [-1],
+        },
+        time: { start: { hour: 16, minute: 0 } },
+      },
+    ],
+  });
+});
+
+it("keeps last weekday without a month selector as a past weekday", () => {
+  const text = "last Friday at 4pm";
+  expect(
+    compile(
+      text,
+      oracle(text, ["DEICTIC", "WEEKDAY", "O", "HOUR", "MERIDIEM"]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "weekday", days: ["FR"], modifier: "last" },
+        time: { start: { hour: 16, minute: 0 } },
+      },
+    ],
+  });
+});
+
+it("keeps recurrence bound normalization inside its clause", () => {
+  const text = "every Friday July 8 until 10";
+  expect(
+    compile(
+      text,
+      oracle(
+        text,
+        ["RECUR", "WEEKDAY", "MONTH", "DOM", "RANGE_END", "DOM"],
+        [text.indexOf("July")],
+      ),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      { recurrence: { freq: "weekly", interval: 1, byDay: ["FR"] } },
+      {
+        date: {
+          kind: "calendarRange",
+          from: { month: 7, day: 8 },
+          to: { month: 7, day: 10 },
+        },
+      },
+    ],
+  });
+});
+
+it("recognizes a date bound after a frequency word", () => {
+  const text = "weekly until March";
+  expect(
+    compile(text, oracle(text, ["FREQ", "RANGE_END", "MONTH"]))[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          until: { kind: "calendar", month: 3 },
+        },
+      },
+    ],
+  });
+});
+
+it.each(["O", "GLUE"] as Label[])(
+  "does not drop an incomplete until bound labelled %s",
+  (label) => {
+    const text = "every Thursday until";
+    const expression = compile(
+      text,
+      oracle(text, ["RECUR", "WEEKDAY", label]),
+    )[0];
+    expect(expression.schedule).toBeNull();
+    expect(expression.diagnostics.map((value) => value.code)).toContain(
+      "invalid-bound",
+    );
+  },
+);
+
+it("treats until plus a date as a recurrence bound when mislabelled as a range", () => {
+  const text = "Every Thursday until JANUARY";
+  expect(
+    compile(text, oracle(text, ["RECUR", "WEEKDAY", "RANGE_END", "MONTH"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          byDay: ["TH"],
+          until: { kind: "calendar", month: 1 },
+        },
+      },
+    ],
+  });
+});
+
+it("keeps until between clocks as a recurring clock window", () => {
+  const text = "every Thursday 9 until 5pm";
+  expect(
+    compile(
+      text,
+      oracle(text, [
+        "RECUR",
+        "WEEKDAY",
+        "HOUR",
+        "RANGE_END",
+        "HOUR",
+        "MERIDIEM",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          byDay: ["TH"],
+        },
+        time: {
+          start: { hour: 9, minute: 0 },
+          end: { hour: 17, minute: 0 },
+        },
+      },
+    ],
+  });
+});
+
+it("uses tonight to disambiguate an attached clock", () => {
+  const text = "The maintenance starts tonight at 11.";
+  expect(
+    compile(text, oracle(text, ["O", "O", "O", "REL_DAY", "O", "HOUR", "O"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "relativeDay", offset: 0 },
+        time: { start: { hour: 23, minute: 0 } },
+      },
+    ],
+  });
+});
+
+it("compiles a date range followed by a clock window as daily windows", () => {
+  const text = "November 3–5 from 9am to 11am";
+  expect(
+    compile(
+      text,
+      oracle(text, [
+        "MONTH",
+        "DOM",
+        "RANGE_END",
+        "DOM",
+        "RANGE_START",
+        "HOUR",
+        "MERIDIEM",
+        "RANGE_END",
+        "HOUR",
+        "MERIDIEM",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "daily",
+          interval: 1,
+          start: {
+            kind: "calendarRange",
+            from: { month: 11, day: 3 },
+            to: { month: 11, day: 5 },
+          },
+          until: { kind: "calendar", month: 11, day: 5 },
+        },
+        time: {
+          start: { hour: 9, minute: 0 },
+          end: { hour: 11, minute: 0 },
+        },
+      },
+    ],
+  });
+});
+
+it("compiles same-time relative periods as shifts from now", () => {
+  const explicit = "8 pm exactly next year on same time";
+  expect(
+    compile(
+      explicit,
+      oracle(explicit, [
+        "HOUR",
+        "MERIDIEM",
+        "O",
+        "DEICTIC",
+        "UNIT",
+        "O",
+        "O",
+        "O",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "now" },
+        time: { start: { hour: 20, minute: 0 } },
+        shift: { amount: 1, unit: "year", direction: "after" },
+      },
+    ],
+  });
+
+  const qualified = "next year at 8 pm";
+  expect(
+    compile(
+      qualified,
+      oracle(qualified, ["DEICTIC", "UNIT", "O", "HOUR", "MERIDIEM"]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "relativeUnit", unit: "year", modifier: "next" },
+        time: { start: { hour: 20, minute: 0 } },
+      },
+    ],
+  });
+
+  const period = "next year";
+  expect(
+    compile(period, oracle(period, ["DEICTIC", "UNIT"]))[0].schedule,
+  ).toEqual({
+    clauses: [
+      { date: { kind: "relativeUnit", unit: "year", modifier: "next" } },
+    ],
+  });
+
+  const implied = "this time next year";
+  expect(
+    compile(implied, oracle(implied, ["O", "O", "DEICTIC", "UNIT"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "now" },
+        shift: { amount: 1, unit: "year", direction: "after" },
+      },
+    ],
   });
 });
 
@@ -525,7 +881,165 @@ it("marks a bare range start as open rather than returning a bare instant", () =
     )[0].schedule,
   ).toEqual({
     clauses: [
-      { time: { start: { hour: 20, minute: 0 }, end: { hour: 22, minute: 0 } } },
+      {
+        time: { start: { hour: 20, minute: 0 }, end: { hour: 22, minute: 0 } },
+      },
     ],
+  });
+});
+
+it("keeps a short unknown aside inside one expression and reports it", () => {
+  const text = "friday, say, around 3";
+  const result = compile(
+    text,
+    oracle(text, ["WEEKDAY", "O", "O", "O", "O", "HOUR"]),
+  );
+  expect(result).toHaveLength(1);
+  expect(result[0].schedule).toEqual({
+    clauses: [
+      {
+        date: { kind: "weekday", days: ["FR"] },
+        time: { start: { hour: 3, minute: 0 } },
+      },
+    ],
+  });
+  expect(result[0].diagnostics.map((value) => value.code)).toContain(
+    "filler-ignored",
+  );
+
+  const long = "friday well anyway who knows 3";
+  expect(
+    compile(long, oracle(long, ["WEEKDAY", "O", "O", "O", "O", "HOUR"])),
+  ).toHaveLength(2);
+});
+
+it("warns about a bare hour and minute the same way as a bare hour", () => {
+  const text = "4:30";
+  const result = compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0];
+  expect(result.schedule).toEqual({
+    clauses: [{ time: { start: { hour: 4, minute: 30 } } }],
+  });
+  expect(result.diagnostics.map((value) => value.code)).toContain(
+    "ambiguous-meridiem",
+  );
+});
+
+it("repeats a plural day group but keeps a singular one as a single date", () => {
+  const plural = "weekends";
+  expect(compile(plural, oracle(plural, ["DAYGROUP"]))[0].schedule).toEqual({
+    clauses: [
+      { recurrence: { freq: "weekly", interval: 1, byDay: ["SA", "SU"] } },
+    ],
+  });
+  const singular = "over the weekend";
+  expect(
+    compile(singular, oracle(singular, ["O", "O", "DAYGROUP"]))[0].schedule,
+  ).toEqual({ clauses: [{ date: { kind: "dayGroup", group: "weekend" } }] });
+  const every = "every weekend";
+  expect(
+    compile(every, oracle(every, ["RECUR", "DAYGROUP"]))[0].schedule,
+  ).toEqual({
+    clauses: [
+      { recurrence: { freq: "weekly", interval: 1, byDay: ["SA", "SU"] } },
+    ],
+  });
+});
+
+it("reads a quantity before from as a shifted anchor, not a span", () => {
+  const text = "a week from tuesday";
+  expect(
+    compile(text, oracle(text, ["NUM", "UNIT", "RANGE_START", "WEEKDAY"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [
+      {
+        date: { kind: "weekday", days: ["TU"] },
+        shift: { amount: 1, unit: "week", direction: "after" },
+      },
+    ],
+  });
+});
+
+it("keeps a clock stated inside a bound and reports a modifier it cannot place", () => {
+  const bounded = "every monday until friday at 5pm";
+  expect(
+    compile(
+      bounded,
+      oracle(bounded, [
+        "RECUR",
+        "WEEKDAY",
+        "BOUND_END",
+        "WEEKDAY",
+        "O",
+        "HOUR",
+        "MERIDIEM",
+      ]),
+    )[0].schedule,
+  ).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          byDay: ["MO"],
+          until: { kind: "weekday", days: ["FR"] },
+        },
+        time: { start: { hour: 17, minute: 0 } },
+      },
+    ],
+  });
+
+  const deictic = "this afternoon";
+  expect(
+    compile(
+      deictic,
+      oracle(deictic, ["DEICTIC", "DAYPART"]),
+    )[0].diagnostics.map((value) => value.code),
+  ).toContain("dropped-constraint");
+});
+
+it("reads the widened unit, frequency, day-group, and clock spellings", () => {
+  const examples: [string, Label[], object][] = [
+    [
+      "in a fortnight",
+      ["DIR_AFTER", "NUM", "UNIT"],
+      { shift: { amount: 2, unit: "week", direction: "after" } },
+    ],
+    ["quarterly", ["FREQ"], { recurrence: { freq: "monthly", interval: 3 } }],
+    ["nightly", ["FREQ"], { recurrence: { freq: "daily", interval: 1 } }],
+    [
+      "every business day",
+      ["RECUR", "DAYGROUP", "DAYGROUP"],
+      {
+        recurrence: {
+          freq: "weekly",
+          interval: 1,
+          byDay: ["MO", "TU", "WE", "TH", "FR"],
+        },
+      },
+    ],
+    [
+      "9.30pm",
+      ["HOUR", "GLUE", "HOUR", "MERIDIEM"],
+      { time: { start: { hour: 21, minute: 30 } } },
+    ],
+    [
+      "for sixty five minutes",
+      ["DUR", "NUM", "NUM", "UNIT"],
+      { duration: { amount: 65, unit: "minute" } },
+    ],
+  ];
+  for (const [text, labels, clause] of examples)
+    expect(compile(text, oracle(text, labels))[0].schedule, text).toEqual({
+      clauses: [clause],
+    });
+});
+
+it("compiles seconds as a shift unit", () => {
+  const text = "in 30 seconds";
+  expect(
+    compile(text, oracle(text, ["DIR_AFTER", "NUM", "UNIT"]))[0].schedule,
+  ).toEqual({
+    clauses: [{ shift: { amount: 30, unit: "second", direction: "after" } }],
   });
 });

@@ -1,5 +1,5 @@
 {
-  "model": "0aba397673a84e9a3caf2fbd6416d54ff0ea69fb5fa9cd02c1484f934d8ec1e6",
+  "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
   "environment": {
     "browser": "152.0.7977.83",
     "cpu": "Apple M4 Max",
@@ -15,30 +15,30 @@
       "result": {
         "library": "gpu-time-cpu",
         "crossOriginIsolated": true,
-        "initializationMs": 23.354999989271164,
-        "firstParseMs": 14.849999994039536,
+        "initializationMs": 18.855000019073486,
+        "firstParseMs": 10.25,
         "single": {
           "text": "next Monday at 2pm",
           "samples": 100,
-          "p50Ms": 0.11000001430511475,
-          "p95Ms": 0.13500002026557922
+          "p50Ms": 0.15000000596046448,
+          "p95Ms": 0.20500001311302185
         },
         "batches": [
           {
             "size": 1000,
-            "ms": 71.81000000238419,
-            "p95Ms": 72.43999999761581,
+            "ms": 100.90999999642372,
+            "p95Ms": 101.375,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 13925.63709743488
+            "inputsPerSecond": 9909.820632597763
           },
           {
             "size": 10000,
-            "ms": 702.4450000226498,
-            "p95Ms": 707.2899999916553,
+            "ms": 993.9400000274181,
+            "p95Ms": 998.1800000071526,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 14235.990005875987
+            "inputsPerSecond": 10060.969474741078
           }
         ],
         "outputs": [
@@ -68,9 +68,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.02499997615814209,
-                "inferMs": 0.18000000715255737,
-                "resolveMs": 0.034999996423721313
+                "tokenizeMs": 0.034999996423721313,
+                "inferMs": 0.2800000011920929,
+                "resolveMs": 0.07999998331069946
               }
             },
             "occurrences": [
@@ -129,6 +129,13 @@
               "truncated": false,
               "diagnostics": [
                 {
+                  "code": "low-confidence",
+                  "message": "The model is uncertain about this expression.",
+                  "start": 0,
+                  "end": 5,
+                  "severity": "warning"
+                },
+                {
                   "code": "until-month-only",
                   "severity": "warning",
                   "start": 0,
@@ -138,9 +145,9 @@
               ],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.06999999284744263,
-                "resolveMs": 0.2549999952316284
+                "tokenizeMs": 0.009999990463256836,
+                "inferMs": 0.12999999523162842,
+                "resolveMs": 0.304999977350235
               }
             },
             "occurrences": [
@@ -193,9 +200,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.02000001072883606,
-                "inferMs": 0.07499998807907104,
-                "resolveMs": 0.03999999165534973
+                "tokenizeMs": 0.010000020265579224,
+                "inferMs": 0.16499999165534973,
+                "resolveMs": 0.05500000715255737
               }
             },
             "occurrences": [
@@ -226,9 +233,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.06000000238418579,
-                "resolveMs": 0.17000001668930054
+                "tokenizeMs": 0.009999990463256836,
+                "inferMs": 0.125,
+                "resolveMs": 0.23500001430511475
               }
             },
             "occurrences": [
@@ -256,8 +263,8 @@
               "backend": "cpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.034999996423721313,
-                "resolveMs": 0.02000001072883606
+                "inferMs": 0.10500001907348633,
+                "resolveMs": 0.030000001192092896
               }
             },
             "occurrences": [
@@ -338,9 +345,9 @@
               ],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.04499998688697815,
-                "resolveMs": 0.11500000953674316
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.09999999403953552,
+                "resolveMs": 0.125
               }
             },
             "occurrences": [
@@ -459,9 +466,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.05500000715255737,
-                "resolveMs": 0.0949999988079071
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.125,
+                "resolveMs": 0.125
               }
             },
             "occurrences": [
@@ -536,8 +543,8 @@
               "backend": "cpu",
               "timings": {
                 "tokenizeMs": 0,
-                "inferMs": 0.05500000715255737,
-                "resolveMs": 0.025000005960464478
+                "inferMs": 0.07000002264976501,
+                "resolveMs": 0.03999999165534973
               }
             },
             "occurrences": [
@@ -567,8 +574,8 @@
               "backend": "cpu",
               "timings": {
                 "tokenizeMs": 0,
-                "inferMs": 0.04499998688697815,
-                "resolveMs": 0.004999995231628418
+                "inferMs": 0.06999999284744263,
+                "resolveMs": 0.010000020265579224
               }
             },
             "occurrences": [
@@ -662,9 +669,9 @@
               ],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.07999998331069946,
-                "resolveMs": 0.26500001549720764
+                "tokenizeMs": 0,
+                "inferMs": 0.125,
+                "resolveMs": 0.27000001072883606
               }
             },
             "occurrences": [
@@ -750,9 +757,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.06000000238418579,
-                "resolveMs": 0.02000001072883606
+                "tokenizeMs": 0,
+                "inferMs": 0.08500000834465027,
+                "resolveMs": 0.019999980926513672
               }
             },
             "occurrences": [
@@ -781,9 +788,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.06000000238418579,
-                "resolveMs": 0.04999998211860657
+                "tokenizeMs": 0.010000020265579224,
+                "inferMs": 0.09999999403953552,
+                "resolveMs": 0.06999999284744263
               }
             },
             "occurrences": [
@@ -812,9 +819,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.005000025033950806,
-                "inferMs": 0.06999999284744263,
-                "resolveMs": 0.02000001072883606
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.09999999403953552,
+                "resolveMs": 0.030000001192092896
               }
             },
             "occurrences": [
@@ -843,9 +850,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.02499997615814209,
-                "resolveMs": 0.06000000238418579
+                "tokenizeMs": 0.005000025033950806,
+                "inferMs": 0.03999999165534973,
+                "resolveMs": 0.06499999761581421
               }
             },
             "occurrences": [
@@ -874,8 +881,8 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.005000025033950806,
-                "inferMs": 0.1199999749660492,
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.16499999165534973,
                 "resolveMs": 0.015000015497207642
               }
             },
@@ -904,9 +911,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.06000000238418579,
-                "resolveMs": 0
+                "tokenizeMs": 0,
+                "inferMs": 0.09000000357627869,
+                "resolveMs": 0.004999995231628418
               }
             },
             "occurrences": [
@@ -933,9 +940,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.07000002264976501,
-                "resolveMs": 0.054999977350234985
+                "tokenizeMs": 0.010000020265579224,
+                "inferMs": 0.10999998450279236,
+                "resolveMs": 0.06000000238418579
               }
             },
             "occurrences": [
@@ -963,9 +970,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.02499997615814209,
-                "resolveMs": 0.02000001072883606
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.03999999165534973,
+                "resolveMs": 0.015000015497207642
               }
             },
             "occurrences": [
@@ -1039,9 +1046,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.06499999761581421,
-                "resolveMs": 0.12999999523162842
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.09000000357627869,
+                "resolveMs": 0.13999998569488525
               }
             },
             "occurrences": [
@@ -1116,9 +1123,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.1199999749660492,
-                "resolveMs": 0.10000002384185791
+                "tokenizeMs": 0.005000025033950806,
+                "inferMs": 0.1599999964237213,
+                "resolveMs": 0.10500001907348633
               }
             },
             "occurrences": [
@@ -1178,8 +1185,8 @@
               "backend": "cpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.11499997973442078,
-                "resolveMs": 0.04000002145767212
+                "inferMs": 0.16999998688697815,
+                "resolveMs": 0.04500001668930054
               }
             },
             "occurrences": [
@@ -1283,8 +1290,8 @@
               "backend": "cpu",
               "timings": {
                 "tokenizeMs": 0,
-                "inferMs": 0.06499999761581421,
-                "resolveMs": 0.06000000238418579
+                "inferMs": 0.09999999403953552,
+                "resolveMs": 0.07500001788139343
               }
             },
             "occurrences": [
@@ -1403,9 +1410,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.014999985694885254,
-                "inferMs": 0.07000002264976501,
-                "resolveMs": 0.04999998211860657
+                "tokenizeMs": 0,
+                "inferMs": 0.09999999403953552,
+                "resolveMs": 0.04499998688697815
               }
             },
             "occurrences": [
@@ -1524,9 +1531,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.1199999749660492,
-                "resolveMs": 0.17000001668930054
+                "tokenizeMs": 0.010000020265579224,
+                "inferMs": 0.1499999761581421,
+                "resolveMs": 0.1900000274181366
               }
             },
             "occurrences": [
@@ -1600,9 +1607,9 @@
               "diagnostics": [],
               "backend": "cpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.07500001788139343,
-                "resolveMs": 0.034999996423721313
+                "tokenizeMs": 0.019999980926513672,
+                "inferMs": 0.09999999403953552,
+                "resolveMs": 0.04499998688697815
               }
             },
             "occurrences": [
@@ -1623,30 +1630,30 @@
       "result": {
         "library": "gpu-time-webgpu",
         "crossOriginIsolated": true,
-        "initializationMs": 19.875,
-        "firstParseMs": 4.419999986886978,
+        "initializationMs": 10.849999994039536,
+        "firstParseMs": 4.6700000166893005,
         "single": {
           "text": "next Monday at 2pm",
           "samples": 100,
-          "p50Ms": 0.28999999165534973,
-          "p95Ms": 0.6099999845027924
+          "p50Ms": 0.6550000011920929,
+          "p95Ms": 0.8449999988079071
         },
         "batches": [
           {
             "size": 1000,
-            "ms": 9.034999996423721,
-            "p95Ms": 10.895000010728836,
+            "ms": 15.629999995231628,
+            "p95Ms": 15.925000011920929,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 110680.68626406475
+            "inputsPerSecond": 63979.526571022274
           },
           {
             "size": 10000,
-            "ms": 82.6550000011921,
-            "p95Ms": 86.62000000476837,
+            "ms": 122.39499998092651,
+            "p95Ms": 123,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 120984.8164037962
+            "inputsPerSecond": 81702.68394589938
           }
         ],
         "outputs": [
@@ -1677,8 +1684,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.025000005960464478,
-                "inferMs": 1.6600000262260437,
-                "resolveMs": 0.04499998688697815
+                "inferMs": 1.5499999821186066,
+                "resolveMs": 0.034999996423721313
               }
             },
             "occurrences": [
@@ -1737,6 +1744,13 @@
               "truncated": false,
               "diagnostics": [
                 {
+                  "code": "low-confidence",
+                  "message": "The model is uncertain about this expression.",
+                  "start": 0,
+                  "end": 5,
+                  "severity": "warning"
+                },
+                {
                   "code": "until-month-only",
                   "severity": "warning",
                   "start": 0,
@@ -1746,9 +1760,9 @@
               ],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.8850000202655792,
-                "resolveMs": 0.29999998211860657
+                "tokenizeMs": 0.015000015497207642,
+                "inferMs": 0.7849999964237213,
+                "resolveMs": 0.3149999976158142
               }
             },
             "occurrences": [
@@ -1801,9 +1815,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.015000015497207642,
-                "inferMs": 0.949999988079071,
-                "resolveMs": 0.03999999165534973
+                "tokenizeMs": 0.02000001072883606,
+                "inferMs": 1.0999999940395355,
+                "resolveMs": 0.06999999284744263
               }
             },
             "occurrences": [
@@ -1834,9 +1848,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.6500000059604645,
-                "resolveMs": 0.1899999976158142
+                "tokenizeMs": 0.014999985694885254,
+                "inferMs": 0.7950000166893005,
+                "resolveMs": 0.3349999785423279
               }
             },
             "occurrences": [
@@ -1864,8 +1878,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.4750000238418579,
-                "resolveMs": 0.03999999165534973
+                "inferMs": 0.7549999952316284,
+                "resolveMs": 0.06000000238418579
               }
             },
             "occurrences": [
@@ -1946,9 +1960,9 @@
               ],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.5050000250339508,
-                "resolveMs": 0.13499999046325684
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.6449999809265137,
+                "resolveMs": 0.1550000011920929
               }
             },
             "occurrences": [
@@ -2067,9 +2081,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.5400000214576721,
-                "resolveMs": 0.12999999523162842
+                "tokenizeMs": 0.005000025033950806,
+                "inferMs": 0.7049999833106995,
+                "resolveMs": 0.17000001668930054
               }
             },
             "occurrences": [
@@ -2143,9 +2157,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.5349999964237213,
-                "resolveMs": 0.034999996423721313
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.6949999928474426,
+                "resolveMs": 0.050000011920928955
               }
             },
             "occurrences": [
@@ -2174,9 +2188,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.5200000107288361,
-                "resolveMs": 0.004999995231628418
+                "tokenizeMs": 0,
+                "inferMs": 0.6500000059604645,
+                "resolveMs": 0.02000001072883606
               }
             },
             "occurrences": [
@@ -2271,8 +2285,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.6800000071525574,
-                "resolveMs": 0.4050000011920929
+                "inferMs": 0.925000011920929,
+                "resolveMs": 0.35499998927116394
               }
             },
             "occurrences": [
@@ -2358,9 +2372,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.6449999809265137,
-                "resolveMs": 0.030000001192092896
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.7250000238418579,
+                "resolveMs": 0.034999996423721313
               }
             },
             "occurrences": [
@@ -2389,9 +2403,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.6099999845027924,
-                "resolveMs": 0.08000001311302185
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.7650000154972076,
+                "resolveMs": 0.12999999523162842
               }
             },
             "occurrences": [
@@ -2421,7 +2435,7 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.5350000262260437,
+                "inferMs": 0.7950000166893005,
                 "resolveMs": 0.03999999165534973
               }
             },
@@ -2452,8 +2466,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.3400000035762787,
-                "resolveMs": 0.07499998807907104
+                "inferMs": 0.5150000154972076,
+                "resolveMs": 0.09999999403953552
               }
             },
             "occurrences": [
@@ -2482,9 +2496,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.5499999821186066,
-                "resolveMs": 0.030000030994415283
+                "tokenizeMs": 0.015000015497207642,
+                "inferMs": 1.0599999725818634,
+                "resolveMs": 0.03999999165534973
               }
             },
             "occurrences": [
@@ -2513,8 +2527,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.4350000023841858,
-                "resolveMs": 0.014999985694885254
+                "inferMs": 0.7450000047683716,
+                "resolveMs": 0.02000001072883606
               }
             },
             "occurrences": [
@@ -2541,9 +2555,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.7150000035762787,
-                "resolveMs": 0.07499998807907104
+                "tokenizeMs": 0.025000005960464478,
+                "inferMs": 0.8299999833106995,
+                "resolveMs": 0.1199999749660492
               }
             },
             "occurrences": [
@@ -2571,9 +2585,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.3850000202655792,
-                "resolveMs": 0.030000001192092896
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.47999998927116394,
+                "resolveMs": 0.04000002145767212
               }
             },
             "occurrences": [
@@ -2648,8 +2662,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.5649999976158142,
-                "resolveMs": 0.1550000011920929
+                "inferMs": 0.75,
+                "resolveMs": 0.18000000715255737
               }
             },
             "occurrences": [
@@ -2724,9 +2738,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.9149999916553497,
-                "resolveMs": 0.13500002026557922
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 1.104999989271164,
+                "resolveMs": 0.14500001072883606
               }
             },
             "occurrences": [
@@ -2785,9 +2799,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.9200000166893005,
-                "resolveMs": 0.03999999165534973
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 1.1200000047683716,
+                "resolveMs": 0.06499999761581421
               }
             },
             "occurrences": [
@@ -2890,9 +2904,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0,
-                "inferMs": 0.5900000035762787,
-                "resolveMs": 0.07499998807907104
+                "tokenizeMs": 0.004999995231628418,
+                "inferMs": 0.7700000107288361,
+                "resolveMs": 0.12000000476837158
               }
             },
             "occurrences": [
@@ -3011,9 +3025,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.010000020265579224,
-                "inferMs": 0.574999988079071,
-                "resolveMs": 0.050000011920928955
+                "tokenizeMs": 0.009999990463256836,
+                "inferMs": 0.7900000214576721,
+                "resolveMs": 0.07999998331069946
               }
             },
             "occurrences": [
@@ -3133,8 +3147,8 @@
               "backend": "webgpu",
               "timings": {
                 "tokenizeMs": 0.004999995231628418,
-                "inferMs": 0.8100000023841858,
-                "resolveMs": 0.16499999165534973
+                "inferMs": 1.0349999964237213,
+                "resolveMs": 0.22999998927116394
               }
             },
             "occurrences": [
@@ -3208,9 +3222,9 @@
               "diagnostics": [],
               "backend": "webgpu",
               "timings": {
-                "tokenizeMs": 0.009999990463256836,
-                "inferMs": 0.47999998927116394,
-                "resolveMs": 0.04499998688697815
+                "tokenizeMs": 0.02499997615814209,
+                "inferMs": 0.7300000190734863,
+                "resolveMs": 0.06499999761581421
               }
             },
             "occurrences": [
@@ -3231,30 +3245,30 @@
       "result": {
         "library": "chrono",
         "crossOriginIsolated": true,
-        "initializationMs": 176.80000001192093,
-        "firstParseMs": 9.389999985694885,
+        "initializationMs": 13.034999996423721,
+        "firstParseMs": 9.659999996423721,
         "single": {
           "text": "next Monday at 2pm",
           "samples": 100,
-          "p50Ms": 0.010000020265579224,
-          "p95Ms": 0.02000001072883606
+          "p50Ms": 0.014999985694885254,
+          "p95Ms": 0.025000005960464478
         },
         "batches": [
           {
             "size": 1000,
-            "ms": 8.949999988079071,
-            "p95Ms": 9.549999982118607,
+            "ms": 9.715000003576279,
+            "p95Ms": 10.125,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 111731.84372423992
+            "inputsPerSecond": 102933.60778506236
           },
           {
             "size": 10000,
-            "ms": 82.81000000238419,
-            "p95Ms": 83.16499999165535,
+            "ms": 89.20999997854233,
+            "p95Ms": 93.16999998688698,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 120758.36251312752
+            "inputsPerSecond": 112095.0566349658
           }
         ],
         "outputs": [
@@ -4658,30 +4672,30 @@
       "result": {
         "library": "compromise",
         "crossOriginIsolated": true,
-        "initializationMs": 248.24500000476837,
-        "firstParseMs": 16.205000013113022,
+        "initializationMs": 65.76999998092651,
+        "firstParseMs": 17.80000001192093,
         "single": {
           "text": "next Monday at 2pm",
           "samples": 100,
-          "p50Ms": 1.2900000214576721,
-          "p95Ms": 1.6149999797344208
+          "p50Ms": 1.4350000023841858,
+          "p95Ms": 1.8400000035762787
         },
         "batches": [
           {
             "size": 1000,
-            "ms": 561.3700000047684,
-            "p95Ms": 570.1399999856949,
+            "ms": 610.955000013113,
+            "p95Ms": 646.6649999916553,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 1781.3563246904998
+            "inputsPerSecond": 1636.7817596689395
           },
           {
             "size": 10000,
-            "ms": 5685.780000001192,
-            "p95Ms": 5715.450000017881,
+            "ms": 6265.189999997616,
+            "p95Ms": 6318.354999989271,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 1758.773642314318
+            "inputsPerSecond": 1596.120788037363
           }
         ],
         "outputs": [
@@ -5189,14 +5203,14 @@
             "raw": [
               {
                 "start": "2026-09-09T09:00:00.000+06:00",
-                "end": "2026-09-09T18:15:25.839+06:00",
+                "end": "2026-09-09T18:54:13.786+06:00",
                 "timezone": "Etc/GMT-6",
                 "duration": {
                   "years": 0,
                   "months": 0,
                   "days": 0,
                   "hours": 9,
-                  "minutes": 15
+                  "minutes": 54
                 },
                 "unit": "time"
               }
@@ -5204,14 +5218,14 @@
             "occurrences": [
               {
                 "start": "2026-09-09T09:00:00.000+06:00",
-                "end": "2026-09-09T18:15:25.839+06:00",
+                "end": "2026-09-09T18:54:13.786+06:00",
                 "timezone": "Etc/GMT-6",
                 "duration": {
                   "years": 0,
                   "months": 0,
                   "days": 0,
                   "hours": 9,
-                  "minutes": 15
+                  "minutes": 54
                 },
                 "unit": "time"
               }
@@ -5761,8 +5775,8 @@
       "result": {
         "library": "rrule",
         "crossOriginIsolated": true,
-        "initializationMs": 193.10499998927116,
-        "firstParseMs": 0.23499998450279236,
+        "initializationMs": 5.314999997615814,
+        "firstParseMs": 0.23999997973442078,
         "single": {
           "text": "next Monday at 2pm",
           "samples": 100,
@@ -5772,19 +5786,19 @@
         "batches": [
           {
             "size": 1000,
-            "ms": 1.4350000023841858,
-            "p95Ms": 1.5349999964237213,
+            "ms": 1.5350000262260437,
+            "p95Ms": 1.554999977350235,
             "samples": 3,
             "failures": 250,
-            "inputsPerSecond": 696864.1103404505
+            "inputsPerSecond": 651465.7869150683
           },
           {
             "size": 10000,
-            "ms": 12.944999992847443,
-            "p95Ms": 14.03999999165535,
+            "ms": 13.324999988079071,
+            "p95Ms": 14.844999998807907,
             "samples": 3,
             "failures": 2500,
-            "inputsPerSecond": 772499.0348030393
+            "inputsPerSecond": 750469.0438233612
           }
         ],
         "outputs": [
@@ -6105,30 +6119,30 @@
       "result": {
         "library": "recognizers",
         "crossOriginIsolated": true,
-        "initializationMs": 305.2849999964237,
-        "firstParseMs": 59.50499999523163,
+        "initializationMs": 83.67500001192093,
+        "firstParseMs": 63.375,
         "single": {
           "text": "next Monday at 2pm",
           "samples": 100,
-          "p50Ms": 0.5300000011920929,
-          "p95Ms": 0.6649999916553497
+          "p50Ms": 0.5799999833106995,
+          "p95Ms": 0.7849999964237213
         },
         "batches": [
           {
             "size": 1000,
-            "ms": 572.0900000035763,
-            "p95Ms": 572.9650000035763,
+            "ms": 611.3350000083447,
+            "p95Ms": 631.5349999964237,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 1747.976716939203
+            "inputsPerSecond": 1635.7643517651534
           },
           {
             "size": 10000,
-            "ms": 5704.170000016689,
-            "p95Ms": 5719.504999995232,
+            "ms": 6043.194999992847,
+            "p95Ms": 6121.039999991655,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 1753.103431344217
+            "inputsPerSecond": 1654.7538181395496
           }
         ],
         "outputs": [
@@ -7007,7 +7021,7 @@
       "result": {
         "library": "later",
         "crossOriginIsolated": true,
-        "initializationMs": 257.0150000154972,
+        "initializationMs": 4.909999996423721,
         "firstParseMs": 0.2849999964237213,
         "single": {
           "text": "next Monday at 2pm",
@@ -7018,19 +7032,19 @@
         "batches": [
           {
             "size": 1000,
-            "ms": 0.875,
-            "p95Ms": 0.8850000202655792,
+            "ms": 0.8600000143051147,
+            "p95Ms": 0.8899999856948853,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 1142857.142857143
+            "inputsPerSecond": 1162790.6783327279
           },
           {
             "size": 10000,
-            "ms": 6.805000007152557,
-            "p95Ms": 6.8299999833106995,
+            "ms": 7.229999989271164,
+            "p95Ms": 7.28999999165535,
             "samples": 3,
             "failures": 0,
-            "inputsPerSecond": 1469507.713370942
+            "inputsPerSecond": 1383125.8665061314
           }
         ],
         "outputs": [

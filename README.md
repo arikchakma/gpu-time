@@ -28,7 +28,6 @@ TypeScript then builds a schedule from the predicted roles. The calendar resolve
 
 `backend: "auto"` tries WebGPU at 32 inputs or 512 tokens per batch. Smaller batches use the CPU. Explicit `"webgpu"` requests disable CPU fallback, so the caller must handle failures.
 
-
 ## Development
 
 Install with Node.js 24+, pnpm 11, uv, Python 3.13, and Chrome with WebGPU:
@@ -43,16 +42,24 @@ Generated training data, downloaded corpora, training runs, and local virtual en
 
 ```sh
 pnpm gen
-pnpm train -- --run experiment --storage f32 --feature-rows 324 --init runs/spoken2/best.pt --batch 1024
+pnpm train --run experiment --storage f32 --feature-rows 580 --layers 2 --init runs/english-coverage-layer2-negative-blend-075/best.pt --batch 1024 --transitions
 ```
 
 Runs are written under `packages/training/runs/`. Export a checkpoint to regenerate the shipped weights, then rebuild and evaluate:
 
 ```sh
-pnpm --filter @gpu-time/training export -- --checkpoint runs/experiment/best.pt
+pnpm --filter @gpu-time/training export --checkpoint runs/experiment/best.pt
 pnpm build:core
 pnpm evaluate
 ```
+
+To inspect a candidate without changing the shipped model:
+
+```sh
+pnpm --filter @gpu-time/training export --checkpoint runs/experiment/best.pt --out ../../test-results/candidate.ts --skip-gate
+```
+
+The report, parity fixtures, and source snapshots stay beside that candidate. Candidate exports cannot write active metadata or canonical export history; `--skip-gate` cannot publish shipped weights.
 
 The tracked `packages/training/active/` directory holds the promoted model report, provenance, and the CPU/GPU parity fixtures needed to verify a clean clone. `pnpm test:browser` checks the model and packaged runtime on real WebGPU. `pnpm benchmark` reuses existing evaluation corpora unless `--refresh-corpus` is passed explicitly; compare source hashes before comparing accuracy.
 

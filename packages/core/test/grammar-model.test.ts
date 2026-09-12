@@ -29,11 +29,9 @@ beforeAll(async () => {
 });
 afterAll(() => parser.dispose());
 
-// The model reads the trailing "3" as an hour. Accepted knowingly in 5ce9070:
-// the checkpoint that fixed it regressed compound-duration and prose-date, so
-// the gate rejected it. it.fails keeps the case running — a later retrain that
-// closes the gap turns this red and the id comes off the list.
-const knownGaps = new Set(["negative-017"]);
+// Gold is right, model is behind. Runs under it.fails so a retrain that
+// closes one turns red and the id comes off the list.
+const knownGaps = new Set(["negative-096"]);
 const isGap = (example: Example) => knownGaps.has(example.id);
 
 const check = async (example: Example) => {

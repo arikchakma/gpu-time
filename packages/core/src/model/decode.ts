@@ -3,6 +3,10 @@ export interface EncodedWeights {
   roleClasses: number;
   storage?: "f16" | "f32";
   boundaryThreshold?: number;
+  /** Scan layers; a second one repeats the gated SSM over the first's output. */
+  layers?: number;
+  /** Whether a role transition matrix ships and roles decode by Viterbi. */
+  transitions?: boolean;
   labels: readonly string[];
   q: string;
   segments: readonly {

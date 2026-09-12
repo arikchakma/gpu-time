@@ -1,7 +1,8 @@
 import type { Label, Role } from "./labels.js";
 export type { Label };
 export type Weekday = "MO" | "TU" | "WE" | "TH" | "FR" | "SA" | "SU";
-export type Unit = "minute" | "hour" | "day" | "week" | "month" | "year";
+export type Unit =
+  "second" | "minute" | "hour" | "day" | "week" | "month" | "year";
 export type Modifier = "this" | "next" | "last";
 export interface CalendarDate {
   year?: number;
@@ -47,7 +48,9 @@ export type DateSpec =
         | "new-year"
         | "new-years-eve"
         | "halloween"
-        | "valentines";
+        | "valentines"
+        | "july-4th"
+        | "thanksgiving";
     };
 export type DayPart = "morning" | "afternoon" | "evening" | "night";
 export type ClockTime =

@@ -1,0 +1,29 @@
+{
+  "note": "Ratchet for the authored Chrono-comparison cases. A run with --floor fails if the overall pass count or any family falls below these numbers.",
+  "total": 85,
+  "passed": 73,
+  "families": {
+    "calendar-arithmetic": 4,
+    "calendar-timezone-policy": 1,
+    "caller-timezone": 2,
+    "clock": 7,
+    "date-range-policy": 1,
+    "date-time-join": 5,
+    "daypart-policy": 1,
+    "iso-date-time": 1,
+    "multiple-results": 0,
+    "named-date": 6,
+    "numeric-date": 7,
+    "numeric-order-policy": 1,
+    "partial-date": 3,
+    "period-policy": 1,
+    "precision-policy": 1,
+    "rejection": 10,
+    "relative-day": 6,
+    "relative-offset": 6,
+    "result-order-policy": 0,
+    "time-range": 5,
+    "weekday": 4,
+    "weekday-policy": 1
+  }
+}

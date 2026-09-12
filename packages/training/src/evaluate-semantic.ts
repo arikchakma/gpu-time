@@ -1,11 +1,21 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { isDeepStrictEqual } from "node:util";
+import { isDeepStrictEqual, parseArgs } from "node:util";
 import { createHash } from "node:crypto";
-import { defineParser } from "../../core/dist/schedule.js";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import type { Schedule } from "../../core/src/types.ts";
 
 // Recorded paths stay relative to this package so the reports stay portable.
 const root = new URL("../", import.meta.url);
+const { values, positionals } = parseArgs({
+  options: { dist: { type: "string" } },
+  allowPositionals: true,
+});
+const { defineParser } = await import(
+  values.dist
+    ? pathToFileURL(resolve(values.dist)).href
+    : new URL("../../core/dist/schedule.js", import.meta.url).href
+);
 
 interface Example {
   id: string;
@@ -13,7 +23,7 @@ interface Example {
   text: string;
   schedule: Schedule;
 }
-const source = process.argv[3] ?? "data/synth/semantic-checks.jsonl";
+const source = positionals[1] ?? "data/synth/semantic-checks.jsonl";
 const contents = await readFile(new URL(source, root), "utf8");
 const examples: Example[] = contents
   .trim()
@@ -38,10 +48,11 @@ try {
 } finally {
   parser.dispose();
 }
-const model = JSON.parse(
-  await readFile(new URL("active/export-report.json", root), "utf8"),
-).artifactSha256;
-const output = process.argv[2] ?? "results/semantic-evaluation.json";
+const model =
+  values.dist ??
+  JSON.parse(await readFile(new URL("active/export-report.json", root), "utf8"))
+    .artifactSha256;
+const output = positionals[0] ?? "results/semantic-evaluation.json";
 await writeFile(
   new URL(output, root),
   JSON.stringify(

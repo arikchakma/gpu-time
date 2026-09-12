@@ -30,3 +30,163 @@
 {"id":"negative-030","family":"non-temporal","text":"The field named year contains a string.","schedule":null}
 {"id":"negative-031","family":"non-temporal","text":"The timestamp column is empty.","schedule":null}
 {"id":"negative-032","family":"non-temporal","text":"The word midnight appears in the glossary.","schedule":null}
+{"id":"negative-033","family":"non-temporal","text":"Please read section 3 carefully.","schedule":null}
+{"id":"negative-034","family":"non-temporal","text":"He ran a quarter mile in four minutes.","schedule":null}
+{"id":"negative-035","family":"non-temporal","text":"The build has 2011 errors.","schedule":null}
+{"id":"negative-036","family":"non-temporal","text":"May is my sister's name.","schedule":null}
+{"id":"negative-037","family":"non-temporal","text":"Chapter 12 covers recursion.","schedule":null}
+{"id":"negative-038","family":"non-temporal","text":"Room 304 is on the second floor.","schedule":null}
+{"id":"negative-039","family":"non-temporal","text":"I have two kids.","schedule":null}
+{"id":"negative-040","family":"non-temporal","text":"Call 911 if the alarm sounds.","schedule":null}
+{"id":"negative-041","family":"non-temporal","text":"The 3rd edition is out of print.","schedule":null}
+{"id":"negative-042","family":"non-temporal","text":"We need a dozen eggs.","schedule":null}
+{"id":"negative-043","family":"non-temporal","text":"Page 45 is missing from the copy.","schedule":null}
+{"id":"negative-044","family":"non-temporal","text":"Version 2.0 shipped with fewer bugs.","schedule":null}
+{"id":"negative-045","family":"non-temporal","text":"He is 30.","schedule":null}
+{"id":"negative-046","family":"non-temporal","text":"Sixty percent of the votes were counted.","schedule":null}
+{"id":"negative-047","family":"non-temporal","text":"Half of them never replied.","schedule":null}
+{"id":"negative-048","family":"non-temporal","text":"The recipe serves 8 people.","schedule":null}
+{"id":"negative-049","family":"non-temporal","text":"Flight 447 departs from gate 12.","schedule":null}
+{"id":"negative-050","family":"non-temporal","text":"Our office is at 15 Baker Street.","schedule":null}
+{"id":"negative-051","family":"non-temporal","text":"The answer is 42.","schedule":null}
+{"id":"negative-052","family":"non-temporal","text":"She scored 9 out of 10 on the quiz.","schedule":null}
+{"id":"negative-053","family":"non-temporal","text":"The password must be 12 characters long.","schedule":null}
+{"id":"negative-054","family":"non-temporal","text":"Route 66 runs through Arizona.","schedule":null}
+{"id":"negative-055","family":"non-temporal","text":"Add 3 tablespoons of sugar.","schedule":null}
+{"id":"negative-056","family":"non-temporal","text":"The error code is 500.","schedule":null}
+{"id":"negative-057","family":"non-temporal","text":"Table 7 is reserved.","schedule":null}
+{"id":"negative-058","family":"non-temporal","text":"Track 5 is my favourite song on the album.","schedule":null}
+{"id":"negative-059","family":"non-temporal","text":"He lives on the 12th floor.","schedule":null}
+{"id":"negative-060","family":"non-temporal","text":"The bus number 30 goes downtown.","schedule":null}
+{"id":"negative-061","family":"non-temporal","text":"Exhibit A was entered into evidence.","schedule":null}
+{"id":"negative-062","family":"non-temporal","text":"Please increase the font size to 14.","schedule":null}
+{"id":"negative-063","family":"non-temporal","text":"The array has 24 elements.","schedule":null}
+{"id":"negative-064","family":"non-temporal","text":"Pick a number between 1 and 10.","schedule":null}
+{"id":"negative-065","family":"non-temporal","text":"The temperature dropped to 12 degrees.","schedule":null}
+{"id":"negative-066","family":"non-temporal","text":"The invoice total came to 2400 dollars.","schedule":null}
+{"id":"negative-067","family":"non-temporal","text":"Our team won 3 to 2.","schedule":null}
+{"id":"negative-068","family":"non-temporal","text":"Divide 60 by 12.","schedule":null}
+{"id":"negative-069","family":"non-temporal","text":"Set the volume to 7.","schedule":null}
+{"id":"negative-070","family":"non-temporal","text":"He weighs 90 kilos.","schedule":null}
+{"id":"negative-071","family":"non-temporal","text":"The novel is 300 pages long.","schedule":null}
+{"id":"negative-072","family":"non-temporal","text":"This road has a speed limit of 30.","schedule":null}
+{"id":"negative-073","family":"non-temporal","text":"Pack 4 shirts and 2 pairs of shoes.","schedule":null}
+{"id":"negative-074","family":"non-temporal","text":"The bug affects 5 of the 20 test cases.","schedule":null}
+{"id":"negative-075","family":"non-temporal","text":"I bought 3 tickets for the show.","schedule":null}
+{"id":"negative-076","family":"non-temporal","text":"Line 45 of the file is empty.","schedule":null}
+{"id":"negative-077","family":"non-temporal","text":"The building has 12 floors.","schedule":null}
+{"id":"negative-078","family":"non-temporal","text":"Please review pull request 2024.","schedule":null}
+{"id":"negative-079","family":"non-temporal","text":"The class has 31 students.","schedule":null}
+{"id":"negative-080","family":"non-temporal","text":"Delete the last 3 rows.","schedule":null}
+{"id":"negative-081","family":"non-temporal","text":"The score was 7 to 5 at halftime.","schedule":null}
+{"id":"negative-082","family":"non-temporal","text":"Order 66 was never executed.","schedule":null}
+{"id":"negative-083","family":"non-temporal","text":"The zip code is 10011.","schedule":null}
+{"id":"negative-084","family":"non-temporal","text":"He turned the dial to 11.","schedule":null}
+{"id":"negative-085","family":"non-temporal","text":"The set contains 52 cards.","schedule":null}
+{"id":"negative-086","family":"non-temporal","text":"We reserved seats 14 and 15.","schedule":null}
+{"id":"negative-087","family":"non-temporal","text":"The recipe calls for 2 cups of flour.","schedule":null}
+{"id":"negative-088","family":"non-temporal","text":"That model has 8 gigabytes of memory.","schedule":null}
+{"id":"negative-089","family":"non-temporal","text":"The pipeline failed at step 4.","schedule":null}
+{"id":"negative-090","family":"non-temporal","text":"There are 7 continents.","schedule":null}
+{"id":"negative-091","family":"non-temporal","text":"She placed 2nd in the race.","schedule":null}
+{"id":"negative-092","family":"non-temporal","text":"The test suite has 1200 assertions.","schedule":null}
+{"id":"negative-093","family":"non-temporal","text":"The general ordered them to march.","schedule":null}
+{"id":"negative-094","family":"non-temporal","text":"April is a common name for a girl.","schedule":null}
+{"id":"negative-095","family":"non-temporal","text":"June and August are sisters.","schedule":null}
+{"id":"negative-096","family":"non-temporal","text":"My friend Wednesday never answers her phone.","schedule":null}
+{"id":"negative-097","family":"non-temporal","text":"The Sunday Times published the story.","schedule":null}
+{"id":"negative-098","family":"non-temporal","text":"The second amendment is often debated.","schedule":null}
+{"id":"negative-099","family":"non-temporal","text":"This is my third attempt at the puzzle.","schedule":null}
+{"id":"negative-100","family":"non-temporal","text":"A minute detail escaped the reviewers.","schedule":null}
+{"id":"negative-101","family":"non-temporal","text":"The second hand fell off the clock.","schedule":null}
+{"id":"negative-102","family":"non-temporal","text":"Her second album sold better.","schedule":null}
+{"id":"negative-103","family":"non-temporal","text":"The number of the beast is 666.","schedule":null}
+{"id":"negative-104","family":"non-temporal","text":"Quarter the apples before baking.","schedule":null}
+{"id":"negative-105","family":"non-temporal","text":"That will cost you a quarter.","schedule":null}
+{"id":"negative-106","family":"non-temporal","text":"They live in the French Quarter.","schedule":null}
+{"id":"negative-107","family":"non-temporal","text":"Episode 3 was the best.","schedule":null}
+{"id":"negative-108","family":"non-temporal","text":"The hotel is on 42nd Street.","schedule":null}
+{"id":"negative-109","family":"non-temporal","text":"Please format the cell as a number.","schedule":null}
+{"id":"negative-110","family":"non-temporal","text":"My phone battery is at 20 percent.","schedule":null}
+{"id":"negative-111","family":"non-temporal","text":"The company was valued at 2 billion.","schedule":null}
+{"id":"negative-112","family":"non-temporal","text":"He scored a 95 on the exam.","schedule":null}
+{"id":"negative-113","family":"non-temporal","text":"There are 60 seconds of silence in the track.","schedule":null}
+{"id":"negative-114","family":"non-temporal","text":"The plane seats 180 passengers.","schedule":null}
+{"id":"negative-115","family":"non-temporal","text":"She read 12 books in total.","schedule":null}
+{"id":"negative-116","family":"non-temporal","text":"Type 8 into the box.","schedule":null}
+{"id":"negative-117","family":"non-temporal","text":"The key is 256 bits long.","schedule":null}
+{"id":"negative-118","family":"non-temporal","text":"Grade 5 is the hardest.","schedule":null}
+{"id":"negative-119","family":"non-temporal","text":"Our apartment is number 7.","schedule":null}
+{"id":"negative-120","family":"non-temporal","text":"The sum of 3 and 4 is 7.","schedule":null}
+{"id":"negative-121","family":"non-temporal","text":"Convert the value to base 16.","schedule":null}
+{"id":"negative-122","family":"non-temporal","text":"He finished 4th overall.","schedule":null}
+{"id":"negative-123","family":"non-temporal","text":"The recipe halves easily.","schedule":null}
+{"id":"negative-124","family":"non-temporal","text":"Aisle 9 has the cereal.","schedule":null}
+{"id":"negative-125","family":"non-temporal","text":"The sensor reads 3.5 volts.","schedule":null}
+{"id":"negative-126","family":"non-temporal","text":"Version 11 dropped support for that.","schedule":null}
+{"id":"negative-127","family":"non-temporal","text":"The document is 2 megabytes.","schedule":null}
+{"id":"negative-128","family":"non-temporal","text":"The meeting room holds 20 people.","schedule":null}
+{"id":"negative-129","family":"non-temporal","text":"There were 500 people at the concert.","schedule":null}
+{"id":"negative-130","family":"non-temporal","text":"Buy 2 get 1 free.","schedule":null}
+{"id":"negative-131","family":"non-temporal","text":"The jersey number is 23.","schedule":null}
+{"id":"negative-132","family":"non-temporal","text":"Chapter 2 introduces the theory.","schedule":null}
+{"id":"negative-133","family":"non-temporal","text":"She finished the 5k in twenty two minutes.","schedule":null}
+{"id":"negative-134","family":"non-temporal","text":"He swam the final lap in under a minute.","schedule":null}
+{"id":"negative-135","family":"non-temporal","text":"The marathon record is just over two hours.","schedule":null}
+{"id":"negative-136","family":"non-temporal","text":"They built the whole prototype in three days flat.","schedule":null}
+{"id":"negative-137","family":"non-temporal","text":"The kettle boils in ninety seconds.","schedule":null}
+{"id":"negative-138","family":"non-temporal","text":"She solved the cube in twelve seconds.","schedule":null}
+{"id":"negative-139","family":"non-temporal","text":"Our fastest lap was one minute and eight seconds.","schedule":null}
+{"id":"negative-140","family":"non-temporal","text":"The film is two hours and ten minutes long.","schedule":null}
+{"id":"negative-141","family":"non-temporal","text":"Room 214 on the 4th floor.","schedule":null}
+{"id":"negative-142","family":"non-temporal","text":"The 2nd edition corrected those errors.","schedule":null}
+{"id":"negative-143","family":"non-temporal","text":"She lives on the 9th floor of the tower.","schedule":null}
+{"id":"negative-144","family":"non-temporal","text":"Chapter 7 covers hashing.","schedule":null}
+{"id":"negative-145","family":"non-temporal","text":"The 5th verse repeats the chorus.","schedule":null}
+{"id":"negative-146","family":"non-temporal","text":"Our seats are in the 3rd row.","schedule":null}
+{"id":"negative-147","family":"non-temporal","text":"He won the 4th prize in the contest.","schedule":null}
+{"id":"negative-148","family":"non-temporal","text":"Version 3.2 shipped with 14 fixes.","schedule":null}
+{"id":"negative-149","family":"non-temporal","text":"Page 45 to 60 covers the appendix.","schedule":null}
+{"id":"negative-150","family":"non-temporal","text":"Section 9 explains the refund policy.","schedule":null}
+{"id":"negative-151","family":"non-temporal","text":"Meet me in room 12 of the annex.","schedule":null}
+{"id":"negative-152","family":"non-temporal","text":"The stack trace points to line 88.","schedule":null}
+{"id":"negative-153","family":"non-temporal","text":"Gate 23 is at the far end of the terminal.","schedule":null}
+{"id":"negative-154","family":"non-temporal","text":"Docket 5 was dismissed without comment.","schedule":null}
+{"id":"negative-155","family":"non-temporal","text":"We scored 3 to 1 in the second half.","schedule":null}
+{"id":"negative-156","family":"non-temporal","text":"Brazil beat them 2 nil.","schedule":null}
+{"id":"negative-157","family":"non-temporal","text":"He shot 4 under par.","schedule":null}
+{"id":"negative-158","family":"non-temporal","text":"The judges gave her an 8 and a 9.","schedule":null}
+{"id":"negative-159","family":"non-temporal","text":"The vote was 12 in favour and 5 against.","schedule":null}
+{"id":"negative-160","family":"non-temporal","text":"Between 8 and 12 people showed up.","schedule":null}
+{"id":"negative-161","family":"non-temporal","text":"Pick any number between 20 and 30.","schedule":null}
+{"id":"negative-162","family":"non-temporal","text":"The dosage ranges from 5 to 10 milligrams.","schedule":null}
+{"id":"negative-163","family":"non-temporal","text":"Prices sit between 40 and 60 euros.","schedule":null}
+{"id":"negative-164","family":"non-temporal","text":"He is 45 and has three kids.","schedule":null}
+{"id":"negative-165","family":"non-temporal","text":"My grandmother is 90 and still drives.","schedule":null}
+{"id":"negative-166","family":"non-temporal","text":"The twins are 6 and 8.","schedule":null}
+{"id":"negative-167","family":"non-temporal","text":"She retired at 62 with a full pension.","schedule":null}
+{"id":"negative-168","family":"non-temporal","text":"A 30 percent raise is unrealistic.","schedule":null}
+{"id":"negative-169","family":"non-temporal","text":"Turnout was up 12 percent.","schedule":null}
+{"id":"negative-170","family":"non-temporal","text":"The battery holds 80 percent of its original charge.","schedule":null}
+{"id":"negative-171","family":"non-temporal","text":"Only 15 percent of the seats sold.","schedule":null}
+{"id":"negative-172","family":"non-temporal","text":"May and June are both on the team.","schedule":null}
+{"id":"negative-173","family":"non-temporal","text":"April introduced me to her brother.","schedule":null}
+{"id":"negative-174","family":"non-temporal","text":"August is the name of the main character.","schedule":null}
+{"id":"negative-175","family":"non-temporal","text":"June signed the lease and May cosigned.","schedule":null}
+{"id":"negative-176","family":"non-temporal","text":"Ask April what she thinks of the design.","schedule":null}
+{"id":"negative-177","family":"non-temporal","text":"The second draft is better.","schedule":null}
+{"id":"negative-178","family":"non-temporal","text":"She came second in the spelling bee.","schedule":null}
+{"id":"negative-179","family":"non-temporal","text":"The second argument must be a string.","schedule":null}
+{"id":"negative-180","family":"non-temporal","text":"Take the second exit at the roundabout.","schedule":null}
+{"id":"negative-181","family":"non-temporal","text":"About a quarter of the budget went to salaries.","schedule":null}
+{"id":"negative-182","family":"non-temporal","text":"Half the audience left before the encore.","schedule":null}
+{"id":"negative-183","family":"non-temporal","text":"Cut the dough into quarters.","schedule":null}
+{"id":"negative-184","family":"non-temporal","text":"He owns a half share in the business.","schedule":null}
+{"id":"negative-185","family":"non-temporal","text":"A dozen reasons come to mind.","schedule":null}
+{"id":"negative-186","family":"non-temporal","text":"A couple of the chairs are broken.","schedule":null}
+{"id":"negative-187","family":"non-temporal","text":"She brought a few friends to the party.","schedule":null}
+{"id":"negative-188","family":"non-temporal","text":"There are a couple of typos on the cover.","schedule":null}
+{"id":"negative-189","family":"non-temporal","text":"The package weighs 2 kilos and costs 30 dollars.","schedule":null}
+{"id":"negative-190","family":"non-temporal","text":"Dial 911 if you smell smoke.","schedule":null}
+{"id":"negative-191","family":"non-temporal","text":"Take two tablets with food.","schedule":null}
+{"id":"negative-192","family":"non-temporal","text":"The ladder is 12 feet tall.","schedule":null}

@@ -22,10 +22,18 @@ function node(script: string, args: string[] = []) {
 function python(script: string, args: string[] = []) {
   run("uv", ["run", "--project", training, "python", script, ...args]);
 }
+function checkSemantic(args: string[] = []) {
+  run("pnpm", [
+    "--filter",
+    "@gpu-time/training",
+    "run",
+    "check:semantic",
+    ...args,
+  ]);
+}
 
 // Keep the build's size gate visible while allowing development reports to
-// explain a missed budget. `pnpm --filter gpu-time build` remains the strict
-// release command.
+// explain a missed budget. `pnpm size:gate` remains the strict release command.
 run("pnpm", ["--filter", "gpu-time", "run", "build", "--report-only"]);
 node(join(here, "evaluate-model.ts"));
 node(join(here, "evaluate-results.ts"));
@@ -35,8 +43,9 @@ if (refreshCorpus || !existsSync(join(synth, "natural-evaluation.jsonl")))
     "--out",
     join(synth, "natural-evaluation.jsonl"),
   ]);
-node(join(training, "src", "check-semantic.ts"), [
+checkSemantic([
   join(synth, "natural-evaluation.jsonl"),
+  "results/natural-roundtrip.json",
 ]);
 node(join(training, "src", "evaluate-semantic.ts"), [
   join(training, "results", "natural-evaluation.json"),
@@ -54,7 +63,7 @@ node(join(training, "src", "evaluate-semantic.ts"), [
 ]);
 if (refreshCorpus || !existsSync(join(synth, "semantic-checks.jsonl")))
   python(join(training, "torch", "generate-semantic.py"));
-node(join(training, "src", "check-semantic.ts"));
+checkSemantic();
 node(join(training, "src", "evaluate-semantic.ts"));
 if (!existsSync(join(packageRoot, "data", "recognizers", "cases.jsonl")))
   node(join(here, "fetch-recognizers.ts"));
@@ -71,7 +80,14 @@ run("uv", [
   "-r",
   join(packageRoot, "requirements.lock"),
 ]);
-run(venvPython, [join(here, "sidecar.py")]);
+run("uv", [
+  "run",
+  "--no-project",
+  "--python",
+  venvPython,
+  "python",
+  join(here, "sidecar.py"),
+]);
 node(join(here, "perf.browser.ts"));
 node(join(here, "report.ts"));
 const elapsedSeconds = (performance.now() - started) / 1000;

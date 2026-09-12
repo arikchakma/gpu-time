@@ -17,6 +17,9 @@ const [browser, python, sizes, structure] = await Promise.all([
 const model = JSON.parse(
   await readFile(join(training, "active", "export-report.json"), "utf8"),
 );
+const sizeGate = JSON.parse(
+  await readFile(join(packageRoot, "..", "core", "dist", "size.json"), "utf8"),
+);
 const direct = await read("direct-results");
 const gpu = JSON.parse(
   await readFile(join(training, "results", "parity-gpu.json"), "utf8"),
@@ -25,11 +28,25 @@ const external = await read("recognizers-development");
 const semantic = JSON.parse(
   await readFile(join(training, "results", "semantic-evaluation.json"), "utf8"),
 );
+const natural = JSON.parse(
+  await readFile(join(training, "results", "natural-evaluation.json"), "utf8"),
+);
+const reserved = JSON.parse(
+  await readFile(
+    join(training, "results", "natural-reserved-evaluation.json"),
+    "utf8",
+  ),
+);
+const naturalOracle = JSON.parse(
+  await readFile(join(training, "results", "natural-roundtrip.json"), "utf8"),
+);
 if (
   browser.model !== model.artifactSha256 ||
   direct.model !== model.artifactSha256 ||
   external.model !== model.artifactSha256 ||
   semantic.model !== model.artifactSha256 ||
+  natural.model !== model.artifactSha256 ||
+  reserved.model !== model.artifactSha256 ||
   structure.model !== model.artifactSha256 ||
   gpu.model !== model.artifactSha256
 )
@@ -103,10 +120,26 @@ const summary = {
     "The four-input batch workload includes unsupported inputs. Reported thrown-error counts do not include silent partial parses or abstentions.",
     "Internal interpretation checks and direct-result fixtures are development checks. Sets overlap and are not a final independent accuracy benchmark.",
     "Cross-library resolved-date correctness, remaining external corpora, a broader gold set and Python batch throughput remain incomplete. Microsoft development agreement is reported separately; its test split remains reserved.",
-    "The complete gpu-time library exceeds its 30,000-byte Brotli budget.",
+    ...(naturalOracle.correct < naturalOracle.total
+      ? [
+          `The frozen natural corpus has ${naturalOracle.total - naturalOracle.correct} oracle failures; pnpm benchmark stops at that check. These component results were refreshed separately without changing the corpus.`,
+        ]
+      : []),
+    ...(sizeGate.withinBudget
+      ? []
+      : [
+          `The complete gpu-time library exceeds its ${sizeGate.limitBytes.toLocaleString("en-US")}-byte Brotli budget.`,
+        ]),
   ],
   performance,
   sizes: sizeRows,
+  sizeGate: {
+    limitBytes: sizeGate.limitBytes,
+    withinBudget: sizeGate.withinBudget,
+    brotliBytes: sizeGate.files.find(
+      (file: { file: string }) => file.file === "index.js",
+    ).brotliBytes,
+  },
   structure: structure.results.map(
     (set: {
       name: string;
@@ -133,6 +166,17 @@ const summary = {
     total: semantic.total,
     correct: semantic.correct,
     accuracy: semantic.correct / semantic.total,
+  },
+  naturalSchedules: {
+    total: natural.total,
+    correct: natural.correct,
+    sourceSha256: natural.sourceSha256,
+    oracleCorrect: naturalOracle.correct,
+  },
+  reservedSchedules: {
+    total: reserved.total,
+    correct: reserved.correct,
+    sourceSha256: reserved.sourceSha256,
   },
 };
 await writeFile(
@@ -222,6 +266,8 @@ lines.push(
   sizes.method,
   "",
   "All gpu-time runtime exports, its resolver and trained weights are included. Different libraries provide different language coverage and output contracts. Exact imports and locked dependencies are recorded in [size.json](size.json).",
+  "",
+  `The release artifact uses ${summary.sizeGate.brotliBytes.toLocaleString("en-US")} of its ${summary.sizeGate.limitBytes.toLocaleString("en-US")}-byte Brotli budget (${sizeGate.withinBudget ? "passed" : "exceeded"}). This gate measures the published entry directly; comparison bundles below are rebundled with the recorded import expressions.`,
   "",
   "| Library | Minified bytes | Gzip bytes | Brotli bytes |",
   "|---|---:|---:|---:|",

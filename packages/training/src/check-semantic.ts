@@ -1,5 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { isDeepStrictEqual } from "node:util";
+import { relative } from "node:path";
+import { fileURLToPath } from "node:url";
 import { compile } from "../../core/src/compile.ts";
 import { tokenize } from "../../core/src/tokenizer.ts";
 import type { Label, Schedule, Token } from "../../core/src/types.ts";
@@ -15,7 +17,8 @@ interface Example {
   spans: { start: number; end: number; label: Label; clauseStart: boolean }[];
 }
 const source = process.argv[2] ?? "data/synth/semantic-checks.jsonl";
-const examples: Example[] = (await readFile(new URL(source, root), "utf8"))
+const sourceUrl = new URL(source, root);
+const examples: Example[] = (await readFile(sourceUrl, "utf8"))
   .trim()
   .split("\n")
   .map((line) => JSON.parse(line));
@@ -44,10 +47,10 @@ for (const example of examples) {
     failures.push({ ...example, actual: expressions });
 }
 await writeFile(
-  new URL("results/semantic-roundtrip.json", root),
+  new URL(process.argv[3] ?? "results/semantic-roundtrip.json", root),
   JSON.stringify(
     {
-      source,
+      source: relative(fileURLToPath(root), fileURLToPath(sourceUrl)),
       total: examples.length,
       correct: examples.length - failures.length,
       failures,

@@ -4,9 +4,12 @@
   "type": "module",
   "packageManager": "pnpm@11.13.1",
   "scripts": {
-    "test": "pnpm test:core && pnpm test:benchmark && pnpm test:website",
+    "test": "pnpm test:core && pnpm test:benchmark && pnpm test:english && pnpm test:recognizers && pnpm test:compatibility && pnpm test:website",
     "test:core": "pnpm --filter gpu-time test",
     "test:benchmark": "pnpm --filter @gpu-time/benchmark test",
+    "test:english": "pnpm build:core && pnpm --filter @gpu-time/benchmark evaluate:english --require-all",
+    "test:recognizers": "pnpm --filter @gpu-time/benchmark test:recognizers",
+    "test:compatibility": "pnpm --filter @gpu-time/benchmark test:compatibility",
     "test:website": "pnpm --filter @gpu-time/website check && pnpm --filter @gpu-time/website test:highlight",
     "test:browser": "pnpm --filter gpu-time test:browser",
     "check": "pnpm -r check",

@@ -2,7 +2,8 @@ import unittest
 
 import torch
 
-from model import PADDING_ROW, TimeTagger, affine_scan
+from export import decide, override, family_guards, synthetic
+from model import PADDING_ROW, TimeTagger, affine_scan, crf_nll
 
 
 class ModelTests(unittest.TestCase):
@@ -83,14 +84,149 @@ class ModelTests(unittest.TestCase):
             torch.testing.assert_close(left[:1], right, atol=2e-4, rtol=1e-4)
 
     def test_all_parameters_receive_finite_gradients(self):
-        model = TimeTagger()
-        model.qat = True
-        roles, boundaries = model(*self.inputs())
-        loss = roles.square().mean() + boundaries.square().mean()
-        loss.backward()
-        for name, parameter in model.named_parameters():
-            self.assertIsNotNone(parameter.grad, name)
-            self.assertTrue(torch.isfinite(parameter.grad).all(), name)
+        for layers, transitions in ((1, False), (2, True)):
+            model = TimeTagger(layers=layers, transitions=transitions)
+            model.qat = True
+            roles, boundaries = model(*self.inputs())
+            loss = roles.square().mean() + boundaries.square().mean()
+            if transitions:
+                loss = loss + model.transition.square().mean()
+            loss.backward()
+            for name, parameter in model.named_parameters():
+                self.assertIsNotNone(parameter.grad, name)
+                self.assertTrue(torch.isfinite(parameter.grad).all(), name)
+
+    def test_a_second_scan_layer_keeps_the_first_layer_tensor_names(self):
+        one = set(dict(TimeTagger().named_parameters()))
+        two = dict(TimeTagger(layers=2, transitions=True).named_parameters())
+        self.assertTrue(one <= set(two))
+        self.assertEqual(
+            sorted(set(two) - one),
+            [
+                "candidate2_bias",
+                "candidate2_weight",
+                "combine2_bias",
+                "combine2_weight",
+                "gate2_bias",
+                "gate2_weight",
+                "transition",
+            ],
+        )
+
+    def test_crf_matches_brute_force_enumeration(self):
+        """Masked positions must drop out of the chain, not just out of the sum."""
+        classes, length = 4, 5
+        emissions = torch.randn(1, length, classes)
+        transition = torch.randn(classes, classes)
+        labels = torch.tensor([[1, -100, 3, 0, -100]])
+        mask = labels >= 0
+        kept = [index for index in range(length) if mask[0, index]]
+        paths = torch.cartesian_prod(*[torch.arange(classes)] * len(kept))
+        scores = []
+        for path in paths:
+            total = sum(emissions[0, kept[step], label] for step, label in enumerate(path))
+            total = total + sum(
+                transition[path[step - 1], path[step]] for step in range(1, len(kept))
+            )
+            scores.append(total)
+        gold = [labels[0, index] for index in kept]
+        expected = torch.logsumexp(torch.stack(scores), 0) - (
+            sum(emissions[0, kept[step], label] for step, label in enumerate(gold))
+            + sum(transition[gold[step - 1], gold[step]] for step in range(1, len(kept)))
+        )
+        torch.testing.assert_close(
+            crf_nll(emissions, transition, labels, mask),
+            expected / mask.sum(),
+            atol=1e-5,
+            rtol=1e-5,
+        )
+
+
+class PromotionGateTests(unittest.TestCase):
+    """A gain cannot hide a regression in another development set or family."""
+
+    def gold(self, correct, total=100):
+        return {"prose": {"total": total, "correct": correct}}
+
+    def test_a_tie_ships(self):
+        decision = decide(self.gold(90), self.gold(90), [])
+        self.assertTrue(decision["accepted"])
+        self.assertEqual(decision["improvement"], 0)
+
+    def test_improvement_is_recorded_but_not_required(self):
+        decision = decide(self.gold(95), self.gold(90), [])
+        self.assertTrue(decision["accepted"])
+        self.assertAlmostEqual(decision["improvement"], 0.05)
+
+    def test_one_lost_example_is_rejected(self):
+        decision = decide(self.gold(89), self.gold(90), [])
+        self.assertFalse(decision["accepted"])
+
+    def test_pooled_gain_cannot_hide_a_set_regression(self):
+        candidate = {**self.gold(100), "chat": {"total": 330, "correct": 269}}
+        baseline = {**self.gold(90), "chat": {"total": 330, "correct": 270}}
+        self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_small_set_regression_is_rejected(self):
+        self.assertFalse(decide(self.gold(2, 3), self.gold(3, 3), [])["accepted"])
+
+    def test_family_regression_is_rejected_even_when_set_improves(self):
+        candidate, baseline = self.gold(95), self.gold(90)
+        candidate["prose"]["families"] = {"question": {"total": 20, "correct": 18}}
+        baseline["prose"]["families"] = {"question": {"total": 20, "correct": 19}}
+        self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_changed_corpus_is_rejected(self):
+        candidate, baseline = self.gold(95), self.gold(90)
+        candidate["prose"]["sha256"] = "new"
+        baseline["prose"]["sha256"] = "old"
+        self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_reserved_carriers_require_strict_improvement(self):
+        counts = {"total": 1000, "correct": 983, "families": {}}
+        self.assertFalse(synthetic(counts, counts)["accepted"])
+
+    def test_reserved_carriers_allow_a_tie_at_the_ceiling(self):
+        counts = {"total": 1000, "correct": 1000, "families": {
+            "clock": {"total": 1000, "correct": 1000},
+        }}
+        self.assertTrue(synthetic(counts, counts)["accepted"])
+
+    def test_perfect_baseline_still_rejects_regressions_and_changed_corpora(self):
+        baseline = {"total": 1000, "correct": 1000, "families": {}, "sha256": "same"}
+        for candidate in (
+            {**baseline, "correct": 999},
+            {**baseline, "sha256": "different"},
+            {**baseline, "total": 1001},
+        ):
+            with self.subTest(candidate=candidate):
+                self.assertFalse(synthetic(candidate, baseline)["accepted"])
+
+    def test_reserved_family_cannot_regress(self):
+        candidate = {"families": {"clock": {"total": 59, "correct": 58}}}
+        baseline = {"families": {"clock": {"total": 59, "correct": 59}}}
+        self.assertFalse(family_guards(candidate, baseline)[0]["passed"])
+
+    def test_significant_regression_is_rejected(self):
+        decision = decide(self.gold(60), self.gold(90), [])
+        self.assertFalse(decision["accepted"])
+        self.assertIn("gold prose: regression", decision["failures"])
+
+    def test_changed_row_counts_are_rejected(self):
+        decision = decide(self.gold(90, 100), self.gold(90, 99), [])
+        self.assertFalse(decision["accepted"])
+
+    def test_a_missing_baseline_blocks(self):
+        decision = decide(self.gold(90), None, ["no pinned baseline"])
+        self.assertFalse(decision["accepted"])
+        self.assertNotIn("guard", decision)
+
+    def test_force_records_what_it_overrode(self):
+        forced = override(decide(self.gold(60), self.gold(90), []))
+        self.assertTrue(forced["accepted"])
+        self.assertEqual(forced["failures"], [])
+        self.assertIn("gold prose: regression", forced["overriddenFailures"])
+        self.assertEqual(forced["overriddenCriterion"], "gold-schedule-accuracy")
 
 
 if __name__ == "__main__":

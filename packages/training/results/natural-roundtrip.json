@@ -1,0 +1,2676 @@
+{
+  "source": "data/synth/natural-evaluation.jsonl",
+  "total": 1000,
+  "correct": 976,
+  "failures": [
+    {
+      "id": "natural-424242-12",
+      "family": "recurrence",
+      "text": "could you check this: could you remind me to call Jordan at three weekday at ten in the evening",
+      "spans": [
+        {
+          "start": 0,
+          "end": 59,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 60,
+          "end": 65,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 73,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 76,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 80,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 81,
+          "end": 95,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 22,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 60,
+          "end": 95,
+          "text": "three weekday at ten in the evening",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 60,
+              "end": 65,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-47",
+      "family": "shared-times",
+      "text": "please, the invoice starts at weekday at half past six pm and three ten",
+      "spans": [
+        {
+          "start": 0,
+          "end": 29,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 37,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 40,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 45,
+          "label": "CLOCK_OFFSET",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 50,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 54,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 57,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 58,
+          "end": 61,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 62,
+          "end": 67,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 71,
+          "label": "MINUTE",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 30
+              }
+            }
+          },
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 10
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 30,
+          "end": 71,
+          "text": "weekday at half past six pm and three ten",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 18,
+                    "minute": 30
+                  }
+                }
+              },
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 3,
+                    "minute": 10
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ambiguous-meridiem",
+              "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+              "start": 62,
+              "end": 67,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-76",
+      "family": "recurrence",
+      "text": "they might be available on other weekday shift at four fifty eight pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 26,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 32,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 40,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 49,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 54,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 66,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 67,
+          "end": 69,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 58
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 27,
+          "end": 69,
+          "text": "other weekday shift at four fifty eight pm",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 27,
+              "end": 32,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-79",
+      "family": "shared-times",
+      "text": "note: book room 6 at weekday at ten twelve and five in the afternoon",
+      "spans": [
+        {
+          "start": 0,
+          "end": 20,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 28,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 31,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 42,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 43,
+          "end": 46,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 51,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 68,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 12
+              }
+            }
+          },
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 68,
+          "text": "weekday at ten twelve and five in the afternoon",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 10,
+                    "minute": 12
+                  }
+                }
+              },
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 17,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ambiguous-meridiem",
+              "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+              "start": 32,
+              "end": 35,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-108",
+      "family": "recurrence",
+      "text": "I think that this is the best school in Australia. weekday",
+      "spans": [
+        {
+          "start": 0,
+          "end": 50,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 58,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 51,
+          "end": 58,
+          "text": "weekday",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-124",
+      "family": "recurrence",
+      "text": "please, can you set an alarm for two weekday at 10:39 pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 32,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 36,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 44,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 47,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 51,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 53,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 54,
+          "end": 56,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 22,
+                "minute": 39
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 33,
+          "end": 56,
+          "text": "two weekday at 10:39 pm",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 33,
+              "end": 36,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-173",
+      "family": "recurrence-bound",
+      "text": "the appointment is on weekday at twelve in morning until July. 2 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 21,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 22,
+          "end": 29,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 32,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 39,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 50,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 56,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 61,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 62,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 64,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 65,
+          "end": 69,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 7,
+                "day": 2
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 0,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 22,
+          "end": 69,
+          "text": "weekday at twelve in morning until July. 2 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 51,
+              "end": 56,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-413",
+      "family": "recurrence-bound",
+      "text": "I'd like to schedule a sync on weekday at quarter to ten pm until August 5 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 30,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 38,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 41,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 49,
+          "label": "CLOCK_OFFSET",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 52,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 56,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 59,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 60,
+          "end": 65,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 72,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 74,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 75,
+          "end": 79,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 8,
+                "day": 5
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 21,
+                "minute": 45
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 31,
+          "end": 79,
+          "text": "weekday at quarter to ten pm until August 5 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 60,
+              "end": 65,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-477",
+      "family": "recurrence-bound",
+      "text": "weekday at 1 in the afternoon until October 25 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 7,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 10,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 12,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 13,
+          "end": 29,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 43,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 51,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 10,
+                "day": 25
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 51,
+          "text": "weekday at 1 in the afternoon until October 25 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 30,
+              "end": 35,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-493",
+      "family": "recurrence-bound",
+      "text": "could you check this: remind me for weekday at quarter past four pm until Mar 2 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 35,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 43,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 54,
+          "label": "CLOCK_OFFSET",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 59,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 60,
+          "end": 64,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 73,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 74,
+          "end": 77,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 79,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 80,
+          "end": 84,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 3,
+                "day": 2
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 15
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 36,
+          "end": 84,
+          "text": "weekday at quarter past four pm until Mar 2 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 68,
+              "end": 73,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-525",
+      "family": "recurrence-bound",
+      "text": "weekday appointment at 1 in the afternoon until Nov 22 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 7,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 19,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 20,
+          "end": 22,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 23,
+          "end": 24,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 25,
+          "end": 41,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 47,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 51,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 54,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 59,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 11,
+                "day": 22
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 13,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 59,
+          "text": "weekday appointment at 1 in the afternoon until Nov 22 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 42,
+              "end": 47,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-543",
+      "family": "shared-times",
+      "text": "could you check this: could you remind me to call Sam on weekday at five:31 pm and ten eight am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 56,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 64,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 68,
+          "end": 72,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 73,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 75,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 78,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 79,
+          "end": 82,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 86,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 87,
+          "end": 92,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 93,
+          "end": 95,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 31
+              }
+            }
+          },
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 10,
+                "minute": 8
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 57,
+          "end": 95,
+          "text": "weekday at five:31 pm and ten eight am",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 17,
+                    "minute": 31
+                  }
+                }
+              },
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 10,
+                    "minute": 8
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-559",
+      "family": "shared-times",
+      "text": "weekday at eight seventeen pm and six forty-seven am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 7,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 8,
+          "end": 10,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 11,
+          "end": 16,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 17,
+          "end": 26,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 29,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 33,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 37,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 49,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 52,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 20,
+                "minute": 17
+              }
+            }
+          },
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 6,
+                "minute": 47
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 0,
+          "end": 52,
+          "text": "weekday at eight seventeen pm and six forty-seven am",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 20,
+                    "minute": 17
+                  }
+                }
+              },
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 6,
+                    "minute": 47
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-572",
+      "family": "recurrence",
+      "text": "note: our backup is scheduled weekday at four:22 pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 29,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 37,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 38,
+          "end": 40,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 41,
+          "end": 45,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 48,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 51,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 16,
+                "minute": 22
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 30,
+          "end": 51,
+          "text": "weekday at four:22 pm",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 16,
+                    "minute": 22
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-636",
+      "family": "recurrence",
+      "text": "There were no signs of disorder in the ship. two weeks on weekday at 3 in the morning",
+      "spans": [
+        {
+          "start": 0,
+          "end": 44,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 48,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 54,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 55,
+          "end": 57,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 58,
+          "end": 65,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 68,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 70,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 71,
+          "end": 85,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 45,
+          "end": 85,
+          "text": "two weeks on weekday at 3 in the morning",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 3,
+                    "minute": 0
+                  }
+                },
+                "duration": {
+                  "amount": 2,
+                  "unit": "week"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-652",
+      "family": "recurrence",
+      "text": "you may be available weekday at half past three am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 20,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 21,
+          "end": 28,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 29,
+          "end": 31,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 32,
+          "end": 36,
+          "label": "CLOCK_OFFSET",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 41,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 47,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 3,
+                "minute": 30
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 21,
+          "end": 50,
+          "text": "weekday at half past three am",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 3,
+                    "minute": 30
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-669",
+      "family": "recurrence-bound",
+      "text": "could you check this: the office closes weekday at 5 in the afternoon until May 20 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 39,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 47,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 51,
+          "end": 52,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 69,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 75,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 76,
+          "end": 79,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 80,
+          "end": 82,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 87,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 5,
+                "day": 20
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 17,
+                "minute": 0
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 40,
+          "end": 87,
+          "text": "weekday at 5 in the afternoon until May 20 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 70,
+              "end": 75,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-748",
+      "family": "recurrence",
+      "text": "please, the store opens for weekday",
+      "spans": [
+        {
+          "start": 0,
+          "end": 27,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 35,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 28,
+          "end": 35,
+          "text": "weekday",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-749",
+      "family": "recurrence-bound",
+      "text": "I might go back on weekday at two:03 pm until May 2 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 18,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 19,
+          "end": 26,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 27,
+          "end": 29,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 33,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 33,
+          "end": 34,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 36,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 37,
+          "end": 39,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 45,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 46,
+          "end": 49,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 51,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 52,
+          "end": 56,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 5,
+                "day": 2
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 3
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 19,
+          "end": 56,
+          "text": "weekday at two:03 pm until May 2 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 40,
+              "end": 45,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-781",
+      "family": "recurrence-bound",
+      "text": "could you check this: we may go back at weekday meeting at eleven eighteen pm until Aug 19 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 39,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 40,
+          "end": 47,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 55,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 58,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 59,
+          "end": 65,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 74,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 75,
+          "end": 77,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 83,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 84,
+          "end": 87,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 91,
+          "end": 95,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 8,
+                "day": 19
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 23,
+                "minute": 18
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 40,
+          "end": 95,
+          "text": "weekday meeting at eleven eighteen pm until Aug 19 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 78,
+              "end": 83,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-815",
+      "family": "shared-times",
+      "text": "could you check this: my report is scheduled weekday at half past two pm and eight twenty-six am",
+      "spans": [
+        {
+          "start": 0,
+          "end": 44,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 52,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 55,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 60,
+          "label": "CLOCK_OFFSET",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 65,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 66,
+          "end": 69,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 70,
+          "end": 72,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 73,
+          "end": 76,
+          "label": "JOIN",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 82,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 83,
+          "end": 93,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 94,
+          "end": 96,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 14,
+                "minute": 30
+              }
+            }
+          },
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 8,
+                "minute": 26
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 45,
+          "end": 96,
+          "text": "weekday at half past two pm and eight twenty-six am",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 14,
+                    "minute": 30
+                  }
+                }
+              },
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 8,
+                    "minute": 26
+                  }
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-828",
+      "family": "recurrence",
+      "text": "the office is closed on three weeks on weekday at quarter to eight pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 23,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 24,
+          "end": 29,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 46,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 49,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 57,
+          "label": "CLOCK_OFFSET",
+          "clauseStart": false
+        },
+        {
+          "start": 58,
+          "end": 60,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 61,
+          "end": 66,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 67,
+          "end": 69,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 3,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 45
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 24,
+          "end": 69,
+          "text": "three weeks on weekday at quarter to eight pm",
+          "confidence": 1,
+          "schedule": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "dayGroup",
+                  "group": "weekday"
+                },
+                "time": {
+                  "start": {
+                    "hour": 19,
+                    "minute": 45
+                  }
+                },
+                "duration": {
+                  "amount": 3,
+                  "unit": "week"
+                }
+              }
+            ]
+          },
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-924",
+      "family": "recurrence",
+      "text": "please book a standup about other weekday at six fifty four pm",
+      "spans": [
+        {
+          "start": 0,
+          "end": 27,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 28,
+          "end": 33,
+          "label": "NUM",
+          "clauseStart": false
+        },
+        {
+          "start": 34,
+          "end": 41,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 45,
+          "end": 48,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 49,
+          "end": 59,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 60,
+          "end": 62,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 2,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ]
+            },
+            "time": {
+              "start": {
+                "hour": 18,
+                "minute": 54
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 28,
+          "end": 62,
+          "text": "other weekday at six fifty four pm",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "Unsupported token role NUM.",
+              "start": 28,
+              "end": 33,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-424242-957",
+      "family": "recurrence-bound",
+      "text": "note: the library is closed at weekday meeting at seven thirty eight pm until October 13 2036",
+      "spans": [
+        {
+          "start": 0,
+          "end": 30,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 31,
+          "end": 38,
+          "label": "DAYGROUP",
+          "clauseStart": false
+        },
+        {
+          "start": 39,
+          "end": 46,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 47,
+          "end": 49,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 50,
+          "end": 55,
+          "label": "HOUR",
+          "clauseStart": false
+        },
+        {
+          "start": 56,
+          "end": 68,
+          "label": "MINUTE",
+          "clauseStart": false
+        },
+        {
+          "start": 69,
+          "end": 71,
+          "label": "MERIDIEM",
+          "clauseStart": false
+        },
+        {
+          "start": 72,
+          "end": 77,
+          "label": "BOUND_END",
+          "clauseStart": false
+        },
+        {
+          "start": 78,
+          "end": 85,
+          "label": "MONTH",
+          "clauseStart": false
+        },
+        {
+          "start": 86,
+          "end": 88,
+          "label": "DOM",
+          "clauseStart": false
+        },
+        {
+          "start": 89,
+          "end": 93,
+          "label": "YEAR",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "weekly",
+              "interval": 1,
+              "byDay": [
+                "MO",
+                "TU",
+                "WE",
+                "TH",
+                "FR"
+              ],
+              "until": {
+                "kind": "calendar",
+                "year": 2036,
+                "month": 10,
+                "day": 13
+              }
+            },
+            "time": {
+              "start": {
+                "hour": 19,
+                "minute": 38
+              }
+            }
+          }
+        ]
+      },
+      "actual": [
+        {
+          "start": 31,
+          "end": 93,
+          "text": "weekday meeting at seven thirty eight pm until October 13 2036",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "unsupported",
+              "message": "This bound requires recurrence.",
+              "start": 72,
+              "end": 77,
+              "severity": "error"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Compiler equality using independently sampled ASTs and renderer slot labels. This validates training supervision, not neural prediction accuracy."
+}

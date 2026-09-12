@@ -133,7 +133,7 @@ await writeFile(
       scope:
         "Strict match to independent upstream FutureResolution values, including the entire input and returned interval ends. No mismatches are removed as policy differences. This development evaluation is separate from synthetic training metrics; the reserved test split is not evaluated by default.",
     },
-    null,
+    (key, value) => (key === "timings" ? undefined : value),
     2,
   ) + "\n",
 );
@@ -141,6 +141,41 @@ console.table(families);
 console.log(
   `Recognizers ${split}: ${correct}/${cases.length} exact resolved results`,
 );
+
+if (process.argv.includes("--floor")) {
+  const floorPath = join(
+    packageRoot,
+    "data",
+    `recognizers-${split}.floor.json`,
+  );
+  const floor: { correct: number; families: Record<string, number> } =
+    JSON.parse(await readFile(floorPath, "utf8"));
+  const drops = [
+    ...(correct < floor.correct
+      ? [`overall ${correct} < ${floor.correct}`]
+      : []),
+    ...families
+      .filter(({ family, correct }) => correct < (floor.families[family] ?? 0))
+      .map(
+        ({ family, correct }) =>
+          `${family} ${correct} < ${floor.families[family]}`,
+      ),
+  ];
+  if (drops.length) {
+    console.error(`Recognizers floor failed:\n  ${drops.join("\n  ")}`);
+    console.error(
+      `Raise the floor in ${floorPath} only when the drop is understood and recorded.`,
+    );
+    process.exitCode = 1;
+  } else {
+    const gains = families.filter(
+      ({ family, correct }) => correct > (floor.families[family] ?? 0),
+    );
+    console.log(
+      `Recognizers floor passed${gains.length ? `; ${gains.length} families above floor, raise it` : ""}.`,
+    );
+  }
+}
 
 function matchResults(actual: TimeRange[], expected: Expected[]): boolean {
   if (actual.length !== expected.length) return false;

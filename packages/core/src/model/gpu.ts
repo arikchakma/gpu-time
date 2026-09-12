@@ -3,7 +3,7 @@ import { diagnostics, fullPrecision } from "./options.js";
 import { weights } from "./weights.gen.js";
 import { decodeWeights, type EncodedWeights } from "./decode.js";
 import type { RawToken } from "../types.js";
-import type { Predictions } from "./cpu.js";
+import { viterbiDecode, type Predictions } from "./cpu.js";
 
 interface ModelWeights extends EncodedWeights {
   storage?: "f16" | "f32";
@@ -13,6 +13,14 @@ interface BufferSlot {
   capacity: number;
 }
 const model: ModelWeights = weights;
+const roles = model.roleClasses;
+const outputs = roles + 1;
+// ponytail: Viterbi runs here over the emissions the kernel already produces,
+// not in WGSL. A workgroup-resident 40x40 chain would need a fifth state stage
+// and a second pass; upgrade if the extra readback ever shows up in a profile.
+const chain = model.transitions
+  ? decodeWeights(model).get("transition")!
+  : undefined;
 
 export class GPUModel {
   readonly stats = { submissions: 0, recoveries: 0 };
@@ -182,7 +190,9 @@ export class GPUModel {
     const device = this.device!;
     const packedBytes = Math.ceil(count / 4) * 4;
     const scoreBytes = count * 4;
-    const debugBytes = debug ? count * 41 * 4 : 4;
+    // Viterbi needs every emission, so a chained model always reads them back.
+    const wantLogits = debug || chain !== undefined;
+    const debugBytes = wantLogits ? count * outputs * 4 : 4;
     const stateSize = count * 32 * 4 * this.stateBytes;
     const sizes = [
       features.byteLength,
@@ -230,7 +240,8 @@ export class GPUModel {
         GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC,
       ),
     ];
-    const readbackSize = packedBytes + scoreBytes + (debug ? debugBytes : 0);
+    const readbackSize =
+      packedBytes + scoreBytes + (wantLogits ? debugBytes : 0);
     const readback = this.buffer(
       "readback",
       readbackSize,
@@ -253,7 +264,7 @@ export class GPUModel {
     device.queue.writeBuffer(
       buffers[2],
       0,
-      Uint32Array.of(count, streams.length, Number(debug), 0),
+      Uint32Array.of(count, streams.length, Number(wantLogits), 0),
     );
     const encoder = device.createCommandEncoder();
     encoder.clearBuffer(buffers[5], 0, packedBytes);
@@ -271,7 +282,7 @@ export class GPUModel {
       packedBytes,
       scoreBytes,
     );
-    if (debug)
+    if (wantLogits)
       encoder.copyBufferToBuffer(
         buffers[7],
         0,
@@ -287,31 +298,51 @@ export class GPUModel {
       const mapped = readback.getMappedRange(0, readbackSize);
       const packed = new Uint8Array(mapped, 0, count);
       const margins = new Float32Array(mapped, packedBytes, count);
-      const rawLogits = debug
-        ? new Float32Array(mapped, packedBytes + scoreBytes, count * 41)
+      const rawLogits = wantLogits
+        ? new Float32Array(mapped, packedBytes + scoreBytes, count * outputs)
         : undefined;
       offset = 0;
       return inputs.map((tokens) => {
         const labels = new Uint8Array(tokens.length);
         const clauseStarts = new Uint8Array(tokens.length);
         const scores = margins.slice(offset, offset + tokens.length);
-        const logits = debug ? new Float32Array(tokens.length * 40) : undefined;
+        const logits = debug
+          ? new Float32Array(tokens.length * roles)
+          : undefined;
         const boundaryLogits = debug
           ? new Float32Array(tokens.length)
           : undefined;
+        const scored: number[] = [];
         for (let token = 0; token < tokens.length; token++) {
           labels[token] = packed[offset + token] & 63;
           clauseStarts[token] = packed[offset + token] >>> 7;
           if (rawLogits && tokens[token].kind !== 3) {
-            logits!.set(
+            scored.push((offset + token) * outputs);
+            logits?.set(
               rawLogits.subarray(
-                (offset + token) * 41,
-                (offset + token) * 41 + 40,
+                (offset + token) * outputs,
+                (offset + token) * outputs + roles,
               ),
-              token * 40,
+              token * roles,
             );
-            boundaryLogits![token] = rawLogits[(offset + token) * 41 + 40];
+            if (boundaryLogits)
+              boundaryLogits[token] =
+                rawLogits[(offset + token) * outputs + roles];
           }
+        }
+        if (chain && rawLogits) {
+          const { path, confidence } = viterbiDecode(
+            rawLogits,
+            scored,
+            roles,
+            chain,
+          );
+          let step = 0;
+          for (let token = 0; token < tokens.length; token++)
+            if (tokens[token].kind !== 3) {
+              labels[token] = path[step];
+              scores[token] = confidence[step++];
+            }
         }
         offset += tokens.length;
         return { labels, clauseStarts, scores, logits, boundaryLogits };

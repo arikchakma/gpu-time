@@ -297,7 +297,9 @@
                 "new-year",
                 "new-years-eve",
                 "halloween",
-                "valentines"
+                "valentines",
+                "july-4th",
+                "thanksgiving"
               ]
             }
           },
@@ -337,7 +339,7 @@
     },
     "Unit": {
       "type": "string",
-      "enum": ["minute", "hour", "day", "week", "month", "year"]
+      "enum": ["second", "minute", "hour", "day", "week", "month", "year"]
     },
     "MonthRef": {
       "anyOf": [
