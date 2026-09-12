@@ -1,6 +1,6 @@
 {
   "name": "gpu-time",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A compact neural parser for English schedules",
   "author": "Arik Chakma",
   "type": "module",
