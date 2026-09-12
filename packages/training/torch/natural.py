@@ -30,6 +30,7 @@ FAMILIES = [
     "monthly-exception",
     "shared-times",
     "slot-request",
+    "carrier-date",
 ]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
@@ -152,9 +153,103 @@ def calendar(s, date, numeric=False):
             s.add(str(date["year"]), "YEAR")
 
 
+# "scheduled for next week" is a date: the preposition is glue, not a duration.
+CARRIERS = [
+    ("the {event} is scheduled", "for"),
+    ("{name}'s {event} is scheduled", "for"),
+    ("the {event} is planned", "for"),
+    ("{name} planned the {event}", "for"),
+    ("we set the {event}", "for"),
+    ("the {event} is set", "for"),
+    ("book the {event}", "for"),
+    ("book the room", "for"),
+    ("i booked the {event}", "for"),
+    ("the {event} is booked", "for"),
+    ("the {event} has been rescheduled", "for"),
+    ("{name} rescheduled the {event}", "to"),
+    ("we moved the {event}", "to"),
+    ("the {event} moved", "to"),
+    ("push the {event}", "to"),
+    ("they postponed the {event}", "to"),
+    ("the {event} is postponed", "until"),
+    ("the {event} has been put off", "until"),
+    # "in" rides along: a carrier ending in a connector loses the next one.
+    ("pencil it", "in for"),
+    ("pencil me", "in for"),
+    ("{name} penciled you", "in for"),
+    ("the {event} is penciled", "for"),
+    ("the {event} is slated", "for"),
+    ("{name} slated the {event}", "for"),
+    ("we are aiming", "for"),
+]
+
+
+def carrier(r):
+    """A scheduling verb and the preposition that follows it."""
+    nouns, _ = background.vocabulary()
+    text, connector = r.choice(CARRIERS)
+    return (
+        text.format(
+            event=r.choice(FILLERS) if r.random() < 0.3 else r.choice(nouns),
+            name=r.choice(background.NAMES),
+        ),
+        connector,
+    )
+
+
+def suffixed(day):
+    return (
+        "th"
+        if 10 <= day % 100 <= 20
+        else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+    )
+
+
+def target(s):
+    """The date a carrier preposition points at, optionally with a clock."""
+    r = s.rng
+    pick = r.random()
+    if pick < 0.3:
+        modifier = r.choice(["next", "this", "last"])
+        unit = r.choice(["week", "month", "year"])
+        s.add(modifier, "DEICTIC")
+        s.add(unit, "UNIT")
+        clause = {"date": {"kind": "relativeUnit", "unit": unit, "modifier": modifier}}
+    elif pick < 0.45:
+        name = r.choice(list(RELATIVE_DAYS))
+        s.add(name, "REL_DAY")
+        clause = {"date": {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}}
+    elif pick < 0.65:
+        day = r.randrange(7)
+        date = {"kind": "weekday", "days": [DAY_CODES[day]]}
+        if r.random() < 0.4:
+            date["modifier"] = r.choice(["this", "next", "last"])
+            s.add(date["modifier"], "DEICTIC")
+        s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+        clause = {"date": date}
+    elif pick < 0.8:
+        day = r.randint(1, 28)
+        s.add("the", "GLUE")
+        s.add(str(day), "DOM")
+        s.add(suffixed(day), "GLUE", "")
+        clause = {"date": {"kind": "calendar", "day": day}}
+    else:
+        date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
+        if r.random() < 0.3:
+            date["year"] = r.randint(2024, 2040)
+        calendar(s, date)
+        clause = {"date": {"kind": "calendar", **date}}
+    if r.random() < 0.35:
+        join(s)
+        clause["time"] = {"start": clock(s)}
+    return clause
+
+
 def render(s, reserved=False, family=None, bare=False):
     r = s.rng
     family = family or r.choice(FAMILIES)
+    # The carrier is this family's own prefix; reserved and bare get none.
+    lead = carrier(r) if family == "carrier-date" and not (reserved or bare) else None
     anchored = family not in (
         "compound-duration",
         "compound-shift",
@@ -163,6 +258,8 @@ def render(s, reserved=False, family=None, bare=False):
     )
     if bare:
         prefix = ""
+    elif lead:
+        prefix = lead[0]
     elif reserved:
         prefix = r.choice(RESERVED if anchored else RESERVED_DURATION)
     elif r.random() < 0.85:
@@ -356,6 +453,19 @@ def render(s, reserved=False, family=None, bare=False):
         elif choice < 0.8:
             join(s)
             clause["time"] = {"start": clock(s, "digits")}
+    elif family == "carrier-date":
+        connector = lead[1] if lead else None
+        if connector == "for" and r.random() < 0.18:
+            # Contrast: a quantity after the same verb keeps "for" a duration.
+            s.add("for", "DUR")
+            unit = r.choice(["minute", "hour", "day", "week"])
+            amount = r.choice([15, 30, 45, 90]) if unit == "minute" else r.randint(1, 5)
+            quantity(s, amount, unit)
+            clause = {"duration": {"amount": amount, "unit": unit}}
+        else:
+            if connector:
+                s.add(connector, "GLUE")
+            clause = target(s)
     else:
         day = r.randrange(7)
         interval = 1
@@ -373,10 +483,7 @@ def render(s, reserved=False, family=None, bare=False):
                     "other" if interval == 2 and r.random() < 0.5 else words(interval)
                 )
                 s.add(spelled, "NUM")
-                # "every other weeks on weekday" was two defects at once: the
-                # plural after "other", and the period spelled out before a group
-                # that already names its own days. Only "other" stands alone;
-                # "every three Tuesday" is not English.
+                # "every other" may stand alone; "every three" needs its unit.
                 if spelled != "other" or r.random() < 0.5:
                     s.add("week" if spelled == "other" else "weeks", "UNIT")
                     s.add("on", "GLUE")

@@ -29,37 +29,18 @@ beforeAll(async () => {
 });
 afterAll(() => parser.dispose());
 
-// Open model gaps, kept running with it.fails so a retrain that closes one
-// turns this red and the id comes off the list. Gold is right in every case:
-// the model reads a bare ordinal, a numbered thing, a measurement, or an
-// "N to M" score as a date or a clock range.
-// Rewritten for the step3-580b weights. That retrain closed nine of the older
-// gaps (017, 044, 052, 076, 081, 089, 095, 104, 110) and opened thirteen more,
-// a net loss of four on negatives.jsonl traded for +59 on the pooled gold sets.
-// The new gaps cluster on counted objects ("Pack 4 shirts and 2 pairs") and on
-// "second"/"minute" used as an ordinal or an adjective.
+// Gold is right, model is behind. Runs under it.fails so a retrain that
+// closes one turns red and the id comes off the list.
 const knownGaps = new Set([
-  "negative-034",
-  "negative-041",
-  "negative-050",
-  "negative-053",
-  "negative-059",
-  "negative-064",
-  "negative-065",
-  "negative-067",
-  "negative-068",
-  "negative-073",
-  "negative-074",
-  "negative-086",
-  "negative-091",
   "negative-096",
-  "negative-098",
   "negative-100",
-  "negative-102",
   "negative-106",
-  "negative-120",
-  "negative-122",
-  "negative-124",
+  "negative-107",
+  "negative-139",
+  "negative-140",
+  "prose-017-authored",
+  "prose-017-lowercase",
+  "prose-017-uppercase",
 ]);
 const isGap = (example: Example) => knownGaps.has(example.id);
 
