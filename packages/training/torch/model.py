@@ -57,12 +57,55 @@ def half_storage(value: Tensor) -> Tensor:
     return value + (rounded - value).detach()
 
 
+def crf_nll(
+    emissions: Tensor, transition: Tensor, labels: Tensor, mask: Tensor
+) -> Tensor:
+    """Linear-chain CRF negative log-likelihood, averaged over scored tokens.
+
+    Masked positions (padding and whitespace, where labels are -100) are skipped
+    entirely, so the chain links consecutive *scored* tokens exactly as Viterbi
+    does at inference time.
+    """
+    targets = labels.clamp_min(0)
+    zero = emissions.new_zeros(())
+    started = mask[:, 0]
+    alpha = torch.where(mask[:, 0, None], emissions[:, 0], zero)
+    score = torch.where(
+        mask[:, 0], emissions[:, 0].gather(1, targets[:, :1]).squeeze(1), zero
+    )
+    previous = targets[:, 0]
+    for step in range(1, emissions.shape[1]):
+        emission = emissions[:, step]
+        live = mask[:, step]
+        chained = torch.logsumexp(alpha.unsqueeze(2) + transition, dim=1) + emission
+        alpha = torch.where(
+            live.unsqueeze(1), torch.where(started.unsqueeze(1), chained, emission), alpha
+        )
+        current = targets[:, step]
+        gold = emission.gather(1, current.unsqueeze(1)).squeeze(1)
+        gold = gold + torch.where(started, transition[previous, current], zero)
+        score = score + torch.where(live, gold, zero)
+        previous = torch.where(live, current, previous)
+        started = started | live
+    partition = torch.logsumexp(alpha, dim=1) * started
+    return (partition - score).sum() / mask.sum().clamp_min(1)
+
+
 class TimeTagger(nn.Module):
-    def __init__(self, feature_rows: int = FEATURE_ROWS) -> None:
+    def __init__(
+        self,
+        feature_rows: int = FEATURE_ROWS,
+        layers: int = 1,
+        transitions: bool = False,
+    ) -> None:
         super().__init__()
         if feature_rows not in (324, 580):
             raise ValueError("Feature rows must be 324 (S) or 580 (M)")
+        if layers not in (1, 2):
+            raise ValueError("Scan layers must be 1 or 2")
         self.feature_rows = feature_rows
+        self.layers = layers
+        self.transitions = transitions
         mapping = torch.arange(FEATURE_ROWS + 1)
         if feature_rows == 324:
             mapping[140:396] = 140 + torch.arange(256) % 128
@@ -74,12 +117,28 @@ class TimeTagger(nn.Module):
         self.encoder_bias = nn.Parameter(torch.zeros(HIDDEN))
         self.convolution = nn.Parameter(torch.empty(5, HIDDEN))
         self.neighbor_weights = nn.Parameter(torch.empty(2, HIDDEN))
-        self.gate_weight = nn.Parameter(torch.empty(HIDDEN, HIDDEN))
-        self.gate_bias = nn.Parameter(torch.zeros(HIDDEN))
-        self.candidate_weight = nn.Parameter(torch.empty(HIDDEN, HIDDEN))
-        self.candidate_bias = nn.Parameter(torch.zeros(HIDDEN))
-        self.combine_weight = nn.Parameter(torch.empty(HIDDEN, HIDDEN * 2))
-        self.combine_bias = nn.Parameter(torch.zeros(HIDDEN))
+        # Layer 1 keeps the shipped tensor names; later layers add a suffix.
+        for layer in range(layers):
+            suffix = "" if layer == 0 else str(layer + 1)
+            self.register_parameter(
+                f"gate{suffix}_weight", nn.Parameter(torch.empty(HIDDEN, HIDDEN))
+            )
+            self.register_parameter(
+                f"gate{suffix}_bias", nn.Parameter(torch.zeros(HIDDEN))
+            )
+            self.register_parameter(
+                f"candidate{suffix}_weight", nn.Parameter(torch.empty(HIDDEN, HIDDEN))
+            )
+            self.register_parameter(
+                f"candidate{suffix}_bias", nn.Parameter(torch.zeros(HIDDEN))
+            )
+            self.register_parameter(
+                f"combine{suffix}_weight",
+                nn.Parameter(torch.empty(HIDDEN, HIDDEN * 2)),
+            )
+            self.register_parameter(
+                f"combine{suffix}_bias", nn.Parameter(torch.zeros(HIDDEN))
+            )
         self.global_weight = nn.Parameter(torch.empty(HIDDEN, HIDDEN))
         self.global_bias = nn.Parameter(torch.zeros(HIDDEN))
         self.head_gate_weight = nn.Parameter(torch.empty(16, HIDDEN * 2))
@@ -88,6 +147,8 @@ class TimeTagger(nn.Module):
         self.head_hidden_bias = nn.Parameter(torch.zeros(64))
         self.output_weight = nn.Parameter(torch.empty(ROLE_CLASSES + 1, 64))
         self.output_bias = nn.Parameter(torch.zeros(ROLE_CLASSES + 1))
+        if transitions:
+            self.transition = nn.Parameter(torch.zeros(ROLE_CLASSES, ROLE_CLASSES))
         self.quantization_bits = 6
         self.row_scales = False
         self.qat = False
@@ -97,17 +158,22 @@ class TimeTagger(nn.Module):
         self.trace = {}
 
         for name, parameter in self.named_parameters():
-            if parameter.ndim >= 2:
+            # A zero transition matrix starts the CRF equivalent to per-token CE.
+            if parameter.ndim >= 2 and name != "transition":
                 nn.init.xavier_uniform_(parameter)
         nn.init.normal_(self.embedding, std=0.08)
         nn.init.normal_(self.convolution, std=0.15)
         nn.init.normal_(self.neighbor_weights, std=0.1)
         # Give different lanes short and long memories from the start.
         with torch.no_grad():
-            self.gate_bias.copy_(torch.linspace(0.0, 4.0, HIDDEN))
-        assert (
-            sum(parameter.numel() for parameter in self.parameters())
-            == feature_rows * HIDDEN + 14393
+            for layer in range(layers):
+                bias = f"gate{'' if layer == 0 else layer + 1}_bias"
+                getattr(self, bias).copy_(torch.linspace(0.0, 4.0, HIDDEN))
+        assert sum(parameter.numel() for parameter in self.parameters()) == (
+            feature_rows * HIDDEN
+            + 14393
+            + (layers - 1) * 4192
+            + (ROLE_CLASSES**2 if transitions else 0)
         )
 
     def weight(self, name: str) -> Tensor:
@@ -155,21 +221,28 @@ class TimeTagger(nn.Module):
             )
         encoded = self.store(torch.tanh(encoded)) * valid.unsqueeze(-1)
 
-        gate = self.store(torch.sigmoid(self.linear(encoded, "gate")))
-        candidate = self.store(
-            (1 - gate) * torch.tanh(self.linear(encoded, "candidate"))
-        )
-        gate = torch.where(valid.unsqueeze(-1), gate, torch.ones_like(gate))
-        candidate = candidate * valid.unsqueeze(-1)
         scan = sequential_scan if self.reference_scan else affine_scan
-        forward = self.store(scan(gate, candidate))
-        backward = self.store(scan(gate.flip(1), candidate.flip(1)).flip(1))
-        combined = self.store(
-            torch.tanh(
-                encoded + self.linear(torch.cat((forward, backward), dim=-1), "combine")
+        combined = encoded
+        for layer in range(self.layers):
+            suffix = "" if layer == 0 else str(layer + 1)
+            previous = combined
+            gate = self.store(torch.sigmoid(self.linear(previous, f"gate{suffix}")))
+            candidate = self.store(
+                (1 - gate) * torch.tanh(self.linear(previous, f"candidate{suffix}"))
             )
-        )
-        combined = combined * valid.unsqueeze(-1)
+            gate = torch.where(valid.unsqueeze(-1), gate, torch.ones_like(gate))
+            candidate = candidate * valid.unsqueeze(-1)
+            forward = self.store(scan(gate, candidate))
+            backward = self.store(scan(gate.flip(1), candidate.flip(1)).flip(1))
+            combined = self.store(
+                torch.tanh(
+                    previous
+                    + self.linear(
+                        torch.cat((forward, backward), dim=-1), f"combine{suffix}"
+                    )
+                )
+            )
+            combined = combined * valid.unsqueeze(-1)
 
         pooled = combined.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1)
         context = torch.sigmoid(self.linear(pooled, "global")) * pooled

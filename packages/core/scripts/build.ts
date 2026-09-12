@@ -74,6 +74,10 @@ await build({
             roleClasses: weights.roleClasses,
             storage: weights.storage,
             boundaryThreshold: weights.boundaryThreshold,
+            ...(weights.layers && weights.layers > 1
+              ? { layers: weights.layers }
+              : {}),
+            ...(weights.transitions ? { transitions: true } : {}),
             q: weights.q,
             segments: weights.segments.map((segment) => ({
               name: segment.name,

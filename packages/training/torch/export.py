@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from model import TimeTagger
+from model import ROLE_CLASSES, TimeTagger
 from train import Dataset, evaluate
 from calibrate import calibrate
 
@@ -97,11 +97,31 @@ def decode(encoded: str, segments: list[dict]) -> dict[str, torch.Tensor]:
 
 
 def artifact_model(artifact: dict) -> TimeTagger:
-    model = TimeTagger(artifact["featureRows"]).eval()
+    model = TimeTagger(
+        artifact["featureRows"],
+        artifact.get("layers", 1),
+        artifact.get("transitions", False),
+    ).eval()
     model.load_state_dict(decode(artifact["q"], artifact["segments"]))
     model.storage_f16 = artifact["storage"] == "f16"
     model.reference_scan = True
     return model
+
+
+def viterbi(emissions: np.ndarray, transition: np.ndarray | None) -> np.ndarray:
+    """Decode one sequence of emissions; plain argmax when there is no chain."""
+    if transition is None:
+        return emissions.argmax(-1).astype(np.uint8)
+    best = emissions[0]
+    pointers = []
+    for step in range(1, len(emissions)):
+        scores = best[:, None] + transition
+        pointers.append(scores.argmax(0))
+        best = scores.max(0) + emissions[step]
+    path = [int(best.argmax())]
+    for back in reversed(pointers):
+        path.append(int(back[path[-1]]))
+    return np.array(path[::-1], dtype=np.uint8)
 
 
 def read_artifact(path: Path) -> dict:
@@ -465,10 +485,19 @@ def export(
     bare: Path,
     baseline_report: Path,
     force: bool,
+    skip_gate: bool = False,
 ):
+    if skip_gate and destination.resolve() == SHIPPED.resolve():
+        raise SystemExit("--skip-gate cannot write the shipped weights module.")
     torch.set_num_threads(4)
     saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
-    reference = TimeTagger(saved["model"]["embedding"].shape[0]).eval()
+    options = {
+        "layers": saved["config"].get("layers", 1),
+        "transitions": saved["config"].get("transitions", False),
+    }
+    reference = TimeTagger(
+        saved["model"]["embedding"].shape[0], options["layers"], options["transitions"]
+    ).eval()
     reference.load_state_dict(saved["model"])
     bits = saved["config"].get("quantization_bits", 6)
     maximum = (1 << (bits - 1)) - 1
@@ -518,7 +547,7 @@ def export(
     # Measure what ships: the reference runs the values decoded back off the wire.
     wire = {"q": "".join(encoded), "segments": segments}
     reference = artifact_model(
-        {**wire, "featureRows": reference.feature_rows, "storage": storage}
+        {**wire, "featureRows": reference.feature_rows, "storage": storage, **options}
     )
 
     data = ROOT / "data/synth" / config["run"]
@@ -535,8 +564,9 @@ def export(
         "hidden": 32,
         "featureRows": reference.feature_rows,
         "storage": storage,
-        "roleClasses": 40,
+        "roleClasses": ROLE_CLASSES,
         "boundaryThreshold": threshold,
+        **options,
         "labels": labels,
         **wire,
     }
@@ -548,7 +578,11 @@ def export(
         + " as const;\n"
     )
 
-    promotion = gate(reference, threshold, source, reserved, bare, baseline_report)
+    promotion = (
+        {"criterion": "skipped", "accepted": True, "failures": [], "synthetic": None}
+        if skip_gate
+        else gate(reference, threshold, source, reserved, bare, baseline_report)
+    )
     if not promotion["accepted"]:
         if not force:
             raise SystemExit(
@@ -557,7 +591,8 @@ def export(
             )
         promotion = override(promotion)
         print("Forcing export despite: " + "; ".join(promotion["overriddenFailures"]))
-    promotion["description"] = GATE_CRITERION
+    if not skip_gate:
+        promotion["description"] = GATE_CRITERION
 
     destination.parent.mkdir(parents=True, exist_ok=True)
     staged = destination.with_name(f"{destination.name}.{os.getpid()}.tmp")
@@ -587,6 +622,7 @@ def export(
         "parameters": int(offset),
         "quantizationBits": bits,
         "quantizationScheme": "power-of-two-rows" if row_scales else "tensor",
+        "options": {"featureRows": reference.feature_rows, **options},
         "logicalPackedBytes": int(np.ceil(offset * bits / 8)),
         "encodedCharacters": len(encoded),
         "moduleBytes": len(source.encode()),
@@ -597,9 +633,11 @@ def export(
         "corpora": {
             "validation": corpus_digest(data / "validation"),
             "heldout": corpus_digest(data / "heldout"),
-            "reservedCarrier": promotion["synthetic"]["reserved"]["corpus"][
-                "featurizedSha256"
-            ],
+            "reservedCarrier": (
+                promotion["synthetic"]["reserved"]["corpus"]["featurizedSha256"]
+                if promotion.get("synthetic")
+                else None
+            ),
         },
         "promotion": promotion,
         "scope": f"Exact decoded int{bits} weights, sequential CPU PyTorch inference reference with the recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. The heldout metrics share the split calibrate() fitted the boundary threshold on and gate nothing, as do the reserved-carrier and bare corpora under promotion.synthetic. Promotion is decided by end-to-end schedule accuracy on the hand-authored gold sets. Browser parity is a separate gate.",
@@ -627,10 +665,22 @@ def export(
         wire_rows = rows.numpy()[valid.numpy()].astype(np.uint16)
         wire_logits = logits.numpy()[valid.numpy()].astype(np.float32)
         wire_boundaries = clause_logits.numpy()[valid.numpy()].astype(np.float32)
+        # Decoded roles, so the TypeScript parity test compares Viterbi to
+        # Viterbi rather than re-deriving an argmax the model no longer uses.
+        chain = (
+            reference.transition.detach().numpy() if options["transitions"] else None
+        )
+        scored = (targets.numpy() >= 0)[valid.numpy()]
+        wire_labels = np.zeros(len(wire_rows), dtype=np.uint8)
+        for start, end in zip(offsets[:-1], offsets[1:]):
+            keep = np.flatnonzero(scored[start:end]) + start
+            if len(keep):
+                wire_labels[keep] = viterbi(wire_logits[keep], chain)
         for suffix, values in [
             ("rows", wire_rows),
             ("logits", wire_logits),
             ("boundaries", wire_boundaries),
+            ("labels", wire_labels),
             ("offsets", offsets),
         ]:
             values.tofile(f"{parity_prefix}.{suffix}.bin")
@@ -639,8 +689,9 @@ def export(
             "sequences": len(indices),
             "tokens": int(lengths.sum()),
             "rowsPerToken": 17,
-            "rolesPerToken": 40,
+            "rolesPerToken": ROLE_CLASSES,
             "boundaryThreshold": threshold,
+            **options,
         }
         publish(
             Path(f"{parity_prefix}.json"),
@@ -687,6 +738,11 @@ if __name__ == "__main__":
         "--baseline", type=Path, default=ROOT / "active/export-report.json"
     )
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--skip-gate",
+        action="store_true",
+        help="Skip promotion scoring. Refused when --out is the shipped module.",
+    )
     args = parser.parse_args()
     export(
         args.checkpoint,
@@ -697,4 +753,5 @@ if __name__ == "__main__":
         args.bare,
         args.baseline,
         args.force,
+        args.skip_gate,
     )

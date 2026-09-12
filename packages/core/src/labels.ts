@@ -36,7 +36,6 @@ export const LABELS = [
   "CLOCK_OFFSET",
 ] as const;
 export type Label = (typeof LABELS)[number];
-export const LABEL_COUNT = 40;
 export const labelId = /* @__PURE__ */ Object.fromEntries(
   /* @__PURE__ */ LABELS.map((name, id) => [name, id]),
 ) as Record<Label, number>;

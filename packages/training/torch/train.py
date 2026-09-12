@@ -14,7 +14,7 @@ import numpy as np
 import torch
 from torch.nn import functional as F
 
-from model import PADDING_ROW, ROLE_CLASSES, TimeTagger
+from model import PADDING_ROW, ROLE_CLASSES, TimeTagger, crf_nll
 
 LABEL_O = 0
 LABEL_GLUE = 32
@@ -190,6 +190,12 @@ def main():
     parser.add_argument("--learning-rate", type=float, default=3e-3)
     parser.add_argument("--storage", choices=["f16", "f32"], default="f16")
     parser.add_argument("--feature-rows", type=int, choices=[324, 580], default=580)
+    parser.add_argument("--layers", type=int, choices=[1, 2], default=1)
+    parser.add_argument(
+        "--transitions",
+        action="store_true",
+        help="Learn a role transition matrix and train the roles as a CRF.",
+    )
     parser.add_argument(
         "--device", default="mps" if torch.backends.mps.is_available() else "cpu"
     )
@@ -225,7 +231,9 @@ def main():
     if set(training.manifest["fingerprints"]) & set(heldout.manifest["fingerprints"]):
         raise RuntimeError("Training and held-out structural frames overlap")
 
-    model = TimeTagger(args.feature_rows).to(args.device)
+    model = TimeTagger(args.feature_rows, args.layers, args.transitions).to(
+        args.device
+    )
     if args.init:
         initial = torch.load(args.init, map_location="cpu", weights_only=False)
         previous_labels = initial["labelNames"]
@@ -243,7 +251,18 @@ def main():
                     source = previous_labels.index(label)
                     initial["model"]["output_weight"][index] = weights[source]
                     initial["model"]["output_bias"][index] = biases[source]
-        model.load_state_dict(initial["model"])
+        # Load by name and shape; tensors the checkpoint lacks (a second scan
+        # layer, the transition matrix) keep their fresh initialization.
+        current = model.state_dict()
+        usable = {
+            name: value
+            for name, value in initial["model"].items()
+            if name in current and value.shape == current[name].shape
+        }
+        missing = sorted(set(current) - set(usable))
+        if missing:
+            print(json.dumps({"stage": "fresh-tensors", "names": missing}), flush=True)
+        model.load_state_dict(usable, strict=False)
         args.init = str(args.init)
     role_weights = None
     if args.role_weighting == "sqrt":
@@ -338,12 +357,19 @@ def main():
                 rows = rows.masked_fill(hidden, PADDING_ROW)
             logits, boundary_logits = model(rows, valid, neighbors)
             mask = labels >= 0
-            role_loss = F.cross_entropy(
-                logits.reshape(-1, ROLE_CLASSES),
-                labels.reshape(-1),
-                weight=role_weights,
-                ignore_index=-100,
-                label_smoothing=0.05,
+            role_loss = (
+                # ponytail: CRF path ignores --role-weighting; per-class weights
+                # would have to reweight the whole sequence NLL. Add if rare
+                # roles regress under --transitions.
+                crf_nll(logits, model.transition, labels, mask)
+                if args.transitions
+                else F.cross_entropy(
+                    logits.reshape(-1, ROLE_CLASSES),
+                    labels.reshape(-1),
+                    weight=role_weights,
+                    ignore_index=-100,
+                    label_smoothing=0.05,
+                )
             )
             boundary_loss = F.binary_cross_entropy_with_logits(
                 boundary_logits[mask],

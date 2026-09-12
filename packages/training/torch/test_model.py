@@ -3,7 +3,7 @@ import unittest
 import torch
 
 from export import decide, override
-from model import PADDING_ROW, TimeTagger, affine_scan
+from model import PADDING_ROW, TimeTagger, affine_scan, crf_nll
 
 
 class ModelTests(unittest.TestCase):
@@ -84,14 +84,62 @@ class ModelTests(unittest.TestCase):
             torch.testing.assert_close(left[:1], right, atol=2e-4, rtol=1e-4)
 
     def test_all_parameters_receive_finite_gradients(self):
-        model = TimeTagger()
-        model.qat = True
-        roles, boundaries = model(*self.inputs())
-        loss = roles.square().mean() + boundaries.square().mean()
-        loss.backward()
-        for name, parameter in model.named_parameters():
-            self.assertIsNotNone(parameter.grad, name)
-            self.assertTrue(torch.isfinite(parameter.grad).all(), name)
+        for layers, transitions in ((1, False), (2, True)):
+            model = TimeTagger(layers=layers, transitions=transitions)
+            model.qat = True
+            roles, boundaries = model(*self.inputs())
+            loss = roles.square().mean() + boundaries.square().mean()
+            if transitions:
+                loss = loss + model.transition.square().mean()
+            loss.backward()
+            for name, parameter in model.named_parameters():
+                self.assertIsNotNone(parameter.grad, name)
+                self.assertTrue(torch.isfinite(parameter.grad).all(), name)
+
+    def test_a_second_scan_layer_keeps_the_first_layer_tensor_names(self):
+        one = set(dict(TimeTagger().named_parameters()))
+        two = dict(TimeTagger(layers=2, transitions=True).named_parameters())
+        self.assertTrue(one <= set(two))
+        self.assertEqual(
+            sorted(set(two) - one),
+            [
+                "candidate2_bias",
+                "candidate2_weight",
+                "combine2_bias",
+                "combine2_weight",
+                "gate2_bias",
+                "gate2_weight",
+                "transition",
+            ],
+        )
+
+    def test_crf_matches_brute_force_enumeration(self):
+        """Masked positions must drop out of the chain, not just out of the sum."""
+        classes, length = 4, 5
+        emissions = torch.randn(1, length, classes)
+        transition = torch.randn(classes, classes)
+        labels = torch.tensor([[1, -100, 3, 0, -100]])
+        mask = labels >= 0
+        kept = [index for index in range(length) if mask[0, index]]
+        paths = torch.cartesian_prod(*[torch.arange(classes)] * len(kept))
+        scores = []
+        for path in paths:
+            total = sum(emissions[0, kept[step], label] for step, label in enumerate(path))
+            total = total + sum(
+                transition[path[step - 1], path[step]] for step in range(1, len(kept))
+            )
+            scores.append(total)
+        gold = [labels[0, index] for index in kept]
+        expected = torch.logsumexp(torch.stack(scores), 0) - (
+            sum(emissions[0, kept[step], label] for step, label in enumerate(gold))
+            + sum(transition[gold[step - 1], gold[step]] for step in range(1, len(kept)))
+        )
+        torch.testing.assert_close(
+            crf_nll(emissions, transition, labels, mask),
+            expected / mask.sum(),
+            atol=1e-5,
+            rtol=1e-5,
+        )
 
 
 class PromotionGateTests(unittest.TestCase):

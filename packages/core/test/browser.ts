@@ -74,7 +74,15 @@ try {
     const expected = new Float32Array(await binary("logits"));
     const expectedBoundaries = new Float32Array(await binary("boundaries"));
     const offsets = new Uint32Array(await binary("offsets"));
-    const { boundaryThreshold = 0 } = await (
+    // Fixtures older than role transitions carry no decoded labels; for those
+    // the emission argmax is what PyTorch predicted.
+    const labelFile = await fetch(
+      "/packages/training/active/parity.labels.bin",
+    );
+    const decoded = labelFile.ok
+      ? new Uint8Array(await labelFile.arrayBuffer())
+      : undefined;
+    const { boundaryThreshold = 0, rolesPerToken: roles } = await (
       await fetch("/packages/training/active/parity.json")
     ).json();
     const inputs: RawToken[][] = texts
@@ -113,21 +121,21 @@ try {
               cpu.clauseStarts[token] !== prediction.clauseStarts[token],
             );
             let bestPython = 0;
-            for (let label = 0; label < 40; label++) {
-              const value = prediction.logits[token * 40 + label];
+            for (let label = 0; label < roles; label++) {
+              const value = prediction.logits[token * roles + label];
               maxError = Math.max(
                 maxError,
-                Math.abs(value - cpu.logits[token * 40 + label]),
+                Math.abs(value - cpu.logits[token * roles + label]),
               );
               if (sequence < offsets.length - 1) {
                 const position = offsets[sequence] + token;
                 pythonMaxError = Math.max(
                   pythonMaxError,
-                  Math.abs(value - expected[position * 40 + label]),
+                  Math.abs(value - expected[position * roles + label]),
                 );
                 if (
-                  expected[position * 40 + label] >
-                  expected[position * 40 + bestPython]
+                  expected[position * roles + label] >
+                  expected[position * roles + bestPython]
                 )
                   bestPython = label;
               }
@@ -139,9 +147,11 @@ try {
               ),
             );
             if (sequence < offsets.length - 1) {
-              const boundary = expectedBoundaries[offsets[sequence] + token];
+              const position = offsets[sequence] + token;
+              const boundary = expectedBoundaries[position];
               pythonLabelMismatches += Number(
-                prediction.labels[token] !== bestPython,
+                prediction.labels[token] !==
+                  (decoded?.[position] ?? bestPython),
               );
               pythonBoundaryMismatches += Number(
                 prediction.clauseStarts[token] !==
@@ -237,7 +247,9 @@ try {
         gpu.dispose();
       }
       if (tokenMismatches || scheduleMismatches)
-        throw new Error("Packaged shader parity failed");
+        throw new Error(
+          `Packaged shader parity failed: ${tokenMismatches} token and ${scheduleMismatches} schedule mismatches`,
+        );
       return { sequences: texts.length, tokenMismatches, scheduleMismatches };
     },
     texts.slice(0, 1000),
