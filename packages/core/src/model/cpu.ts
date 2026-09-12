@@ -78,14 +78,40 @@ export function viterbiDecode(
   const back = new Uint8Array(steps * classes);
   let best = new Float32Array(classes);
   let next = new Float32Array(classes);
+  const minimum = new Float32Array(classes);
+  const maximum = new Float32Array(classes);
+  const candidates = new Uint8Array(classes);
+  if (steps > 1)
+    for (let previous = 0; previous < classes; previous++) {
+      let low = chain[previous * classes];
+      let high = low;
+      for (let label = 1; label < classes; label++) {
+        const value = chain[previous * classes + label];
+        low = Math.min(low, value);
+        high = Math.max(high, value);
+      }
+      minimum[previous] = low;
+      maximum[previous] = high;
+    }
   for (let label = 0; label < classes; label++)
     best[label] = emissions[offsets[0] + label];
   for (let step = 1; step < steps; step++) {
     const base = offsets[step];
+    let leader = 0;
+    for (let previous = 1; previous < classes; previous++)
+      if (best[previous] > best[leader]) leader = previous;
+    const floor = best[leader] + minimum[leader];
+    let count = 0;
+    // Remove only states whose best transition loses to a known lower bound.
+    // Retain ties in their original order, with the same f32 step rounding.
+    for (let previous = 0; previous < classes; previous++)
+      if (!(best[previous] + maximum[previous] < floor))
+        candidates[count++] = previous;
     for (let label = 0; label < classes; label++) {
-      let from = 0;
-      let top = best[0] + chain[label];
-      for (let previous = 1; previous < classes; previous++) {
+      let from = candidates[0];
+      let top = best[from] + chain[from * classes + label];
+      for (let candidate = 1; candidate < count; candidate++) {
+        const previous = candidates[candidate];
         const value = best[previous] + chain[previous * classes + label];
         if (value > top) {
           top = value;
@@ -95,7 +121,9 @@ export function viterbiDecode(
       back[step * classes + label] = from;
       next[label] = top + emissions[base + label];
     }
-    [best, next] = [next, best];
+    const previous = best;
+    best = next;
+    next = previous;
   }
   let chosen = 0;
   for (let label = 1; label < classes; label++)
