@@ -200,7 +200,9 @@ def main():
         "--device", default="mps" if torch.backends.mps.is_available() else "cpu"
     )
     parser.add_argument("--identity-dropout", type=float, default=0.0)
-    parser.add_argument("--role-weighting", choices=["sqrt", "none"], default="sqrt")
+    parser.add_argument(
+        "--role-weighting", choices=["sqrt", "sqrt-keep-o", "none"], default="sqrt"
+    )
     parser.add_argument("--log-every", type=int, default=50)
     parser.add_argument("--warmup-steps", type=int, default=500)
     parser.add_argument(
@@ -265,7 +267,7 @@ def main():
         model.load_state_dict(usable, strict=False)
         args.init = str(args.init)
     role_weights = None
-    if args.role_weighting == "sqrt":
+    if args.role_weighting != "none":
         # COUNT and BOUND_START see ~2,000 tokens against O's ~2,000,000. Weight
         # by 1/sqrt(count), normalised so the mean weight over labels is 1.
         counts = np.array(
@@ -273,7 +275,17 @@ def main():
             dtype=np.float64,
         )
         named = 1 / np.sqrt(counts)
-        named /= named.mean()
+        if args.role_weighting == "sqrt-keep-o":
+            # Plain sqrt hands O the smallest weight of every label, because O
+            # is the most frequent one, which is a standing push towards
+            # predicting a role. Normalise over the non-O roles only and pin O
+            # at 1.0, so rare roles still get their lift and abstaining costs
+            # full price.
+            named[LABEL_O] = 0
+            named /= named[named > 0].mean()
+            named[LABEL_O] = 1.0
+        else:
+            named /= named.mean()
         # The reserved output slots are never a target; leave them at the mean
         # so they cannot skew the normalisation.
         weights = np.ones(ROLE_CLASSES, dtype=np.float64)

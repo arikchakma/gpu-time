@@ -661,6 +661,13 @@ def render(family: int, variant: int, rng: random.Random) -> Sentence:
             rng.choice(
                 [
                     "May I have your second opinion?",
+                    # The other half of a contrastive pair: the same surface
+                    # form carries a label in families 01, 02, 13 and 17.
+                    f"He ran a mile in {rng.choice(['four', 'five', 'nine'])} minutes.",
+                    f"The {rng.choice(['3rd', '2nd', '4th'])} edition is out of print.",
+                    f"{name} scored {rng.randint(2, 9)} and {rng.choice(['Sam', 'Alex'])} scored {rng.randint(2, 9)}.",
+                    f"{name} is aged {rng.randint(4, 12)} and reads well.",
+                    "May said three things about the proposal.",
                     f"Please call {count} people in room {rng.randint(1, 40)}.",
                     f"The last slide has {count} diagrams for {name}.",
                     "We march together and may succeed.",
@@ -934,7 +941,21 @@ def generate(
             )[0]
             variant = rng.choice(variants)
             spec = semantic.sample(rng) if family != 23 and rng.random() < 0.8 else None
-            if rng.random() < 0.12:
+            if family == 23:
+                # Family 23 is the negative family. It used to lose roughly half
+                # its draws to the terse and natural branches below, which emit
+                # labelled expressions, so negatives were ~8% of the corpus
+                # against its 15% weight. Take the branch first and the weight
+                # means what it says.
+                sentence = (
+                    render_heldout(family, rng)
+                    if split == "heldout"
+                    else render(family, variant, rng)
+                )
+                template = f"family-{family:02d}/" + (
+                    "heldout-reordered" if split == "heldout" else f"surface-{variant}"
+                )
+            elif rng.random() < 0.12:
                 sentence = Sentence(rng)
                 template = terse(sentence, variant)
                 spec = None

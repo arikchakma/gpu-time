@@ -395,17 +395,195 @@ def suffix(rng: random.Random) -> str:
             return text
 
 
+# Vocabulary for the contrastive negatives below. Every surface form here also
+# appears inside a labelled expression elsewhere in the generator -- "in four
+# minutes", "on the 3rd", "at 5", "May 3", "a couple of" -- so the pair is what
+# teaches the model that the carrier decides, not the number.
+DISTANCES = [
+    "mile", "5k", "10k", "lap", "marathon", "half marathon", "course",
+    "circuit", "final leg", "sprint", "climb", "descent", "relay", "length",
+]
+COMPLETED = [
+    "ran", "swam", "cycled", "rowed", "walked", "finished", "completed",
+    "covered", "cleared", "paced", "jogged", "skated",
+]
+PRODUCED = [
+    "built", "wrote", "assembled", "fixed", "shipped", "drafted", "packed",
+    "cooked", "printed", "reviewed", "rewired", "repainted",
+]
+SPOKEN_COUNTS = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    "ten", "eleven", "twelve", "twenty", "thirty", "twenty two", "forty five",
+    "ninety", "a hundred",
+]
+DURATION_UNITS = ["seconds", "minutes", "hours", "days", "weeks"]
+NUMBERED = [
+    "section", "chapter", "page", "room", "floor", "aisle", "gate", "line",
+    "seat", "row", "track", "version", "build", "table", "figure", "exhibit",
+    "unit", "lot", "bay", "platform", "suite", "ward", "locker", "carriage",
+]
+ORDINAL_NOUNS = [
+    "edition", "chapter", "floor", "draft", "album", "verse", "row", "attempt",
+    "prize", "amendment", "instalment", "printing", "season", "movement",
+    "act", "half", "quarter", "helping", "opinion", "language", "cousin",
+]
+ORDINAL_WORDS = [
+    "first", "second", "third", "fourth", "fifth", "sixth", "seventh",
+    "eighth", "ninth", "tenth", "eleventh", "twelfth",
+]
+MONTH_NAMES = ["May", "June", "April", "August", "March", "January"]
+VAGUE_COUNTS = [
+    "a couple of", "a few", "a dozen", "half a dozen", "several",
+    "a handful of", "a bunch of", "a couple more",
+]
+MEASURES = [
+    "kilos", "pounds", "metres", "feet", "litres", "dollars", "euros",
+    "degrees", "volts", "megabytes", "gigabytes", "characters", "milligrams",
+    "millimetres", "acres", "calories", "decibels", "pixels",
+]
+CONTAINERS = [
+    "tablets", "drops", "spoons", "scoops", "sheets", "slices", "coats",
+    "cups", "tickets", "copies", "batteries", "screws",
+]
+SPORTS = [
+    "match", "final", "semifinal", "derby", "opener", "friendly", "rematch",
+    "tie", "playoff", "scrimmage",
+]
+
+
+def _suffixed(value: int) -> str:
+    tail = (
+        "th"
+        if value % 100 in (11, 12, 13)
+        else {1: "st", 2: "nd", 3: "rd"}.get(value % 10, "th")
+    )
+    return f"{value}{tail}"
+
+
 def numeric(rng: random.Random) -> str:
     """Number-heavy prose with no time expression in it at all.
 
     The nouns and verbs come from the mined vocabulary, so a negative is not
-    recognisable by its handful of template words.
+    recognisable by its handful of template words. The groups below mirror the
+    false triggers the shipped model shows on negatives.jsonl: a measurement
+    after a completion verb, an ordinal on an ordinary noun, a numbered thing,
+    a score, a numeric range, an age, a percentage, a month name used as a
+    person, and a vague count.
     """
     nouns, verbs = vocabulary()
     noun, other, verb = rng.choice(nouns), rng.choice(nouns), rng.choice(verbs)
     name = rng.choice(NAMES)
+    month, second_month = rng.sample(MONTH_NAMES, 2)
     count = rng.randint(2, 99)
-    return rng.choice(
+    ordinal_value = rng.randint(2, 12)
+    ordinal_noun = rng.choice(ORDINAL_NOUNS)
+    numbered = rng.choice(NUMBERED)
+    spoken = rng.choice(SPOKEN_COUNTS)
+    unit = rng.choice(DURATION_UNITS)
+    low = rng.randint(1, 20)
+    high = low + rng.randint(1, 40)
+    groups = [
+        # A measured duration after a completion verb. "in four minutes" here is
+        # every token O; "call me in four minutes" is a labelled shift. Only two
+        # of the six frames use that exact "in N units" surface: at a higher
+        # share the model stops reading the real shift as a shift, and "in ten
+        # minutes" on its own is far commoner input than a race time.
+        [
+            f"{name} {rng.choice(COMPLETED)} the {rng.choice(DISTANCES)} in {spoken} {unit}.",
+            f"They {rng.choice(PRODUCED)} the whole {noun} in {spoken} {unit} flat.",
+            f"The {noun} took {spoken} {unit} to {verb} start to finish.",
+            f"Our fastest {rng.choice(DISTANCES)} was {spoken} {unit}.",
+            f"{name} held the record at just over {spoken} {unit}.",
+            f"The {noun} is {spoken} {unit} long end to end.",
+        ],
+        # An ordinal sitting on an ordinary noun, never on a day of the month.
+        [
+            f"The {_suffixed(ordinal_value)} {ordinal_noun} corrected those {other}.",
+            f"The {_suffixed(ordinal_value)} {ordinal_noun} is out of print.",
+            f"{name} lives on the {_suffixed(ordinal_value)} floor of the {noun}.",
+            f"Our seats are in the {_suffixed(ordinal_value)} row.",
+            f"The {rng.choice(ORDINAL_WORDS)} {ordinal_noun} reads better than the first.",
+            f"{name} placed {_suffixed(ordinal_value)} and {other} went unclaimed.",
+            f"He finished {_suffixed(ordinal_value)} overall in the {rng.choice(SPORTS)}.",
+            f"Take the {rng.choice(ORDINAL_WORDS)} exit and follow the {noun}.",
+            f"The {rng.choice(ORDINAL_WORDS)} argument of the {noun} must be a string.",
+        ],
+        # A numbered thing. "on the 3rd floor" must not become a day of month.
+        [
+            f"Room {count} on the {_suffixed(rng.randint(2, 20))} floor.",
+            f"{numbered.capitalize()} {count} explains the {noun}.",
+            f"{numbered.capitalize()} {count} covers the {other} and the {noun}.",
+            f"Meet me in {numbered} {count} of the {noun}.",
+            f"Version {rng.randint(1, 12)}.{rng.randint(0, 9)} shipped with {count} fixes.",
+            f"Page {low} to {high} covers the {noun}.",
+            f"The stack trace points to line {count}.",
+            f"{numbered.capitalize()} {count} is at the far end of the {noun}.",
+            f"Dial {rng.randint(200, 999)} {rng.randint(1000, 9999)} about the {noun}.",
+        ],
+        # Scores and tallies: "3 to 1" is not a clock range.
+        [
+            f"We scored {rng.randint(0, 9)} to {rng.randint(0, 9)} in the second half.",
+            f"The {rng.choice(SPORTS)} ended {rng.randint(0, 9)} nil.",
+            f"They beat us {rng.randint(0, 9)} to {rng.randint(0, 9)} in the {rng.choice(SPORTS)}.",
+            f"The vote was {count} in favour and {rng.randint(1, 40)} against.",
+            f"The judges gave the {noun} an {rng.randint(1, 9)} and a {rng.randint(1, 9)}.",
+            f"{name} shot {rng.randint(1, 9)} under par.",
+            f"{name} scored {rng.randint(1, 9)} out of {rng.randint(10, 20)} on the {noun}.",
+        ],
+        # A numeric range between two plain quantities.
+        [
+            f"Pick a number between {low} and {high}.",
+            f"Between {low} and {high} people asked about the {noun}.",
+            f"The {noun} ranges from {low} to {high} {rng.choice(MEASURES)}.",
+            f"Prices sit between {low} and {high} {rng.choice(['euros', 'dollars', 'pounds'])}.",
+            f"Anything from {low} to {high} {rng.choice(MEASURES)} is within spec.",
+            f"The {noun} holds between {low} and {high} {other}.",
+        ],
+        # Ages, plain counts and measurements.
+        [
+            f"{name} is {rng.randint(18, 92)} and still runs the {noun}.",
+            f"{name} is {rng.randint(18, 92)} and has {rng.choice(SPOKEN_COUNTS[:5])} kids.",
+            f"The twins are {rng.randint(2, 15)} and {rng.randint(2, 15)}.",
+            f"{name} retired at {rng.randint(55, 70)} with a full pension.",
+            f"The {noun} weighs {rng.randint(2, 90)} {rng.choice(MEASURES)} and costs {count} dollars.",
+            f"The {noun} is {count} {rng.choice(MEASURES)} across.",
+            f"Take {rng.choice(SPOKEN_COUNTS[:4])} {rng.choice(CONTAINERS)} with the {noun}.",
+            f"Add {rng.choice(SPOKEN_COUNTS[:5])} {rng.choice(CONTAINERS)} and stir.",
+        ],
+        # Percentages and fractions. "half" and "quarter" appear in only two of
+        # the eight frames on purpose: they are also the CLOCK_OFFSET words in
+        # "half past eight" and "a quarter to 8", and a heavier share of them as
+        # filler costs that role outright.
+        [
+            f"A {rng.randint(2, 60)} percent raise on the {noun} is unrealistic.",
+            f"Turnout on the {noun} was up {rng.randint(2, 60)} percent.",
+            f"Only {rng.randint(2, 90)} percent of the {other} matched the {noun}.",
+            f"A third of the {other} never reached the {noun}.",
+            f"Two thirds of the {noun} is already spent.",
+            f"Most of the {other} were filed under the wrong {noun}.",
+            f"About a quarter of the {noun} went to {other}.",
+            f"Half the {other} left before the {noun} finished.",
+        ],
+        # A month name that is somebody's name, not a month.
+        [
+            f"{month} and {second_month} are both on the team.",
+            f"{month} introduced me to her brother at the {noun}.",
+            f"{month} is the name of the main character in the {noun}.",
+            f"{month} signed the {noun} and {second_month} cosigned.",
+            f"Ask {month} what she thinks of the {noun}.",
+            f"{month} and {name} split the {noun} evenly.",
+            f"{month} said {rng.choice(SPOKEN_COUNTS[:5])} things about the {noun}.",
+        ],
+        # A vague count of ordinary objects, not of days or weeks.
+        [
+            f"{rng.choice(VAGUE_COUNTS).capitalize()} {other} are broken.",
+            f"There are {rng.choice(VAGUE_COUNTS)} typos in the {noun}.",
+            f"{name} brought {rng.choice(VAGUE_COUNTS)} friends to the {noun}.",
+            f"A dozen reasons to {verb} the {noun} come to mind.",
+            f"{rng.choice(VAGUE_COUNTS).capitalize()} {other} still need a {noun}.",
+            f"We ordered {rng.choice(VAGUE_COUNTS)} {rng.choice(CONTAINERS)} for the {noun}.",
+        ],
+        # The original number-heavy frames, kept.
         [
             f"See section {rng.randint(1, 12)}.{rng.randint(1, 9)} of the {noun}.",
             f"Chapter {rng.randint(1, 20)} of the {noun} runs to page {rng.randint(100, 400)}.",
@@ -432,15 +610,18 @@ def numeric(rng: random.Random) -> str:
             f"Page {count} of the {noun} explains the {other}.",
             f"The {noun} weighs {rng.randint(2, 90)} kilos.",
             f"Room {count} holds {rng.randint(4, 60)} {other}.",
-        ]
-    )
+        ],
+    ]
+    # Uniform over groups, not over templates: the last group has twenty-five
+    # frames and would otherwise swamp the nine categories that actually fail.
+    return rng.choice(rng.choice(groups))
 
 
 def sentence(rng: random.Random) -> str:
     pool = borrowed()
     if pool and rng.random() < 0.15:
         return rng.choice(pool)
-    if rng.random() < 0.22:
+    if rng.random() < 0.35:
         return numeric(rng)
     if rng.random() < 0.12:
         subject = rng.choice(
