@@ -42,7 +42,8 @@ Generated training data, downloaded corpora, training runs, and local virtual en
 
 ```sh
 pnpm gen
-pnpm train --run experiment --storage f32 --feature-rows 580 --layers 2 --init runs/english-coverage-layer2-negative-blend-075/best.pt --batch 1024 --transitions
+pnpm train --run experiment --storage f32 --feature-rows 580 --layers 2 --init runs/ad-f001/best.pt --batch 1024 --transitions \
+  --distill runs/ad-f001/best.pt --distill-alpha 0 --distill-beta 5 --distill-lambda 0.1
 ```
 
 Runs are written under `packages/training/runs/`. Export a checkpoint to regenerate the shipped weights, then rebuild and evaluate:

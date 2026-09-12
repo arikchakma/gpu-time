@@ -55,7 +55,29 @@ Each epoch draws fresh examples. The structural holdout and the unseen-sentence-
 
 The model learns to distinguish time expressions from surrounding prose. `background.py` combines carrier phrases, and filtered Tatoeba sentences supply additional background. Every borrowed token receives the filler label `O`. The filter removes known time words and number patterns that resemble dates or times.
 
-Every run snapshots its sources and hashes. Export records lineage in `active/export-report.json` and `active/provenance.json`; `pnpm model:audit` checks it when the local checkpoints and history are available. A clean clone can check inference parity from committed fixtures, but cannot reproduce the full checkpoint audit. The promoted checkpoint averages compatible two-layer weights, recording both parent hashes and coefficients and counting shared ancestors once. Evaluation uses Viterbi, including quantized transitions. Export requires no gold set or family regression through the built package, reserved-carrier improvement (or a tie at a perfect baseline) without family loss, and preserved bare expressions. These development gates do not establish real-user accuracy. See `MODEL_CARD.md` for metrics and remaining tradeoffs.
+A warm-started run forgets. Fine-tuning the promoted checkpoint on a new family
+learned that family and broke eleven unrelated cases, a failure known as a
+**negative flip**: a case the reference model answered correctly and the update
+does not. `train.py --distill <reference>` applies focal distillation from
+[Positive-Congruent Training](https://arxiv.org/abs/2011.09161) (Yan et al.,
+CVPR 2021), matching the reference's emissions and weighting the tokens it
+already gets right:
+
+```
+loss = crf_nll + lambda * mean over tokens of
+       (alpha + beta * [reference predicts the gold label]) * 0.5 * ||logits_new - logits_reference||^2
+```
+
+The paper's FD-LM variant matches logits directly and reports alpha=1, beta=5,
+lambda=1. The promoted model uses `--distill-alpha 0 --distill-beta 5
+--distill-lambda 0.1`: alpha=0 constrains only what the reference already
+answers correctly and leaves everything else free to change, which is what lets
+a new family be learned at all. At alpha=1, lambda=1 the update matched the
+reference exactly and learned nothing. Checkpoint averaging was measured as the
+alternative and was worse in both directions: it either diluted the new family
+away or regressed reserved carriers.
+
+Every run snapshots its sources and hashes. Export records lineage in `active/export-report.json` and `active/provenance.json`; `pnpm model:audit` checks it when the local checkpoints and history are available. A clean clone can check inference parity from committed fixtures, but cannot reproduce the full checkpoint audit. The promoted checkpoint records its reference checkpoint and distillation settings; earlier promotions on this line were weighted averages and record both parent hashes and coefficients, counting shared ancestors once. Evaluation uses Viterbi, including quantized transitions. Export requires no gold set or family regression through the built package, reserved-carrier improvement (or a tie at a perfect baseline) without family loss, and preserved bare expressions. These development gates do not establish real-user accuracy. See `MODEL_CARD.md` for metrics and remaining tradeoffs.
 
 ## Performance boundaries
 
