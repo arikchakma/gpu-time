@@ -1,10 +1,15 @@
 {
-  "model": "c69ab6c9be8ec854790c004b5d540dc6a41bececbacdbf34a4725de6b711d6d5",
+  "model": "ffa45c508b7e6f61e8518cd845b69a51e442206f091591e34ec0b7c7a26ecfd5",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
     {
-      "checkpoint": "runs/spoken2/best.pt",
+      "checkpoint": "runs/noun-inside/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/spoken2/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },

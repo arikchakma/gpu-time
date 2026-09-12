@@ -70,3 +70,4 @@
 {"id":"prose-024-authored","family":"prose-negative","variant":"authored","text":"Our clinic is open for questions.","schedule":null}
 {"id":"prose-024-lowercase","family":"prose-negative","variant":"lowercase","text":"our clinic is open for questions.","schedule":null}
 {"id":"prose-024-uppercase","family":"prose-negative","variant":"uppercase","text":"OUR CLINIC IS OPEN FOR QUESTIONS.","schedule":null}
+{"id":"prose-noun-inside","family":"prose-carrier","variant":"authored","text":"every monday report at 7pm","schedule":{"clauses":[{"recurrence":{"freq":"weekly","interval":1,"byDay":["MO"]},"time":{"start":{"hour":19,"minute":0}}}]}}
