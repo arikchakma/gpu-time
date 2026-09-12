@@ -1,10 +1,15 @@
 {
-  "model": "b1dfa50dc6fa5cca7f710b06bf64e48af0ec138852d5ddf0fb093e76d9e9018e",
+  "model": "a91218532329ee47300260b9709b636ef99a4cdf51857f0ce4f739762433ee0d",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
     {
-      "checkpoint": "runs/step5-keepo-crf3/best.pt",
+      "checkpoint": "runs/step7-crf2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "/Users/arikko/Developer/vibecode/gpu-time/packages/training/runs/step5-keepo-crf3/best.pt",
       "checkpointHashMatches": true,
       "matchingSourceFiles": 10
     },

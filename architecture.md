@@ -23,7 +23,7 @@ The promoted model has 34,553 parameters, int6 weights, and f32 intermediates. 1
 1. Sparse token features are summed into one learned vector per token.
 2. Learned affine state updates scan the sequence in both directions, giving every token context within its input window. The browser kernel evaluates these scans in parallel blocks and carries exact block prefixes, so block boundaries do not reset context.
 3. A classifier produces 40 output slots: 35 named semantic roles plus 5 reserved. The roles cover clock hours and minutes, meridiem, weekday, month, ordinal, year, quantity and unit, recurrence markers, range separators, bounds, exceptions, and filler. A `CLOCK_OFFSET` role distinguishes half and quarter clock arithmetic.
-4. A boundary score per token cuts the sequence into independent expressions at threshold 1.25, so one input can yield several schedules.
+4. A boundary score per token cuts the sequence into independent expressions at threshold 0.0, so one input can yield several schedules.
 
 Timezone has no role in the model. TypeScript computes timezone arithmetic after the model runs.
 
@@ -39,7 +39,7 @@ The resolver then turns a schedule into instants. Calendar days and weeks preser
 
 ## Model representation
 
-The training exporter writes 6-bit symmetric per-tensor weights to `packages/core/src/model/weights.gen.ts`. Its SHA-256 hash must match `packages/training/active/export-report.json`. The active report records 25,915 logical packed bytes and 19,089 Brotli bytes for the weight module. The full package must pass the 50,000-byte Brotli release limit.
+The training exporter writes 6-bit symmetric per-tensor weights to `packages/core/src/model/weights.gen.ts`. Its SHA-256 hash must match `packages/training/active/export-report.json`. The active report records 25,915 logical packed bytes and 19,051 Brotli bytes for the weight module. The full package must pass the 50,000-byte Brotli release limit.
 
 The WGSL kernel in `src/model/kernel.wgsl` is specialized at build time: `src/model/shader-source.ts` splices model constants into it, `wgslender` minifies the result, and the build inlines the minified shader and the trimmed weight table directly into the JavaScript bundle. The `.wgsl` file never ships. For f16 storage the build emits two shader variants, with and without native half support.
 
