@@ -34,7 +34,15 @@ for (const ancestor of report.lineage) {
   const training = JSON.parse(
     await readFile(new URL(`${directory}/report.json`, root), "utf8"),
   );
+  const skipped = [];
   for (const [source, expected] of Object.entries(training.sourceHashes)) {
+    // Some older runs recorded dataset inputs alongside source. They were never
+    // snapshotted and the corpora have since moved on, so there is nothing to
+    // verify: report the recorded hash and move on.
+    if (source.startsWith("data/")) {
+      skipped.push({ source, recordedSha256: expected });
+      continue;
+    }
     const snapshot = await readFile(
       new URL(`${directory}/source/${source}`, root),
     );
@@ -44,7 +52,9 @@ for (const ancestor of report.lineage) {
   results.push({
     checkpoint: ancestor.checkpoint,
     checkpointHashMatches: true,
-    matchingSourceFiles: Object.keys(training.sourceHashes).length,
+    matchingSourceFiles:
+      Object.keys(training.sourceHashes).length - skipped.length,
+    ...(skipped.length > 0 && { skippedDatasetInputs: skipped }),
   });
 }
 await writeFile(

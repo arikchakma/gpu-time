@@ -12,20 +12,22 @@ The package keeps its WebGPU device, pipelines, weights, and grow-only buffers r
 
 ## Source preparation
 
-One CPU scan splits the input into tokens and emits a sparse feature row per token. Each row records character shape, casing, digit and punctuation class, length bucket, lexicon membership for the closed vocabulary of time words, and hashes of neighboring tokens. There are 324 embedding rows in the feature table.
+One CPU scan splits the input into tokens and emits a sparse feature row per token. Each row records character shape, casing, digit and punctuation class, length bucket, lexicon membership for the closed vocabulary of time words, and hashes of neighboring tokens. There are 580 embedding rows in the feature table, including a 128-bucket hash of each token's consonant skeleton.
 
 The tokenizer uses regular expressions and an English lexicon. The compiler and calendar resolver also run on the CPU.
 
 ## Learned context
 
-The promoted model has 24,761 parameters, int6 weights, and f32 intermediates.
+The promoted model has 32,953 parameters, int6 weights, and f32 intermediates.
 
 1. Sparse token features are summed into one learned vector per token.
 2. Learned affine state updates scan the sequence in both directions, giving every token context within its input window. The browser kernel evaluates these scans in parallel blocks and carries exact block prefixes, so block boundaries do not reset context.
 3. A classifier produces 40 output slots: 35 named semantic roles plus 5 reserved. The roles cover clock hours and minutes, meridiem, weekday, month, ordinal, year, quantity and unit, recurrence markers, range separators, bounds, exceptions, and filler. A `CLOCK_OFFSET` role distinguishes half and quarter clock arithmetic.
-4. A boundary score per token cuts the sequence into independent expressions at threshold 1.75, so one input can yield several schedules.
+4. A boundary score per token cuts the sequence into independent expressions at threshold 0.0, so one input can yield several schedules.
 
 Timezone has no role in the model. TypeScript computes timezone arithmetic after the model runs.
+
+Two architecture options are available but off in the promoted model, each recorded in the weights header and in `active/export-report.json` under `options`. `train.py --layers 2` adds a second scan block over the first one's output, with the same residual; the kernel loops over the layer count spliced in by `shader-source.ts`. `train.py --transitions` adds a 40x40 role transition matrix, trains the roles as a linear-chain CRF instead of per-token cross-entropy, and decodes them by Viterbi over the non-whitespace tokens. Viterbi runs on the CPU for both backends: the GPU path reads its emissions back and decodes them with the same function, so the two backends cannot diverge in the decode. Per-token confidence under Viterbi is the softmax of the emission at the chosen label, not the runner-up margin the argmax path reports.
 
 ## Compilation and resolution
 
@@ -37,7 +39,7 @@ The resolver then turns a schedule into instants. Calendar days and weeks preser
 
 ## Model representation
 
-The training exporter writes 6-bit symmetric per-tensor weights to `packages/core/src/model/weights.gen.ts`. Its SHA-256 hash must match `packages/training/active/export-report.json`. The active report records 18,571 logical packed bytes and 13,888 Brotli bytes for the weight module. The full package must pass the 50,000-byte Brotli release limit.
+The training exporter writes 6-bit symmetric per-tensor weights to `packages/core/src/model/weights.gen.ts`. Its SHA-256 hash must match `packages/training/active/export-report.json`. The active report records 24,715 logical packed bytes and 17,854 Brotli bytes for the weight module. The full package must pass the 50,000-byte Brotli release limit.
 
 The WGSL kernel in `src/model/kernel.wgsl` is specialized at build time: `src/model/shader-source.ts` splices model constants into it, `wgslender` minifies the result, and the build inlines the minified shader and the trimmed weight table directly into the JavaScript bundle. The `.wgsl` file never ships. For f16 storage the build emits two shader variants, with and without native half support.
 
