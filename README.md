@@ -43,13 +43,13 @@ Generated training data, downloaded corpora, training runs, and local virtual en
 
 ```sh
 pnpm gen
-pnpm train -- --run experiment --storage f32 --feature-rows 324 --init runs/spoken2/best.pt --batch 1024
+pnpm train --run experiment --storage f32 --feature-rows 324 --init runs/spoken2/best.pt --batch 1024
 ```
 
 Runs are written under `packages/training/runs/`. Export a checkpoint to regenerate the shipped weights, then rebuild and evaluate:
 
 ```sh
-pnpm --filter @gpu-time/training export -- --checkpoint runs/experiment/best.pt
+pnpm --filter @gpu-time/training export --checkpoint runs/experiment/best.pt
 pnpm build:core
 pnpm evaluate
 ```
