@@ -545,6 +545,13 @@ function compileDateAndTime(
       case Role.DAYPART: {
         const part = Object.hasOwn(dayParts, word) ? dayParts[word] : undefined;
         if (!part) fail(token, "unsupported", "Unknown day part.");
+        // "last night" names a day. Without this the modifier is dropped and
+        // the day part lands on today. A weekday already consumed it.
+        if (modifier && clause.date === undefined)
+          clause.date = {
+            kind: "relativeDay",
+            offset: modifier === "last" ? -1 : modifier === "next" ? 1 : 0,
+          };
         if (dayPartClock) {
           if ("part" in dayPartClock.value && dayPartClock.value.part === part)
             break;

@@ -17183,9 +17183,9 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T21:00:00+00:00",
+          "start": "2016-11-06T21:00:00+00:00",
           "allDay": false,
-          "end": "2016-11-08T00:00:00+00:00"
+          "end": "2016-11-07T00:00:00+00:00"
         }
       ],
       "correct": false,
@@ -17193,22 +17193,14 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T21:00:00+00:00",
+            "start": "2016-11-06T21:00:00+00:00",
             "allDay": false,
-            "end": "2016-11-08T00:00:00+00:00"
+            "end": "2016-11-07T00:00:00+00:00"
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "dropped-constraint",
-            "message": "A date modifier was ignored because the expression names no date.",
-            "start": 13,
-            "end": 17,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
