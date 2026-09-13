@@ -1,7 +1,4 @@
-// Repair the spans where our tagger drops a leading modifier. The second parser
-// gives the true span, our tagger labels the rest, and the modifier is forced to
-// DEICTIC. A row is kept only if compiling those labels reproduces the stated
-// fields, so a wrong guess cannot enter the corpus.
+// Repairs spans where our tagger drops a leading modifier such as "last".
 process.env.TZ = "UTC";
 import { readFile, writeFile } from "node:fs/promises";
 import { join, resolve as resolvePath } from "node:path";
@@ -73,7 +70,7 @@ for (const [index, row] of rows.entries()) {
     continue;
   }
 
-  // Label the phrase with our own tagger, then overwrite the modifier.
+  // Tags the phrase, then forces the modifier our tagger missed.
   const alone = await parser.parse(phrase);
   const tagged: Token[] = alone.tokens;
   const taggedWords = tagged.filter((token) => token.kind !== 3);
@@ -109,7 +106,7 @@ for (const [index, row] of rows.entries()) {
     continue;
   }
 
-  // The corrected labels must reproduce what the sentence actually states.
+  // Rejects a guess that does not reproduce what the sentence states.
   let matches = false;
   try {
     const occurrence = resolve(schedule, {

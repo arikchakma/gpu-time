@@ -1,6 +1,5 @@
-// Recover the sentences the tagger goes silent on. The second parser gives the
-// span; our own tagger gives the roles, read off the phrase alone where it is
-// reliable. Both must agree on the phrase before the labels are transplanted.
+// Recovers sentences the tagger goes silent on, using the second parser for the
+// span and our own tagger for the roles.
 process.env.TZ = "UTC";
 import { readFile, writeFile } from "node:fs/promises";
 import { join, resolve as resolvePath } from "node:path";
@@ -54,8 +53,8 @@ const agrees = async (phrase: string, known: Record<string, number>) => {
 
 type Token = { start: number; end: number; text: string; label: string };
 
-// A span of "morning" inside "every morning" would teach the model that
-// "every" is filler and cost us recurrence. Drop the row instead.
+// A span of "morning" inside "every morning" would label "every" as filler and
+// cost us recurrence.
 const MODIFIER = /(?:^|\W)(every|each|last|next|this|coming|past)\W*$/i;
 
 const rows = (await readFile(join(directory, "disputed.jsonl"), "utf8"))

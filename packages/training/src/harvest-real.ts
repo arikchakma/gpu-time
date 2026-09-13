@@ -1,5 +1,4 @@
-// Label real sentences where two independent parsers agree. A row is kept only
-// when both find the same expression and every stated field matches.
+// Labels real sentences that two independent parsers agree on.
 process.env.TZ = "UTC";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname, join, resolve as resolvePath } from "node:path";
@@ -22,11 +21,11 @@ const outDirectory = resolvePath(
   argument("--out") ?? join(training, "data/real"),
 );
 const limit = Number(argument("--limit") ?? 100000);
-// Tatoeba carries no timestamps, so every sentence is read against one clock.
+// The corpus has no timestamps, so one reference clock is used throughout.
 const referenceIso = argument("--reference") ?? "2026-09-12T12:00:00Z";
 const reference = new Date(referenceIso);
 
-// schedule.js tags without a timezone; index.js resolves to a real instant.
+// schedule.js tags without a timezone; index.js resolves to an instant.
 const { defineParser } = await import(
   new URL("../../core/dist/schedule.js", import.meta.url).href
 );
@@ -36,8 +35,8 @@ const { defineParser: defineResolver } = await import(
 const parser = await defineParser({ backend: "cpu", tokens: true });
 const resolver = await defineResolver({ backend: "cpu" });
 
-// One side keeps the preposition and the ordinal suffix; ours labels them
-// separately. That is a convention difference, not a disagreement.
+// Normalizes away preposition and ordinal-suffix conventions, which differ
+// between the parsers without disagreeing on meaning.
 const LEADING = /^(?:on|at|in|by|from|until|till|before|after|during)\s+/i;
 const shape = (span: string) =>
   span.replace(LEADING, "").replace(/(\d)(?:st|nd|rd|th)\b/gi, "$1").toLowerCase();
@@ -61,8 +60,7 @@ const resolveOurs = async (text: string) => {
   }
 };
 
-// A sentence states some fields and leaves the rest implied. Only the stated
-// fields are a real claim, so only those are compared.
+// Compares only the fields the sentence states; the rest are implied defaults.
 const FIELDS = ["year", "month", "day", "hour", "minute"] as const;
 const read = (date: Date) => ({
   year: date.getUTCFullYear(),
@@ -107,8 +105,7 @@ for (const [index, text] of sentences.entries()) {
 
   if (theirs.length === 0) {
     tally.chronoSilent++;
-    // Neither parser sees a time, so the time-shaped words here are not times.
-    // These are the real negatives the generated corpus cannot invent.
+    // Neither parser sees a time, so these time-shaped words are not times.
     if (expressions.length === 0) {
       tally.negatives++;
       negatives.push({

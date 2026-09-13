@@ -1,6 +1,7 @@
-// Split the labelled real sentences into a training mix and a holdout, and drop
-// anything that is already a gold test sentence. The chat gold set was drawn
-// from the same public corpus, so without this the benchmark trains on itself.
+// Splits labelled real sentences into a training mix and a holdout.
+//
+// Gold texts are dropped: the chat gold set came from the same public corpus, so
+// keeping them would train the model on its own benchmark.
 import { readFile, writeFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { join, resolve as resolvePath } from "node:path";
@@ -18,16 +19,14 @@ const argument = (name: string) => {
 const directory = resolvePath(argument("--dir") ?? join(training, "data/real"));
 const goldDirectory = join(training, "data/gold");
 const holdoutShare = Number(argument("--holdout") ?? 10);
-// One repaired phrase is most of corrected.jsonl. Cap it in the training mix so
-// it cannot swamp the rest. The holdout is never capped, so scores stay comparable.
+// Caps how often one repaired phrase may appear in the training mix. The holdout
+// is never capped, so scores stay comparable across runs.
 const cap = Number(argument("--cap") ?? 800);
 
 const normal = (text: string) => text.trim().replace(/\s+/g, " ").toLowerCase();
 
-// The second parser cannot see recurrence, so a sentence whose expression sits
-// elsewhere leaves "every day" outside the span and labelled O. Training on that
-// teaches the model to ignore recurrence, which is the one thing it owns. Reject
-// any row that calls a word with an unavoidable time meaning filler.
+// Rejects rows that label an unambiguous time word as filler. The second parser
+// cannot see recurrence, so "every day" outside its span arrives labelled O.
 const STRONG =
   /^(every|each|daily|weekly|monthly|yearly|hourly|nightly|annually|tonight|tonite|tomorrow|yesterday|today|noon|midnight|midday|o'clock|oclock)$/i;
 const callsTimeFiller = (row: Row) =>
@@ -63,7 +62,7 @@ for (const source of ["agreed", "rescued", "corrected"]) {
     rows.push({ ...JSON.parse(line), source } as Row);
 }
 
-// Hash the sentence so a re-harvest keeps the same rows on the same side.
+// Hashes the sentence so a re-harvest keeps rows on the same side.
 const bucket = (text: string) =>
   parseInt(createHash("sha256").update(text).digest("hex").slice(0, 8), 16) %
   holdoutShare;
