@@ -82,6 +82,11 @@ for (const source of SOURCES) {
     rows.push({ ...JSON.parse(line), source } as Row);
 }
 
+// A sentence the duration rule claims must not also appear labelled as a time.
+const durations = new Set(
+  rows.filter((row) => row.source === "duration").map((row) => row.text),
+);
+
 let frozen = new Set<string>();
 try {
   const raw = await readFile(join(directory, "real-holdout.jsonl"), "utf8");
@@ -103,6 +108,7 @@ const seen = new Map<string, number>();
 let dropped = 0;
 let capped = 0;
 let mislabelled = 0;
+let contradictory = 0;
 for (const row of rows) {
   if (gold.has(normal(row.text))) {
     dropped++;
@@ -114,6 +120,10 @@ for (const row of rows) {
   }
   if (callsTimeFiller(row)) {
     mislabelled++;
+    continue;
+  }
+  if (row.source !== "duration" && durations.has(row.text)) {
+    contradictory++;
     continue;
   }
   if (row.source === "corrected") {
@@ -151,6 +161,7 @@ console.log(
       read: rows.length,
       droppedAsGold: dropped,
       droppedAsMislabelled: mislabelled,
+      droppedAsContradictory: contradictory,
       cappedByPhrase: capped,
       recased: recased.length,
       train: train.length + recased.length,

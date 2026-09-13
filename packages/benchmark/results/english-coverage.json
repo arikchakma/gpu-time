@@ -1,18 +1,18 @@
 {
-  "model": "f2f9fdd3de300314fe3c575a85a3fad4dc1f7fa6980aa1a7f5023b6bdbaedb2c",
-  "runtimeSha256": "d8416baa1776ce2011044699105da1138d6d933508a09a04bfaa628a64283424",
+  "model": "2df3dff392a78565b925ec131efedd9bbf2b074ff75ec169695c65656a4f00b6",
+  "runtimeSha256": "e3b6a076799f7aec63b8b82f213f0db099e9548d76577c945e2e8a82ce501dd5",
   "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
   "total": 71,
-  "correct": 70,
-  "accuracy": 0.9859154929577465,
+  "correct": 71,
+  "accuracy": 1,
   "families": {
     "calendar-edge-shift": {
       "correct": 3,
       "total": 3
     },
     "clock-with-place": {
-      "correct": 14,
+      "correct": 15,
       "total": 15
     },
     "compact-named-date": {
@@ -749,7 +749,15 @@
           "end": "2026-09-13T02:00:00+06:00"
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 21,
+          "end": 25,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -1705,17 +1713,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"drinks at 9 at the bar\".",
-          "start": 0,
-          "end": 22
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 10,
+          "end": 11,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-067",

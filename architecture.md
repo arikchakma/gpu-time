@@ -100,6 +100,32 @@ comparison found a sequence-level term must be mixed with the token loss rather
 than replacing it, and the gold-versus-best-incorrect formulation of
 [Suzuki et al., COLING-ACL 2006](https://aclanthology.org/P06-1028/).
 
+## Real English
+
+The generator writes both the sentences and their labels, so the model could only
+ever learn the generator. `pnpm --filter @gpu-time/training harvest` adds text
+written by people, labelled by whichever teacher can actually judge it:
+
+| Source | Teacher | Rows |
+| --- | --- | --- |
+| `agreed` | chrono-node and our tagger agree on span and every stated field | 54,0k |
+| `negatives` | both parsers silent, so the time-shaped words are not times | 7,9k |
+| `recurrence` | our tagger alone; chrono has no recurrence support | 6,4k |
+| `rescued` | chrono's span, our roles, for sentences we went silent on | 3,0k |
+| `possessive` | our tagger on the bare word behind `'s` | 1,2k |
+| `corrected` | chrono's span with the dropped modifier forced to `DEICTIC` | 1,0k |
+| `duration` | three language judgements distilled into one rule | 0,7k |
+
+Every row outside `agreed` is verified by compiling its labels and checking the
+result against what the sentence states, so a wrong guess cannot enter the corpus.
+Three filters protect the corpus: gold texts are dropped, a row may never label an
+unambiguous time word as filler, and a sentence the duration rule claims may not
+also appear labelled as a time.
+
+`train.py --real <file>` appends these rows to every training epoch. Evaluation
+splits are drawn first and excluded from training, which closed a 13.9% overlap
+between validation and training.
+
 Every run snapshots its sources and hashes. Export records lineage in `active/export-report.json` and `active/provenance.json`; `pnpm model:audit` checks it when the local checkpoints and history are available. A clean clone can check inference parity from committed fixtures, but cannot reproduce the full checkpoint audit. The promoted checkpoint records its reference checkpoint and distillation settings; earlier promotions on this line were weighted averages and record both parent hashes and coefficients, counting shared ancestors once. Evaluation uses Viterbi, including quantized transitions. Export requires no gold set or family regression through the built package, reserved-carrier improvement (or a tie at a perfect baseline) without family loss, and preserved bare expressions. These development gates do not establish real-user accuracy. See `MODEL_CARD.md` for metrics and remaining tradeoffs.
 
 ## Performance boundaries
