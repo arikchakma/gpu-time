@@ -25,6 +25,10 @@ const holdoutShare = Number(argument("--holdout") ?? 10);
 const cap = Number(argument("--cap") ?? 800);
 // Real text is nearly all lower case, so a share of rows is recased.
 const recase = Number(argument("--recase") ?? 25);
+// One word can dominate a source: 69% of the harvested negatives say "may", which
+// taught the tagger to ignore it even in "every may". Caps rows per trigger word.
+// Measured at 2,000: it did not fix "every may" and cost 5 gold cases, so off.
+const perWord = Number(argument("--per-word") ?? 100000);
 // Repeats small sources up to this floor. Measured at 2,200 and 4,000: both cost
 // more on the gold sets than they returned, so it is off by default.
 const floor = Number(argument("--floor") ?? 0);
@@ -131,6 +135,19 @@ for (const row of rows) {
   if (row.source !== "duration" && durations.has(row.text)) {
     contradictory++;
     continue;
+  }
+  if (row.source === "negatives") {
+    const word = /\b(may|march|august|day|year|minute|hour|week|month)\b/i.exec(
+      row.text,
+    )?.[1]?.toLowerCase();
+    if (word) {
+      const count = (seen.get(`w:${word}`) ?? 0) + 1;
+      seen.set(`w:${word}`, count);
+      if (count > perWord) {
+        capped++;
+        continue;
+      }
+    }
   }
   if (row.source === "corrected") {
     const key = phrase(row);
