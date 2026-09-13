@@ -386,7 +386,17 @@ function compileDateAndTime(
 
   for (let index = 0; index < tokens.length; index++) {
     const token = tokens[index];
-    const word = token.text.toLowerCase();
+    // "today's meeting" tokenizes as one word. Only a date role drops the
+    // possessive, so a holiday such as "Valentine's Day" keeps it.
+    const possessive = [
+      Role.REL_DAY,
+      Role.WEEKDAY,
+      Role.DAYPART,
+      Role.MONTH,
+    ].includes(token.label);
+    const word = possessive
+      ? token.text.toLowerCase().replace(/['\u2019]s$/, "")
+      : token.text.toLowerCase();
 
     switch (token.label) {
       case Role.O:
@@ -545,6 +555,13 @@ function compileDateAndTime(
       case Role.DAYPART: {
         const part = Object.hasOwn(dayParts, word) ? dayParts[word] : undefined;
         if (!part) fail(token, "unsupported", "Unknown day part.");
+        // "last night" names a day. Without this the modifier is dropped and
+        // the day part lands on today. A weekday already consumed it.
+        if (modifier && clause.date === undefined)
+          clause.date = {
+            kind: "relativeDay",
+            offset: modifier === "last" ? -1 : modifier === "next" ? 1 : 0,
+          };
         if (dayPartClock) {
           if ("part" in dayPartClock.value && dayPartClock.value.part === part)
             break;
@@ -965,9 +982,14 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
   if (
     input.some((token) => token.label === Role.RECUR) &&
     !input.some((token) =>
-      [Role.UNIT, Role.FREQ, Role.WEEKDAY, Role.DAYGROUP, Role.MONTH].includes(
-        token.label,
-      ),
+      [
+        Role.UNIT,
+        Role.FREQ,
+        Role.WEEKDAY,
+        Role.DAYGROUP,
+        Role.MONTH,
+        Role.DAYPART,
+      ].includes(token.label),
     )
   )
     fail(
@@ -993,11 +1015,34 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
   const pluralDayGroup = selectors.some(
     (token) => token.label === Role.DAYGROUP && /s$/i.test(token.text),
   );
+  // The weekly default belongs to a weekday. "every morning" repeats once a day
+  // and "every May" once a year, so a lone day part or month sets its own period.
+  const alone = (label: Role) =>
+    selectors.some((token) => token.label === label) &&
+    !selectors.some(
+      (token) =>
+        token.label !== label &&
+        [
+          Role.UNIT,
+          Role.FREQ,
+          Role.WEEKDAY,
+          Role.DAYGROUP,
+          Role.MONTH,
+          Role.DAYPART,
+        ].includes(token.label),
+    );
+  const period = implicitOrdinal
+    ? "monthly"
+    : alone(Role.MONTH)
+      ? "yearly"
+      : alone(Role.DAYPART)
+        ? "daily"
+        : "weekly";
   let recurrence: Recurrence | undefined =
     selectors.some((token) => token.label === Role.RECUR) ||
     implicitOrdinal ||
     (pluralDayGroup && !selectors.some((token) => token.label === Role.DEICTIC))
-      ? { freq: implicitOrdinal ? "monthly" : "weekly", interval: 1 }
+      ? { freq: period, interval: 1 }
       : undefined;
   let duration: Duration | undefined;
   let startingDate: DateSpec | undefined;

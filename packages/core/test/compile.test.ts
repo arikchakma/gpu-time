@@ -960,7 +960,7 @@ it("reads a quantity before from as a shifted anchor, not a span", () => {
   });
 });
 
-it("keeps a clock stated inside a bound and reports a modifier it cannot place", () => {
+it("keeps a clock stated inside a bound and anchors a modified day part", () => {
   const bounded = "every monday until friday at 5pm";
   expect(
     compile(
@@ -990,12 +990,37 @@ it("keeps a clock stated inside a bound and reports a modifier it cannot place",
   });
 
   const deictic = "this afternoon";
+  const modified = compile(deictic, oracle(deictic, ["DEICTIC", "DAYPART"]))[0];
+  expect(modified.schedule).toEqual({
+    clauses: [
+      {
+        date: { kind: "relativeDay", offset: 0 },
+        time: { start: { part: "afternoon" } },
+      },
+    ],
+  });
+  expect(modified.diagnostics).toEqual([]);
+});
+
+it("dates a day part from the modifier in front of it", () => {
+  const cases: [string, number][] = [
+    ["last night", -1],
+    ["this morning", 0],
+    ["next morning", 1],
+  ];
+  for (const [text, offset] of cases) {
+    expect(
+      compile(text, oracle(text, ["DEICTIC", "DAYPART"]))[0].schedule
+        ?.clauses[0]?.date,
+    ).toEqual({ kind: "relativeDay", offset });
+  }
+
+  // A weekday already consumed the modifier, so the day part must not reuse it.
+  const weekday = "last monday night";
   expect(
-    compile(
-      deictic,
-      oracle(deictic, ["DEICTIC", "DAYPART"]),
-    )[0].diagnostics.map((value) => value.code),
-  ).toContain("dropped-constraint");
+    compile(weekday, oracle(weekday, ["DEICTIC", "WEEKDAY", "DAYPART"]))[0]
+      .schedule?.clauses[0]?.date,
+  ).toEqual({ kind: "weekday", days: ["MO"], modifier: "last" });
 });
 
 it("reads the widened unit, frequency, day-group, and clock spellings", () => {

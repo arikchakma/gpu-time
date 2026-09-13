@@ -1,7 +1,5 @@
 {
   "note": "Cases the shipped model gets wrong, kept red on purpose. --require-all fails if a listed id starts passing, so a fix forces the id off this list. Never add an id to silence a new regression; add it only with the cause recorded in MODEL_CARD.md.",
-  "cause": "A bare hour followed by a place returned nothing: the model learned that 'at <X>' must be followed by a time. Twelve of the thirteen are fixed by sequence-level ranking training, which promotes the correct reading where it was already the model's second choice. 'drinks at 9 at the bar' still fails; the correct reading sits second by 5.3 points, the widest gap in the family. See MODEL_CARD.md.",
-  "ids": [
-    "english-066"
-  ]
+  "cause": "Empty. 'drinks at 9 at the bar' was the last entry: the correct reading sat second by 5.3 points until the model was trained on real English sentences that place a time before a location. See MODEL_CARD.md.",
+  "ids": []
 }

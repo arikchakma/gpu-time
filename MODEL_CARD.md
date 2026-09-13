@@ -2,11 +2,11 @@
 
 ## Model
 
-The package embeds `ad-f001`, with artifact SHA-256 `95647e7e0a3c4c3f998281a6de389d26908b12e042913f1dacb477a04dcabff2`. It fine-tunes `english-coverage-layer2-negative-blend-075` under focal distillation against that same checkpoint, so the update learns new forms without flipping cases the reference already answers correctly.
+The package embeds `lessgen2`, with artifact SHA-256 `27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3`. It fine-tunes `risk-w0.005` under focal distillation against that same checkpoint, so the update learns new forms without flipping cases the reference already answers correctly. Its lineage runs back through `ad-f001` and `english-coverage-layer2-negative-blend-075`; `audit:model` verifies the chain.
 
-The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,191 Brotli bytes for the weights and 912,393,193 training tokens. The published package is 44,730 Brotli bytes, below the 50,000-byte limit.
+The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,519 Brotli bytes for the weights. The published package is 44,682 Brotli bytes, below the 50,000-byte limit.
 
-The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 0.0, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
+The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 1.0, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
 
 Timezone is not a model role. TypeScript handles calendar arithmetic, daylight saving time, the reference instant, and expansion limits after the model runs.
 
@@ -18,7 +18,11 @@ It is not suitable for parsing documents, extracting dates from long prose, lega
 
 ## Training data
 
-Supervision is entirely generated. `packages/training/torch/generate.py` renders schedules, and `natural.py` adds natural-phrasing families, including negative prose containing no time expression. Labels come from the generator's structure, never from the runtime parser, so the model is not trained on its own predictions.
+Training data comes from three sources. `generate.py` and `natural.py` write schedules and natural phrasing, and the generator supplies the labels. Tatoeba supplies real English, and a sentence enters only when two parsers agree. `data/teacher/teacher.jsonl` holds 1,004 written sentences. A language model proposes those labels and the compiler accepts them.
+
+The third source covers what agreement cannot reach. chrono-node cannot read recurrence, so `every <month>` had no correct label anywhere in the training data.
+
+The shipped model uses 60,000 generated rows. The default is 300,000.
 
 The earlier `balanced-prose` model followed `step7-crf2` through `carrier-consistent`, `contrast-coverage`, and `prose-coverage`. The current model warm-starts from that lineage and adds a second scan layer. Training adds prose months, compact dates, clock-qualified dayparts, shifts, idioms, and mixed temporal/non-temporal contexts. Imperative carriers and trailing actions remain `O`; only the time expression receives temporal roles. A targeted correction adds ordinal rankings, street addresses, and place-name contrasts. The final 75% correction average passed every existing export gate without `--force`. These fixtures guide development and are not an untouched test set.
 
@@ -40,8 +44,10 @@ Carrier prepositions now consistently receive the background label `O`; `for` in
 
 The saved reports cover different model versions. Each result below describes its recorded run.
 
+- **Real English: 5791/6011 exact schedules, up from 5399/6011.** The holdout is 6,011 labelled sentences drawn from a public corpus and never shown to training; gold texts are excluded so the benchmark cannot train on itself. This is the only set here written by people rather than by the generator.
+
 - **Historical unseen carriers: 993/1000 for `terse-f32`.** This measured exact schedule structures, not token labels. Current reports identify their model artifact and frozen source corpus explicitly.
-- **Microsoft Recognizers development agreement: 226/563 (40.1%), up from 220/563.** `DateParser` sits at 70 against a committed floor of 71. One case out of 113 is inside the measured seed spread, so the floor reports it as a warning; the overall count rose by six and five of the six families held or improved. Its 134-case test split remains unused. Policy differences still count as failures.
+- **Microsoft Recognizers development agreement: 229/563 (40.7%), up from 226/563.** `DateParser` sits at 70 against a committed floor of 71. One case out of 113 is inside the measured seed spread, so the floor reports it as a warning; the overall count rose by six and five of the six families held or improved. Its 134-case test split remains unused. Policy differences still count as failures.
 
   This comparison includes interpretation-policy differences. `pnpm test:recognizers` now holds every family at a committed floor, so a silent drop fails the build. The weakest family is `DatePeriodParser`, at 18/190, recovered from 16/190.
 
@@ -49,15 +55,15 @@ The saved reports cover different model versions. Each result below describes it
 
   Two earlier training attempts were rejected and are worth recording. Checkpoint averaging either diluted the correction away or dropped the reserved-carrier set from 1000/1000 to 991/1000. Plain fine-tuning recovered more cases but cost eleven others, including `DateParser` 71 to 69. Focal distillation ([Yan et al., CVPR 2021](https://arxiv.org/abs/2011.09161)), at `--distill-alpha 0 --distill-beta 5 --distill-lambda 0.1`, keeps every family at or above its previous score and passes the unchanged promotion gate. `architecture.md` records the loss.
 
-- **Authored English coverage: 70/71, up from 58/71.** The 71 independent cases cover 13 families and include both user-reported examples. `pnpm test:english` runs these cases through the built package and is part of `pnpm test`.
+- **Authored English coverage: 71/71, up from 70/71.** The gaps file is empty for the first time; `drinks at 9 at the bar` was its last entry. The 71 independent cases cover 13 families and include both user-reported examples. `pnpm test:english` runs these cases through the built package and is part of `pnpm test`.
 
   **Recovered regression: a bare hour followed by a place.** `Dinner at 8 at Nobu` returned nothing. In the previous corpus, `at <NUM>` followed by `at`, `in`, `near` or `by` was followed by a time of day in 2,231 of 2,244 cases, so the model learned that the preposition announces a daypart and discarded the hour when a venue arrived instead. The correct reading was never far away: measured over the shipped model's top sixteen paths, it ranked **second in twelve of the thirteen failing cases**, losing by a median of 2.889 points against the 3.475 the CRF charges for an isolated `HOUR`.
 
   Rebalancing the corpus did not fix it. Moving the daypart share from 99.4% to 11.3% traded the family for `qualified-clock`; moving it to 65% brought the original bug back. Cold starts fixed all thirteen and cost four pooled cases and twenty-eight reserved schedules. Weight interpolation across basins destroyed the model outright.
 
   What worked is training on whole sequences. `train.py --risk-lambda` adds a term that fires only where the decoder's best path is wrong, pushing the gold path above it by a margin; sequences already decoded correctly contribute nothing. The promoted run uses `--risk-lambda 0.005 --risk-margin 4`. `architecture.md` records the loss. `drinks at 9 at the bar` still fails and stays listed in `english-coverage.gaps.json`; its correct reading sits second by 5.393 points, the widest gap in the family.
-- **Hand-authored chat gold: 281/330, up from 278/330.** Pooled across the five gold sets the promotion records 573/623 against 570/623. The promotion comparison uses the same compiler for both models. `chat-relative` lost one case and is recorded as a warning rather than a failure; see the gate note below.
-- **Non-temporal negatives: 191/192, up from 187/192.** Four existing failures recover without new negative failures. Only `negative-096` remains under `it.fails` in `packages/core/test/grammar-model.test.ts`.
+- **Hand-authored chat gold: 287/330, up from 284/330.** Pooled across the eight gold sets the promotion records 1034/1043 against 1031/1043. The promotion comparison uses the same compiler for both models. `chat-relative` lost one case and is recorded as a warning rather than a failure; see the gate note below.
+- **Non-temporal negatives: 191/192, held.** No negative regressed under the real-English training described below. Only `negative-096` remains under `it.fails` in `packages/core/test/grammar-model.test.ts`.
 - **Prose gold: 73/73, preserved.** The date-carrier and non-date contrast examples preserve "The meeting is scheduled for next week" in all three casings.
 - **Frozen generated schedules: 4996/5000 semantic and 959/1000 natural**, down three each from `balanced-prose`. These development checks expose a small synthetic-coverage tradeoff despite the authored-case improvements and successful promotion gate. The natural corpus contains 24 legacy rows whose supplied labels fail compiler equality because a recurrence marker is missing. The corpus remains unchanged. The complete `pnpm benchmark` command still stops at this oracle failure.
 - The saved reports record 18/18 packaged public-result fixtures and 25/25 adversarial schedules. These fixtures influenced implementation and training; they are a regression gate, not an untouched test.
@@ -72,6 +78,9 @@ The saved reports cover different model versions. Each result below describes it
 - Vague expressions (`ASAP`, `after work`, `soon`) are deliberately given no clock value rather than a guessed one.
 - Ambiguous numeric dates depend on the caller's `dateOrder` (`MDY` by default). `03/04/2027` is ambiguous. `21/04/2016` is not and resolves correctly either way.
 - Complex recurring exception combinations preview correctly but can return an `unsupported-export` diagnostic when no single RFC 5545 rule represents them.
+- The model reads a month name standing alone correctly in 8 of 12 cases. `every <month>` and `in <month>` are correct for all twelve.
+- `each may` returns the right answer, but the model labels `each` as filler instead of a recurrence marker. The answer rests on the month alone.
+- The seed spread on this model is about 1.85 points. Treat any smaller single-run difference as noise. Compare three to five seeds.
 - Quantization and browser GPU implementations can differ from the PyTorch reference unless parity is explicitly tested. It is, but only for the fixtures listed above.
 - WebGPU startup and dispatch overhead make small inputs slower than a CPU parser, which is why `auto` keeps them on the CPU.
 - The release build must stay within the 50,000-byte Brotli limit.

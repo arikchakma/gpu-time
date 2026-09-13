@@ -1,18 +1,18 @@
 {
-  "model": "f2f9fdd3de300314fe3c575a85a3fad4dc1f7fa6980aa1a7f5023b6bdbaedb2c",
-  "runtimeSha256": "6f6ca7dca67d0bc9e72f7a4585e91ef3d624285a882d58eeafbf354b0a0d682f",
+  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
+  "runtimeSha256": "18188272b5b5dff7d97483482782ace292994c265009945a0255501f06c43d89",
   "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
   "total": 71,
-  "correct": 70,
-  "accuracy": 0.9859154929577465,
+  "correct": 71,
+  "accuracy": 1,
   "families": {
     "calendar-edge-shift": {
       "correct": 3,
       "total": 3
     },
     "clock-with-place": {
-      "correct": 14,
+      "correct": 15,
       "total": 15
     },
     "compact-named-date": {
@@ -590,8 +590,8 @@
       "diagnostics": [
         {
           "code": "filler-ignored",
-          "message": "Ignored same time inside the expression.",
-          "start": 34,
+          "message": "Ignored exactly same time inside the expression.",
+          "start": 13,
           "end": 43,
           "severity": "warning"
         }
@@ -899,13 +899,6 @@
           "start": 30,
           "end": 31,
           "severity": "error"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 18,
-          "end": 22,
-          "severity": "warning"
         }
       ],
       "correct": true
@@ -1202,7 +1195,15 @@
           "end": "2026-11-05T11:00:00+06:00"
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 15,
+          "end": 23,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -1705,17 +1706,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"drinks at 9 at the bar\".",
-          "start": 0,
-          "end": 22
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 10,
+          "end": 11,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-067",

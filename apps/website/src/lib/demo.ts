@@ -107,12 +107,17 @@ export function format(result: ParseResult, reference: Date, timeZone: string) {
     hour: "numeric",
     minute: "2-digit",
   });
+  // A yearly rule has one date inside the twelve-month preview, so without this
+  // the page reads as if nothing repeated.
+  const repeating = result.rrules.length > 0;
   const status = result.diagnostics.length
     ? result.diagnostics.map((diagnostic) => diagnostic.message).join(" ")
     : result.occurrences.length
-      ? result.truncated
-        ? `Next ${result.occurrences.length} occurrences`
-        : "Result"
+      ? repeating
+        ? `Repeats · ${result.occurrences.length} in the next 12 months`
+        : result.truncated
+          ? `Next ${result.occurrences.length} occurrences`
+          : "Result"
       : "No dates found. Try a date or a time window.";
 
   const rows = result.occurrences.map((occurrence) => {

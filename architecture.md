@@ -12,7 +12,7 @@ The package keeps its WebGPU device, pipelines, weights, and grow-only buffers r
 
 ## Source preparation
 
-One CPU scan splits the input into tokens and emits a sparse feature row per token. Each row records character shape, casing, digit and punctuation class, length bucket, lexicon membership for the closed vocabulary of time words, and hashes of neighboring tokens. There are 580 embedding rows in the feature table, including a 128-bucket hash of each token's consonant skeleton.
+One CPU scan splits the input into tokens. It writes one sparse feature row for each token. The row records the token kind, a length bucket, the first and last character class, an 8-bit hash of the lowercased token, a 7-bit hash of its consonant skeleton, eight flag bits for casing and position, the punctuation class on each side, and a number bucket. The feature table has 580 rows. Nothing writes to row 523. The model has no dictionary. `lexicon.ts` holds the month names, but only the compiler imports it. The tokenizer never does, so a month name reaches the model as spelling alone. The row carries no hash of the neighbouring tokens either. Context reaches the model through the five-tap convolution and the bidirectional scan below.
 
 The tokenizer uses regular expressions and an English lexicon. The compiler and calendar resolver also run on the CPU.
 
@@ -99,6 +99,32 @@ This is the k=2 case of the ranked-candidate losses surveyed by
 comparison found a sequence-level term must be mixed with the token loss rather
 than replacing it, and the gold-versus-best-incorrect formulation of
 [Suzuki et al., COLING-ACL 2006](https://aclanthology.org/P06-1028/).
+
+## Real English
+
+The generator writes both the sentences and their labels, so the model could only
+ever learn the generator. `pnpm --filter @gpu-time/training harvest` adds text
+written by people, labelled by whichever teacher can actually judge it:
+
+| Source | Teacher | Rows |
+| --- | --- | --- |
+| `agreed` | chrono-node and our tagger agree on span and every stated field | 54,0k |
+| `negatives` | both parsers silent, so the time-shaped words are not times | 7,9k |
+| `recurrence` | our tagger alone; chrono has no recurrence support | 6,4k |
+| `rescued` | chrono's span, our roles, for sentences we went silent on | 3,0k |
+| `possessive` | our tagger on the bare word behind `'s` | 1,2k |
+| `corrected` | chrono's span with the dropped modifier forced to `DEICTIC` | 1,0k |
+| `duration` | three language judgements distilled into one rule | 0,7k |
+
+Every row outside `agreed` is verified by compiling its labels and checking the
+result against what the sentence states, so a wrong guess cannot enter the corpus.
+Three filters protect the corpus: gold texts are dropped, a row may never label an
+unambiguous time word as filler, and a sentence the duration rule claims may not
+also appear labelled as a time.
+
+`train.py --real <file>` appends these rows to every training epoch. Evaluation
+splits are drawn first and excluded from training, which closed a 13.9% overlap
+between validation and training.
 
 Every run snapshots its sources and hashes. Export records lineage in `active/export-report.json` and `active/provenance.json`; `pnpm model:audit` checks it when the local checkpoints and history are available. A clean clone can check inference parity from committed fixtures, but cannot reproduce the full checkpoint audit. The promoted checkpoint records its reference checkpoint and distillation settings; earlier promotions on this line were weighted averages and record both parent hashes and coefficients, counting shared ancestors once. Evaluation uses Viterbi, including quantized transitions. Export requires no gold set or family regression through the built package, reserved-carrier improvement (or a tie at a perfect baseline) without family loss, and preserved bare expressions. These development gates do not establish real-user accuracy. See `MODEL_CARD.md` for metrics and remaining tradeoffs.
 
