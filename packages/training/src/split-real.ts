@@ -25,6 +25,9 @@ const holdoutShare = Number(argument("--holdout") ?? 10);
 const cap = Number(argument("--cap") ?? 800);
 // Real text is nearly all lower case, so a share of rows is recased.
 const recase = Number(argument("--recase") ?? 25);
+// Repeats small sources up to this floor. Measured at 2,200 and 4,000: both cost
+// more on the gold sets than they returned, so it is off by default.
+const floor = Number(argument("--floor") ?? 0);
 
 const SOURCES = [
   "agreed",
@@ -138,6 +141,20 @@ for (const row of rows) {
   train.push(row);
 }
 
+// Repeat the sources that are too small to compete with the generated corpus.
+const bySource = new Map<string, Row[]>();
+for (const row of train) {
+  const key = row.source ?? "";
+  (bySource.get(key) ?? bySource.set(key, []).get(key)!).push(row);
+}
+const repeated: Row[] = [];
+for (const [key, part] of bySource) {
+  if (key === "agreed" || part.length === 0 || part.length >= floor) continue;
+  const copies = Math.min(5, Math.ceil(floor / part.length)) - 1;
+  for (let round = 0; round < copies; round++) repeated.push(...part);
+}
+train.push(...repeated);
+
 // Case carries no meaning here, so recased copies teach the same labels on text
 // shapes the corpus almost never shows.
 const recased: Row[] = [];
@@ -163,6 +180,7 @@ console.log(
       droppedAsMislabelled: mislabelled,
       droppedAsContradictory: contradictory,
       cappedByPhrase: capped,
+      repeated: repeated.length,
       recased: recased.length,
       train: train.length + recased.length,
       holdout: holdout.length,
