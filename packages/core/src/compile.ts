@@ -1015,22 +1015,34 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
   const pluralDayGroup = selectors.some(
     (token) => token.label === Role.DAYGROUP && /s$/i.test(token.text),
   );
-  // "every morning" repeats once a day; the weekly default belongs to a weekday.
-  const dayPartOnly =
-    selectors.some((token) => token.label === Role.DAYPART) &&
-    !selectors.some((token) =>
-      [Role.UNIT, Role.FREQ, Role.WEEKDAY, Role.DAYGROUP, Role.MONTH].includes(
-        token.label,
-      ),
+  // The weekly default belongs to a weekday. "every morning" repeats once a day
+  // and "every May" once a year, so a lone day part or month sets its own period.
+  const alone = (label: Role) =>
+    selectors.some((token) => token.label === label) &&
+    !selectors.some(
+      (token) =>
+        token.label !== label &&
+        [
+          Role.UNIT,
+          Role.FREQ,
+          Role.WEEKDAY,
+          Role.DAYGROUP,
+          Role.MONTH,
+          Role.DAYPART,
+        ].includes(token.label),
     );
+  const period = implicitOrdinal
+    ? "monthly"
+    : alone(Role.MONTH)
+      ? "yearly"
+      : alone(Role.DAYPART)
+        ? "daily"
+        : "weekly";
   let recurrence: Recurrence | undefined =
     selectors.some((token) => token.label === Role.RECUR) ||
     implicitOrdinal ||
     (pluralDayGroup && !selectors.some((token) => token.label === Role.DEICTIC))
-      ? {
-          freq: implicitOrdinal ? "monthly" : dayPartOnly ? "daily" : "weekly",
-          interval: 1,
-        }
+      ? { freq: period, interval: 1 }
       : undefined;
   let duration: Duration | undefined;
   let startingDate: DateSpec | undefined;
