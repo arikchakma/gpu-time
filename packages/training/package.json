@@ -22,7 +22,7 @@
     "seed:prose": "tsx src/seed-prose.ts",
     "seed:variations": "tsx src/grammar-variations.ts",
     "test": "uv run --project . python -m unittest discover -s torch -p 'test_*.py'",
-    "harvest": "uv run --project . python torch/harvest.py && npx tsx src/harvest-real.ts && npx tsx src/rescue-real.ts && npx tsx src/correct-spans.ts && npx tsx src/harvest-recurrence.ts && npx tsx src/label-duration.ts && npx tsx src/split-real.ts"
+    "harvest": "uv run --project . python torch/harvest.py && npx tsx src/harvest-real.ts && npx tsx src/rescue-real.ts && npx tsx src/correct-spans.ts && npx tsx src/harvest-recurrence.ts && npx tsx src/harvest-possessive.ts && npx tsx src/label-duration.ts && npx tsx src/split-real.ts"
   },
   "dependencies": {
     "gpu-time": "workspace:*"

@@ -386,7 +386,17 @@ function compileDateAndTime(
 
   for (let index = 0; index < tokens.length; index++) {
     const token = tokens[index];
-    const word = token.text.toLowerCase();
+    // "today's meeting" tokenizes as one word. Only a date role drops the
+    // possessive, so a holiday such as "Valentine's Day" keeps it.
+    const possessive = [
+      Role.REL_DAY,
+      Role.WEEKDAY,
+      Role.DAYPART,
+      Role.MONTH,
+    ].includes(token.label);
+    const word = possessive
+      ? token.text.toLowerCase().replace(/['\u2019]s$/, "")
+      : token.text.toLowerCase();
 
     switch (token.label) {
       case Role.O:
