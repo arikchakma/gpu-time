@@ -1,6 +1,6 @@
 {
   "scope": "Exact AST equality from trained CPU predictions. Development fixtures overlap across sets; do not combine totals or describe these as untouched test data.",
-  "model": "2df3dff392a78565b925ec131efedd9bbf2b074ff75ec169695c65656a4f00b6",
+  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
   "results": [
     {
       "name": "adversarial",
