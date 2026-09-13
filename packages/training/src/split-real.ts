@@ -38,6 +38,9 @@ const SOURCES = [
   "duration",
   "negatives",
 ];
+// Mention replacement is built by augment-mentions.ts but left out by default:
+// measured at 2,509 rows it fixed "last night" and cost 4 pooled gold cases.
+// Dai and Adel report the same shape, gains shrinking as the corpus grows.
 const normal = (text: string) => text.trim().replace(/\s+/g, " ").toLowerCase();
 
 // Rejects rows that label an unambiguous time word as filler. The second parser
