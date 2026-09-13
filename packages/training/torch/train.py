@@ -174,7 +174,9 @@ def path_score(emissions, transition, path, mask):
     return score
 
 
-def prepare(split: str, count: int, seed: int, directory: Path) -> Dataset:
+def prepare(
+    split: str, count: int, seed: int, directory: Path, real: Path | None = None
+) -> Dataset:
     prefix = directory / split
     command = [
         "uv",
@@ -199,6 +201,9 @@ def prepare(split: str, count: int, seed: int, directory: Path) -> Dataset:
                 ["--exclude", str(directory / f"{name}.fingerprints.json")]
             )
     subprocess.run(command, cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
+    if split == "train" and real is not None:
+        with open(f"{prefix}.jsonl", "a") as handle:
+            handle.write(real.read_text())
     subprocess.run(
         [
             # tsx, not node --experimental-strip-types: featurize imports core's
@@ -259,6 +264,11 @@ def main():
         "--device", default="mps" if torch.backends.mps.is_available() else "cpu"
     )
     parser.add_argument(
+        "--real",
+        type=Path,
+        help="Labelled real sentences appended to every training epoch.",
+    )
+    parser.add_argument(
         "--risk-lambda",
         type=float,
         default=0.0,
@@ -300,7 +310,7 @@ def main():
     )
     heldout = prepare("heldout", args.eval_samples, args.seed + 2, directory)
     validation = prepare("validation", args.eval_samples, args.seed + 1, directory)
-    training = prepare("train", args.samples, args.seed, directory)
+    training = prepare("train", args.samples, args.seed, directory, args.real)
     seen = set(training.manifest["fingerprints"])
     for name, split in (("held-out", heldout), ("validation", validation)):
         if seen & set(split.manifest["fingerprints"]):
@@ -428,7 +438,7 @@ def main():
     for epoch in range(args.epochs):
         if epoch > 0 and args.fresh_each_epoch:
             training = prepare(
-                "train", args.samples, args.seed + epoch * 101, directory
+                "train", args.samples, args.seed + epoch * 101, directory, args.real
             )
         model.train()
         model.qat = epoch >= args.qat_start
@@ -584,8 +594,11 @@ def main():
             "status": "training" if epoch + 1 < args.epochs else "completed",
             "scope": f"Quantized int{args.quantization_bits} token-role and clause-boundary evaluation on genuinely reordered held-out frames. End-to-end AST/occurrence accuracy is separate.",
         }
-        (run / "report.json").write_text(json.dumps(report, indent=2) + "\n")
-        print(json.dumps(entry), flush=True)
+        # config carries Path values for --init, --distill and --real.
+        (run / "report.json").write_text(
+            json.dumps(report, indent=2, default=str) + "\n"
+        )
+        print(json.dumps(entry, default=str), flush=True)
     print(
         json.dumps(
             {
