@@ -24,6 +24,18 @@ const cap = Number(argument("--cap") ?? 800);
 
 const normal = (text: string) => text.trim().replace(/\s+/g, " ").toLowerCase();
 
+// The second parser cannot see recurrence, so a sentence whose expression sits
+// elsewhere leaves "every day" outside the span and labelled O. Training on that
+// teaches the model to ignore recurrence, which is the one thing it owns. Reject
+// any row that calls a word with an unavoidable time meaning filler.
+const STRONG =
+  /^(every|each|daily|weekly|monthly|yearly|hourly|nightly|annually|tonight|tonite|tomorrow|yesterday|today|noon|midnight|midday|o'clock|oclock)$/i;
+const callsTimeFiller = (row: Row) =>
+  row.spans.some(
+    (one) =>
+      one.label === "O" && STRONG.test(row.text.slice(one.start, one.end)),
+  );
+
 const gold = new Set<string>();
 for (const name of await readdir(goldDirectory)) {
   if (!name.endsWith(".jsonl") && !name.endsWith(".json")) continue;
@@ -61,9 +73,14 @@ const holdout: Row[] = [];
 const seen = new Map<string, number>();
 let dropped = 0;
 let capped = 0;
+let mislabelled = 0;
 for (const row of rows) {
   if (gold.has(normal(row.text))) {
     dropped++;
+    continue;
+  }
+  if (row.source !== "negative" && callsTimeFiller(row)) {
+    mislabelled++;
     continue;
   }
   if (bucket(row.text) === 0) {
@@ -94,6 +111,7 @@ console.log(
     {
       read: rows.length,
       cappedByPhrase: capped,
+      droppedAsMislabelled: mislabelled,
       droppedAsGold: dropped,
       train: train.length,
       holdout: holdout.length,

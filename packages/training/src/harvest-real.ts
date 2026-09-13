@@ -85,6 +85,7 @@ const sentences = (await readFile(source, "utf8"))
 
 const agreed: unknown[] = [];
 const disputed: unknown[] = [];
+const negatives: unknown[] = [];
 const tally = {
   read: 0,
   chronoSilent: 0,
@@ -93,6 +94,7 @@ const tally = {
   spanMismatch: 0,
   valueMismatch: 0,
   agreed: 0,
+  negatives: 0,
 };
 
 for (const [index, text] of sentences.entries()) {
@@ -105,6 +107,22 @@ for (const [index, text] of sentences.entries()) {
 
   if (theirs.length === 0) {
     tally.chronoSilent++;
+    // Neither parser sees a time, so the time-shaped words here are not times.
+    // These are the real negatives the generated corpus cannot invent.
+    if (expressions.length === 0) {
+      tally.negatives++;
+      negatives.push({
+        id: `negative-${index}`,
+        template: "real/tatoeba-negative",
+        text,
+        spans: ours.tokens.map((token: { start: number; end: number }) => ({
+          start: token.start,
+          end: token.end,
+          label: "O",
+          clauseStart: false,
+        })),
+      });
+    }
     continue;
   }
   if (expressions.length === 0) {
@@ -174,4 +192,5 @@ const line = (rows: unknown[]) =>
   rows.map((row) => JSON.stringify(row)).join("\n") + "\n";
 await writeFile(join(outDirectory, "agreed.jsonl"), line(agreed));
 await writeFile(join(outDirectory, "disputed.jsonl"), line(disputed));
+await writeFile(join(outDirectory, "negatives.jsonl"), line(negatives));
 console.log(JSON.stringify(tally, null, 2));
