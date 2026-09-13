@@ -562,7 +562,11 @@ def main():
                 name: value.detach().cpu() for name, value in model.state_dict().items()
             },
             "optimizer": optimizer.state_dict(),
-            "config": vars(args),
+            # Paths here would need an allowlist to load with weights_only.
+            "config": {
+                key: str(value) if isinstance(value, Path) else value
+                for key, value in vars(args).items()
+            },
             "epoch": epoch + 1,
             "metrics": metrics,
             "tokensSeen": tokens_seen,

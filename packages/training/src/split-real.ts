@@ -18,6 +18,9 @@ const argument = (name: string) => {
 const directory = resolvePath(argument("--dir") ?? join(training, "data/real"));
 const goldDirectory = join(training, "data/gold");
 const holdoutShare = Number(argument("--holdout") ?? 10);
+// One repaired phrase is most of corrected.jsonl. Cap it in the training mix so
+// it cannot swamp the rest. The holdout is never capped, so scores stay comparable.
+const cap = Number(argument("--cap") ?? 800);
 
 const normal = (text: string) => text.trim().replace(/\s+/g, " ").toLowerCase();
 
@@ -32,12 +35,20 @@ for (const name of await readdir(goldDirectory)) {
     if (row && typeof row.text === "string") gold.add(normal(row.text));
 }
 
-type Row = { text: string; source?: string };
+type Span = { start: number; end: number; label: string };
+type Row = { text: string; source?: string; spans: Span[] };
+const phrase = (row: Row) =>
+  row.spans
+    .filter((one) => one.label !== "O")
+    .map((one) => row.text.slice(one.start, one.end))
+    .join(" ")
+    .toLowerCase();
+
 const rows: Row[] = [];
-for (const source of ["agreed", "rescued"]) {
+for (const source of ["agreed", "rescued", "corrected"]) {
   const raw = await readFile(join(directory, `${source}.jsonl`), "utf8");
   for (const line of raw.split("\n").filter(Boolean))
-    rows.push({ ...JSON.parse(line), source });
+    rows.push({ ...JSON.parse(line), source } as Row);
 }
 
 // Hash the sentence so a re-harvest keeps the same rows on the same side.
@@ -47,13 +58,28 @@ const bucket = (text: string) =>
 
 const train: Row[] = [];
 const holdout: Row[] = [];
+const seen = new Map<string, number>();
 let dropped = 0;
+let capped = 0;
 for (const row of rows) {
   if (gold.has(normal(row.text))) {
     dropped++;
     continue;
   }
-  (bucket(row.text) === 0 ? holdout : train).push(row);
+  if (bucket(row.text) === 0) {
+    holdout.push(row);
+    continue;
+  }
+  if (row.source === "corrected") {
+    const key = phrase(row);
+    const count = (seen.get(key) ?? 0) + 1;
+    seen.set(key, count);
+    if (count > cap) {
+      capped++;
+      continue;
+    }
+  }
+  train.push(row);
 }
 
 const write = (name: string, part: Row[]) =>
@@ -65,7 +91,13 @@ await write("real-train", train);
 await write("real-holdout", holdout);
 console.log(
   JSON.stringify(
-    { read: rows.length, droppedAsGold: dropped, train: train.length, holdout: holdout.length },
+    {
+      read: rows.length,
+      cappedByPhrase: capped,
+      droppedAsGold: dropped,
+      train: train.length,
+      holdout: holdout.length,
+    },
     null,
     2,
   ),
