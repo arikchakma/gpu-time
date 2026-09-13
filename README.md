@@ -14,13 +14,14 @@ const result = await parse("Sat Sun 1pm-8pm Mon 10pm-12am", {
 console.log(result.occurrences); // ISO start/end strings and an allDay flag
 console.log(result.rrules); // RFC 5545 properties for repeating expressions
 console.log(result.diagnostics); // why an expression was rejected
+console.log(result.spans); // where in the text each answer came from
 ```
 
-The package exports `parse(text, context)`, `parseMany(texts, context)`, and `defineParser(options)` for a reusable instance with explicit backend selection. The caller supplies the reference instant and timezone. The calendar resolver uses these inputs after the model runs. There is no public AST or token-label output.
+The package exports `parse(text, context)`, `parseMany(texts, context)`, and `defineParser(options)` for a reusable instance with explicit backend selection. The caller supplies the reference instant and timezone. The calendar resolver uses these inputs after the model runs. `spans` gives the character offsets each answer was read from, so a caller can subtract the time from the text without parsing it again. There is no public AST or token-label output.
 
 ## How it works
 
-The CPU splits the input into tokens (words, numbers, and punctuation). It records features such as character shape, case, known time words, and nearby token hashes.
+The CPU splits the input into tokens (words, numbers, and punctuation). It records features such as character shape, case, length, and hashes of the token's own spelling. The model has no word list: it never sees that a token is a month name.
 
 The model reads these features in both directions. A classifier assigns each token one of 35 roles, such as hour, weekday, or range separator. A separate score marks expression boundaries. WebGPU processes the model in parallel blocks and carries context across block boundaries. Long inputs use overlapping windows.
 
@@ -43,7 +44,7 @@ Generated training data, downloaded corpora, training runs, and local virtual en
 ```sh
 pnpm gen
 pnpm train --run experiment --storage f32 --feature-rows 580 --layers 2 --init runs/risk-w0.005/best.pt --batch 1024 --transitions \
-  --distill runs/risk-w0.005/best.pt --distill-alpha 0 --distill-beta 5 --distill-lambda 0.1 \
+  --distill runs/risk-w0.005/best.pt --distill-alpha 0 --distill-beta 5 --distill-lambda 0.05 \
   --risk-lambda 0.005 --risk-margin 4
 ```
 

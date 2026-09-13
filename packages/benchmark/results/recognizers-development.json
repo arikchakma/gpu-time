@@ -127,6 +127,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 18,
+            "text": "15",
+            "confidence": 0.4195679724216461
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -167,6 +175,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 19,
+            "text": "Oct. 2",
+            "confidence": 0.999816358089447
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -199,6 +215,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 17,
+            "text": "Oct2",
+            "confidence": 0.9997450709342957
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -231,6 +255,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 18,
+            "text": "Oct/2",
+            "confidence": 0.9999171495437622
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -263,6 +295,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "October. 2",
+            "confidence": 0.999800443649292
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -295,6 +335,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 21,
+            "text": "October2",
+            "confidence": 0.9998375773429871
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -327,6 +375,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "January 12, 2016",
+            "confidence": 0.9997565150260925
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -359,6 +415,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "02/22/2016",
+            "confidence": 0.7575443983078003
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -391,6 +455,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "21/04/2016",
+            "confidence": 0.9967632293701172
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -413,6 +485,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -453,6 +526,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "21-04-2016",
+            "confidence": 0.9994157552719116
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -485,6 +566,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 20,
+            "text": "4.22",
+            "confidence": 0.7597079873085022
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -507,6 +596,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -547,6 +637,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 23,
+            "text": "4/22",
+            "confidence": 0.9938483834266663
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -579,6 +677,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 21,
+            "text": "22/04",
+            "confidence": 0.815356433391571
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -611,6 +717,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 21,
+            "text": "4/22",
+            "confidence": 0.9962326884269714
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -643,6 +757,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 18,
+            "text": "22/04",
+            "confidence": 0.6407693028450012
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -675,6 +797,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "2015/08/12",
+            "confidence": 0.9975995421409607
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -707,6 +837,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "08/12,2015",
+            "confidence": 0.8946303725242615
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -729,6 +867,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -769,6 +908,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 20,
+            "text": "1st Jan",
+            "confidence": 0.9995431900024414
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -801,6 +948,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 22,
+            "text": "Jan first",
+            "confidence": 0.9991310238838196
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -833,6 +988,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "May twenty-first",
+            "confidence": 0.11749889701604843
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -873,6 +1036,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 27,
+            "text": "May twenty one",
+            "confidence": 0.9744433760643005
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -905,6 +1076,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 26,
+            "text": "second of Aug",
+            "confidence": 0.9876518249511719
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -937,6 +1116,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "twenty second of June",
+            "confidence": 0.9084627032279968
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -969,6 +1156,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 22,
+            "text": "Friday",
+            "confidence": 0.9999866485595703
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1001,6 +1196,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 20,
+            "text": "Friday",
+            "confidence": 0.999483048915863
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1033,6 +1236,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 18,
+            "text": "today",
+            "confidence": 0.9999707341194153
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1065,6 +1276,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 17,
+            "text": "tmrw",
+            "confidence": 0.999954342842102
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1097,6 +1316,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 22,
+            "text": "yesterday",
+            "confidence": 0.999961256980896
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1129,6 +1356,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 37,
+            "text": "the day before yesterday",
+            "confidence": 0.9829070568084717
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1161,6 +1396,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 35,
+            "text": "the day after tomorrow",
+            "confidence": 0.9824413657188416
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1183,6 +1426,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -1223,6 +1467,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 22,
+            "text": "The day after tomorrow",
+            "confidence": 0.9942930340766907
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1257,6 +1509,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 25,
+            "text": "next day",
+            "confidence": 0.9551813006401062
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1289,6 +1549,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 24,
+            "text": "this Friday",
+            "confidence": 0.984665036201477
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1321,6 +1589,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 24,
+            "text": "next Sunday",
+            "confidence": 0.9995183348655701
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1353,6 +1629,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 24,
+            "text": "last Sunday",
+            "confidence": 0.9993793964385986
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1385,6 +1669,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "this week Friday",
+            "confidence": 0.9919344782829285
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1417,6 +1709,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "last week Sunday",
+            "confidence": 0.8817025423049927
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1451,6 +1751,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 25,
+            "text": "last day",
+            "confidence": 0.5293647050857544
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1473,6 +1781,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -1520,6 +1829,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "15 June 2016",
+            "confidence": 0.9998721480369568
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1552,6 +1869,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 37,
+            "text": "first friday of july",
+            "confidence": 0.9986512064933777
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1584,6 +1909,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 43,
+            "text": "first friday in this month",
+            "confidence": 0.9915798306465149
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1616,6 +1949,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 32,
+            "text": "next week on Friday",
+            "confidence": 0.9943985342979431
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1648,6 +1989,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 32,
+            "text": "Friday next week",
+            "confidence": 0.999043345451355
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1670,6 +2019,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -1712,6 +2062,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 21,
+            "text": "this day",
+            "confidence": 0.31918010115623474
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -1742,6 +2100,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -1789,6 +2148,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 31,
+            "text": "two weeks from now",
+            "confidence": 0.9903231859207153
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1821,6 +2188,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 30,
+            "text": "few months ago",
+            "confidence": 0.4942127764225006
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -1861,6 +2236,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 30,
+            "text": "a few days ago",
+            "confidence": 0.7354809641838074
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1883,6 +2266,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -1923,6 +2307,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 22,
+            "text": "27",
+            "confidence": 0.9763455986976624
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -1945,6 +2337,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -1985,6 +2378,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 22,
+            "text": "22",
+            "confidence": 0.9730203151702881
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2007,6 +2408,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2047,6 +2449,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 27,
+            "end": 33,
+            "text": "second",
+            "confidence": 0.9362055063247681
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2079,6 +2489,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 27,
+            "text": "Thursday the 21",
+            "confidence": 0.9947651028633118
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2111,6 +2529,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 25,
+            "text": "Friday the 22",
+            "confidence": 0.9408472776412964
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2143,6 +2569,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 27,
+            "text": "Saturday the 23",
+            "confidence": 0.9058948159217834
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2175,6 +2609,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 25,
+            "text": "Friday the 15",
+            "confidence": 0.985021710395813
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2207,6 +2649,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 37,
+            "text": "Thursday the twenty first",
+            "confidence": 0.8726921081542969
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2239,6 +2689,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 18,
+            "text": "Friday",
+            "confidence": 0.9999735951423645
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2271,6 +2729,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 26,
+            "text": "second Sunday",
+            "confidence": 0.9991217255592346
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2303,6 +2769,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "first Sunday",
+            "confidence": 0.998818039894104
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2335,6 +2809,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 26,
+            "text": "third Tuesday",
+            "confidence": 0.9990596771240234
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2357,6 +2839,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2387,6 +2870,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2417,6 +2901,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2457,6 +2942,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "January 12, 2018",
+            "confidence": 0.9997463226318359
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2479,6 +2972,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2526,6 +3020,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 25,
+            "text": "two years ago",
+            "confidence": 0.9965725541114807
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2558,6 +3060,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "16. Nov. 2016",
+            "confidence": 0.998486340045929
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2590,6 +3100,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 36,
+            "text": "1 month 21 days ago",
+            "confidence": 0.9756959676742554
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2622,6 +3140,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 39,
+            "text": "2 years 1 month 21 days ago",
+            "confidence": 0.9915934801101685
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2654,6 +3180,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 38,
+            "text": "2 years 21 days later",
+            "confidence": 0.7929708361625671
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2686,6 +3220,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 39,
+            "text": "1 month 2 years 21 days ago",
+            "confidence": 0.9439075589179993
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2718,6 +3260,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 40,
+            "text": "1 month and 21 days ago",
+            "confidence": 0.9609935879707336
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2752,6 +3302,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 37,
+            "text": "1 month, 21 days ago",
+            "confidence": 0.9664947390556335
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2774,6 +3332,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2814,6 +3373,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 32,
+            "text": "5 December 1391",
+            "confidence": 0.1340070217847824
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -2854,6 +3421,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 28,
+            "text": "monday, jan twenty two, 2018",
+            "confidence": 0.9725826382637024
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -2876,6 +3451,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2920,6 +3496,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2957,6 +3534,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -2997,6 +3575,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 43,
+            "text": "first Friday of next month",
+            "confidence": 0.9910150766372681
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3029,6 +3615,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 43,
+            "text": "second Monday of next month",
+            "confidence": 0.9608942866325378
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3061,6 +3655,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 49,
+            "text": "third Wednesday of previous month",
+            "confidence": 0.9825757741928101
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3093,6 +3695,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 36,
+            "text": "Tuesday next week",
+            "confidence": 0.9994088411331177
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3125,6 +3735,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 38,
+            "text": "Sunday of next week",
+            "confidence": 0.9902907013893127
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3157,6 +3775,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 35,
+            "text": "two days from tomorrow",
+            "confidence": 0.6929047107696533
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3191,6 +3817,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 37,
+            "text": "four days from yesterday",
+            "confidence": 0.9769049286842346
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3223,6 +3857,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 25,
+            "text": "5.2015",
+            "confidence": 0.8229764699935913
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3255,6 +3897,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 30,
+            "text": "2015.5.13",
+            "confidence": 0.9431295394897461
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3287,6 +3937,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 21,
+            "text": "3-7-2017",
+            "confidence": 0.6313658356666565
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3309,6 +3967,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3346,6 +4005,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3393,6 +4053,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 21,
+            "text": "05/05/89",
+            "confidence": 0.8189067244529724
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3415,6 +4083,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3457,6 +4126,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 38,
+            "text": "two sundays from now",
+            "confidence": 0.48101192712783813
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -3504,6 +4181,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 28,
+            "text": "two monday",
+            "confidence": 0.9762364029884338
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -3544,6 +4229,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 43,
+            "text": "three weeks from tomorrow",
+            "confidence": 0.3552453815937042
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -3584,6 +4277,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "in 3 weeks",
+            "confidence": 0.9984226226806641
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3606,6 +4307,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3646,6 +4348,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 39,
+            "text": "twenty second of June 2017",
+            "confidence": 0.9416772723197937
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3668,6 +4378,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3708,6 +4419,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 24,
+            "text": "2019/sep/01",
+            "confidence": 0.9795088171958923
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3730,6 +4449,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3760,6 +4480,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3790,6 +4511,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -3830,6 +4552,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 28,
+            "text": "eight forty",
+            "confidence": 0.9457561373710632
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -3870,6 +4600,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 31,
+            "text": "eight forty am",
+            "confidence": 0.9995148181915283
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3902,6 +4640,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 31,
+            "text": "eight forty pm",
+            "confidence": 0.999416172504425
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -3934,6 +4680,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 31,
+            "text": "ten forty five",
+            "confidence": 0.9961122870445251
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -3964,6 +4718,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -4001,6 +4756,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -4048,6 +4804,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 24,
+            "text": "ten ten",
+            "confidence": 0.9957723617553711
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4088,6 +4852,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 37,
+            "text": "ten fifty five p. m.",
+            "confidence": 0.9973586797714233
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4120,6 +4892,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 17,
+            "text": "7",
+            "confidence": 0.9982274770736694
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4160,6 +4940,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 17,
+            "text": "7",
+            "confidence": 0.9992977380752563
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4200,6 +4988,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 21,
+            "text": "seven",
+            "confidence": 0.9484968185424805
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4240,6 +5036,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 19,
+            "text": "7:56pm",
+            "confidence": 0.9998239874839783
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4272,6 +5076,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 22,
+            "text": "7:56:30pm",
+            "confidence": 0.9975358247756958
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4304,6 +5116,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "7:56:30 pm",
+            "confidence": 0.9984865784645081
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4336,6 +5156,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 18,
+            "text": "12:34",
+            "confidence": 0.9998388290405273
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4376,6 +5204,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 14,
+            "text": "7 o'clock",
+            "confidence": 0.630661129951477
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4398,6 +5234,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4430,6 +5267,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 21,
+            "text": "8 in the morning",
+            "confidence": 0.5225935578346252
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4462,6 +5307,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 19,
+            "text": "8 in the night",
+            "confidence": 0.44884878396987915
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4502,6 +5355,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 20,
+            "text": "half past eight",
+            "confidence": 0.3212818205356598
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4549,6 +5410,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 18,
+            "text": "half past 8pm",
+            "confidence": 0.9405021667480469
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4583,6 +5452,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 23,
+            "text": "30 mins past eight",
+            "confidence": 0.5626040697097778
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4623,6 +5500,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 7,
+            "end": 25,
+            "text": "quarter past eight",
+            "confidence": 0.9983694553375244
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4663,6 +5548,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 23,
+            "text": "quarter past eight",
+            "confidence": 0.9985244870185852
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4703,6 +5596,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 27,
+            "text": "eight",
+            "confidence": 0.9342802166938782
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4743,6 +5644,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 28,
+            "text": "half past seven o'clock",
+            "confidence": 0.3442608416080475
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4783,6 +5692,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 35,
+            "text": "half past seven in the morning",
+            "confidence": 0.8680612444877625
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4815,6 +5732,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 7,
+            "end": 34,
+            "text": "quarter to 8 in the morning",
+            "confidence": 0.5031844973564148
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4847,6 +5772,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 37,
+            "text": "eight in the evening",
+            "confidence": 0.9883332848548889
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4881,6 +5814,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 33,
+            "text": "10 past 9",
+            "confidence": 0.28380510210990906
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -4928,6 +5869,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 26,
+            "text": "seven o'clock",
+            "confidence": 0.5847178101539612
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -4962,6 +5911,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 49,
+            "text": "ten past 9 in the evening",
+            "confidence": 0.05529903620481491
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -5002,6 +5959,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 38,
+            "text": "eight in the morning",
+            "confidence": 0.8810788989067078
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5034,6 +5999,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 27,
+            "text": "afternoon at 7",
+            "confidence": 0.9994105696678162
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5066,6 +6039,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 27,
+            "text": "afternoon 7:00",
+            "confidence": 0.9991340637207031
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5098,6 +6079,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 30,
+            "text": "afternoon 7:00:05",
+            "confidence": 0.9979665279388428
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5130,6 +6119,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 31,
+            "text": "afternoon seven pm",
+            "confidence": 0.4576224088668823
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -5170,6 +6167,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "seven thirty pm",
+            "confidence": 0.9983068108558655
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5202,6 +6207,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 33,
+            "text": "seven thirty five pm",
+            "confidence": 0.9965807199478149
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5234,6 +6247,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "eleven twenty pm",
+            "confidence": 0.9992846846580505
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5266,6 +6287,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 20,
+            "text": "noon",
+            "confidence": 0.9997945427894592
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5298,6 +6327,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 15,
+            "text": "11",
+            "confidence": 0.8024423122406006
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -5328,6 +6365,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5358,6 +6396,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5395,6 +6434,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5425,6 +6465,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5447,6 +6488,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5477,6 +6519,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5507,6 +6550,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5529,6 +6573,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5569,6 +6614,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "midday",
+            "confidence": 0.9998342394828796
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5591,6 +6644,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5621,6 +6675,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5661,6 +6716,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "noon",
+            "confidence": 0.9998630285263062
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5683,6 +6746,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5723,6 +6787,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 24,
+            "text": "midnight",
+            "confidence": 0.9998388886451721
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5745,6 +6817,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -5785,6 +6858,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 26,
+            "end": 36,
+            "text": "11 o'clock",
+            "confidence": 0.9856398701667786
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5817,6 +6898,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "7:56:13 pm",
+            "confidence": 0.998892605304718
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5849,6 +6938,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 30,
+            "text": "afternoon 7:00:25",
+            "confidence": 0.9967836141586304
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5881,6 +6978,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "seven thirty am",
+            "confidence": 0.9988150000572205
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5913,6 +7018,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 27,
+            "text": "eleven five",
+            "confidence": 0.9987969994544983
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -5953,6 +7066,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 37,
+            "text": "five thirty in the night",
+            "confidence": 0.26955676078796387
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -5983,6 +7104,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -6030,6 +7152,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 17,
+            "text": "noon",
+            "confidence": 0.99998539686203
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6062,6 +7192,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 26,
+            "end": 36,
+            "text": "12 o'clock",
+            "confidence": 0.9876173138618469
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6084,6 +7222,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -6114,6 +7253,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -6161,6 +7301,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 30,
+            "text": "3pm : I'll be out on this week",
+            "confidence": 0.979321300983429
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -6201,6 +7349,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "this week 8am",
+            "confidence": 0.9512277841567993
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6223,6 +7379,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -6253,6 +7410,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -6300,6 +7458,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 26,
+            "text": "8.10 pm",
+            "confidence": 0.05621396005153656
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -6341,6 +7507,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 20,
+            "text": "to 6pm",
+            "confidence": 0.999272346496582
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6374,6 +7548,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 22,
+            "text": "to 6 p.m",
+            "confidence": 0.6713719367980957
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6407,6 +7589,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 37,
+            "text": "to seven in the morning",
+            "confidence": 0.7668969631195068
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6442,6 +7632,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 26,
+            "text": "from 5 to 6 pm",
+            "confidence": 0.7524504065513611
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6477,6 +7675,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 28,
+            "end": 39,
+            "text": "for 2.5 hrs",
+            "confidence": 0.9954595565795898
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6514,6 +7720,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 54,
+            "text": "from 10 am for 3 hours 30 minutes",
+            "confidence": 0.6674008369445801
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6549,6 +7763,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 42,
+            "text": "for 2.5 hours from 9",
+            "confidence": 0.09041377902030945
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -6599,6 +7821,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 26,
+            "end": 44,
+            "text": "3 hours from 10 am",
+            "confidence": 0.9990437030792236
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6634,6 +7864,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 26,
+            "end": 42,
+            "text": "2 hours from 2pm",
+            "confidence": 0.9990575909614563
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6669,6 +7907,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 29,
+            "text": "between 5 and 6pm",
+            "confidence": 0.5668697953224182
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6704,6 +7950,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 31,
+            "text": "between 5pm and 6pm",
+            "confidence": 0.9982490539550781
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6739,6 +7993,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 44,
+            "text": "between 5 and 6 in the afternoon",
+            "confidence": 0.17800608277320862
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -6782,6 +8044,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 27,
+            "text": "from 1am to 5pm",
+            "confidence": 0.9959636330604553
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6817,6 +8087,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 24,
+            "text": "4pm till 5pm",
+            "confidence": 0.9988895058631897
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6852,6 +8130,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 28,
+            "text": "4:00 to 7 oclock",
+            "confidence": 0.9614309668540955
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -6895,6 +8181,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 43,
+            "text": "from 3 in the morning until 5pm",
+            "confidence": 0.9627049565315247
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6930,6 +8224,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 44,
+            "text": "between 3 in the morning and 5pm",
+            "confidence": 0.8372663855552673
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -6965,6 +8267,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 37,
+            "text": "between 4pm and 5pm today",
+            "confidence": 0.9977784156799316
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7000,6 +8310,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 25,
+            "text": "morning",
+            "confidence": 0.9802773594856262
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7035,6 +8353,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 27,
+            "text": "afternoon",
+            "confidence": 0.9534416794776917
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7070,6 +8396,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 23,
+            "text": "night",
+            "confidence": 0.92400723695755
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7093,6 +8427,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7116,6 +8451,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7151,6 +8487,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 31,
+            "text": "morning",
+            "confidence": 0.9405478239059448
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7186,6 +8530,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 30,
+            "text": "morning",
+            "confidence": 0.9861541390419006
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7221,6 +8573,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 33,
+            "text": "afternoon",
+            "confidence": 0.9948242902755737
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7256,6 +8616,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 32,
+            "text": "afternoon",
+            "confidence": 0.9950461387634277
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7291,6 +8659,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 31,
+            "text": "evening",
+            "confidence": 0.9969787001609802
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7326,6 +8702,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 30,
+            "text": "evening",
+            "confidence": 0.9988206028938293
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7361,6 +8745,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 29,
+            "text": "night",
+            "confidence": 0.9895309209823608
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7396,6 +8788,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 28,
+            "text": "night",
+            "confidence": 0.9918193817138672
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7431,6 +8831,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 29,
+            "text": "night",
+            "confidence": 0.9486936330795288
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7466,6 +8874,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 28,
+            "text": "night",
+            "confidence": 0.9918720126152039
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7501,6 +8917,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 11,
+            "end": 26,
+            "text": "from 1p.m. to 4",
+            "confidence": 0.991020679473877
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7536,6 +8960,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 27,
+            "text": "morning",
+            "confidence": 0.9944665431976318
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7571,6 +9003,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 48,
+            "text": "from 1:30am to 3",
+            "confidence": 0.9666528701782227
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7606,6 +9046,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "from 11 am to 3",
+            "confidence": 0.9831554293632507
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7641,6 +9089,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "from 11 pm to 3",
+            "confidence": 0.9759037494659424
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7676,6 +9132,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 32,
+            "text": "from 11:01 am to 11",
+            "confidence": 0.9976832866668701
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7711,6 +9175,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 50,
+            "text": "from 11am to 11:50",
+            "confidence": 0.9988921880722046
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7746,6 +9218,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 35,
+            "text": "from 1:30 pm to 3:30",
+            "confidence": 0.9993988871574402
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7781,6 +9261,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 38,
+            "text": "from 1:30 pm to 3:30 pm",
+            "confidence": 0.9993855357170105
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7804,6 +9292,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -7847,6 +9336,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 29,
+            "text": "from 3 to 3:30",
+            "confidence": 0.761102557182312
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -7897,6 +9394,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 29,
+            "text": "from 1:30 to 3",
+            "confidence": 0.9935352206230164
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -7947,6 +9452,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 48,
+            "text": "from 1:30 to 3pm",
+            "confidence": 0.9986622929573059
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -7982,6 +9495,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 46,
+            "text": "from 11 to 3pm",
+            "confidence": 0.9518293738365173
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8017,6 +9538,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 50,
+            "text": "from 11 to 11:50am",
+            "confidence": 0.9202675223350525
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8052,6 +9581,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 46,
+            "text": "from 11 to 3am",
+            "confidence": 0.9580525159835815
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8087,6 +9624,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 47,
+            "text": "from 10 to 11am",
+            "confidence": 0.9202017188072205
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8122,6 +9667,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 46,
+            "text": "from 23 to 3am",
+            "confidence": 0.7880344986915588
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8157,6 +9710,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 46,
+            "text": "from 23 to 3pm",
+            "confidence": 0.7697930932044983
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8192,6 +9753,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 35,
+            "text": "between 10 and 11:30",
+            "confidence": 0.9928702116012573
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -8242,6 +9811,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 40,
+            "text": "between 10:10am and 12:50",
+            "confidence": 0.9994151592254639
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8277,6 +9854,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 33,
+            "text": "from 10:10pm to 10",
+            "confidence": 0.9935246109962463
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8312,6 +9897,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 33,
+            "text": "from 10:30am to 23",
+            "confidence": 0.9840908050537109
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8335,6 +9928,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -8366,6 +9960,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8389,6 +9984,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8412,6 +10008,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8444,6 +10041,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 16,
+            "text": "now",
+            "confidence": 0.9998844861984253
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8466,6 +10071,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8498,6 +10104,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 26,
+            "text": "8:00",
+            "confidence": 0.9998989701271057
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -8538,6 +10152,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 29,
+            "text": "8:00:20",
+            "confidence": 0.9975045323371887
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -8586,6 +10208,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 23,
+            "text": "15, 8pm",
+            "confidence": 0.9883471727371216
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8618,6 +10248,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 29,
+            "text": "5th at 4 a.m.",
+            "confidence": 0.9939643740653992
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8650,6 +10288,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 31,
+            "text": "04/21/2016, 8:00pm",
+            "confidence": 0.9943182468414307
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8682,6 +10328,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "04/21/2016, 8:00:20pm",
+            "confidence": 0.9492754340171814
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8714,6 +10368,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 30,
+            "text": "October 14 8:00am",
+            "confidence": 0.9997575283050537
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8746,6 +10408,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 37,
+            "text": "October 14 around 8:00am",
+            "confidence": 0.9996504783630371
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8778,6 +10448,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 37,
+            "text": "October 14 for 8:00:31am",
+            "confidence": 0.9963561296463013
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8810,6 +10488,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 31,
+            "text": "October 14, 8:00am",
+            "confidence": 0.999449610710144
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8842,6 +10528,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "October 14, 8:00:25am",
+            "confidence": 0.9949856400489807
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8864,6 +10558,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -8904,6 +10599,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 22,
+            "text": "8pm today",
+            "confidence": 0.9993122220039368
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8926,6 +10629,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -8966,6 +10670,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 30,
+            "text": "19:00, 2016-12-22",
+            "confidence": 0.9982739686965942
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -8998,6 +10710,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "tomorrow 8:00am",
+            "confidence": 0.9992873072624207
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9030,6 +10750,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "tomorrow morning at 7",
+            "confidence": 0.9989809989929199
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9062,6 +10790,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "tonight around 7",
+            "confidence": 0.9888734817504883
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9094,6 +10830,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 42,
+            "text": "7:00 on next Sunday afternoon",
+            "confidence": 0.999454140663147
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9128,6 +10872,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 54,
+            "text": "twenty minutes past five tomorrow morning",
+            "confidence": 0.7251748442649841
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9160,6 +10912,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "7, this morning",
+            "confidence": 0.939903974533081
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9192,6 +10952,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 24,
+            "text": "10, tonight",
+            "confidence": 0.9626665115356445
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9224,6 +10992,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 39,
+            "text": "8pm in the evening, Sunday",
+            "confidence": 0.9951372742652893
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -9254,6 +11030,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -9291,6 +11068,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -9338,6 +11116,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "10pm tonight",
+            "confidence": 0.999024510383606
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9370,6 +11156,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "8am this morning",
+            "confidence": 0.9928913116455078
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9402,6 +11196,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 29,
+            "text": "8pm this evening",
+            "confidence": 0.9984971284866333
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9434,6 +11236,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 30,
+            "text": "sunday",
+            "confidence": 0.9995198845863342
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9466,6 +11276,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "in 5 hours",
+            "confidence": 0.9982239007949829
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9498,6 +11316,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 29,
+            "text": "8:00:24",
+            "confidence": 0.9980335831642151
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -9538,6 +11364,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "04/21/2016, 8:00:24pm",
+            "confidence": 0.9722779393196106
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9570,6 +11404,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 30,
+            "text": "this morning at 7",
+            "confidence": 0.9993359446525574
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9602,6 +11444,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 32,
+            "text": "this morning at 7am",
+            "confidence": 0.9992687702178955
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9634,6 +11484,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "this morning at seven",
+            "confidence": 0.936530351638794
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -9674,6 +11532,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "this night at 7",
+            "confidence": 0.9274519085884094
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9706,6 +11572,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "tonight at 7",
+            "confidence": 0.9991596937179565
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9738,6 +11612,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 32,
+            "text": "2016-12-16T12:23:59",
+            "confidence": 0.9561352133750916
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -9768,6 +11650,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -9808,6 +11691,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 19,
+            "text": "16. Nov. 2016 10:38",
+            "confidence": 0.9967449307441711
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -9848,6 +11739,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 32,
+            "text": "1 day 2 hours later",
+            "confidence": 0.9639130234718323
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9880,6 +11779,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 7,
+            "end": 41,
+            "text": "1 month 2 days 2 hours 30 mins ago",
+            "confidence": 0.9542383551597595
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9912,6 +11819,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 25,
+            "text": "in an hour",
+            "confidence": 0.8893300890922546
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -9934,6 +11849,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -9964,6 +11880,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -9994,6 +11911,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10026,6 +11944,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 42,
+            "text": "wed Oct 26 15:50:06 2016",
+            "confidence": 0.6550617814064026
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10058,6 +11984,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 28,
+            "text": "8.30pm today",
+            "confidence": 0.8953757882118225
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10090,6 +12024,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 28,
+            "text": "today at 8.30pm",
+            "confidence": 0.8915444612503052
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10112,6 +12054,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10149,6 +12092,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10187,6 +12131,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10218,6 +12163,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10263,6 +12209,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10306,6 +12253,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 53,
+            "text": "from Friday the 11th until Tuesday the 15",
+            "confidence": 0.9799655079841614
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10329,6 +12284,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10360,6 +12316,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10410,6 +12367,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 38,
+            "text": "from 4 to 22 January, 1995",
+            "confidence": 0.9212775230407715
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10445,6 +12410,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 38,
+            "text": "between 4-22 January, 1995",
+            "confidence": 0.281719833612442
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -10488,6 +12461,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 53,
+            "text": "between september 4th through september 8",
+            "confidence": 0.9613194465637207
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10523,6 +12504,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 24,
+            "text": "this week",
+            "confidence": 0.9923326969146729
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10558,6 +12547,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 30,
+            "text": "coming week",
+            "confidence": 0.8390701413154602
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10581,6 +12578,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10622,6 +12620,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 20,
+            "text": "February",
+            "confidence": 0.9832334518432617
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10657,6 +12663,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 26,
+            "text": "this September",
+            "confidence": 0.9952354431152344
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10692,6 +12706,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "last sept",
+            "confidence": 0.9978160858154297
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10727,6 +12749,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "next june",
+            "confidence": 0.9998329877853394
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10750,6 +12780,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10781,6 +12812,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10822,6 +12854,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 18,
+            "text": "2015.3",
+            "confidence": 0.26403582096099854
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -10863,6 +12903,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 18,
+            "text": "2015/3",
+            "confidence": 0.9779749512672424
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10896,6 +12944,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 18,
+            "text": "3/2015",
+            "confidence": 0.99940425157547
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10919,6 +12975,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -10962,6 +13019,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 13,
+            "text": "few days",
+            "confidence": 0.9944148063659668
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -10997,6 +13062,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 34,
+            "end": 43,
+            "text": "this week",
+            "confidence": 0.998841404914856
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11020,6 +13093,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11051,6 +13125,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11100,6 +13175,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "this weekend",
+            "confidence": 0.9996126294136047
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11141,6 +13224,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 3,
+            "end": 10,
+            "text": "weekend",
+            "confidence": 0.9992469549179077
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11176,6 +13267,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 32,
+            "text": "Oct. 2 to October 22",
+            "confidence": 0.9953145384788513
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11211,6 +13310,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 41,
+            "text": "January 12, 2016 - 01/22/2016",
+            "confidence": 0.9963780045509338
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11246,6 +13353,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 40,
+            "text": "1st Jan until Wed, 22 of Jan",
+            "confidence": 0.951038122177124
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11269,6 +13384,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11312,6 +13428,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 37,
+            "text": "from Oct. 2 to October 22",
+            "confidence": 0.9991122484207153
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11335,6 +13459,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11378,6 +13503,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 29,
+            "text": "November 19 to 20",
+            "confidence": 0.9996485710144043
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11413,6 +13546,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 38,
+            "text": "November between 19 and 20",
+            "confidence": 0.963803231716156
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11436,6 +13577,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11467,6 +13609,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11498,6 +13641,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11529,6 +13673,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11560,6 +13705,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11591,6 +13737,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11622,6 +13769,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11671,6 +13819,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 27,
+            "text": "this weekend",
+            "confidence": 0.9997012615203857
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11706,6 +13862,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 26,
+            "text": "next year",
+            "confidence": 0.9965814352035522
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11741,6 +13905,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "next year",
+            "confidence": 0.9988066554069519
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11764,6 +13936,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11795,6 +13968,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11838,6 +14012,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 24,
+            "text": "3 weeks",
+            "confidence": 0.998579740524292
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11861,6 +14043,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11904,6 +14087,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 4,
+            "end": 21,
+            "text": "first week of Oct",
+            "confidence": 0.9550107717514038
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -11927,6 +14118,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11958,6 +14150,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -11999,6 +14192,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 33,
+            "end": 37,
+            "text": "2016",
+            "confidence": 0.9999783039093018
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12034,6 +14235,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 30,
+            "end": 39,
+            "text": "this year",
+            "confidence": 0.960561215877533
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12057,6 +14266,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12098,6 +14308,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 19,
+            "text": "3",
+            "confidence": 0.9954659938812256
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -12139,6 +14357,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 22,
+            "text": "3",
+            "confidence": 0.9546089172363281
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -12180,6 +14406,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 22,
+            "text": "2",
+            "confidence": 0.9758174419403076
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -12221,6 +14455,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 26,
+            "text": "4 2016",
+            "confidence": 0.9940673112869263
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12254,6 +14496,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 26,
+            "text": "2016 H2",
+            "confidence": 0.9720524549484253
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -12292,6 +14542,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12335,6 +14586,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "next month",
+            "confidence": 0.9925504922866821
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12370,6 +14629,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 35,
+            "end": 45,
+            "text": "this month",
+            "confidence": 0.955005407333374
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12405,6 +14672,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 35,
+            "end": 44,
+            "text": "this week",
+            "confidence": 0.9968337416648865
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12440,6 +14715,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 36,
+            "end": 45,
+            "text": "next year",
+            "confidence": 0.9908082485198975
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12475,6 +14758,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 36,
+            "end": 45,
+            "text": "next week",
+            "confidence": 0.9994686841964722
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12510,6 +14801,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 36,
+            "end": 46,
+            "text": "next month",
+            "confidence": 0.9615390300750732
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12545,6 +14844,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 31,
+            "text": "last year",
+            "confidence": 0.998979926109314
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12580,6 +14887,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 32,
+            "text": "last month",
+            "confidence": 0.9988349080085754
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12603,6 +14918,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12634,6 +14950,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12684,6 +15001,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 26,
+            "text": "this week",
+            "confidence": 0.998465359210968
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12707,6 +15032,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12738,6 +15064,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12769,6 +15096,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12818,6 +15146,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "this weekend",
+            "confidence": 0.9996126294136047
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -12841,6 +15177,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12872,6 +15209,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12903,6 +15241,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12934,6 +15273,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12965,6 +15305,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -12996,6 +15337,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13027,6 +15369,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13058,6 +15401,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13081,6 +15425,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13114,6 +15459,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 7,
+            "end": 13,
+            "text": "twenty",
+            "confidence": 0.9991526007652283
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13137,6 +15490,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13160,6 +15514,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13183,6 +15538,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13214,6 +15570,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13245,6 +15602,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13286,6 +15644,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 19,
+            "text": "June",
+            "confidence": 0.9997298121452332
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13309,6 +15675,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13340,6 +15707,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13363,6 +15731,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13386,6 +15755,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13417,6 +15787,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13448,6 +15819,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13479,6 +15851,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13520,6 +15893,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 22,
+            "text": "2014-2018",
+            "confidence": 0.5171186923980713
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13553,6 +15934,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 30,
+            "text": "2014-2018",
+            "confidence": 0.9846522808074951
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13586,6 +15975,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 30,
+            "text": "2014 to 2018",
+            "confidence": 0.9617783427238464
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -13617,6 +16014,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13640,6 +16038,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13671,6 +16070,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13694,6 +16094,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13725,6 +16126,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -13766,6 +16168,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 27,
+            "text": "2 days hence",
+            "confidence": 0.5617771744728088
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13799,6 +16209,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 27,
+            "end": 49,
+            "text": "beginning of next week",
+            "confidence": 0.8925854563713074
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13832,6 +16250,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 40,
+            "text": "end of next week",
+            "confidence": 0.9358484148979187
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13865,6 +16291,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 42,
+            "text": "start of next week",
+            "confidence": 0.9873837232589722
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13898,6 +16332,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 36,
+            "text": "end of March",
+            "confidence": 0.21749600768089294
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -13941,6 +16383,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 35,
+            "end": 44,
+            "text": "next week",
+            "confidence": 0.9996910691261292
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -13974,6 +16424,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 43,
+            "text": "beginning of next week",
+            "confidence": 0.9147504568099976
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14009,6 +16467,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 28,
+            "text": "within 5 days",
+            "confidence": 0.9822898507118225
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14044,6 +16510,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 31,
+            "text": "within 10 months",
+            "confidence": 0.9930447936058044
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14079,6 +16553,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 29,
+            "text": "within 3 years",
+            "confidence": 0.9857361316680908
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14114,6 +16596,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 45,
+            "text": "within 5 years 1 month 12 days",
+            "confidence": 0.9638931751251221
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14149,6 +16639,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 38,
+            "text": "within the next 3 years",
+            "confidence": 0.9710517525672913
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14184,6 +16682,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 35,
+            "end": 58,
+            "text": "5 years 1 month 12 days",
+            "confidence": 0.8723295331001282
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14219,6 +16725,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 38,
+            "text": "from 4 to January 22, 1995",
+            "confidence": 0.941504716873169
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14252,6 +16766,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 33,
+            "text": "from 02 to April 07",
+            "confidence": 0.9928802847862244
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -14293,6 +16815,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "2016 june",
+            "confidence": 0.988518476486206
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14326,6 +16856,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 21,
+            "text": "nov",
+            "confidence": 0.9999017119407654
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14359,6 +16897,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 22,
+            "text": "nov",
+            "confidence": 0.999854564666748
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14392,6 +16938,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 27,
+            "text": "November , 2016",
+            "confidence": 0.9998123049736023
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14425,6 +16979,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 25,
+            "text": "2016 November",
+            "confidence": 0.9982776045799255
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14448,6 +17010,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -14496,6 +17059,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 20,
+            "text": "11",
+            "confidence": 0.7179920077323914
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14529,6 +17100,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 19,
+            "text": "2016/11",
+            "confidence": 0.9967972040176392
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14562,6 +17141,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "2016 / 11",
+            "confidence": 0.5455663204193115
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14595,6 +17182,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 20,
+            "text": "2016 /11",
+            "confidence": 0.8304281234741211
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14628,6 +17223,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 21,
+            "text": "2016",
+            "confidence": 0.9999681115150452
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14661,6 +17264,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 20,
+            "text": "11 -2016",
+            "confidence": 0.917967677116394
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14694,6 +17305,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 19,
+            "text": "11/2016",
+            "confidence": 0.998418927192688
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14727,6 +17346,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "11 / 2016",
+            "confidence": 0.9945403337478638
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14750,6 +17377,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -14781,6 +17409,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -14822,6 +17451,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 37,
+            "text": "2015 and Feb 2018",
+            "confidence": 0.9989769458770752
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14845,6 +17482,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -14883,6 +17521,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -14924,6 +17563,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 37,
+            "text": "2015 May and 2018",
+            "confidence": 0.6617872714996338
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14957,6 +17604,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 37,
+            "text": "May 2015 and 2018",
+            "confidence": 0.9998161196708679
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -14980,6 +17635,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15021,6 +17677,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 45,
+            "text": "2015 and January 5th 2018",
+            "confidence": 0.9920694828033447
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15044,6 +17708,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15082,6 +17747,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15113,6 +17779,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15144,6 +17811,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15182,6 +17850,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15213,6 +17882,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15262,6 +17932,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 28,
+            "text": "weekend",
+            "confidence": 0.9994972348213196
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15285,6 +17963,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15316,6 +17995,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15359,6 +18039,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 47,
+            "end": 57,
+            "text": "this month",
+            "confidence": 0.869204044342041
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15394,6 +18082,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 47,
+            "end": 56,
+            "text": "this year",
+            "confidence": 0.9725685119628906
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15429,6 +18125,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 36,
+            "end": 45,
+            "text": "this week",
+            "confidence": 0.9789677858352661
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15464,6 +18168,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 36,
+            "end": 46,
+            "text": "this month",
+            "confidence": 0.9349850416183472
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15499,6 +18211,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 36,
+            "end": 45,
+            "text": "this year",
+            "confidence": 0.97540682554245
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15522,6 +18242,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15562,6 +18283,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 31,
+            "end": 50,
+            "text": "2 weeks after today",
+            "confidence": 0.9790789484977722
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15595,6 +18324,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 27,
+            "end": 45,
+            "text": "2 weeks from today",
+            "confidence": 0.8403027057647705
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15630,6 +18367,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 17,
+            "end": 42,
+            "text": "within 2 weeks from today",
+            "confidence": 0.6008110046386719
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15665,6 +18410,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 33,
+            "text": "1 week, from 20th dec",
+            "confidence": 0.9826003313064575
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15700,6 +18453,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 8,
+            "end": 30,
+            "text": "for 3 days, from today",
+            "confidence": 0.6941115856170654
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15733,6 +18494,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 29,
+            "text": "3 days from today",
+            "confidence": 0.5891698002815247
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15766,6 +18535,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 33,
+            "end": 54,
+            "text": "3 days after tomorrow",
+            "confidence": 0.9395027756690979
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15799,6 +18576,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 16,
+            "text": "15",
+            "confidence": 0.98086017370224
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15822,6 +18607,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15865,6 +18651,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 43,
+            "end": 52,
+            "text": "this week",
+            "confidence": 0.9987421631813049
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15900,6 +18694,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 30,
+            "text": "this week",
+            "confidence": 0.9745903015136719
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15933,6 +18735,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 34,
+            "end": 45,
+            "text": "November 15",
+            "confidence": 0.9998746514320374
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -15956,6 +18766,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -15997,6 +18808,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 30,
+            "text": "3pm : I'll be out on this week",
+            "confidence": 0.979321300983429
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -16038,6 +18857,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 0,
+            "end": 13,
+            "text": "this week 8am",
+            "confidence": 0.9523398876190186
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16061,6 +18888,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -16092,6 +18920,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -16140,6 +18969,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 45,
+            "text": "next friday to Oct 1st 2020",
+            "confidence": 0.9968032240867615
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -16171,6 +19008,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -16212,6 +19050,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 50,
+            "end": 60,
+            "text": "february 4",
+            "confidence": 0.9997327327728271
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16245,6 +19091,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 39,
+            "end": 58,
+            "text": "starting february 4",
+            "confidence": 0.9937245845794678
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16280,6 +19134,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 35,
+            "end": 67,
+            "text": "3 days starting from next Monday",
+            "confidence": 0.9634492993354797
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16315,6 +19177,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 36,
+            "text": "a week starting tomorrow",
+            "confidence": 0.5401758551597595
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16350,6 +19220,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 8,
+            "end": 35,
+            "text": "for 2 weeks starting May 20",
+            "confidence": 0.7664369344711304
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16383,6 +19261,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 51,
+            "end": 61,
+            "text": "february 4",
+            "confidence": 0.999740481376648
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16416,6 +19302,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 52,
+            "end": 62,
+            "text": "february 4",
+            "confidence": 0.99953293800354
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16449,6 +19343,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 39,
+            "end": 59,
+            "text": "beginning february 4",
+            "confidence": 0.9848071336746216
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16482,6 +19384,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 43,
+            "end": 47,
+            "text": "2000",
+            "confidence": 0.9998276233673096
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16515,6 +19425,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 49,
+            "end": 53,
+            "text": "2000",
+            "confidence": 0.9996819496154785
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16538,6 +19456,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -16569,6 +19488,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -16600,6 +19520,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -16643,6 +19564,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 31,
+            "text": "3pm to 4pm tomorrow",
+            "confidence": 0.9994456768035889
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16678,6 +19607,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 43,
+            "text": "half past seven to 4pm tomorrow",
+            "confidence": 0.6650352478027344
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16713,6 +19650,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 54,
+            "text": "from 2:00pm, 2016-2-21 to 3:32, 04/23/2016",
+            "confidence": 0.8270601630210876
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -16756,6 +19701,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 37,
+            "text": "between 4pm and 5pm today",
+            "confidence": 0.9977784156799316
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16791,6 +19744,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 52,
+            "text": "between 4pm on Jan 1, 2016 and 5pm today",
+            "confidence": 0.07968468219041824
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -16834,6 +19795,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 53,
+            "text": "14th Feb for 7 hours from 9:30am",
+            "confidence": 0.28382644057273865
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -16879,6 +19848,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 21,
+            "end": 53,
+            "text": "14th Feb from 9:30am for 7 hours",
+            "confidence": 0.972192108631134
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16912,6 +19889,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 20,
+            "text": "tonight",
+            "confidence": 0.999944269657135
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16945,6 +19930,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 26,
+            "text": "tonight for 8",
+            "confidence": 0.9966822266578674
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -16980,6 +19973,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "this night",
+            "confidence": 0.8938642144203186
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17015,6 +20016,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "this evening",
+            "confidence": 0.9970508813858032
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -17058,6 +20067,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "this morning",
+            "confidence": 0.996587872505188
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -17101,6 +20118,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 27,
+            "text": "this afternoon",
+            "confidence": 0.9983500838279724
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -17144,6 +20169,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 23,
+            "text": "last night",
+            "confidence": 0.9911985993385315
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17179,6 +20212,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 34,
+            "text": "next monday afternoon",
+            "confidence": 0.9994064569473267
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17202,6 +20243,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -17245,6 +20287,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 18,
+            "end": 26,
+            "text": "3 minute",
+            "confidence": 0.9999088644981384
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17268,6 +20318,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -17311,6 +20362,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 27,
+            "text": "3mins",
+            "confidence": 0.9998837113380432
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17334,6 +20393,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -17377,6 +20437,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 24,
+            "text": "last minute",
+            "confidence": 0.9957508444786072
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17412,6 +20480,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 22,
+            "text": "next hour",
+            "confidence": 0.9995293617248535
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17447,6 +20523,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 35,
+            "end": 58,
+            "text": "morning of this Tuesday",
+            "confidence": 0.9899665117263794
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17482,6 +20566,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 26,
+            "end": 67,
+            "text": "for 30 minutes on Tuesday, in the morning",
+            "confidence": 0.8498417735099792
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17517,6 +20609,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 35,
+            "text": "tuesday in the evening",
+            "confidence": 0.9983508586883545
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17552,6 +20652,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 39,
+            "text": "morning Tuesday",
+            "confidence": 0.998451828956604
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17587,6 +20695,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 42,
+            "text": "morning on Tuesday",
+            "confidence": 0.9886611700057983
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17622,6 +20738,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 38,
+            "text": "morning Tuesday",
+            "confidence": 0.9988620281219482
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17657,6 +20781,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 41,
+            "text": "afternoon Tuesday",
+            "confidence": 0.9977108836174011
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17692,6 +20824,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 40,
+            "text": "afternoon Tuesday",
+            "confidence": 0.9980503916740417
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17727,6 +20867,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 39,
+            "text": "evening Tuesday",
+            "confidence": 0.9973069429397583
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17762,6 +20910,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 24,
+            "end": 37,
+            "text": "night Tuesday",
+            "confidence": 0.9974313974380493
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17797,6 +20953,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 36,
+            "text": "night Tuesday",
+            "confidence": 0.9965194463729858
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17832,6 +20996,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 36,
+            "text": "night Tuesday",
+            "confidence": 0.9994235634803772
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -17867,6 +21039,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 35,
+            "text": "Tuesday early-morning",
+            "confidence": 0.9760072827339172
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -17910,6 +21090,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 34,
+            "text": "Tuesday late-morning",
+            "confidence": 0.958847165107727
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -17953,6 +21141,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 36,
+            "text": "Tuesday late-afternoon",
+            "confidence": 0.9908053874969482
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -17996,6 +21192,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 35,
+            "text": "Tuesday early-evening",
+            "confidence": 0.9986389875411987
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18039,6 +21243,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 32,
+            "text": "Tuesday late-night",
+            "confidence": 0.9723636507987976
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18082,6 +21294,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 33,
+            "text": "Tuesday early night",
+            "confidence": 0.9777758717536926
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18117,6 +21337,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 14,
+            "end": 32,
+            "text": "Tuesday late night",
+            "confidence": 0.9879060983657837
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18140,6 +21368,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -18171,6 +21400,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -18202,6 +21432,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -18245,6 +21476,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 19,
+            "end": 27,
+            "text": "this day",
+            "confidence": 0.9631591439247131
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18268,6 +21507,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -18311,6 +21551,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 39,
+            "text": "night on Tuesday",
+            "confidence": 0.9974998235702515
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18346,6 +21594,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 47,
+            "text": "Dec 9th between 8am and 2pm",
+            "confidence": 0.9710831046104431
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18381,6 +21637,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 69,
+            "end": 113,
+            "text": "30 min meeting this Friday, in the afternoon",
+            "confidence": 0.9928631782531738
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18416,6 +21680,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 69,
+            "end": 113,
+            "text": "30 min meeting in the afternoon, this Friday",
+            "confidence": 0.9939113259315491
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18459,6 +21731,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 69,
+            "end": 113,
+            "text": "30 min meeting in the afternoon, next Friday",
+            "confidence": 0.9935789704322815
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18502,6 +21782,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 69,
+            "end": 113,
+            "text": "30 min meeting in the afternoon, last Friday",
+            "confidence": 0.9948904514312744
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18545,6 +21833,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 69,
+            "end": 106,
+            "text": "Friday afternoon between 1PM and 4 PM",
+            "confidence": 0.9925726056098938
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18580,6 +21876,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 73,
+            "end": 113,
+            "text": "afternoon on Friday between 1PM and 4 PM",
+            "confidence": 0.9836682081222534
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18615,6 +21919,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 41,
+            "end": 62,
+            "text": "2018-09-23 1p.m. to 4",
+            "confidence": 0.9007412791252136
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18648,6 +21960,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 41,
+            "end": 60,
+            "text": "2018-09-23 1:30p.m.",
+            "confidence": 0.917117714881897
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18681,6 +22001,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 20,
+            "text": "tuesday",
+            "confidence": 0.99994957447052
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18716,6 +22044,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 22,
+            "end": 32,
+            "text": "15 seconds",
+            "confidence": 0.9047138690948486
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18751,6 +22087,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 31,
+            "text": "within 5 minutes",
+            "confidence": 0.9923809170722961
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18786,6 +22130,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 29,
+            "text": "within 5 hours",
+            "confidence": 0.9901216626167297
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18821,6 +22173,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 25,
+            "end": 66,
+            "text": "within 2 days 1 hour 5 minutes 30 seconds",
+            "confidence": 0.7517914772033691
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -18844,6 +22204,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -18887,6 +22248,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 28,
+            "text": "monday 8 to 9",
+            "confidence": 0.21335379779338837
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18942,6 +22311,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 43,
+            "text": "Monday 12-4",
+            "confidence": 0.4685261845588684
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -18990,6 +22367,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 32,
+            "end": 43,
+            "text": "Monday 11-4",
+            "confidence": 0.8504891991615295
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -19033,6 +22418,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 47,
+            "text": "between 10 and 11:30 on 1/1/2015",
+            "confidence": 0.002876515965908766
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -19078,6 +22471,7 @@
       "parsed": {
         "occurrences": [],
         "rrules": [],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
@@ -19126,6 +22520,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 34,
+            "end": 42,
+            "text": "1/1/2015",
+            "confidence": 0.8751783967018127
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -19161,6 +22563,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 15,
+            "end": 44,
+            "text": "from 3:30 to 5:55 on 1/1/2015",
+            "confidence": 0.7981209754943848
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
@@ -19211,6 +22621,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 23,
+            "end": 59,
+            "text": "Friday next week between 8am and 2pm",
+            "confidence": 0.8113088607788086
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -19246,6 +22664,14 @@
           }
         ],
         "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 55,
+            "text": "half past seven and 4pm of tomorrow",
+            "confidence": 0.06835051625967026
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {

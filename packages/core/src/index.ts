@@ -15,9 +15,18 @@ export type ParserOptions = Pick<ModelOptions, "backend" | "dateOrder">;
 export type TimeRange = Omit<Occurrence, "clause">;
 export type { Diagnostic } from "./types.js";
 
+/** Character offsets of a resolved expression. Role names stay internal. */
+export interface TimeSpan {
+  start: number;
+  end: number;
+  text: string;
+  confidence: number;
+}
+
 export interface ParseResult {
   occurrences: TimeRange[];
   rrules: string[];
+  spans: TimeSpan[];
   truncated: boolean;
   diagnostics: Diagnostic[];
   backend: "cpu" | "webgpu";
@@ -52,6 +61,7 @@ export async function defineParser(options: ParserOptions = {}) {
     const started = performance.now();
     const occurrences: TimeRange[] = [];
     const rrules: string[] = [];
+    const spans: TimeSpan[] = [];
     const diagnostics = parsed.expressions.flatMap(
       (expression) => expression.diagnostics,
     );
@@ -80,6 +90,12 @@ export async function defineParser(options: ParserOptions = {}) {
           })),
         );
         truncated ||= result.truncated;
+        spans.push({
+          start: expression.start,
+          end: expression.end,
+          text: expression.text,
+          confidence: expression.confidence,
+        });
       } catch (error) {
         diagnostics.push({
           code: "resolution-error",
@@ -95,6 +111,8 @@ export async function defineParser(options: ParserOptions = {}) {
     return {
       occurrences: occurrences.slice(0, limit),
       rrules,
+      // Not sliced: spans describe the input, not the expansion.
+      spans,
       truncated: truncated || occurrences.length > limit,
       diagnostics,
       backend: parsed.backend,
