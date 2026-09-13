@@ -63,7 +63,7 @@ FAMILY_WEIGHTS = [
         "imperative-shift",
         "daypart-clock",
     )
-    else 8
+    else 6
     if name == "clock-place"
     else 2
     for name in FAMILIES
@@ -111,8 +111,9 @@ PLACES = (
 EVENT_NOUNS = (
     "dinner lunch coffee standup call interview gym class dentist drinks pickup "
     "breakfast haircut yoga brunch checkup practice rehearsal session demo retro "
-    "physio therapy swim tutoring"
+    "physio therapy swim tutoring meeting appointment lesson sync review briefing"
 ).split()
+BARE_PLACES = "home school work daycare".split()
 VENUES = [
     "Nobu", "Joe's", "HQ", "Luigi's", "Maria's", "the Ivy", "Blue Bottle",
     "Cafe Nero", "the Grand", "Dorsia", "Pret", "the Anchor",
@@ -123,14 +124,18 @@ def trailing_place(s):
     """A venue after a clock is background, and the clock is still a clock."""
     r = s.rng
     s.in_expression = False
-    if r.random() < 0.45:
-        s.add(f"{r.choice(['at', 'in'])} {r.choice(VENUES)}", "O")
-    elif r.random() < 0.5:
-        s.add(f"{r.choice(['at', 'in'])} the {r.choice(PLACES)}", "O")
+    lead = r.choice(["at", "in", "near", "by", "next to", "outside", "across from"])
+    roll = r.random()
+    if roll < 0.35:
+        s.add(f"{lead} {r.choice(VENUES)}", "O")
+    elif roll < 0.65:
+        s.add(f"{lead} the {r.choice(PLACES)}", "O")
+    elif roll < 0.8:
+        s.add(f"{r.choice(['at', 'from'])} {r.choice(BARE_PLACES)}", "O")
     else:
         spot = r.choice(["room", "suite", "studio", "gate", "desk"])
-        lead = r.choice(["at", "in"]) if spot in ("room", "suite", "studio") else "at"
-        s.add(f"{lead} {spot} {r.randint(1, 40)}", "O")
+        where = r.choice(["at", "in"]) if spot in ("room", "suite", "studio") else "at"
+        s.add(f"{where} {spot} {r.randint(1, 40)}", "O")
 
 
 def join(s, connective="at"):
@@ -528,8 +533,20 @@ def render(s, reserved=False, family=None, bare=False):
             s.add(":", "GLUE", "")
             minute = r.choice([15, 30, 45])
             s.add(f"{minute:02}", "MINUTE", "")
+        # One prefix, two endings: the following word decides, not the preposition.
+        if r.random() < 0.45:
+            morning = r.random() < 0.5
+            qualifier = (
+                r.choice(["in the morning", "in morning"])
+                if morning
+                else r.choice(["in the afternoon", "in the evening", "at night"])
+            )
+            s.add(qualifier, "MERIDIEM")
+            meridiem = "am" if morning or (hour == 12 and qualifier == "at night") else "pm"
+            hour = hour % 12 + (12 if meridiem == "pm" else 0)
+        else:
+            trailing_place(s)
         clause = {"time": {"start": {"hour": hour, "minute": minute}}}
-        trailing_place(s)
     elif family == "daypart-clock":
         part = r.choice(["morning", "afternoon", "evening"])
         if r.random() < 0.65:

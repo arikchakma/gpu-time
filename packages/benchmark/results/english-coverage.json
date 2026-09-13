@@ -1,18 +1,18 @@
 {
-  "model": "95647e7e0a3c4c3f998281a6de389d26908b12e042913f1dacb477a04dcabff2",
-  "runtimeSha256": "341bbe79976a30050b0fae6e1afd5fc47b2118fdad89a35eda9f03e981de717a",
+  "model": "f2f9fdd3de300314fe3c575a85a3fad4dc1f7fa6980aa1a7f5023b6bdbaedb2c",
+  "runtimeSha256": "6f6ca7dca67d0bc9e72f7a4585e91ef3d624285a882d58eeafbf354b0a0d682f",
   "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
   "total": 71,
-  "correct": 58,
-  "accuracy": 0.8169014084507042,
+  "correct": 70,
+  "accuracy": 0.9859154929577465,
   "families": {
     "calendar-edge-shift": {
       "correct": 3,
       "total": 3
     },
     "clock-with-place": {
-      "correct": 2,
+      "correct": 14,
       "total": 15
     },
     "compact-named-date": {
@@ -749,15 +749,7 @@
           "end": "2026-09-13T02:00:00+06:00"
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 21,
-          "end": 25,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -907,6 +899,13 @@
           "start": 30,
           "end": 31,
           "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 18,
+          "end": 22,
+          "severity": "warning"
         }
       ],
       "correct": true
@@ -1427,17 +1426,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"Dinner at 8 at Nobu\".",
-          "start": 0,
-          "end": 19
+          "start": "2026-09-13T08:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 10,
+          "end": 11,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-058",
@@ -1453,17 +1457,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"Lunch at 12 at Joe's\".",
-          "start": 0,
-          "end": 20
+          "start": "2026-09-12T12:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 9,
+          "end": 11,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-059",
@@ -1479,17 +1488,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"Coffee at 3 at the cafe\".",
-          "start": 0,
-          "end": 23
+          "start": "2026-09-13T03:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 10,
+          "end": 11,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-060",
@@ -1505,17 +1519,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"standup at 9 at the office\".",
-          "start": 0,
-          "end": 26
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 11,
+          "end": 12,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-061",
@@ -1531,17 +1550,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"call at 3 at the office\".",
-          "start": 0,
-          "end": 23
+          "start": "2026-09-13T03:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 8,
+          "end": 9,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-062",
@@ -1557,17 +1581,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"interview at 10 at HQ\".",
-          "start": 0,
-          "end": 21
+          "start": "2026-09-13T10:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 13,
+          "end": 15,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-063",
@@ -1583,17 +1612,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"gym at 7 at the club\".",
-          "start": 0,
-          "end": 20
+          "start": "2026-09-13T07:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 7,
+          "end": 8,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-064",
@@ -1609,17 +1643,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"class at 6 at the studio\".",
-          "start": 0,
-          "end": 24
+          "start": "2026-09-13T06:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 9,
+          "end": 10,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-065",
@@ -1635,17 +1674,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"dentist at 4 at the clinic\".",
-          "start": 0,
-          "end": 26
+          "start": "2026-09-13T04:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 11,
+          "end": 12,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-066",
@@ -1687,17 +1731,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"pickup at 5 at school\".",
-          "start": 0,
-          "end": 21
+          "start": "2026-09-13T05:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 10,
+          "end": 11,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-068",
@@ -1775,17 +1824,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"breakfast at 9 at the diner\".",
-          "start": 0,
-          "end": 27
+          "start": "2026-09-13T09:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 13,
+          "end": 14,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "english-071",
@@ -1801,17 +1855,22 @@
           "allDay": false
         }
       ],
-      "actual": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"haircut at 2 at the salon\".",
-          "start": 0,
-          "end": 25
+          "start": "2026-09-13T02:00:00+06:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 11,
+          "end": 12,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     }
   ],
   "scope": "Independently authored English schedule regression cases with hand-written expected occurrences. This is targeted coverage, not general-language accuracy."

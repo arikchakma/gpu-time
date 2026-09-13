@@ -1,5 +1,5 @@
 {
-  "model": "95647e7e0a3c4c3f998281a6de389d26908b12e042913f1dacb477a04dcabff2",
+  "model": "f2f9fdd3de300314fe3c575a85a3fad4dc1f7fa6980aa1a7f5023b6bdbaedb2c",
   "corpus": {
     "repository": "microsoft/Recognizers-Text",
     "commit": "da7edcff59f669b2a460ab9d400e36298f0d658e",
@@ -57,18 +57,18 @@
   },
   "split": "development",
   "total": 563,
-  "correct": 220,
-  "accuracy": 0.3907637655417407,
+  "correct": 226,
+  "accuracy": 0.40142095914742454,
   "families": [
     {
       "family": "DateParser",
       "total": 113,
-      "correct": 71
+      "correct": 70
     },
     {
       "family": "TimeParser",
       "total": 73,
-      "correct": 43
+      "correct": 44
     },
     {
       "family": "TimePeriodParser",
@@ -78,25 +78,25 @@
     {
       "family": "DateTimeParser",
       "total": 53,
-      "correct": 34
+      "correct": 35
     },
     {
       "family": "DatePeriodParser",
       "total": 190,
-      "correct": 18
+      "correct": 22
     },
     {
       "family": "DateTimePeriodParser",
       "total": 74,
-      "correct": 18
+      "correct": 19
     }
   ],
   "stages": {
-    "value-mismatch": 168,
-    "correct": 220,
-    "interpretation-failed": 123,
+    "value-mismatch": 180,
+    "correct": 226,
+    "interpretation-failed": 103,
     "matches-upstream-past": 1,
-    "no-result": 47,
+    "no-result": 49,
     "resolution-error": 4
   },
   "results": [
@@ -700,7 +700,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 15,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -1121,7 +1129,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -1468,13 +1484,6 @@
             "start": 13,
             "end": 16,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 16,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -1725,6 +1734,13 @@
             "start": 13,
             "end": 17,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -1995,16 +2011,16 @@
       ],
       "actual": [
         {
-          "start": "2016-11-22T00:00:00+00:00",
+          "start": "2016-12-02T00:00:00+00:00",
           "allDay": true
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-22T00:00:00+00:00",
+            "start": "2016-12-02T00:00:00+00:00",
             "allDay": true
           }
         ],
@@ -2763,10 +2779,17 @@
         "diagnostics": [
           {
             "code": "invalid-date",
-            "message": "Unknown month.",
+            "message": "Day of month must be between 1 and 31.",
             "start": 28,
             "end": 32,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 17,
+            "end": 18,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -2800,15 +2823,7 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 0,
-            "end": 6,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -2884,6 +2899,13 @@
             "start": 17,
             "end": 25,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 3,
+            "end": 12,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -3124,30 +3146,24 @@
       ],
       "actual": [
         {
-          "start": "2018-04-23T00:00:00+00:00",
-          "allDay": true
+          "start": "2018-04-19T00:00:00+00:00",
+          "allDay": true,
+          "end": "2018-04-23T00:00:00+00:00"
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-04-23T00:00:00+00:00",
-            "allDay": true
+            "start": "2018-04-19T00:00:00+00:00",
+            "allDay": true,
+            "end": "2018-04-23T00:00:00+00:00"
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 17,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -3164,7 +3180,7 @@
       ],
       "actual": [
         {
-          "start": "2015-05-01T00:00:00+00:00",
+          "start": "2015-03-05T00:00:00+00:00",
           "allDay": true
         }
       ],
@@ -3173,21 +3189,13 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2015-05-01T00:00:00+00:00",
+            "start": "2015-03-05T00:00:00+00:00",
             "allDay": true
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 19,
-            "end": 20,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -3495,7 +3503,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 18,
+            "end": 23,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -3604,22 +3620,24 @@
           "precision": "date"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2019-09-01T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Both ends of a calendar range need a day.",
-            "start": 13,
-            "end": 17,
-            "severity": "error"
+            "start": "2019-09-01T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -3911,9 +3929,16 @@
           {
             "code": "invalid-time",
             "message": "Clock components are out of range.",
-            "start": 25,
-            "end": 32,
+            "start": 17,
+            "end": 24,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 17,
+            "end": 24,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -4654,26 +4679,29 @@
           "precision": "time"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-07T07:30:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-07T07:30:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-duration",
-            "message": "A duration needs a positive quantity and a time unit.",
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 15,
             "end": 20,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 5,
-            "end": 9,
             "severity": "warning"
           }
         ],
@@ -4855,8 +4883,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 13,
             "end": 18,
             "severity": "warning"
@@ -5278,13 +5306,6 @@
             "start": 13,
             "end": 17,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 17,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -5870,7 +5891,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -5995,8 +6024,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-date",
-            "message": "Multiple dates need a range or recurrence.",
+            "code": "unsupported",
+            "message": "Unsupported token role SECOND.",
             "start": 18,
             "end": 20,
             "severity": "error"
@@ -6023,24 +6052,29 @@
           "precision": "time"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-07T22:00:00+00:00",
-          "allDay": false
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-07T22:00:00+00:00",
-            "allDay": false
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "unlinked-times",
+            "message": "Two clocks need a range separator or separate clauses.",
+            "start": 21,
+            "end": 23,
+            "severity": "error"
+          },
+          {
+            "code": "filler-ignored",
+            "message": "Ignored H inside the expression.",
+            "start": 19,
+            "end": 20,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -6171,6 +6205,13 @@
             "start": 0,
             "end": 4,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -6189,7 +6230,7 @@
       ],
       "actual": [
         {
-          "start": "2017-08-01T22:00:00+00:00",
+          "start": "2016-11-07T22:00:00+00:00",
           "allDay": false
         }
       ],
@@ -6198,21 +6239,13 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2017-08-01T22:00:00+00:00",
+            "start": "2016-11-07T22:00:00+00:00",
             "allDay": false
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 19,
-            "end": 20,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -6230,32 +6263,22 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T17:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-07T18:00:00+00:00"
+          "start": "2016-11-07T18:00:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T17:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-07T18:00:00+00:00"
+            "start": "2016-11-07T18:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 13,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -6288,7 +6311,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -6461,20 +6492,39 @@
           "precision": "time"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-08T09:00:00+00:00",
+          "allDay": false,
+          "end": "2016-11-08T11:30:00+00:00"
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-08T09:00:00+00:00",
+            "allDay": false,
+            "end": "2016-11-08T11:30:00+00:00"
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unsupported token role NUM.",
-            "start": 26,
-            "end": 27,
-            "severity": "error"
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 41,
+            "end": 42,
+            "severity": "warning"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 22,
+            "end": 25,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -6651,7 +6701,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 19,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -6920,26 +6978,29 @@
           "precision": "time"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-08T12:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T17:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-08T12:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T17:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "invalid-time",
+            "message": "A time-of-day qualifier needs a clock.",
+            "start": 14,
+            "end": 17,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -6955,26 +7016,29 @@
           "precision": "time"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-07T21:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T00:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-07T21:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T00:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "invalid-time",
+            "message": "A time-of-day qualifier needs a clock.",
+            "start": 14,
+            "end": 17,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -8938,22 +9002,30 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T19:00:00+00:00",
+          "start": "2016-11-07T07:00:00+00:00",
           "allDay": false
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T19:00:00+00:00",
+            "start": "2016-11-07T07:00:00+00:00",
             "allDay": false
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 28,
+            "end": 29,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -9098,26 +9170,29 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-13T20:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-13T20:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-time",
-            "message": "Clock components are out of range.",
-            "start": 13,
-            "end": 14,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 14,
+            "code": "filler-ignored",
+            "message": "Ignored in inside the expression.",
+            "start": 17,
+            "end": 19,
             "severity": "warning"
           }
         ],
@@ -9241,29 +9316,24 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-07T08:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "unsupported",
-            "message": "This bound requires recurrence.",
-            "start": 17,
-            "end": 21,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 14,
-            "severity": "warning"
+            "start": "2016-11-07T08:00:00+00:00",
+            "allDay": false
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -9549,7 +9619,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "filler-ignored",
+            "message": "Ignored this inside the expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -9755,15 +9833,7 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 7,
-            "end": 8,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -9909,7 +9979,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 18,
+            "end": 21,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -10142,9 +10220,9 @@
         "diagnostics": [
           {
             "code": "unsupported",
-            "message": "This bound requires recurrence.",
-            "start": 19,
-            "end": 24,
+            "message": "Unknown calendar unit.",
+            "start": 31,
+            "end": 35,
             "severity": "error"
           }
         ],
@@ -10302,20 +10380,32 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "1995-01-04T00:00:00+00:00",
+          "allDay": true,
+          "end": "1995-01-23T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "1995-01-04T00:00:00+00:00",
+            "allDay": true,
+            "end": "1995-01-23T00:00:00+00:00"
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-date",
-            "message": "Both ends of a calendar range need a day.",
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
             "start": 12,
             "end": 19,
-            "severity": "error"
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -10469,22 +10559,24 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2017-02-01T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "no-result",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out February\".",
-            "start": 0,
-            "end": 20
+            "start": "2017-02-01T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -10669,8 +10761,8 @@
       ],
       "actual": [
         {
-          "start": "2015-11-03T00:00:00+00:00",
-          "allDay": true
+          "start": "2015-11-01T03:00:00+00:00",
+          "allDay": false
         }
       ],
       "correct": false,
@@ -10678,18 +10770,18 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2015-11-03T00:00:00+00:00",
-            "allDay": true
+            "start": "2015-11-01T03:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 16,
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 17,
+            "end": 18,
             "severity": "warning"
           }
         ],
@@ -11300,10 +11392,10 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-duration",
-            "message": "A duration needs a positive quantity and a time unit.",
-            "start": 17,
-            "end": 19,
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 20,
+            "end": 24,
             "severity": "error"
           }
         ],
@@ -11324,18 +11416,18 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "no-result",
       "parsed": {
         "occurrences": [],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "A standalone unit needs a modifier or a quantity.",
-            "start": 21,
-            "end": 25,
-            "severity": "error"
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"I'll be out rest the week\".",
+            "start": 0,
+            "end": 25
           }
         ],
         "backend": "cpu"
@@ -11355,18 +11447,18 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "no-result",
       "parsed": {
         "occurrences": [],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "A standalone unit needs a modifier or a quantity.",
-            "start": 23,
-            "end": 27,
-            "severity": "error"
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"I'll be out rest of my week\".",
+            "start": 0,
+            "end": 27
           }
         ],
         "backend": "cpu"
@@ -11479,18 +11571,18 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "no-result",
       "parsed": {
         "occurrences": [],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "A standalone unit needs a modifier or a quantity.",
-            "start": 23,
-            "end": 27,
-            "severity": "error"
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"I'll be out rest of my week\".",
+            "start": 0,
+            "end": 27
           }
         ],
         "backend": "cpu"
@@ -11549,22 +11641,26 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2017-01-01T00:00:00+00:00",
+          "allDay": true,
+          "end": "2018-01-01T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Conflicting date specifications need separate clauses.",
-            "start": 12,
-            "end": 16,
-            "severity": "error"
+            "start": "2017-01-01T00:00:00+00:00",
+            "allDay": true,
+            "end": "2018-01-01T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -11840,29 +11936,24 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-01T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-time",
-            "message": "A fractional clock needs past or to and an hour.",
-            "start": 22,
-            "end": 29,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 22,
-            "end": 29,
-            "severity": "warning"
+            "start": "2016-11-01T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -11946,7 +12037,7 @@
       ],
       "actual": [
         {
-          "start": "2016-11-01T03:00:00+00:00",
+          "start": "2016-11-07T03:00:00+00:00",
           "allDay": false
         }
       ],
@@ -11955,7 +12046,7 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-01T03:00:00+00:00",
+            "start": "2016-11-07T03:00:00+00:00",
             "allDay": false
           }
         ],
@@ -12100,20 +12191,37 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-01T02:00:00+00:00",
+          "allDay": false
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-01T02:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "A standalone unit needs a modifier or a quantity.",
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 25,
+            "end": 26,
+            "severity": "warning"
+          },
+          {
+            "code": "filler-ignored",
+            "message": "Ignored H inside the expression.",
             "start": 24,
             "end": 25,
-            "severity": "error"
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -12133,18 +12241,18 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "no-result",
       "parsed": {
         "occurrences": [],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "A standalone unit needs a modifier or a quantity.",
-            "start": 9,
-            "end": 14,
-            "severity": "error"
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"upcoming month holidays\".",
+            "start": 0,
+            "end": 23
           }
         ],
         "backend": "cpu"
@@ -12480,26 +12588,29 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2017-11-14T00:00:00+00:00",
-          "allDay": true,
-          "end": "2017-11-17T00:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2017-11-14T00:00:00+00:00",
-            "allDay": true,
-            "end": "2017-11-17T00:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "open-bound-needs-time",
+            "message": "An open bound needs a clock time, as in \"after 6pm\".",
+            "start": 71,
+            "end": 75,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 61,
+            "end": 65,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -13090,6 +13201,13 @@
             "start": 32,
             "end": 35,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 19,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -13140,8 +13258,8 @@
       ],
       "actual": [
         {
-          "start": "2017-06-01T09:00:00+00:00",
-          "allDay": false
+          "start": "2017-06-01T00:00:00+00:00",
+          "allDay": true
         }
       ],
       "correct": false,
@@ -13149,28 +13267,13 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2017-06-01T09:00:00+00:00",
-            "allDay": false
+            "start": "2017-06-01T00:00:00+00:00",
+            "allDay": true
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "ambiguous-meridiem",
-            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-            "start": 39,
-            "end": 43,
-            "severity": "warning"
-          },
-          {
-            "code": "filler-ignored",
-            "message": "Ignored nineteen ninety inside the expression.",
-            "start": 23,
-            "end": 38,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -13200,6 +13303,13 @@
             "start": 3,
             "end": 11,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 2,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -13258,33 +13368,29 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-07T02:00:00+00:00",
+          "allDay": false
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-07T02:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-time",
-            "message": "A fractional clock needs past or to and an hour.",
-            "start": 22,
-            "end": 29,
-            "severity": "error"
-          },
-          {
-            "code": "filler-ignored",
-            "message": "Ignored thousand inside the expression.",
-            "start": 37,
-            "end": 45,
-            "severity": "warning"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 22,
-            "end": 29,
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 33,
+            "end": 36,
             "severity": "warning"
           }
         ],
@@ -13367,18 +13473,18 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out the year after next\".",
-            "start": 0,
-            "end": 31
+            "code": "unsupported",
+            "message": "The expression has no date or time.",
+            "start": 27,
+            "end": 31,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -13534,32 +13640,14 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-07T02:00:00+00:00",
-          "allDay": false
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "no-result",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-07T02:00:00+00:00",
-            "allDay": false
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "ambiguous-meridiem",
-            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-            "start": 37,
-            "end": 40,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -14064,22 +14152,26 @@
           "precision": "date"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2017-11-08T00:00:00+00:00",
+          "allDay": false,
+          "end": "2020-11-08T00:00:00+00:00"
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "unsupported",
-            "message": "The expression has no date or time.",
-            "start": 26,
-            "end": 30,
-            "severity": "error"
+            "start": "2017-11-08T00:00:00+00:00",
+            "allDay": false,
+            "end": "2020-11-08T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -14387,6 +14479,13 @@
             "start": 12,
             "end": 16,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -14404,22 +14503,24 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-11T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Both ends of a calendar range need a day.",
-            "start": 12,
-            "end": 16,
-            "severity": "error"
+            "start": "2016-11-11T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -14470,8 +14571,8 @@
       ],
       "actual": [
         {
-          "start": "2016-11-11T00:00:00+00:00",
-          "allDay": true
+          "start": "2016-11-01T11:00:00+00:00",
+          "allDay": false
         }
       ],
       "correct": false,
@@ -14479,18 +14580,18 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-11T00:00:00+00:00",
-            "allDay": true
+            "start": "2016-11-01T11:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 16,
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 19,
+            "end": 21,
             "severity": "warning"
           }
         ],
@@ -14783,6 +14884,13 @@
             "start": 12,
             "end": 16,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -14831,22 +14939,24 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2018-05-01T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Year is out of range.",
-            "start": 25,
-            "end": 28,
-            "severity": "error"
+            "start": "2018-05-01T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -15037,18 +15147,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unsupported token role NUM.",
-            "start": 25,
-            "end": 27,
+            "code": "invalid-time",
+            "message": "Clock components are out of range.",
+            "start": 37,
+            "end": 39,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 19,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -15077,16 +15180,9 @@
           {
             "code": "invalid-shift",
             "message": "Invalid relative quantity.",
-            "start": 33,
-            "end": 36,
+            "start": 37,
+            "end": 41,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 20,
-            "end": 25,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -15240,18 +15336,18 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"We could have scheduled a time to meet earlier in the week.\".",
-            "start": 0,
-            "end": 59
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 54,
+            "end": 58,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -15339,22 +15435,26 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2017-11-06T00:00:00+00:00",
+          "allDay": true,
+          "end": "2017-11-13T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "open-bound-needs-time",
-            "message": "An open bound needs a clock time, as in \"after 6pm\".",
-            "start": 30,
-            "end": 35,
-            "severity": "error"
+            "start": "2017-11-06T00:00:00+00:00",
+            "allDay": true,
+            "end": "2017-11-13T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -15370,22 +15470,26 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2018-05-01T00:00:00+00:00",
+          "allDay": true,
+          "end": "2018-06-01T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "open-bound-needs-time",
-            "message": "An open bound needs a clock time, as in \"after 6pm\".",
-            "start": 30,
-            "end": 35,
-            "severity": "error"
+            "start": "2018-05-01T00:00:00+00:00",
+            "allDay": true,
+            "end": "2018-06-01T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -15401,22 +15505,26 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2017-01-01T00:00:00+00:00",
+          "allDay": true,
+          "end": "2018-01-01T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "open-bound-needs-time",
-            "message": "An open bound needs a clock time, as in \"after 6pm\".",
-            "start": 30,
-            "end": 35,
-            "severity": "error"
+            "start": "2017-01-01T00:00:00+00:00",
+            "allDay": true,
+            "end": "2018-01-01T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -15530,22 +15638,32 @@
       ],
       "actual": [
         {
-          "start": "2018-06-12T00:00:00+00:00",
-          "allDay": true
+          "start": "2018-05-29T00:00:00+00:00",
+          "allDay": true,
+          "end": "2018-06-12T00:00:00+00:00"
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-06-12T00:00:00+00:00",
-            "allDay": true
+            "start": "2018-05-29T00:00:00+00:00",
+            "allDay": true,
+            "end": "2018-06-12T00:00:00+00:00"
           }
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 17,
+            "end": 23,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -15615,15 +15733,7 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 8,
-            "end": 11,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -15656,7 +15766,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 13,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -15705,22 +15823,24 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2018-06-15T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "open-bound-needs-time",
-            "message": "An open bound needs a clock time, as in \"after 6pm\".",
-            "start": 11,
-            "end": 13,
-            "severity": "error"
+            "start": "2018-06-15T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -15767,22 +15887,26 @@
           "precision": "date"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2018-12-31T00:00:00+00:00",
+          "allDay": true,
+          "end": "2019-01-07T00:00:00+00:00"
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Unknown month.",
-            "start": 32,
-            "end": 42,
-            "severity": "error"
+            "start": "2018-12-31T00:00:00+00:00",
+            "allDay": true,
+            "end": "2019-01-07T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -16016,6 +16140,13 @@
             "start": 0,
             "end": 4,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -16163,20 +16294,32 @@
           "precision": "date"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2024-11-11T00:00:00+00:00",
+          "allDay": true,
+          "end": "2024-11-14T00:00:00+00:00"
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2024-11-11T00:00:00+00:00",
+            "allDay": true,
+            "end": "2024-11-14T00:00:00+00:00"
+          }
+        ],
         "rrules": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-bound",
-            "message": "A bound needs a date.",
-            "start": 42,
-            "end": 50,
-            "severity": "error"
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 35,
+            "end": 36,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -16248,15 +16391,7 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 8,
-            "end": 11,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -16482,13 +16617,6 @@
             "start": 29,
             "end": 31,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 16,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -16520,6 +16648,13 @@
             "start": 27,
             "end": 28,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -16632,13 +16767,6 @@
             "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 38,
             "end": 39,
-            "severity": "warning"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 16,
             "severity": "warning"
           }
         ],
@@ -16943,7 +17071,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "filler-ignored",
+            "message": "Ignored this inside the expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -17021,7 +17157,15 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "filler-ignored",
+            "message": "Ignored this inside the expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -17348,29 +17492,26 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-08T06:00:00+00:00",
+          "allDay": false,
+          "end": "2016-11-08T12:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "unsupported",
-            "message": "Unknown relative day.",
-            "start": 31,
-            "end": 34,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 31,
-            "end": 34,
-            "severity": "warning"
+            "start": "2016-11-08T06:00:00+00:00",
+            "allDay": false,
+            "end": "2016-11-08T12:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -17386,29 +17527,26 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-08T06:00:00+00:00",
+          "allDay": false,
+          "end": "2016-11-08T06:30:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-time",
-            "message": "A fractional clock needs past or to and an hour.",
-            "start": 53,
-            "end": 55,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 26,
-            "end": 29,
-            "severity": "warning"
+            "start": "2016-11-08T06:00:00+00:00",
+            "allDay": false,
+            "end": "2016-11-08T06:30:00+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -18171,15 +18309,7 @@
         ],
         "rrules": [],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 19,
-            "end": 23,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -18771,22 +18901,26 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-07T16:12:00+00:00",
+          "allDay": false,
+          "end": "2016-11-09T17:17:30+00:00"
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "unsupported",
-            "message": "The expression has no date or time.",
-            "start": 32,
-            "end": 36,
-            "severity": "error"
+            "start": "2016-11-07T16:12:00+00:00",
+            "allDay": false,
+            "end": "2016-11-09T17:17:30+00:00"
           }
         ],
+        "rrules": [],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },

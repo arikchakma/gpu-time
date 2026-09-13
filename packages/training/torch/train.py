@@ -131,6 +131,49 @@ def evaluate(
     }
 
 
+def viterbi_on_device(emissions, transition, mask):
+    """Best path per sequence, float32 and on the training device.
+
+    Mirrors model.decode; training does not need its float64 tie-breaking.
+    """
+    roles = torch.zeros_like(mask, dtype=torch.long)
+    best = torch.zeros_like(emissions[:, 0])
+    started = torch.zeros_like(mask[:, 0])
+    pointers = []
+    for step in range(emissions.shape[1]):
+        scores, previous = (best.unsqueeze(2) + transition).max(dim=1)
+        scores = torch.where(started.unsqueeze(1), scores, torch.zeros_like(scores))
+        scores = scores + emissions[:, step]
+        best = torch.where(mask[:, step, None], scores, best)
+        started = started | mask[:, step]
+        pointers.append(previous)
+    current = best.argmax(-1)
+    for step in reversed(range(emissions.shape[1])):
+        roles[:, step] = torch.where(mask[:, step], current, torch.zeros_like(current))
+        previous = pointers[step].gather(1, current.unsqueeze(1)).squeeze(1)
+        current = torch.where(mask[:, step], previous, current)
+    return roles
+
+
+def path_score(emissions, transition, path, mask):
+    """Score of one label path under the CRF, over scored tokens only."""
+    zero = emissions.new_zeros(())
+    started = mask[:, 0]
+    score = torch.where(
+        mask[:, 0], emissions[:, 0].gather(1, path[:, :1]).squeeze(1), zero
+    )
+    previous = path[:, 0]
+    for step in range(1, emissions.shape[1]):
+        live = mask[:, step]
+        current = path[:, step]
+        step_score = emissions[:, step].gather(1, current.unsqueeze(1)).squeeze(1)
+        step_score = step_score + torch.where(started, transition[previous, current], zero)
+        score = score + torch.where(live, step_score, zero)
+        previous = torch.where(live, current, previous)
+        started = started | live
+    return score
+
+
 def prepare(split: str, count: int, seed: int, directory: Path) -> Dataset:
     prefix = directory / split
     command = [
@@ -212,6 +255,13 @@ def main():
     parser.add_argument(
         "--device", default="mps" if torch.backends.mps.is_available() else "cpu"
     )
+    parser.add_argument(
+        "--risk-lambda",
+        type=float,
+        default=0.0,
+        help="Weight on the sequence-level ranking loss. 0 disables it.",
+    )
+    parser.add_argument("--risk-margin", type=float, default=4.0)
     parser.add_argument("--identity-dropout", type=float, default=0.0)
     parser.add_argument(
         "--role-weighting", choices=["sqrt", "sqrt-keep-o", "none"], default="sqrt"
@@ -427,6 +477,19 @@ def main():
                 pos_weight=torch.tensor(8.0, device=args.device),
             )
             loss = role_loss + 0.5 * boundary_loss
+            if args.risk_lambda and args.transitions:
+                # Where the decoded path is wrong, lift the gold path above it.
+                transition = model.weight("transition")
+                with torch.no_grad():
+                    predicted = viterbi_on_device(logits.detach(), transition.detach(), mask)
+                wrong = ((predicted != labels) & mask).any(1)
+                if wrong.any():
+                    gold_path = path_score(logits, transition, labels.clamp_min(0), mask)
+                    best_path = path_score(logits, transition, predicted, mask)
+                    penalty = F.softplus(best_path + args.risk_margin - gold_path)
+                    loss = loss + args.risk_lambda * (
+                        (penalty * wrong.float()).sum() / wrong.float().sum()
+                    )
             if reference is not None:
                 reference.qat = model.qat
                 with torch.no_grad():

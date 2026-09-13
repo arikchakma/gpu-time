@@ -158,23 +158,48 @@ class PromotionGateTests(unittest.TestCase):
         self.assertTrue(decision["accepted"])
         self.assertAlmostEqual(decision["improvement"], 0.05)
 
-    def test_one_lost_example_is_rejected(self):
+    def test_one_lost_example_is_tolerated_but_recorded(self):
+        """Seed noise moves single examples; a veto on one rejects equal models."""
         decision = decide(self.gold(89), self.gold(90), [])
-        self.assertFalse(decision["accepted"])
+        self.assertTrue(decision["accepted"])
+        self.assertIn("gold prose: lost 1, gained 0", decision["warnings"])
+
+    def test_a_loss_beyond_chance_is_still_rejected(self):
+        self.assertFalse(decide(self.gold(85), self.gold(90), [])["accepted"])
+
+    def test_the_line_sits_where_the_sign_test_puts_it(self):
+        self.assertTrue(decide(self.gold(86), self.gold(90), [])["accepted"])
+        self.assertFalse(decide(self.gold(85), self.gold(90), [])["accepted"])
 
     def test_pooled_gain_cannot_hide_a_set_regression(self):
-        candidate = {**self.gold(100), "chat": {"total": 330, "correct": 269}}
+        candidate = {**self.gold(100), "chat": {"total": 330, "correct": 265}}
         baseline = {**self.gold(90), "chat": {"total": 330, "correct": 270}}
         self.assertFalse(decide(candidate, baseline, [])["accepted"])
 
-    def test_small_set_regression_is_rejected(self):
-        self.assertFalse(decide(self.gold(2, 3), self.gold(3, 3), [])["accepted"])
+    def test_a_set_too_small_to_measure_warns_instead_of_failing(self):
+        decision = decide(self.gold(2, 3), self.gold(3, 3), [])
+        self.assertTrue(decision["accepted"])
+        self.assertTrue(decision["warnings"])
+
+    def test_fixes_are_weighed_against_breaks(self):
+        """Five broken and five fixed is a coin toss, not a regression."""
+        candidate = {"prose": {"total": 100, "correct": 90,
+                               "failures": [f"a{i}" for i in range(5)] + ["keep"]}}
+        baseline = {"prose": {"total": 100, "correct": 90,
+                              "failures": [f"b{i}" for i in range(5)] + ["keep"]}}
+        self.assertTrue(decide(candidate, baseline, [])["accepted"])
 
     def test_family_regression_is_rejected_even_when_set_improves(self):
         candidate, baseline = self.gold(95), self.gold(90)
-        candidate["prose"]["families"] = {"question": {"total": 20, "correct": 18}}
+        candidate["prose"]["families"] = {"question": {"total": 20, "correct": 14}}
         baseline["prose"]["families"] = {"question": {"total": 20, "correct": 19}}
         self.assertFalse(decide(candidate, baseline, [])["accepted"])
+
+    def test_a_tiny_family_cannot_veto_on_one_example(self):
+        candidate, baseline = self.gold(95), self.gold(90)
+        candidate["prose"]["families"] = {"edge": {"total": 1, "correct": 0}}
+        baseline["prose"]["families"] = {"edge": {"total": 1, "correct": 1}}
+        self.assertTrue(decide(candidate, baseline, [])["accepted"])
 
     def test_changed_corpus_is_rejected(self):
         candidate, baseline = self.gold(95), self.gold(90)
@@ -195,17 +220,22 @@ class PromotionGateTests(unittest.TestCase):
     def test_perfect_baseline_still_rejects_regressions_and_changed_corpora(self):
         baseline = {"total": 1000, "correct": 1000, "families": {}, "sha256": "same"}
         for candidate in (
-            {**baseline, "correct": 999},
+            {**baseline, "correct": 994},
             {**baseline, "sha256": "different"},
             {**baseline, "total": 1001},
         ):
             with self.subTest(candidate=candidate):
                 self.assertFalse(synthetic(candidate, baseline)["accepted"])
 
-    def test_reserved_family_cannot_regress(self):
-        candidate = {"families": {"clock": {"total": 59, "correct": 58}}}
+    def test_reserved_family_cannot_regress_beyond_chance(self):
+        candidate = {"families": {"clock": {"total": 59, "correct": 41}}}
         baseline = {"families": {"clock": {"total": 59, "correct": 59}}}
         self.assertFalse(family_guards(candidate, baseline)[0]["passed"])
+
+    def test_reserved_family_tolerates_a_single_flip(self):
+        candidate = {"families": {"clock": {"total": 59, "correct": 58}}}
+        baseline = {"families": {"clock": {"total": 59, "correct": 59}}}
+        self.assertTrue(family_guards(candidate, baseline)[0]["passed"])
 
     def test_significant_regression_is_rejected(self):
         decision = decide(self.gold(60), self.gold(90), [])

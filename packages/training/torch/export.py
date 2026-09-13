@@ -6,6 +6,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import math
 import os
 import subprocess
 import tempfile
@@ -179,7 +180,29 @@ def score(model: TimeTagger, dataset: Dataset, families: list[str], threshold: f
     }
 
 
-def count_guard(candidate: dict, baseline: dict) -> dict:
+# Seed noise moves a few percent of examples, so a group must lose more than
+# chance explains. Groups below MINIMUM_SUPPORT warn instead of failing.
+MINIMUM_SUPPORT = 10
+SIGNIFICANCE = 0.05
+
+
+def flips(candidate: dict, baseline: dict) -> dict:
+    """Examples the update fixed and broke, read from the recorded failures."""
+    before = set(baseline.get("failures") or [])
+    after = set(candidate.get("failures") or [])
+    return {"fixed": sorted(before - after), "broke": sorted(after - before)}
+
+
+def regressed(fixed: int, broke: int, alpha: float = SIGNIFICANCE) -> bool:
+    """One-sided exact sign test over the examples that moved (McNemar)."""
+    discordant = fixed + broke
+    if discordant == 0 or broke <= fixed:
+        return False
+    tail = sum(math.comb(discordant, k) for k in range(broke, discordant + 1))
+    return tail / (2**discordant) < alpha
+
+
+def count_guard(candidate: dict, baseline: dict, minimum: int = 0) -> dict:
     support = candidate["total"]
     if support != baseline["total"]:
         return {"passed": False, "reason": "support mismatch", "support": support}
@@ -187,12 +210,24 @@ def count_guard(candidate: dict, baseline: dict) -> dict:
         return {"passed": False, "reason": "empty corpus", "support": support}
     if candidate.get("sha256") != baseline.get("sha256"):
         return {"passed": False, "reason": "corpus mismatch", "support": support}
-    delta = (baseline["correct"] - candidate["correct"]) / support
+    lost = baseline["correct"] - candidate["correct"]
+    if "failures" in candidate and "failures" in baseline:
+        moved = flips(candidate, baseline)
+        fixed, broke = len(moved["fixed"]), len(moved["broke"])
+    else:
+        fixed, broke = 0, max(lost, 0)
+    failed = regressed(fixed, broke)
+    reason = "regression" if failed else None
+    if failed and support < minimum:
+        failed, reason = False, "below minimum support"
     return {
-        "passed": delta <= 0,
-        "reason": None if delta <= 0 else "regression",
+        "passed": not failed,
+        "reason": reason if failed else None,
+        "warning": reason if not failed and reason else None,
         "support": support,
-        "delta": delta,
+        "delta": lost / support,
+        "fixed": fixed,
+        "broke": broke,
     }
 
 
@@ -202,21 +237,22 @@ def family_guards(candidate: dict, baseline: dict) -> list[dict]:
         current = candidate["families"].get(family)
         before = baseline["families"].get(family)
         support = (current or {}).get("total", 0)
-        reason = None
-        delta = None
+        guard = {}
         if not current or not before:
-            reason = "support mismatch"
+            reason, delta, passed = "support mismatch", None, False
         else:
-            guard = count_guard(current, before)
-            reason = guard["reason"]
-            delta = guard.get("delta")
+            guard = count_guard(current, before, minimum=MINIMUM_SUPPORT)
+            reason, delta, passed = guard["reason"], guard.get("delta"), guard["passed"]
         guards.append(
             {
                 "family": family,
                 "support": support,
                 "delta": delta,
-                "passed": reason is None,
+                "passed": passed,
                 "reason": reason,
+                "warning": guard.get("warning"),
+                "fixed": guard.get("fixed"),
+                "broke": guard.get("broke"),
             }
         )
     return guards
@@ -238,6 +274,7 @@ def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
         "baseline": None,
         "improvement": None,
         "failures": list(failures),
+        "warnings": [],
     }
     if baseline is not None:
         decision["baseline"] = {**pooled(baseline), "sets": baseline}
@@ -252,6 +289,10 @@ def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
                 guard = count_guard(counts, before)
                 if not guard["passed"]:
                     decision["failures"].append(f"gold {name}: {guard['reason']}")
+                elif guard["broke"] > guard["fixed"]:
+                    decision["warnings"].append(
+                        f"gold {name}: lost {guard['broke']}, gained {guard['fixed']}"
+                    )
                 for family in family_guards(
                     {"families": counts.get("families", {})},
                     {"families": before.get("families", {})},
@@ -259,6 +300,11 @@ def decide(candidate: dict, baseline: dict | None, failures: list[str]) -> dict:
                     if not family["passed"]:
                         decision["failures"].append(
                             f"gold {name}/{family['family']}: {family['reason']}"
+                        )
+                    elif family["warning"] or (family["broke"] or 0) > 0:
+                        decision["warnings"].append(
+                            f"gold {name}/{family['family']}: lost {family['broke']}"
+                            + (f" ({family['warning']})" if family["warning"] else "")
                         )
     decision["accepted"] = not decision["failures"]
     return decision
@@ -339,6 +385,42 @@ def score_corpus(
                 artifact["boundaryThreshold"],
             )
     return corpus, candidate, baseline
+
+
+def answer_scores(built: Path, sets: list[str], directory: Path) -> dict:
+    """Exact-schedule accuracy of a built package on the generated corpora."""
+    with tempfile.TemporaryDirectory() as out:
+        measured = Path(out) / "answers.json"
+        subprocess.run(
+            [
+                "node",
+                "--experimental-strip-types",
+                str(BENCH / "src/evaluate-model.ts"),
+                "--dist",
+                str(built / "dist/schedule.js"),
+                "--dir",
+                str(directory),
+                "--sets",
+                ",".join(sets),
+                "--out",
+                str(measured),
+            ],
+            cwd=BENCH,
+            check=True,
+            stdout=subprocess.DEVNULL,
+        )
+        return {
+            result["name"]: {
+                "total": result["total"],
+                "correct": result["correct"],
+                "failures": [
+                    example["id"]
+                    for example in result["examples"]
+                    if not example["correct"]
+                ],
+            }
+            for result in json.loads(measured.read_text())["results"]
+        }
 
 
 def gold_scores(weights_module: Path, scratch: Path, sets: list[str]) -> dict:
@@ -471,6 +553,14 @@ def gate(
             if sets and artifact
             else None
         )
+        # Graded on the schedule users receive; token labels only warn.
+        generated = [reserved.stem, bare.stem]
+        answers = answer_scores(scratch / "candidate", generated, reserved.parent)
+        answers_before = (
+            answer_scores(scratch / "baseline", generated, reserved.parent)
+            if sets and artifact
+            else None
+        )
 
     decision = decide(gold_candidate, gold_baseline, failures)
     decision["missingSets"] = [name for name in GOLD_SETS if name not in sets]
@@ -481,15 +571,49 @@ def gate(
     decision["synthetic"] = {
         "blocking": True,
         "note": SYNTHETIC_NOTE,
-        "reserved": {"corpus": corpus, **synthetic(candidate, baseline)},
-        "bare": {"corpus": bare_corpus, **synthetic(bare_candidate, bare_baseline, strict=False)},
+        "gradedOn": "exact schedule through the built package",
+        "reserved": {
+            "corpus": corpus,
+            "answers": answers.get(reserved.stem),
+            "answersBaseline": (answers_before or {}).get(reserved.stem),
+            "labels": {"candidate": candidate, "baseline": baseline},
+        },
+        "bare": {
+            "corpus": bare_corpus,
+            "answers": answers.get(bare.stem),
+            "answersBaseline": (answers_before or {}).get(bare.stem),
+            "labels": {"candidate": bare_candidate, "baseline": bare_baseline},
+        },
     }
-    for name in ("reserved", "bare"):
+    for name, stem in (("reserved", reserved.stem), ("bare", bare.stem)):
         result = decision["synthetic"][name]
-        if not result["accepted"]:
+        now, before = result["answers"], result["answersBaseline"]
+        if now is None:
+            decision["failures"].append(f"{name}: not scored")
+            continue
+        if before is None:
+            decision["failures"].append(f"{name}: no baseline to compare against")
+            continue
+        guard = count_guard(now, before)
+        result["accepted"] = guard["passed"]
+        result["guard"] = guard
+        if not guard["passed"]:
             decision["failures"].append(
-                f"{name}: improvement or a perfect-baseline tie required without family regression"
-                if name == "reserved" else "bare: regression or missing baseline"
+                f"{name}: {guard['broke']} of {guard['support']} schedules regressed"
+            )
+        elif guard["broke"] > guard["fixed"]:
+            decision["warnings"].append(
+                f"{name}: lost {guard['broke']} schedules, gained {guard['fixed']}"
+            )
+        previous_labels = result["labels"]["baseline"]
+        label_guard = (
+            count_guard(result["labels"]["candidate"], previous_labels)
+            if previous_labels
+            else {"passed": True}
+        )
+        if not label_guard["passed"]:
+            decision["warnings"].append(
+                f"{name}: token labels drifted on {label_guard['broke']} sequences"
             )
     decision["accepted"] = not decision["failures"]
     return decision

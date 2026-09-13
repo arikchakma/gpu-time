@@ -31,6 +31,8 @@ const { defineParser } = await import(
     : new URL("../../core/dist/schedule.js", import.meta.url).href
 );
 const parser = await defineParser({ backend: "cpu", tokens: true });
+// The generated corpora share the gold {text, schedule} shape.
+const directory = argument("--dir") ? resolve(argument("--dir")!) : gold;
 const sets = argument("--sets")?.split(",") ?? [
   "adversarial",
   "user-cases",
@@ -44,7 +46,7 @@ const sets = argument("--sets")?.split(",") ?? [
 const results = [];
 try {
   for (const name of sets) {
-    const source = await readFile(join(gold, `${name}.jsonl`), "utf8");
+    const source = await readFile(join(directory, `${name}.jsonl`), "utf8");
     const cases = source
       .trim()
       .split("\n")

@@ -77,6 +77,29 @@ reference exactly and learned nothing. Checkpoint averaging was measured as the
 alternative and was worse in both directions: it either diluted the new family
 away or regressed reserved carriers.
 
+A tagger trained on tokens is graded on sequences. `train.py --risk-lambda`
+closes that gap. Each step decodes the batch, and for every sequence whose best
+path is not the gold path it pushes the gold path above the decoder's choice:
+
+```
+loss = crf_nll + lambda * mean over wrongly decoded sequences of
+       softplus( score(best path) + margin - score(gold path) )
+```
+
+Sequences already decoded correctly contribute nothing, so the term applies
+pressure only where the model is wrong. The promoted model uses
+`--risk-lambda 0.005 --risk-margin 4`. Scale matters: `crf_nll` is averaged per
+token and settles near 0.02, while the penalty is averaged per wrong sequence
+and is roughly the margin, so a lambda above about 0.01 drowns the token
+objective. At `--risk-lambda 0.05` the model reached 71/71 authored English and
+lost five chat cases; at 0.005 it reaches 70/71 and gains three.
+
+This is the k=2 case of the ranked-candidate losses surveyed by
+[Edunov et al., NAACL 2018](https://arxiv.org/abs/1711.04956), whose controlled
+comparison found a sequence-level term must be mixed with the token loss rather
+than replacing it, and the gold-versus-best-incorrect formulation of
+[Suzuki et al., COLING-ACL 2006](https://aclanthology.org/P06-1028/).
+
 Every run snapshots its sources and hashes. Export records lineage in `active/export-report.json` and `active/provenance.json`; `pnpm model:audit` checks it when the local checkpoints and history are available. A clean clone can check inference parity from committed fixtures, but cannot reproduce the full checkpoint audit. The promoted checkpoint records its reference checkpoint and distillation settings; earlier promotions on this line were weighted averages and record both parent hashes and coefficients, counting shared ancestors once. Evaluation uses Viterbi, including quantized transitions. Export requires no gold set or family regression through the built package, reserved-carrier improvement (or a tie at a perfect baseline) without family loss, and preserved bare expressions. These development gates do not establish real-user accuracy. See `MODEL_CARD.md` for metrics and remaining tradeoffs.
 
 ## Performance boundaries
