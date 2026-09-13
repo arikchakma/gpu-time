@@ -192,9 +192,12 @@ def prepare(split: str, count: int, seed: int, directory: Path) -> Dataset:
         "--out",
         f"{prefix}.jsonl",
     ]
-    reserved = directory / "heldout.fingerprints.json"
-    if split != "heldout" and reserved.exists():
-        command.extend(["--exclude", str(reserved)])
+    # Evaluation splits are drawn first and fixed; every training epoch avoids them.
+    for name in ("heldout", "validation"):
+        if name != split and (directory / f"{name}.fingerprints.json").exists():
+            command.extend(
+                ["--exclude", str(directory / f"{name}.fingerprints.json")]
+            )
     subprocess.run(command, cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
     subprocess.run(
         [
@@ -298,8 +301,10 @@ def main():
     heldout = prepare("heldout", args.eval_samples, args.seed + 2, directory)
     validation = prepare("validation", args.eval_samples, args.seed + 1, directory)
     training = prepare("train", args.samples, args.seed, directory)
-    if set(training.manifest["fingerprints"]) & set(heldout.manifest["fingerprints"]):
-        raise RuntimeError("Training and held-out structural frames overlap")
+    seen = set(training.manifest["fingerprints"])
+    for name, split in (("held-out", heldout), ("validation", validation)):
+        if seen & set(split.manifest["fingerprints"]):
+            raise RuntimeError(f"Training and {name} structural frames overlap")
 
     model = TimeTagger(args.feature_rows, args.layers, args.transitions).to(
         args.device

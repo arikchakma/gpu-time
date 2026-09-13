@@ -896,7 +896,7 @@ def render_heldout(family: int, rng: random.Random) -> Sentence:
 
 
 def generate(
-    path: Path, count: int, seed: int, split: str, exclude: Path | None = None
+    path: Path, count: int, seed: int, split: str, exclude: list[Path] | None = None
 ) -> dict:
     rng = random.Random(seed)
     variants = [9] if split == "heldout" else list(range(9))
@@ -904,7 +904,7 @@ def generate(
     span_counts = Counter()
     templates = set()
     signatures = set()
-    reserved = set(json.loads(exclude.read_text())) if exclude else set()
+    reserved = {key for one in exclude or [] for key in json.loads(one.read_text())}
     rejected = 0
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w") as output:
@@ -1039,7 +1039,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--split", choices=["train", "validation", "heldout"], default="train"
     )
-    parser.add_argument("--exclude", type=Path)
+    parser.add_argument("--exclude", type=Path, action="append")
     parser.add_argument(
         "--out", type=Path, default=ROOT / "data/synth/train.jsonl"
     )

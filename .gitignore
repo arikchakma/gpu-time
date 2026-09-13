@@ -12,6 +12,7 @@ test-results/
 packages/training/.venv/
 packages/training/data/synth/
 packages/training/data/prose/
+packages/training/data/real/
 packages/training/data/downloads/
 packages/training/*.npz
 packages/training/active/*.npz
