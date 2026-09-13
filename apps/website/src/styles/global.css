@@ -26,3 +26,7 @@
 ::selection {
   background: #dce9f9;
 }
+
+#demo-input::selection {
+  background: rgb(160 196 244 / 0.5);
+}

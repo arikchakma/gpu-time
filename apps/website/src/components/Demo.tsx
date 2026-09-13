@@ -122,7 +122,7 @@ export function Demo({ initial }: { initial: Formatted }) {
               id="demo-highlight"
               ref={layer}
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 right-0 m-0 overflow-hidden whitespace-pre border-0 p-4 font-sans text-base leading-6.5 tracking-[-0.2px]"
+              className="pointer-events-none absolute inset-y-0 left-0 right-0 m-0 select-none overflow-hidden whitespace-pre border-0 p-4 font-sans text-base leading-6.5 tracking-[-0.2px]"
             >
               <Mark text={text} />
             </div>
