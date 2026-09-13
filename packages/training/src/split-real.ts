@@ -41,7 +41,14 @@ const SOURCES = [
   "possessive",
   "duration",
   "negatives",
+  "teacher",
 ];
+// Authored rather than harvested, so it lives in a tracked directory: data/real
+// is ignored and a clean clone must still rebuild this mix.
+const authored = join(training, "data/teacher");
+// 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
+// at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
+const authoredCopies = Number(argument("--authored-copies") ?? 4);
 // Mention replacement is built by augment-mentions.ts but left out by default:
 // measured at 2,509 rows it fixed "last night" and cost 4 pooled gold cases.
 // Dai and Adel report the same shape, gains shrinking as the corpus grows.
@@ -81,15 +88,19 @@ for (const name of await readdir(goldDirectory)) {
 
 const rows: Row[] = [];
 for (const source of SOURCES) {
-  const path = join(directory, `${source}.jsonl`);
+  const path = join(source === "teacher" ? authored : directory, `${source}.jsonl`);
   try {
     await access(path);
   } catch {
     continue;
   }
   const raw = await readFile(path, "utf8");
-  for (const line of raw.split("\n").filter(Boolean))
-    rows.push({ ...JSON.parse(line), source } as Row);
+  const parsed = raw
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => ({ ...JSON.parse(line), source }) as Row);
+  for (let round = 0; round < (source === "teacher" ? authoredCopies : 1); round++)
+    rows.push(...parsed);
 }
 
 // A sentence the duration rule claims must not also appear labelled as a time.

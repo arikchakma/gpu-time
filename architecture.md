@@ -12,7 +12,7 @@ The package keeps its WebGPU device, pipelines, weights, and grow-only buffers r
 
 ## Source preparation
 
-One CPU scan splits the input into tokens and emits a sparse feature row per token. Each row records character shape, casing, digit and punctuation class, length bucket, lexicon membership for the closed vocabulary of time words, and hashes of neighboring tokens. There are 580 embedding rows in the feature table, including a 128-bucket hash of each token's consonant skeleton.
+One CPU scan splits the input into tokens. It writes one sparse feature row for each token. The row records the token kind, a length bucket, the first and last character class, an 8-bit hash of the lowercased token, a 7-bit hash of its consonant skeleton, eight flag bits for casing and position, the punctuation class on each side, and a number bucket. The feature table has 580 rows. Nothing writes to row 523. The model has no dictionary. `lexicon.ts` holds the month names, but only the compiler imports it. The tokenizer never does, so a month name reaches the model as spelling alone. The row carries no hash of the neighbouring tokens either. Context reaches the model through the five-tap convolution and the bidirectional scan below.
 
 The tokenizer uses regular expressions and an English lexicon. The compiler and calendar resolver also run on the CPU.
 

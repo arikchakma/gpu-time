@@ -2,11 +2,11 @@
 
 ## Model
 
-The package embeds `ad-f001`, with artifact SHA-256 `95647e7e0a3c4c3f998281a6de389d26908b12e042913f1dacb477a04dcabff2`. It fine-tunes `english-coverage-layer2-negative-blend-075` under focal distillation against that same checkpoint, so the update learns new forms without flipping cases the reference already answers correctly.
+The package embeds `lessgen2`, with artifact SHA-256 `27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3`. It fine-tunes `risk-w0.005` under focal distillation against that same checkpoint, so the update learns new forms without flipping cases the reference already answers correctly. Its lineage runs back through `ad-f001` and `english-coverage-layer2-negative-blend-075`; `audit:model` verifies the chain.
 
-The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,191 Brotli bytes for the weights and 912,393,193 training tokens. The published package is 44,730 Brotli bytes, below the 50,000-byte limit.
+The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,519 Brotli bytes for the weights. The published package is 44,682 Brotli bytes, below the 50,000-byte limit.
 
-The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 0.0, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
+The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 1.0, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
 
 Timezone is not a model role. TypeScript handles calendar arithmetic, daylight saving time, the reference instant, and expansion limits after the model runs.
 
@@ -18,7 +18,11 @@ It is not suitable for parsing documents, extracting dates from long prose, lega
 
 ## Training data
 
-Supervision is entirely generated. `packages/training/torch/generate.py` renders schedules, and `natural.py` adds natural-phrasing families, including negative prose containing no time expression. Labels come from the generator's structure, never from the runtime parser, so the model is not trained on its own predictions.
+Training data comes from three sources. `generate.py` and `natural.py` write schedules and natural phrasing, and the generator supplies the labels. Tatoeba supplies real English, and a sentence enters only when two parsers agree. `data/teacher/teacher.jsonl` holds 1,004 written sentences. A language model proposes those labels and the compiler accepts them.
+
+The third source covers what agreement cannot reach. chrono-node cannot read recurrence, so `every <month>` had no correct label anywhere in the training data.
+
+The shipped model uses 60,000 generated rows. The default is 300,000.
 
 The earlier `balanced-prose` model followed `step7-crf2` through `carrier-consistent`, `contrast-coverage`, and `prose-coverage`. The current model warm-starts from that lineage and adds a second scan layer. Training adds prose months, compact dates, clock-qualified dayparts, shifts, idioms, and mixed temporal/non-temporal contexts. Imperative carriers and trailing actions remain `O`; only the time expression receives temporal roles. A targeted correction adds ordinal rankings, street addresses, and place-name contrasts. The final 75% correction average passed every existing export gate without `--force`. These fixtures guide development and are not an untouched test set.
 
@@ -74,6 +78,9 @@ The saved reports cover different model versions. Each result below describes it
 - Vague expressions (`ASAP`, `after work`, `soon`) are deliberately given no clock value rather than a guessed one.
 - Ambiguous numeric dates depend on the caller's `dateOrder` (`MDY` by default). `03/04/2027` is ambiguous. `21/04/2016` is not and resolves correctly either way.
 - Complex recurring exception combinations preview correctly but can return an `unsupported-export` diagnostic when no single RFC 5545 rule represents them.
+- The model reads a month name standing alone correctly in 8 of 12 cases. `every <month>` and `in <month>` are correct for all twelve.
+- `each may` returns the right answer, but the model labels `each` as filler instead of a recurrence marker. The answer rests on the month alone.
+- The seed spread on this model is about 1.85 points. Treat any smaller single-run difference as noise. Compare three to five seeds.
 - Quantization and browser GPU implementations can differ from the PyTorch reference unless parity is explicitly tested. It is, but only for the fixtures listed above.
 - WebGPU startup and dispatch overhead make small inputs slower than a CPU parser, which is why `auto` keeps them on the CPU.
 - The release build must stay within the 50,000-byte Brotli limit.

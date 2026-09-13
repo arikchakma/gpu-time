@@ -1,6 +1,6 @@
 {
-  "model": "2df3dff392a78565b925ec131efedd9bbf2b074ff75ec169695c65656a4f00b6",
-  "runtimeSha256": "b7fe2ef2b426aa5726daf29f8e99f59e6bc108fca768a795b29386b3908393f5",
+  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
+  "runtimeSha256": "ec771ec633be87cd7f806e5449b3f5f759782ad2122f8922111abb2577e5ee64",
   "sourceSha256": "ba6496d7bb3eaa7ddf949143ec280286bf47003c1c66bc21934c594cdb882e96",
   "chronoVersion": "2.10.1",
   "scope": "Independently authored API behavior checks inspired by Chrono's English coverage, not copied upstream tests. Both parsers face hand-written expectations. Shared cases measure the same intended behavior; policy cases have explicit separate expectations. Date-only checks ignore implied clock defaults but enforce date, result count and endpoint presence. Explicit times are compared as exact instants. gpu-time also checks allDay, errors, truncation and absence of recurrence. This is a targeted compatibility sample, not full Chrono parity or general language accuracy.",
@@ -19,9 +19,9 @@
   ],
   "shared": {
     "total": 75,
-    "gpuTimePassed": 64,
+    "gpuTimePassed": 63,
     "chronoPassed": 67,
-    "bothPassed": 58,
+    "bothPassed": 57,
     "gpuTimeGaps": [
       "compat-008",
       "compat-016",
@@ -31,6 +31,7 @@
       "compat-054",
       "compat-061",
       "compat-062",
+      "compat-068",
       "compat-070"
     ],
     "chronoGaps": [
@@ -210,10 +211,11 @@
     },
     "rejection": {
       "total": 11,
-      "gpuTimePassed": 10,
+      "gpuTimePassed": 9,
       "chronoPassed": 10,
-      "bothPassed": 9,
+      "bothPassed": 8,
       "gpuTimeGaps": [
+        "compat-068",
         "compat-070"
       ],
       "chronoGaps": [
@@ -855,15 +857,7 @@
             "allDay": false
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 14,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -944,13 +938,6 @@
             "start": 12,
             "end": 14,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 14,
-            "severity": "warning"
           }
         ]
       },
@@ -990,15 +977,7 @@
             "allDay": false
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 14,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -1150,15 +1129,7 @@
             "allDay": false
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 17,
-            "end": 18,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -1643,15 +1614,7 @@
             "end": "2027-01-06T13:21:40+00:00"
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 21,
-            "end": 23,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -2925,15 +2888,20 @@
       "comparison": "shared",
       "expected": [],
       "gpuTime": {
-        "passed": true,
-        "actual": [],
+        "passed": false,
+        "actual": [
+          {
+            "start": "2027-08-16T00:00:00+00:00",
+            "allDay": true
+          }
+        ],
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"Install release 8.16.3 on the kiosk.\".",
-            "start": 0,
-            "end": 36
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 16,
+            "end": 17,
+            "severity": "warning"
           }
         ]
       },
@@ -2994,13 +2962,6 @@
           {
             "code": "ambiguous-meridiem",
             "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-            "start": 22,
-            "end": 23,
-            "severity": "warning"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
             "start": 22,
             "end": 23,
             "severity": "warning"
@@ -3246,13 +3207,6 @@
             "start": 39,
             "end": 41,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 34,
-            "end": 38,
-            "severity": "warning"
           }
         ]
       },
@@ -3421,15 +3375,7 @@
             "end": "2027-05-21T00:00:00+00:00"
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 14,
-            "end": 17,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -3522,15 +3468,7 @@
             "allDay": false
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 16,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -3622,15 +3560,15 @@
         "diagnostics": [
           {
             "code": "invalid-date",
-            "message": "Multiple dates need a range or recurrence.",
-            "start": 18,
-            "end": 20,
+            "message": "A calendar date has more than one month.",
+            "start": 48,
+            "end": 51,
             "severity": "error"
           },
           {
             "code": "filler-ignored",
-            "message": "Ignored visit First visit inside the expression.",
-            "start": 7,
+            "message": "Ignored First visit inside the expression.",
+            "start": 35,
             "end": 46,
             "severity": "warning"
           }

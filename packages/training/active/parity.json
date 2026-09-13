@@ -4,7 +4,7 @@
   "tokens": 10570,
   "rowsPerToken": 17,
   "rolesPerToken": 40,
-  "boundaryThreshold": 1.25,
+  "boundaryThreshold": 1.0,
   "layers": 2,
   "transitions": true
 }

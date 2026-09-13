@@ -1,8 +1,23 @@
 {
-  "model": "2bfbbe5038b4829b4609fc5fd0ed000238a3c273ed2f2e8eb327a23499a8bff9",
+  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
   "generatedWeightsHashMatches": true,
-  "matchingExportFiles": 6,
+  "matchingExportFiles": 5,
   "results": [
+    {
+      "checkpoint": "runs/lessgen2/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/risk-w0.005/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
+    {
+      "checkpoint": "runs/ad-f001/best.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
     {
       "checkpoint": "runs/english-coverage-layer2-negative-blend-075/best.pt",
       "checkpointHashMatches": true,
