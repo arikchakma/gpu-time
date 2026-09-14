@@ -25,6 +25,10 @@ var<workgroup> output: array<f32, OUTPUTS>;
 
 fn rounded(value: f32) -> f32 { ROUND_BODY }
 fn sigmoid(value: f32) -> f32 { return 1.0 / (1.0 + exp(-value)); }
+// Each scan layer owns one weight block; the loop index chooses which.
+fn layerOffset(layer: u32, first: u32, second: u32, third: u32) -> u32 {
+  return select(select(third, second, layer == 1u), first, layer == 0u);
+}
 // Four buffers follow tensor lifetimes: embedding -> forward, encoded,
 // gate -> combined, candidate -> backward. Barriers precede cross-lane reads.
 fn readState(stage: u32, token: u32, channel: u32) -> f32 {
@@ -108,12 +112,12 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
   for (var layer = 0u; layer < SCAN_LAYERS; layer++) {
     let input = select(2u, 1u, layer == 0u);
     let gateStage = select(1u, 2u, layer == 0u);
-    let gateWeights = select(GATE2_WEIGHT_OFFSET, GATE_WEIGHT_OFFSET, layer == 0u);
-    let gateBias = select(GATE2_BIAS_OFFSET, GATE_BIAS_OFFSET, layer == 0u);
-    let candidateWeights = select(CANDIDATE2_WEIGHT_OFFSET, CANDIDATE_WEIGHT_OFFSET, layer == 0u);
-    let candidateBias = select(CANDIDATE2_BIAS_OFFSET, CANDIDATE_BIAS_OFFSET, layer == 0u);
-    let combineWeights = select(COMBINE2_WEIGHT_OFFSET, COMBINE_WEIGHT_OFFSET, layer == 0u);
-    let combineBias = select(COMBINE2_BIAS_OFFSET, COMBINE_BIAS_OFFSET, layer == 0u);
+    let gateWeights = layerOffset(layer, GATE_WEIGHT_OFFSET, GATE2_WEIGHT_OFFSET, GATE3_WEIGHT_OFFSET);
+    let gateBias = layerOffset(layer, GATE_BIAS_OFFSET, GATE2_BIAS_OFFSET, GATE3_BIAS_OFFSET);
+    let candidateWeights = layerOffset(layer, CANDIDATE_WEIGHT_OFFSET, CANDIDATE2_WEIGHT_OFFSET, CANDIDATE3_WEIGHT_OFFSET);
+    let candidateBias = layerOffset(layer, CANDIDATE_BIAS_OFFSET, CANDIDATE2_BIAS_OFFSET, CANDIDATE3_BIAS_OFFSET);
+    let combineWeights = layerOffset(layer, COMBINE_WEIGHT_OFFSET, COMBINE2_WEIGHT_OFFSET, COMBINE3_WEIGHT_OFFSET);
+    let combineBias = layerOffset(layer, COMBINE_BIAS_OFFSET, COMBINE2_BIAS_OFFSET, COMBINE3_BIAS_OFFSET);
     var state = 0.0;
     for (var position = 0u; position < count; position++) {
       let token = start + position;

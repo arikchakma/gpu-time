@@ -241,7 +241,7 @@ def main():
     parser.add_argument("--learning-rate", type=float, default=3e-3)
     parser.add_argument("--storage", choices=["f16", "f32"], default="f16")
     parser.add_argument("--feature-rows", type=int, choices=[324, 580], default=580)
-    parser.add_argument("--layers", type=int, choices=[1, 2], default=1)
+    parser.add_argument("--layers", type=int, choices=[1, 2, 3], default=1)
     parser.add_argument(
         "--transitions",
         action="store_true",

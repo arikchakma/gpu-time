@@ -133,8 +133,8 @@ class TimeTagger(nn.Module):
         super().__init__()
         if feature_rows not in (324, 580):
             raise ValueError("Feature rows must be 324 (S) or 580 (M)")
-        if layers not in (1, 2):
-            raise ValueError("Scan layers must be 1 or 2")
+        if layers not in (1, 2, 3):
+            raise ValueError("Scan layers must be 1, 2 or 3")
         self.feature_rows = feature_rows
         self.layers = layers
         self.transitions = transitions
