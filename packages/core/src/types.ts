@@ -26,6 +26,7 @@ export type DateSpec =
       year?: number;
       modifier?: Modifier;
       week?: number;
+      edge?: "start" | "end";
     }
   | {
       kind: "relativeUnit";

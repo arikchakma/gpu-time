@@ -213,6 +213,8 @@ export function resolveDates(
         reference,
       );
       const end = addMonths(beginning, 1);
+      if (spec.edge === "start") return [{ start: beginning }];
+      if (spec.edge === "end") return [{ start: addDays(end, -1) }];
       if (spec.week !== undefined) {
         const start = addDays(beginning, (spec.week - 1) * 7);
         if (spec.week < 1 || spec.week > 5 || start.month !== beginning.month)
