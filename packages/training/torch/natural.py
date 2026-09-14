@@ -547,8 +547,15 @@ def render(s, reserved=False, family=None, bare=False):
             if r.random() < 0.65
             else r.randint(1, 120)
         )
+        if r.random() < 0.2:
+            amount = 1
         unit = r.choice(["second", "minute", "hour", "day", "week"])
-        quantity(s, amount, unit)
+        # "a week from today" is the everyday form and was never rendered.
+        if amount == 1 and r.random() < 0.6:
+            s.add("an" if unit == "hour" else "a", "NUM")
+            s.add(unit, "UNIT")
+        else:
+            quantity(s, amount, unit)
         s.add(r.choice(["from", "after"]), "DIR_AFTER")
         anchor = r.choice(["now", "today", "tomorrow", "weekday"])
         if anchor == "now":
@@ -1057,6 +1064,9 @@ def render(s, reserved=False, family=None, bare=False):
     elif family == "month-edge":
         word = r.choice(["start", "beginning", "end", "end"])
         edge = "end" if word == "end" else "start"
+        # "at the end of this month" is how people say it; the article is glue.
+        if r.random() < 0.4:
+            s.add(r.choice(["at the", "by the", "the", "towards the"]), "GLUE")
         s.add(word, "EDGE")
         s.add("of", "GLUE")
         if r.random() < 0.6:
@@ -1135,6 +1145,13 @@ def render(s, reserved=False, family=None, bare=False):
                 "kind": "calendar", **date,
                 "year": (2000 if short < 69 else 1900) + short,
             }}
+    elif family == "spelled-hour" and r.random() < 0.18:
+        # "12 noon" and "12 midnight": the hour word carries the meaning alone.
+        named = r.choice(["noon", "midnight"])
+        if r.random() < 0.7:
+            s.add("12", "O")
+        s.add(named, "TIME_NAMED")
+        clause = {"time": {"start": {"named": named}}}
     elif family == "spelled-hour":
         # A spelled hour with no meridiem: "at six", "seven o'clock".
         hour = r.randint(1, 12)
