@@ -296,7 +296,9 @@ function literalSeconds(clock: ClockTime): number | undefined {
 }
 
 function qualifyClock(clock: ParsedClock, part: DayPart): void {
-  if (!("hour" in clock.value) || clock.meridiem) return;
+  // "o'clock" names no half of the day, so "ten o'clock in the evening" is 22:00.
+  if (!("hour" in clock.value) || (clock.meridiem && clock.meridiem !== "o'clock"))
+    return;
   const hour = clock.value.hour;
   if (hour < 1 || hour > 12) return;
 
@@ -527,9 +529,12 @@ function compileDateAndTime(
         // "three minutes to eight" offsets an hour the way "quarter to" does.
         const offset =
           token.label === Role.NUM
-            ? unit(tokens[target++]?.text ?? "") === "minute"
+            ? // "ten past six" says the unit only by position.
+              ["past", "to"].includes(tokens[target]?.text.toLowerCase() ?? "")
               ? number(word)
-              : NaN
+              : unit(tokens[target++]?.text ?? "") === "minute"
+                ? number(word)
+                : NaN
             : word === "half"
               ? 30
               : word === "quarter"

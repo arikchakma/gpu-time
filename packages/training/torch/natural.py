@@ -948,7 +948,9 @@ def render(s, reserved=False, family=None, bare=False):
         if opening == "from":
             s.add("from", "RANGE_START")
         elif opening == "after":
-            s.add(r.choice(["after", "from", "past"]), "DIR_AFTER")
+            # "from" mostly opens a range; as a direction it competes with
+            # "a week from today", which must stay an anchored shift.
+            s.add(r.choice(["after", "after", "after", "past", "from"]), "DIR_AFTER")
         else:
             s.add(opening, "DIR_BEFORE")
         hour = r.randint(1, 11)
