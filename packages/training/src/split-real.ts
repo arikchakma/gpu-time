@@ -42,10 +42,12 @@ const SOURCES = [
   "duration",
   "negatives",
   "teacher",
+  "taught",
 ];
-// Authored rather than harvested, so it lives in a tracked directory: data/real
-// is ignored and a clean clone must still rebuild this mix.
 const authored = join(training, "data/teacher");
+// Written or teacher-labelled rather than harvested, so they live in a tracked
+// directory: data/real is ignored and a clean clone must still rebuild this mix.
+const authoredSources = new Set(["teacher", "taught"]);
 // 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
 // at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
 const authoredCopies = Number(argument("--authored-copies") ?? 4);
@@ -88,7 +90,7 @@ for (const name of await readdir(goldDirectory)) {
 
 const rows: Row[] = [];
 for (const source of SOURCES) {
-  const path = join(source === "teacher" ? authored : directory, `${source}.jsonl`);
+  const path = join(authoredSources.has(source) ? authored : directory, `${source}.jsonl`);
   try {
     await access(path);
   } catch {
@@ -99,7 +101,7 @@ for (const source of SOURCES) {
     .split("\n")
     .filter(Boolean)
     .map((line) => ({ ...JSON.parse(line), source }) as Row);
-  for (let round = 0; round < (source === "teacher" ? authoredCopies : 1); round++)
+  for (let round = 0; round < (authoredSources.has(source) ? authoredCopies : 1); round++)
     rows.push(...parsed);
 }
 
@@ -126,13 +128,22 @@ const bucket = (text: string) =>
 const train: Row[] = [];
 const holdout: Row[] = [];
 const seen = new Map<string, number>();
+// A sentence a teacher relabelled must not also arrive with its old labels.
+const taught = new Set(
+  rows.filter((row) => row.source === "taught").map((row) => normal(row.text)),
+);
 let dropped = 0;
+let relabelled = 0;
 let capped = 0;
 let mislabelled = 0;
 let contradictory = 0;
 for (const row of rows) {
   if (gold.has(normal(row.text))) {
     dropped++;
+    continue;
+  }
+  if (row.source !== "taught" && taught.has(normal(row.text))) {
+    relabelled++;
     continue;
   }
   if (frozen.size ? frozen.has(row.text) : bucket(row.text) === 0) {
@@ -208,6 +219,7 @@ console.log(
     {
       read: rows.length,
       droppedAsGold: dropped,
+      droppedAsRelabelled: relabelled,
       droppedAsMislabelled: mislabelled,
       droppedAsContradictory: contradictory,
       cappedByPhrase: capped,

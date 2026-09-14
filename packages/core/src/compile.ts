@@ -69,6 +69,7 @@ const relativeDays: Record<string, number> = {
   "the day before yesterday": -2,
   tmrw: 1,
   tmr: 1,
+  tmw: 1,
   tonite: 0,
 };
 const dayParts: Record<string, DayPart> = {
@@ -85,6 +86,7 @@ const recurrenceBounds = new Set([
 const modifiers: Record<string, Modifier> = {
   this: "this",
   next: "next",
+  nxt: "next",
   coming: "next",
   upcoming: "next",
   last: "last",
