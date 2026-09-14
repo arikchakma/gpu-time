@@ -84,6 +84,9 @@ const sentences = (await readFile(source, "utf8"))
 const agreed: unknown[] = [];
 const disputed: unknown[] = [];
 const negatives: unknown[] = [];
+// Rows no teacher has judged. chrono is blind to recurrence and durations, so
+// dropping these silently is how a coverage gap stays invisible.
+const unjudged: unknown[] = [];
 const tally = {
   read: 0,
   chronoSilent: 0,
@@ -106,6 +109,9 @@ for (const [index, text] of sentences.entries()) {
   if (theirs.length === 0) {
     tally.chronoSilent++;
     // Neither parser sees a time, so these time-shaped words are not times.
+    if (expressions.length > 0) {
+      unjudged.push({ text, reason: "chrono-blind", ours: text.slice(expressions[0]!.start, expressions[0]!.end) });
+    }
     if (expressions.length === 0) {
       tally.negatives++;
       negatives.push({
@@ -129,6 +135,7 @@ for (const [index, text] of sentences.entries()) {
   }
   if (theirs.length > 1 || expressions.length > 1) {
     tally.multiple++;
+    unjudged.push({ text, reason: "multiple", chrono: theirs.length, ours: expressions.length });
     continue;
   }
 
@@ -190,4 +197,5 @@ const line = (rows: unknown[]) =>
 await writeFile(join(outDirectory, "agreed.jsonl"), line(agreed));
 await writeFile(join(outDirectory, "disputed.jsonl"), line(disputed));
 await writeFile(join(outDirectory, "negatives.jsonl"), line(negatives));
-console.log(JSON.stringify(tally, null, 2));
+await writeFile(join(outDirectory, "unjudged.jsonl"), line(unjudged));
+console.log(JSON.stringify({ ...tally, unjudged: unjudged.length }, null, 2));
