@@ -1029,15 +1029,17 @@ def _dotted_version(rng: random.Random, fields: int = 0) -> str:
 
     semantic.py dots only two or three fields, never pads them, and always puts
     a 1990-2040 year in the three-field form; natural.py never dots at all. So a
-    padded CalVer, a four-field address, a small three-field triple, and a
-    two-field pair whose minor is 0 or above 28 are all outside that grammar.
+    four-field address, a small three-field triple, and a two-field pair whose
+    minor is 0 or above 28 are all outside that grammar.
+
+    A padded year-first stamp is not, whatever the strings say: the tokenizer
+    splits it into five tokens and the padding survives only as one number
+    bucket, so "Calibration date: 2027.06.24." read as filler. See test.
     """
     fields = fields or rng.choice([2, 3, 3])  # a four-field address is asked for by name.
     if fields == 4:
         return f"{rng.choice([10, 172, 192])}.{rng.randint(0, 254)}.{rng.randint(0, 254)}.{rng.randint(1, 254)}"
     if fields == 3:
-        if rng.random() < 0.4:  # CalVer, zero padded exactly as a ticket writes it.
-            return f"{rng.randint(2019, 2031)}.{rng.randint(1, 12):02}.{rng.randint(1, 28):02}"
         return f"{rng.randint(1, 40)}.{rng.randint(0, 40)}.{rng.randint(0, 40)}"
     minor = 0 if rng.random() < 0.6 else rng.randint(29, 99)
     return f"{rng.randint(1, 40)}.{minor}"

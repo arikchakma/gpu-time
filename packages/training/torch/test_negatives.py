@@ -122,7 +122,7 @@ class NumericNegativeTests(unittest.TestCase):
         rng = random.Random(20260915)
         run = re.compile(r"\d+(?:[.:/-]\d+)+")
         found = {
-            "dotted-version": False, "prefixed-v": False, "calver": False,
+            "dotted-version": False, "prefixed-v": False,
             "build-stamp": False, "commit": False, "ip": False, "port": False,
             "phone": False, "isbn": False, "spec": False, "part": False,
             "range": False,
@@ -142,17 +142,10 @@ class NumericNegativeTests(unittest.TestCase):
             # three-field form always ends in a 1990-2040 year. Anything of that
             # shape here would label a real date O.
             self.assertIsNone(re.search(r"\b\d{1,2}\.\d{1,2}\.(?:19|20)\d{2}\b", text), text)
-            for year_led in re.findall(r"\b(?:19|20)\d{2}\.[\d.]*\d\b", text):
-                self.assertRegex(year_led, r"^\d{4}\.\d{2}\.\d{2}$", text)
             # The tokenizer splits on every digit boundary, so a year-sized
-            # number is a live YEAR surface unless it opens a padded CalVer.
+            # number is a live YEAR surface whatever the string around it says.
             for number in re.finditer(r"\d+", text):
-                if 1990 <= int(number.group()) <= 2040:
-                    self.assertRegex(
-                        text[number.start() : number.start() + 10],
-                        r"^\d{4}\.\d{2}\.\d{2}$",
-                        text,
-                    )
+                self.assertFalse(1990 <= int(number.group()) <= 2040, text)
             for match in run.finditer(text):
                 parts = re.split(r"[.:/-]", match.group())
                 if len(parts) != 2:
@@ -164,7 +157,6 @@ class NumericNegativeTests(unittest.TestCase):
                     self.assertFalse(1 <= first <= 28 and 1 <= second <= 28, text)
             found["dotted-version"] |= bool(re.search(r"\bversion \d+\.\d+\b", low))
             found["prefixed-v"] |= bool(re.search(r"\bv\d+\.\d+\b", low))
-            found["calver"] |= bool(re.search(r"\b\d{4}\.\d{2}\.\d{2}\b", text))
             found["build-stamp"] |= bool(re.search(r"\b(?:19|20)\d{6}\b", text))
             found["commit"] |= bool(re.search(r"\b[0-9a-f]{7,10}\b", low)) and "ommit" in text
             found["ip"] |= bool(re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", text))
