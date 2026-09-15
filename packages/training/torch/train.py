@@ -241,7 +241,7 @@ def main():
     parser.add_argument("--learning-rate", type=float, default=3e-3)
     parser.add_argument("--storage", choices=["f16", "f32"], default="f16")
     parser.add_argument("--feature-rows", type=int, choices=[324, 580], default=580)
-    parser.add_argument("--layers", type=int, choices=[1, 2], default=1)
+    parser.add_argument("--layers", type=int, choices=[1, 2, 3], default=1)
     parser.add_argument(
         "--transitions",
         action="store_true",
@@ -280,6 +280,7 @@ def main():
         "--role-weighting", choices=["sqrt", "sqrt-keep-o", "none"], default="sqrt"
     )
     parser.add_argument("--log-every", type=int, default=50)
+    parser.add_argument("--heldout-every", type=int, default=5)
     parser.add_argument(
         "--save-epochs",
         action="store_true",
@@ -542,10 +543,12 @@ def main():
                 )
         training_qat = model.qat
         model.qat = True
-        metrics = {
-            "validation": evaluate(model, validation, args.batch, args.device),
-            "heldout": evaluate(model, heldout, args.batch, args.device),
-        }
+        # Only validation picks the saved epoch; heldout is reporting, and
+        # decoding it every epoch costs about a sixth of the run.
+        last = epoch + 1 == args.epochs
+        metrics = {"validation": evaluate(model, validation, args.batch, args.device)}
+        if last or (epoch + 1) % args.heldout_every == 0:
+            metrics["heldout"] = evaluate(model, heldout, args.batch, args.device)
         model.qat = training_qat
         entry = {
             "epoch": epoch + 1,

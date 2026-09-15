@@ -63,7 +63,8 @@ class CarrierTests(unittest.TestCase):
         ):
             sentence = Sentence(random.Random(0), augment=False)
             spec = natural.render(sentence, family="carrier-date")
-            self.assertEqual(sentence.text, "the appointment is scheduled for Thursdays")
+            # Singular: a plural weekday compiles to a weekly series, not one day.
+            self.assertEqual(sentence.text, "the appointment is scheduled for Thursday")
             self.assertEqual(
                 spec.schedule,
                 {"clauses": [{"date": {"kind": "weekday", "days": ["TH"]}}]},

@@ -66,6 +66,15 @@ if (process.argv.includes("--verify")) {
   // A row claiming a recurrence must actually compile to one, or it is noise.
   const require = argument("--require");
   const template = argument("--template") ?? "teacher/real-recurrence";
+  // The teacher returns ids and labels only, so the text comes back from the batch.
+  const batches = argument("--batches");
+  const texts = new Map<string, string>();
+  for (const name of batches ? readdirSync(batches).filter((one) => one.endsWith(".json")) : [])
+    for (const row of JSON.parse(readFileSync(join(batches!, name), "utf8")) as {
+      id: string;
+      text: string;
+    }[])
+      texts.set(row.id, row.text);
 
   const tally = {
     read: 0,
@@ -74,6 +83,7 @@ if (process.argv.includes("--verify")) {
     noSchedule: 0,
     wrongShape: 0,
     mismatch: 0,
+    dropped: 0,
     accepted: 0,
   };
   const accepted: unknown[] = [];
@@ -83,10 +93,21 @@ if (process.argv.includes("--verify")) {
       id: string;
       text: string;
       labels: Record<string, string>;
-      schedule?: Schedule | "none";
+      schedule?: Schedule | "none" | "drop";
     }[];
     for (const proposal of proposals) {
       tally.read++;
+      // The teacher could read the sentence but not express it; skipping beats
+      // trimming the meaning until it compiles.
+      if (proposal.schedule === "drop") {
+        tally.dropped++;
+        continue;
+      }
+      proposal.text ??= texts.get(proposal.id)!;
+      if (!proposal.text) {
+        tally.staleIndex++;
+        continue;
+      }
       const raw = tokenize(proposal.text);
       const entries = Object.entries(proposal.labels ?? {});
       if (entries.some(([, label]) => !labelSet.has(label))) {
@@ -99,7 +120,7 @@ if (process.argv.includes("--verify")) {
       }
       const tokens = raw.map((token, index): Token => ({
         ...token,
-        label: (proposal.labels[String(index)] ?? "O") as Label,
+        label: ((proposal.labels ?? {})[String(index)] ?? "O") as Label,
         clauseStart: false,
         score: 1,
       }));
