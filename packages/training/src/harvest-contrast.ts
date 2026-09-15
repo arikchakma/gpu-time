@@ -13,6 +13,16 @@ const training = join(import.meta.dirname, "..");
 const source = join(training, "data/prose/timed.txt");
 const out = join(training, "data/teacher/contrast.jsonl");
 
+// 135 of these sentences are already taught, 5 of them with a different
+// schedule. split-real.ts matches text this way, so dedupe the same way.
+const normal = (text: string) => text.trim().replace(/\s+/g, " ").toLowerCase();
+const taught = new Set(
+  readFileSync(join(training, "data/teacher/taught.jsonl"), "utf8")
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => normal(JSON.parse(line).text)),
+);
+
 const words = [
   "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
   "ten", "eleven", "twelve",
@@ -28,7 +38,7 @@ const value = (text: string) =>
   words.indexOf(text.toLowerCase()) + 1 || Number(text);
 
 const rows: unknown[] = [];
-const tally = { read: 0, quantity: 0, named: 0, rejected: 0 };
+const tally = { read: 0, taught: 0, quantity: 0, named: 0, rejected: 0 };
 
 for (const line of readFileSync(source, "utf8").split("\n")) {
   const text = line.trim();
@@ -38,6 +48,10 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
   const found = !clock && quantity.exec(text);
   const noon = named.exec(text);
   if (!found && !noon) continue;
+  if (taught.has(normal(text))) {
+    tally.taught++;
+    continue;
+  }
 
   const spans: Record<number, Label> = {};
   let schedule: Schedule;

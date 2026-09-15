@@ -108,19 +108,28 @@ for (const source of SOURCES) {
 }
 
 // A sentence the duration rule claims must not also appear labelled as a time.
+// Its labels are a regex forcing every token to O, so a verified row wins.
 const durations = new Set(
   rows.filter((row) => row.source === "duration").map((row) => row.text),
 );
+const verified = new Set(
+  rows
+    .filter((row) => authoredSources.has(row.source ?? ""))
+    .map((row) => row.text),
+);
+const contradicts = (row: Row) =>
+  row.source === "duration"
+    ? verified.has(row.text)
+    : !authoredSources.has(row.source ?? "") && durations.has(row.text);
 
-let frozen = new Set<string>();
+let frozenLines: string[] = [];
 try {
   const raw = await readFile(join(directory, "real-holdout.jsonl"), "utf8");
-  frozen = new Set(
-    raw.split("\n").filter(Boolean).map((line) => JSON.parse(line).text),
-  );
+  frozenLines = raw.split("\n").filter(Boolean);
 } catch {
-  frozen = new Set();
+  frozenLines = [];
 }
+const frozen = new Set(frozenLines.map((line) => JSON.parse(line).text));
 
 // Hashes the sentence so a re-harvest keeps rows on the same side.
 const bucket = (text: string) =>
@@ -155,11 +164,11 @@ for (const row of rows) {
     holdout.push(row);
     continue;
   }
-  if (callsTimeFiller(row)) {
+  if (!authoredSources.has(row.source ?? "") && callsTimeFiller(row)) {
     mislabelled++;
     continue;
   }
-  if (row.source !== "duration" && durations.has(row.text)) {
+  if (contradicts(row)) {
     contradictory++;
     continue;
   }
@@ -212,13 +221,15 @@ train.forEach((row, index) => {
   recased.push({ ...row, text, source: `${row.source}-case` });
 });
 
-const write = (name: string, part: Row[]) =>
-  writeFile(
-    join(directory, `${name}.jsonl`),
-    part.map((row) => JSON.stringify(row)).join("\n") + "\n",
-  );
-await write("real-train", [...train, ...recased]);
-if (!frozen.size) await write("real-holdout", holdout);
+const write = (name: string, lines: string[]) =>
+  writeFile(join(directory, `${name}.jsonl`), lines.join("\n") + "\n");
+await write("real-train", [...train, ...recased].map((row) => JSON.stringify(row)));
+// Rewritten every run so sources newer than the frozen file are scored, not
+// dropped. One row per sentence, later SOURCES win, frozen text set unchanged.
+const held = new Map<string, string>();
+for (const line of frozenLines) held.set(JSON.parse(line).text, line);
+for (const row of holdout) held.set(row.text, JSON.stringify(row));
+await write("real-holdout", [...held.values()]);
 console.log(
   JSON.stringify(
     {
@@ -231,7 +242,7 @@ console.log(
       repeated: repeated.length,
       recased: recased.length,
       train: train.length + recased.length,
-      holdout: holdout.length,
+      holdout: held.size,
       holdoutFrozen: frozen.size > 0,
     },
     null,
