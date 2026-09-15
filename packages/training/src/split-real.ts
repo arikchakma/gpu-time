@@ -44,11 +44,12 @@ const SOURCES = [
   "teacher",
   "taught",
   "contrast",
+  "open-bound",
 ];
 const authored = join(training, "data/teacher");
 // Written or teacher-labelled rather than harvested, so they live in a tracked
 // directory: data/real is ignored and a clean clone must still rebuild this mix.
-const authoredSources = new Set(["teacher", "taught", "contrast"]);
+const authoredSources = new Set(["teacher", "taught", "contrast", "open-bound"]);
 // 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
 // at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
 const authoredCopies = Number(argument("--authored-copies") ?? 4);
@@ -130,7 +131,7 @@ const train: Row[] = [];
 const holdout: Row[] = [];
 const seen = new Map<string, number>();
 // A sentence relabelled here must not also arrive with its old labels.
-const relabelledSources = new Set(["taught", "contrast"]);
+const relabelledSources = new Set(["taught", "contrast", "open-bound"]);
 const taught = new Set(
   rows
     .filter((row) => relabelledSources.has(row.source ?? ""))
