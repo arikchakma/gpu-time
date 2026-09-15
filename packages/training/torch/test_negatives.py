@@ -30,6 +30,7 @@ class NumericNegativeTests(unittest.TestCase):
             "ordinal-rank": False,
             "ordinal-street": False,
             "proper-quarter": False,
+            "quarter-code": False,
             "unit-homonym": False,
         }
         for _ in range(4000):
@@ -53,6 +54,11 @@ class NumericNegativeTests(unittest.TestCase):
             found["ratio"] |= bool(re.search(r"\b\d+[-:]\d+\b", text))
             found["ordinal-rank"] |= bool(re.search(r"\b(?:placed|ranked|finished|won) \d+(?:st|nd|rd|th)\b", text.lower()))
             found["ordinal-street"] |= bool(re.search(r"\b\d+(?:st|nd|rd|th) (?:Street|Avenue)\b", text))
+            # The tokenizer splits "Q3" in two, so the digit is only ever
+            # distinguishable from an hour by the "Q" glued in front of it.
+            for code in re.finditer(r"[Qq]\s*[1-4]\b", text):
+                self.assertRegex(code.group(), r"^[Qq][1-4]$")
+            found["quarter-code"] |= bool(re.search(r"\bQ[1-4]\b", text))
             found["proper-quarter"] |= " Quarter" in text and any(
                 word in text for word in ("French", "Historic", "Old", "Riverside")
             )
@@ -167,6 +173,30 @@ class NumericNegativeTests(unittest.TestCase):
             found["part"] |= bool(re.search(r"\b[A-Z]{2,3}-\d{4,5}\b", text))
             found["range"] |= bool(re.search(r"\b\d{2,4}-\d{2,4}\b", text))
         self.assertTrue(all(found.values()), found)
+
+    def test_greeting_dayparts_stay_background_before_a_real_expression(self):
+        rng = random.Random(20260915)
+        parts = set()
+        for _ in range(6000):
+            text = background.prefix(rng)
+            low = text.lower()
+            match = re.search(r"\b(morning|afternoon|evening)\b", low)
+            if not match:
+                continue
+            sentence = Sentence(rng, augment=False)
+            sentence.add(text)
+            self.assertTrue(all(span["label"] == "O" for span in sentence.spans), text)
+            self.assertFalse(sentence.clauses, text)
+            self.assertNotIn(background.normal(text), background.RESERVED)
+            if low.startswith("good "):
+                parts.add(match.group())
+                # "good" is the only cue separating the greeting from a real
+                # day part, so it must sit directly in front of the word.
+                self.assertEqual(low[: match.start()].strip(), "good")
+                # A greeting that also carried a clock would label a real
+                # expression O.
+                self.assertIsNone(re.search(r"\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b", low), text)
+        self.assertEqual(parts, {"morning", "afternoon", "evening"})
 
     def test_positive_compound_roles_are_preserved(self):
         for family in ("compound-duration", "compound-shift"):

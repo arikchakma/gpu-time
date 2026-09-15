@@ -32,7 +32,7 @@ import {
 
 import { readDuration, readNumber } from "./quantity.js";
 
-const approximately = new Set(["about", "around", "roughly"]);
+const approximately = new Set(["about", "around", "roughly", "approximately"]);
 const filler = new Set([
   ...approximately,
   "at",
