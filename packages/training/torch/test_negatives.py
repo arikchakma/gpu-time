@@ -81,6 +81,43 @@ class NumericNegativeTests(unittest.TestCase):
             )
         self.assertTrue(all(found.values()), found)
 
+    def test_hard_negatives_stay_background_and_cover_both_classes(self):
+        rng = random.Random(987654)
+        found = {
+            "set-to-int": False, "numbered-noun": False, "plural-count": False,
+            "int-to-int": False, "weekday-person": False, "weekday-title": False,
+            "unit-as-noun": False,
+        }
+        for _ in range(6000):
+            for text in (background.setting_number(rng), background.time_word_name(rng)):
+                sentence = Sentence(rng, augment=False)
+                sentence.add(text)
+                self.assertTrue(all(span["label"] == "O" for span in sentence.spans), text)
+                self.assertFalse(sentence.clauses, text)
+                self.assertNotIn(background.normal(text), background.RESERVED)
+                # A meridiem, a clock, or a weekday beside a day number would be
+                # a real expression labelled O, which poisons the corpus.
+                low = text.lower()
+                self.assertIsNone(re.search(r"\b(?:am|pm|noon|midnight|o'clock)\b", low), text)
+                self.assertIsNone(re.search(r"\b\d{1,2}:\d{2}\b", text), text)
+                self.assertIsNone(
+                    re.search(
+                        r"\b(?:(?:mon|tues|wednes|thurs|fri|satur|sun)day|"
+                        r"january|february|march|april|may|june|july|august|"
+                        r"september|october|november|december)\s+(?:the\s+)?\d",
+                        low,
+                    ),
+                    text,
+                )
+                found["set-to-int"] |= bool(re.search(r"\b(?:set|turned|raised|lowered|bumped|capped) the \w+", low))
+                found["numbered-noun"] |= bool(re.search(r"\b(?:pull request|ticket|issue|option|version|build) \d+", low))
+                found["plural-count"] |= bool(re.search(r"\b\d+ (?:chairs|shirts|assertions|pages|seats)\b", low))
+                found["int-to-int"] |= bool(re.search(r"\b\d+ (?:to|by) \d+\b", low))
+                found["weekday-person"] |= bool(re.search(r"^(?:my \w+ )?(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b", low))
+                found["weekday-title"] |= " club meets" in low or " night football" in low or bool(re.search(r"\b(?:times|herald|gazette|journal)\b", low))
+                found["unit-as-noun"] |= bool(re.search(r"\b(?:the word|the plural of|a) (?:second|minute|hour|day|week|month|year)\b", low))
+        self.assertTrue(all(found.values()), found)
+
     def test_positive_compound_roles_are_preserved(self):
         for family in ("compound-duration", "compound-shift"):
             for seed in range(50):
