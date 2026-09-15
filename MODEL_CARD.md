@@ -2,9 +2,11 @@
 
 ## Model
 
-The package embeds `lessgen2`, with artifact SHA-256 `27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3`. It fine-tunes `risk-w0.005` under focal distillation against that same checkpoint, so the update learns new forms without flipping cases the reference already answers correctly. Its lineage runs back through `ad-f001` and `english-coverage-layer2-negative-blend-075`; `audit:model` verifies the chain.
+The package embeds `sweep/epoch-33`, with artifact SHA-256 `408aefbf59e65ec5...`; the full hash is in `packages/training/active/export-report.json`, which is the only place scores and hashes should be read from. It fine-tunes `lessgen2` under focal distillation against that same checkpoint, on a corpus repaired on 15 September 2026, so the update learns new forms without flipping cases the reference already answers correctly. Its lineage runs back through `risk-w0.005` and `ad-f001`; `audit:model` verifies the chain.
 
-The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,519 Brotli bytes for the weights. The published package is 44,682 Brotli bytes, below the 50,000-byte limit.
+The checkpoint was chosen by sweeping all 40 epochs of one run, not by taking `best.pt`. Chat varies by 17 cases and authored English by 3 between neighbouring epochs at one seed, so every headline number here is a point in a spread, not a property of the recipe.
+
+The model has 38,745 parameters, two scan layers, 580 embedding rows, and 40 role slots (35 named roles plus five reserved). A 40x40 CRF transition matrix supports Viterbi decoding. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates. The active report records 22,511 Brotli bytes for the weights. The published package is 45,466 Brotli bytes, below the 50,000-byte limit. The boundary threshold is 1.75.
 
 The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 1.0, fitted by `calibrate.py` on the development splits. The `CLOCK_OFFSET` role represents half-hour and quarter-hour clock arithmetic.
 
@@ -73,6 +75,11 @@ The saved reports cover different model versions. Each result below describes it
 
 ## Limitations
 
+- **"in N units" meaning how long a thing took is read as how far ahead it is.** "He ran a quarter mile in four minutes" returns a time. Three gold negatives fail this way, and they are the only set where this model is worse than its predecessor. The cause is the boundary-word repair of 15 September 2026, which taught "in" as a forward direction across thousands of rows. It is the next corpus target.
+- **A person named after a weekday is read as the weekday.** "My friend Wednesday never answers her phone" returns a date. The predecessor fails this too.
+- **A trailing two-digit field in a slash triple is read as a day, not a year.** "Delivery is booked for 07/19/27" fails. The generated corpus is split 77 to 34 on this, and no model has ever answered both this and the invalid-month case "2027/15/08".
+- **The em dash is unsupported.** "13:20—15:50" returns nothing, on this model and every model measured. The generator never renders it between clocks, and the tokenizer folds it into the same character class as a colon. The en dash works but on a weaker feature path.
+- **This model answers 15 of 37 reported real-user failures.** A cold start on the same corpus answers 26 but drops the Chrono comparison from 74 to 67 and fails the build. The anchor that holds the gates is the same anchor that costs real English. Anyone revisiting the 37 will find the cold recipe and should know it was measured and rejected, not overlooked.
 - Accuracy on real user phrasing is unmeasured. The generated expressions share training families, including those with reserved surrounding prose.
 - English only. Other languages can produce incorrect results without a diagnostic.
 - Vague expressions (`ASAP`, `after work`, `soon`) are deliberately given no clock value rather than a guessed one.
