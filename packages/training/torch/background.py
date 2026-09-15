@@ -977,12 +977,208 @@ def time_word_name(rng: random.Random) -> str:
     return rng.choice(rng.choice(groups))
 
 
+# Class C hard negatives: a dotted or dashed numeric string that is not a date.
+ARTEFACTS = [
+    "build", "release", "patch", "hotfix", "rollout", "image", "firmware",
+    "driver", "schema", "runtime", "bundle", "package", "snapshot", "installer",
+    "client", "agent", "plugin", "extension", "toolchain", "kernel", "sdk",
+    "binary", "container", "manifest", "changelog", "tarball", "branch cut",
+]
+SHIP_VERBS = [
+    ("ship", "shipped"), ("deploy", "deployed"), ("tag", "tagged"),
+    ("pin", "pinned"), ("promote", "promoted"), ("publish", "published"),
+    ("install", "installed"), ("revert", "reverted"), ("cut", "cut"),
+    ("sign", "signed"), ("mirror", "mirrored"), ("roll back", "rolled back"),
+    ("cherry-pick", "cherry-picked"), ("rebuild", "rebuilt"), ("vendor", "vendored"),
+]
+HOSTS = [
+    "gateway", "proxy", "load balancer", "database", "cache node", "mail relay",
+    "print server", "access point", "firewall", "jump box", "router",
+    "staging box", "build agent", "name server", "broker", "file share",
+    "monitoring box", "test rig", "camera", "printer", "thermostat",
+]
+ENVIRONMENTS = [
+    "production", "staging", "the sandbox", "the test cluster", "the lab",
+    "the demo tenant", "canary", "the mirror", "the field units", "preview",
+]
+SPEC_DOCS = [
+    "RFC 3339", "RFC 2119", "RFC 7231", "RFC 5322", "RFC 6749", "RFC 4122",
+    "ISO 8601", "ISO 9001", "ISO 3166", "IEEE 754", "IEEE 802.11", "UTF-8",
+    "SHA-256", "X.509", "ECMA-262", "PEP 8", "HTTP/2", "TLS 1.0", "ASCII 65",
+]
+PART_LABELS = [
+    "SKU", "part", "model", "serial", "asset tag", "batch", "lot", "item",
+    "catalogue number", "unit", "die", "mould", "fixture", "coupler",
+]
+# Listed, not drawn from letters: random pairs produce "PM", "SAT" and "DEC",
+# and the tokenizer splits "PM-84233" into a bare meridiem token.
+PART_CODES = [
+    "BK", "CR", "DX", "FG", "HP", "KL", "NX", "PQ", "RV", "TZ", "VB", "XG",
+    "ZL", "QD", "BRK", "CLP", "DRV", "FLX", "GRN", "HLX", "KPR", "NVL", "PLT",
+    "RDX", "TRB", "VLX", "ZNC", "GSK", "LTP", "WRN",
+]
+RANGE_NOUNS = [
+    "pages", "rows", "lines", "ports", "records", "entries", "frames",
+    "columns", "offsets", "channels", "slots", "blocks", "sectors", "bins",
+    "shelves", "lockers", "plots", "readings", "samples", "cells",
+]
+
+
+def _dotted_version(rng: random.Random, fields: int = 0) -> str:
+    """A dotted number the positive calendar can never render.
+
+    semantic.py dots only two or three fields, never pads them, and always puts
+    a 1990-2040 year in the three-field form; natural.py never dots at all. So a
+    padded CalVer, a four-field address, a small three-field triple, and a
+    two-field pair whose minor is 0 or above 28 are all outside that grammar.
+    """
+    fields = fields or rng.choice([2, 3, 3])  # a four-field address is asked for by name.
+    if fields == 4:
+        return f"{rng.choice([10, 172, 192])}.{rng.randint(0, 254)}.{rng.randint(0, 254)}.{rng.randint(1, 254)}"
+    if fields == 3:
+        if rng.random() < 0.4:  # CalVer, zero padded exactly as a ticket writes it.
+            return f"{rng.randint(2019, 2031)}.{rng.randint(1, 12):02}.{rng.randint(1, 28):02}"
+        return f"{rng.randint(1, 40)}.{rng.randint(0, 40)}.{rng.randint(0, 40)}"
+    minor = 0 if rng.random() < 0.6 else rng.randint(29, 99)
+    return f"{rng.randint(1, 40)}.{minor}"
+
+
+def _commit(rng: random.Random) -> str:
+    """A short hash. A letter every third place, or the tokenizer splits
+    "2023e23" and leaves a bare year token labelled O."""
+    body = [rng.choice("0123456789abcdef") for _ in range(rng.choice([7, 7, 8, 10]))]
+    for index in range(0, len(body), 3):
+        body[index] = rng.choice("abcdef")
+    return "".join(body)
+
+
+def numeric_identifier(rng: random.Random) -> str:
+    """A dotted or dashed numeric string that looks like a date and is not one.
+
+    "Use build 2026.09.12 in production" is the whole class: a version, a build
+    stamp, an address, a part number or a numeric range. Nothing in the carrier
+    grammar shows these, so the model reads the digits and answers with a date.
+    """
+    nouns, verbs = vocabulary()
+    noun, other, verb = rng.choice(nouns), rng.choice(nouns), rng.choice(verbs)
+    name = rng.choice(NAMES)
+    artefact, host = rng.choice(ARTEFACTS), rng.choice(HOSTS)
+    base, past = rng.choice(SHIP_VERBS)
+    environment, spec = rng.choice(ENVIRONMENTS), rng.choice(SPEC_DOCS)
+    version, older = _dotted_version(rng), _dotted_version(rng)
+    calver = _dotted_version(rng, 3)
+    address, second_address = _dotted_version(rng, 4), _dotted_version(rng, 4)
+    port, commit = rng.choice([80, 443, 3000, 5432, 8000, 8080, 9090]), _commit(rng)
+    stamp = f"{rng.randint(2019, 2031)}{rng.randint(1, 12):02}{rng.randint(1, 28):02}"
+    part_label, letters = rng.choice(PART_LABELS), rng.choice(PART_CODES)
+    part = f"{letters}-{rng.randint(10000, 99999)}"
+    isbn = f"978-{rng.randint(0, 1)}-{rng.randint(10, 99)}-{rng.randint(100000, 999999)}-{rng.randint(0, 9)}"
+    phone = f"{rng.randint(200, 989)}-{rng.choice([rng.randint(0, 1860), rng.randint(2100, 9999)]):04}"
+    # Both ends clear 31, so a dashed pair is never a day range or a clock range,
+    # and the band a year could occupy is skipped outright.
+    low = rng.choice([rng.randint(32, 1860), rng.randint(2100, 8000)])
+    high = low + rng.randint(1, 120)
+    ranged = rng.choice(RANGE_NOUNS)
+    groups = [
+        # A dotted version, with and without a prefix word.
+        [
+            f"Use {artefact} {calver} in {environment} until the {noun} lands.",
+            f"{base.capitalize()} {artefact} {version} to {environment}.",
+            f"{name} {past} {version} after the {noun} failed.",
+            f"We are still on {artefact} {older} here.",
+            f"Version {version} of the {noun} dropped the {other}.",
+            f"{artefact.capitalize()} {calver} replaced {artefact} {older}.",
+            f"The {noun} needs {artefact} {version} or newer.",
+            f"v{version} of the {noun} is the last one that works.",
+            f"Pin the {noun} to v{version} until we {verb} the {other}.",
+            f"release {version} is tagged but not announced.",
+            f"{name} asked whether {version} fixes the {noun}.",
+            f"Downgrade to {older} if the {noun} breaks.",
+            f"The changelog jumps from {older} to {version} with no note.",
+            f"Our {noun} pins {artefact} {calver} in the lockfile.",
+            f"{base.capitalize()} v{version} and tell {name}.",
+            f"Anything above {version} needs a new {noun}.",
+        ],
+        # A build stamp or a commit hash.
+        [
+            f"{artefact.capitalize()} {stamp} never reached {environment}.",
+            f"The {noun} ships as {artefact} {stamp}.",
+            f"{name} {past} {artefact} {stamp} by hand.",
+            f"Compare {artefact} {stamp} against {artefact} {calver}.",
+            f"Commit {commit} touched the {noun}.",
+            f"{name} reverted commit {commit} on the {noun} branch.",
+            f"The {noun} regression starts at {commit}.",
+            f"Cherry-pick {commit} into the {noun} branch.",
+            f"{commit} and {_commit(rng)} both change the {noun}.",
+            f"The bug report only quotes {artefact} {stamp}.",
+            f"Tag {commit} as {artefact} {version}.",
+            f"Our {noun} logs show {artefact} {stamp} everywhere.",
+            f"{base.capitalize()} the {noun} from {commit} instead.",
+            f"The stack trace names {artefact} {stamp} and nothing else.",
+        ],
+        # An address, a port, a phone number: dots and colons that carry no time.
+        [
+            f"The {host} answers on {address}.",
+            f"Point the {noun} at {address} instead of {second_address}.",
+            f"{name} moved the {host} to {address}:{port}.",
+            f"Only {address} may reach the {noun}.",
+            f"The {host} at {address} keeps dropping the {noun}.",
+            f"Whitelist {address} and {second_address} for the {noun}.",
+            f"Bind the {noun} to {address}:{port}.",
+            f"{address} is the old {host}; use {second_address}.",
+            f"Port {port} on {address} is closed.",
+            f"Ring {phone} and ask about the {noun}.",
+            f"{name} left {phone} as the callback number.",
+            f"The {noun} lists {phone} as the support line.",
+            f"Our {host} and the {noun} share {address}.",
+            f"Route the {noun} through {address} for now.",
+        ],
+        # A part number, an SKU, an ISBN, a standard.
+        [
+            f"{part_label.capitalize()} {part} is out of stock.",
+            f"Order {part_label} {part} for the {noun}.",
+            f"{name} quoted {part_label} {part} instead of the {noun}.",
+            f"The {noun} takes {part_label} {part} or the older {letters} range.",
+            f"{part_label.capitalize()} {part} and {part_label} {rng.choice(PART_CODES)}-{rng.randint(10000, 99999)} are not interchangeable.",
+            f"The ISBN on the {noun} is {isbn}.",
+            f"Catalogue the {noun} under {isbn}.",
+            f"{isbn} is a reprint, not a new edition.",
+            f"The {noun} follows {spec} to the letter.",
+            f"{spec} says nothing about the {noun}.",
+            f"{name} cited {spec} in the {noun} review.",
+            f"Read {spec} before you {verb} the {noun}.",
+            f"The {noun} predates {spec}.",
+            f"{spec} and {rng.choice(SPEC_DOCS)} disagree about the {other}.",
+        ],
+        # A dashed numeric range over things that are not days.
+        [
+            f"{ranged.capitalize()} {low}-{high} describe the {noun}.",
+            f"Reread {ranged} {low}-{high} of the {noun}.",
+            f"The {noun} fills {ranged} {low}-{high}.",
+            f"{name} flagged {ranged} {low}-{high} as wrong.",
+            f"Copy {ranged} {low}-{high} into the {other}.",
+            f"Ports {low}-{high} are reserved for the {noun}.",
+            f"Open ports {low}-{high} on the {host}.",
+            f"The {noun} reads {ranged} {low}-{high} in one pass.",
+            f"Delete {ranged} {low}-{high} and rerun the {noun}.",
+            f"{ranged.capitalize()} {low}-{high} are blank in the {noun}.",
+            f"The error covers {ranged} {low}-{high} only.",
+            f"Everything in {ranged} {low}-{high} needs a second {noun}.",
+            f"{base.capitalize()} the {noun} across {ranged} {low}-{high}.",
+            f"Check {ranged} {low}-{high} before you {verb} the {other}.",
+        ],
+    ]
+    return rng.choice(rng.choice(groups))
+
+
 def sentence(rng: random.Random) -> str:
-    # The two hard-negative classes go first, so their share is the stated one.
+    # The three hard-negative classes go first, so their share is the stated one.
     if rng.random() < 0.12:
         return setting_number(rng)
     if rng.random() < 0.09:
         return time_word_name(rng)
+    if rng.random() < 0.07:
+        return numeric_identifier(rng)
     pool = borrowed()
     if pool and rng.random() < 0.15:
         return rng.choice(pool)

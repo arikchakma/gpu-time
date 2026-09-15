@@ -118,6 +118,64 @@ class NumericNegativeTests(unittest.TestCase):
                 found["unit-as-noun"] |= bool(re.search(r"\b(?:the word|the plural of|a) (?:second|minute|hour|day|week|month|year)\b", low))
         self.assertTrue(all(found.values()), found)
 
+    def test_numeric_identifiers_are_background_and_never_a_date_surface(self):
+        rng = random.Random(20260915)
+        run = re.compile(r"\d+(?:[.:/-]\d+)+")
+        found = {
+            "dotted-version": False, "prefixed-v": False, "calver": False,
+            "build-stamp": False, "commit": False, "ip": False, "port": False,
+            "phone": False, "isbn": False, "spec": False, "part": False,
+            "range": False,
+        }
+        for _ in range(8000):
+            text = background.numeric_identifier(rng)
+            sentence = Sentence(rng, augment=False)
+            sentence.add(text)
+            self.assertTrue(all(span["label"] == "O" for span in sentence.spans), text)
+            self.assertFalse(sentence.clauses, text)
+            self.assertNotIn(background.normal(text), background.RESERVED)
+            normalized = background.normal(text)
+            self.assertTrue(all(p not in normalized for p in background.RESERVED), text)
+            low = text.lower()
+            self.assertIsNone(re.search(r"\b(?:am|pm|noon|midnight|o'clock)\b", low), text)
+            # semantic.py dots at most three fields and never pads them; its
+            # three-field form always ends in a 1990-2040 year. Anything of that
+            # shape here would label a real date O.
+            self.assertIsNone(re.search(r"\b\d{1,2}\.\d{1,2}\.(?:19|20)\d{2}\b", text), text)
+            for year_led in re.findall(r"\b(?:19|20)\d{2}\.[\d.]*\d\b", text):
+                self.assertRegex(year_led, r"^\d{4}\.\d{2}\.\d{2}$", text)
+            # The tokenizer splits on every digit boundary, so a year-sized
+            # number is a live YEAR surface unless it opens a padded CalVer.
+            for number in re.finditer(r"\d+", text):
+                if 1990 <= int(number.group()) <= 2040:
+                    self.assertRegex(
+                        text[number.start() : number.start() + 10],
+                        r"^\d{4}\.\d{2}\.\d{2}$",
+                        text,
+                    )
+            for match in run.finditer(text):
+                parts = re.split(r"[.:/-]", match.group())
+                if len(parts) != 2:
+                    continue
+                first, second = int(parts[0]), int(parts[1])
+                if "-" in match.group():
+                    self.assertGreater(max(first, second), 31, text)
+                else:
+                    self.assertFalse(1 <= first <= 28 and 1 <= second <= 28, text)
+            found["dotted-version"] |= bool(re.search(r"\bversion \d+\.\d+\b", low))
+            found["prefixed-v"] |= bool(re.search(r"\bv\d+\.\d+\b", low))
+            found["calver"] |= bool(re.search(r"\b\d{4}\.\d{2}\.\d{2}\b", text))
+            found["build-stamp"] |= bool(re.search(r"\b(?:19|20)\d{6}\b", text))
+            found["commit"] |= bool(re.search(r"\b[0-9a-f]{7,10}\b", low)) and "ommit" in text
+            found["ip"] |= bool(re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", text))
+            found["port"] |= bool(re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}:\d+\b", text)) or "port" in low
+            found["phone"] |= bool(re.search(r"\b\d{3}-\d{4}\b", text))
+            found["isbn"] |= "978-" in text
+            found["spec"] |= bool(re.search(r"\b(?:rfc|iso|ieee|ecma|pep|tls)\b", low))
+            found["part"] |= bool(re.search(r"\b[A-Z]{2,3}-\d{4,5}\b", text))
+            found["range"] |= bool(re.search(r"\b\d{2,4}-\d{2,4}\b", text))
+        self.assertTrue(all(found.values()), found)
+
     def test_positive_compound_roles_are_preserved(self):
         for family in ("compound-duration", "compound-shift"):
             for seed in range(50):
