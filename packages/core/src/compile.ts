@@ -896,6 +896,18 @@ function compileDateAndTime(
     // instant and drop the openness, which a caller could not detect. A
     // "from" that opens a real range ("from 8 to 10pm") keeps both edges.
     time.open = "end";
+  } else if (
+    time &&
+    !time.end &&
+    clocks.length === 1 &&
+    tokens.some((token) => token.label === Role.RANGE_END) &&
+    !tokens.some((token) => token.label === Role.RANGE_START)
+  ) {
+    // The mirror of the branch above: "until 3pm" has no reading where 3pm
+    // starts the window, so a range end with nothing opening it is a deadline.
+    time.end = time.start;
+    time.start = { hour: 0, minute: 0 };
+    time.open = "start";
   }
   if (time) clause.time = time;
   const firstClockIndex = tokens.findIndex((token) =>

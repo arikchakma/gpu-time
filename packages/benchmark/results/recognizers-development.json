@@ -7639,8 +7639,10 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T18:00:00+00:00",
-          "allDay": false
+          "start": "2016-11-07T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2016-11-07T18:00:00+00:00"
         }
       ],
       "correct": false,
@@ -7648,8 +7650,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T18:00:00+00:00",
-            "allDay": false
+            "start": "2016-11-07T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2016-11-07T18:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -7680,8 +7684,10 @@
       ],
       "actual": [
         {
-          "start": "2016-11-08T07:00:00+00:00",
-          "allDay": false
+          "start": "2016-11-08T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2016-11-08T07:00:00+00:00"
         }
       ],
       "correct": false,
@@ -7689,8 +7695,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-08T07:00:00+00:00",
-            "allDay": false
+            "start": "2016-11-08T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2016-11-08T07:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -22654,8 +22662,10 @@
       ],
       "actual": [
         {
-          "start": "2018-06-04T12:00:00+00:00",
-          "allDay": false
+          "start": "2018-06-04T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2018-06-04T12:00:00+00:00"
         }
       ],
       "correct": false,
@@ -22663,8 +22673,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-06-04T12:00:00+00:00",
-            "allDay": false
+            "start": "2018-06-04T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2018-06-04T12:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -22703,8 +22715,10 @@
       ],
       "actual": [
         {
-          "start": "2018-06-04T11:00:00+00:00",
-          "allDay": false
+          "start": "2018-06-04T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2018-06-04T11:00:00+00:00"
         }
       ],
       "correct": false,
@@ -22712,8 +22726,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-06-04T11:00:00+00:00",
-            "allDay": false
+            "start": "2018-06-04T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2018-06-04T11:00:00+00:00"
           }
         ],
         "rrules": [],
