@@ -57,18 +57,18 @@
   },
   "split": "development",
   "total": 563,
-  "correct": 227,
-  "accuracy": 0.40319715808170514,
+  "correct": 231,
+  "accuracy": 0.4103019538188277,
   "families": [
     {
       "family": "DateParser",
       "total": 113,
-      "correct": 69
+      "correct": 71
     },
     {
       "family": "TimeParser",
       "total": 73,
-      "correct": 45
+      "correct": 46
     },
     {
       "family": "TimePeriodParser",
@@ -78,7 +78,7 @@
     {
       "family": "DateTimeParser",
       "total": 53,
-      "correct": 36
+      "correct": 37
     },
     {
       "family": "DatePeriodParser",
@@ -92,9 +92,9 @@
     }
   ],
   "stages": {
-    "value-mismatch": 181,
-    "correct": 227,
-    "interpretation-failed": 90,
+    "value-mismatch": 178,
+    "correct": 231,
+    "interpretation-failed": 89,
     "matches-upstream-past": 1,
     "no-result": 60,
     "resolution-error": 4
@@ -3801,19 +3801,17 @@
       ],
       "actual": [
         {
-          "start": "2018-04-19T00:00:00+00:00",
-          "allDay": true,
-          "end": "2018-04-23T00:00:00+00:00"
+          "start": "2018-04-23T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-04-19T00:00:00+00:00",
-            "allDay": true,
-            "end": "2018-04-23T00:00:00+00:00"
+            "start": "2018-04-23T00:00:00+00:00",
+            "allDay": true
           }
         ],
         "rrules": [],
@@ -4039,16 +4037,16 @@
       ],
       "actual": [
         {
-          "start": "2089-05-05T00:00:00+00:00",
+          "start": "1989-05-05T00:00:00+00:00",
           "allDay": true
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2089-05-05T00:00:00+00:00",
+            "start": "1989-05-05T00:00:00+00:00",
             "allDay": true
           }
         ],
@@ -4113,6 +4111,61 @@
           "start": "2018-05-13T02:00:00+00:00",
           "allDay": false,
           "open": "end"
+        },
+        {
+          "start": "2018-05-20T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-05-27T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-03T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-10T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-17T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-24T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-01T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-08T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-15T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-22T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-29T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
         }
       ],
       "correct": false,
@@ -4123,9 +4176,66 @@
             "start": "2018-05-13T02:00:00+00:00",
             "allDay": false,
             "open": "end"
+          },
+          {
+            "start": "2018-05-20T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-05-27T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-03T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-10T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-17T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-24T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-01T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-08T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-15T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-22T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-29T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
           }
         ],
-        "rrules": [],
+        "rrules": [
+          "DTSTART;TZID=UTC:20180513T020000\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SU"
+        ],
         "spans": [
           {
             "start": 18,
@@ -4134,7 +4244,7 @@
             "confidence": 0.48101192712783813
           }
         ],
-        "truncated": false,
+        "truncated": true,
         "diagnostics": [
           {
             "code": "ambiguous-meridiem",
@@ -5436,19 +5546,17 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T08:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-07T08:30:00+00:00"
+          "start": "2016-11-07T08:30:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T08:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-07T08:30:00+00:00"
+            "start": "2016-11-07T08:30:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -10633,8 +10741,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unsupported token role NUM.",
+            "code": "invalid-time",
+            "message": "A fractional clock needs past or to and an hour.",
             "start": 26,
             "end": 31,
             "severity": "error"
@@ -10856,19 +10964,17 @@
       ],
       "actual": [
         {
-          "start": "2016-11-08T05:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T05:20:00+00:00"
+          "start": "2016-11-08T05:20:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-08T05:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T05:20:00+00:00"
+            "start": "2016-11-08T05:20:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -11913,7 +12019,15 @@
         "rrules": [],
         "spans": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"Bob and Alice usually exchange their encrypted messages at the eod.\".",
+            "start": 0,
+            "end": 67
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -14154,8 +14268,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-ordinal",
-            "message": "An ordinal needs one weekday.",
+            "code": "invalid-date",
+            "message": "Conflicting date specifications need separate clauses.",
             "start": 16,
             "end": 21,
             "severity": "error"
@@ -14944,22 +15058,122 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2017-11-14T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-15T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-16T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-21T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-22T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-23T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-28T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-29T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-30T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-12-05T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-12-06T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-12-07T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "open-bound-needs-time",
-            "message": "An open bound needs a clock time, as in \"after 6pm\".",
-            "start": 71,
-            "end": 75,
-            "severity": "error"
+            "start": "2017-11-14T00:00:00+00:00",
+            "allDay": true
           },
+          {
+            "start": "2017-11-15T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-16T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-21T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-22T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-23T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-28T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-29T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-30T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-12-05T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-12-06T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-12-07T00:00:00+00:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20171114\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TU,WE,TH"
+        ],
+        "spans": [
+          {
+            "start": 61,
+            "end": 87,
+            "text": "this week from Tue to Thur",
+            "confidence": 0.06677161157131195
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [
           {
             "code": "low-confidence",
             "message": "The model is uncertain about this expression.",
@@ -15036,8 +15250,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-ordinal",
-            "message": "An ordinal needs one weekday.",
+            "code": "invalid-date",
+            "message": "Conflicting date specifications need separate clauses.",
             "start": 17,
             "end": 22,
             "severity": "error"
@@ -16318,7 +16532,7 @@
       ],
       "actual": [
         {
-          "start": "2018-03-01T00:00:00+00:00",
+          "start": "2017-03-31T00:00:00+00:00",
           "allDay": true
         }
       ],
@@ -16327,7 +16541,7 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-03-01T00:00:00+00:00",
+            "start": "2017-03-31T00:00:00+00:00",
             "allDay": true
           }
         ],
@@ -19460,8 +19674,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unsupported token role NUM.",
+            "code": "invalid-time",
+            "message": "A fractional clock needs past or to and an hour.",
             "start": 20,
             "end": 25,
             "severity": "error"

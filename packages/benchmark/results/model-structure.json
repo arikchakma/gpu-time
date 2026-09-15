@@ -79182,10 +79182,10 @@
     },
     {
       "name": "chat",
-      "sha256": "47232edf013120ea798dda185eeda4af47a958dfb6e589b1281a86d02d839a3d",
-      "total": 330,
-      "correct": 287,
-      "accuracy": 0.8696969696969697,
+      "sha256": "9b4914a24484c0fa816602cb233b705520c7dc487640ea77f1f1bfbacf7aa53a",
+      "total": 331,
+      "correct": 294,
+      "accuracy": 0.8882175226586103,
       "examples": [
         {
           "id": "chat-001",
@@ -111526,7 +111526,7 @@
           "id": "chat-218",
           "text": "revised: starting at 8:30",
           "family": "chat-correction",
-          "correct": false,
+          "correct": true,
           "expected": {
             "clauses": [
               {
@@ -111545,7 +111545,18 @@
               "end": 25,
               "text": "starting at 8:30",
               "confidence": 0.9547433853149414,
-              "schedule": null,
+              "schedule": {
+                "clauses": [
+                  {
+                    "time": {
+                      "start": {
+                        "hour": 8,
+                        "minute": 30
+                      }
+                    }
+                  }
+                ]
+              },
               "diagnostics": [
                 {
                   "code": "ambiguous-meridiem",
@@ -111553,13 +111564,6 @@
                   "start": 21,
                   "end": 22,
                   "severity": "warning"
-                },
-                {
-                  "code": "invalid-bound",
-                  "message": "A bound needs a date.",
-                  "start": 9,
-                  "end": 17,
-                  "severity": "error"
                 }
               ]
             }
@@ -113223,7 +113227,7 @@
           "id": "chat-231",
           "text": "every saturday except the first of the month",
           "family": "chat-negation",
-          "correct": false,
+          "correct": true,
           "expected": {
             "clauses": [
               {
@@ -113249,16 +113253,26 @@
               "end": 44,
               "text": "every saturday except the first of the month",
               "confidence": 0.6159281730651855,
-              "schedule": null,
-              "diagnostics": [
-                {
-                  "code": "invalid-ordinal",
-                  "message": "An ordinal needs one weekday.",
-                  "start": 26,
-                  "end": 31,
-                  "severity": "error"
-                }
-              ]
+              "schedule": {
+                "clauses": [
+                  {
+                    "recurrence": {
+                      "freq": "weekly",
+                      "interval": 1,
+                      "except": [
+                        {
+                          "kind": "calendar",
+                          "day": 1
+                        }
+                      ],
+                      "byDay": [
+                        "SA"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "diagnostics": []
             }
           ],
           "tokens": [
@@ -113930,7 +113944,7 @@
           "id": "chat-236",
           "text": "later this week",
           "family": "chat-relative",
-          "correct": false,
+          "correct": true,
           "expected": {
             "clauses": [
               {
@@ -113949,16 +113963,19 @@
               "end": 15,
               "text": "later this week",
               "confidence": 0.9823426604270935,
-              "schedule": null,
-              "diagnostics": [
-                {
-                  "code": "open-bound-needs-time",
-                  "message": "An open bound needs a clock time, as in \"after 6pm\".",
-                  "start": 0,
-                  "end": 5,
-                  "severity": "error"
-                }
-              ]
+              "schedule": {
+                "clauses": [
+                  {
+                    "date": {
+                      "kind": "relativeUnit",
+                      "unit": "week",
+                      "modifier": "this",
+                      "edge": "end"
+                    }
+                  }
+                ]
+              },
+              "diagnostics": []
             }
           ],
           "tokens": [
@@ -114783,9 +114800,9 @@
           },
           "actual": [
             {
-              "start": 9,
+              "start": 3,
               "end": 19,
-              "text": "20 minutes",
+              "text": "about 20 minutes",
               "confidence": 0.9998228549957275,
               "schedule": {
                 "clauses": [
@@ -115382,7 +115399,7 @@
           "id": "chat-252",
           "text": "two weeks from friday",
           "family": "chat-relative",
-          "correct": false,
+          "correct": true,
           "expected": {
             "clauses": [
               {
@@ -115415,9 +115432,10 @@
                         "FR"
                       ]
                     },
-                    "duration": {
+                    "shift": {
                       "amount": 2,
-                      "unit": "week"
+                      "unit": "week",
+                      "direction": "after"
                     }
                   }
                 ]
@@ -125713,7 +125731,7 @@
           "id": "chat-306",
           "text": "payroll on the 15th and last day of every month",
           "family": "chat-calendar",
-          "correct": false,
+          "correct": true,
           "expected": {
             "clauses": [
               {
@@ -125741,9 +125759,7 @@
                       "freq": "monthly",
                       "interval": 1,
                       "byMonthDay": [
-                        15
-                      ],
-                      "bySetPos": [
+                        15,
                         -1
                       ]
                     }
@@ -128133,7 +128149,7 @@
           "id": "chat-322",
           "text": "office hours tuesdays 2pm-4pm",
           "family": "chat-calendar",
-          "correct": false,
+          "correct": true,
           "expected": {
             "clauses": [
               {
@@ -128166,12 +128182,6 @@
               "schedule": {
                 "clauses": [
                   {
-                    "date": {
-                      "kind": "weekday",
-                      "days": [
-                        "TU"
-                      ]
-                    },
                     "time": {
                       "start": {
                         "hour": 14,
@@ -128181,6 +128191,13 @@
                         "hour": 16,
                         "minute": 0
                       }
+                    },
+                    "recurrence": {
+                      "freq": "weekly",
+                      "interval": 1,
+                      "byDay": [
+                        "TU"
+                      ]
                     }
                   }
                 ]
@@ -129280,6 +129297,170 @@
               "label": "HOUR",
               "clauseStart": false,
               "score": 0.9991768598556519
+            }
+          ]
+        },
+        {
+          "id": "chat-unsupported-043",
+          "text": "Cortana, find us a time end of March",
+          "family": "chat-recognizers",
+          "correct": true,
+          "expected": {
+            "clauses": [
+              {
+                "date": {
+                  "kind": "calendarPeriod",
+                  "month": 3,
+                  "edge": "end"
+                }
+              }
+            ]
+          },
+          "actual": [
+            {
+              "start": 24,
+              "end": 36,
+              "text": "end of March",
+              "confidence": 0.21749600768089294,
+              "schedule": {
+                "clauses": [
+                  {
+                    "date": {
+                      "kind": "calendarPeriod",
+                      "month": 3,
+                      "edge": "end"
+                    }
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "code": "low-confidence",
+                  "message": "The model is uncertain about this expression.",
+                  "start": 24,
+                  "end": 27,
+                  "severity": "warning"
+                }
+              ]
+            }
+          ],
+          "tokens": [
+            {
+              "start": 0,
+              "end": 7,
+              "text": "Cortana",
+              "kind": 0,
+              "features": [
+                518127700,
+                2622678
+              ],
+              "label": "O",
+              "clauseStart": false,
+              "score": 0.999650239944458
+            },
+            {
+              "start": 7,
+              "end": 8,
+              "text": ",",
+              "kind": 2,
+              "features": [
+                530007298,
+                8267
+              ],
+              "label": "O",
+              "clauseStart": false,
+              "score": 0.9994237422943115
+            },
+            {
+              "start": 9,
+              "end": 13,
+              "text": "find",
+              "kind": 0,
+              "features": [
+                515119276,
+                12323
+              ],
+              "label": "O",
+              "clauseStart": false,
+              "score": 0.9889807105064392
+            },
+            {
+              "start": 14,
+              "end": 16,
+              "text": "us",
+              "kind": 0,
+              "features": [
+                531796612,
+                12290
+              ],
+              "label": "O",
+              "clauseStart": false,
+              "score": 0.998964250087738
+            },
+            {
+              "start": 17,
+              "end": 18,
+              "text": "a",
+              "kind": 0,
+              "features": [
+                509083648,
+                12357
+              ],
+              "label": "O",
+              "clauseStart": false,
+              "score": 0.9990067481994629
+            },
+            {
+              "start": 19,
+              "end": 23,
+              "text": "time",
+              "kind": 0,
+              "features": [
+                533209708,
+                12362
+              ],
+              "label": "O",
+              "clauseStart": false,
+              "score": 0.999778687953949
+            },
+            {
+              "start": 24,
+              "end": 27,
+              "text": "end",
+              "kind": 0,
+              "features": [
+                525605000,
+                12367
+              ],
+              "label": "EDGE",
+              "clauseStart": false,
+              "score": 0.21749600768089294
+            },
+            {
+              "start": 28,
+              "end": 30,
+              "text": "of",
+              "kind": 0,
+              "features": [
+                516958660,
+                12313
+              ],
+              "label": "GLUE",
+              "clauseStart": false,
+              "score": 0.9410200715065002
+            },
+            {
+              "start": 31,
+              "end": 36,
+              "text": "March",
+              "kind": 0,
+              "features": [
+                534788496,
+                6301
+              ],
+              "label": "MONTH",
+              "clauseStart": false,
+              "score": 0.9997233748435974
             }
           ]
         }

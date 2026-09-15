@@ -143,6 +143,10 @@ const unitAbbreviations: Record<string, Unit> = {
   h: "hour",
   mo: "month",
   mos: "month",
+  // "eod", "eow", and "eom" also carry an end edge; the compiler adds it.
+  eod: "day",
+  eow: "week",
+  eom: "month",
   yr: "year",
   yrs: "year",
   // A fortnight is two weeks; readDuration doubles the amount.
