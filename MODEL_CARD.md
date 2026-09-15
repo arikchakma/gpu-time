@@ -4,7 +4,7 @@
 
 The published package embeds checkpoint `runs/shorthand/epoch-39`, artifact SHA-256 `168f2268...`. The full hash and every score live in `packages/training/active/export-report.json`, which is the only place to read them from.
 
-The model has 38,745 parameters, two scan layers, 580 embedding rows, and 35 role labels over 40 slots. A 40x40 CRF transition matrix supports Viterbi decoding, which scores whole label sequences instead of single tokens. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates, and pack to 22,501 Brotli bytes. The full published package is 45,521 Brotli bytes, under the 50,000-byte release limit.
+The model has 38,745 parameters, two scan layers, 580 embedding rows, and 35 role labels over 40 slots. A 40x40 CRF transition matrix supports Viterbi decoding, which scores whole label sequences instead of single tokens. Weights use 6-bit symmetric per-tensor quantization with f32 intermediates, and pack to 22,501 Brotli bytes. The full published package is 45,561 Brotli bytes, under the 50,000-byte release limit.
 
 The model predicts one role per token, such as hour, weekday, quantity, recurrence marker, or filler. A separate boundary score splits the input into expressions at threshold 1.5. `calibrate.py` fits that threshold on the development splits.
 
@@ -37,7 +37,7 @@ The shipped checkpoint scores:
 - Chat gold: 303 of 331. Pooled over the five promotion sets: 593 of 625.
 - Reported user failures: 25 of 37.
 - Microsoft Recognizers, development split: 234 of 563 (41.6%). Policy differences count as failures, and the test split stays unused.
-- Chrono comparison: 74 of 85. Shared behavior is 65 of 75 and policy cases are 9 of 10.
+- Chrono comparison: 76 of 85. Shared behavior is 67 of 75 and policy cases are 9 of 10.
 - Non-temporal negatives: 188 of 192.
 - Reserved carriers: 973 of 1,000 schedules and 981 of 1,000 bare expressions.
 - Token accuracy: 99.26% on validation and 98.85% on heldout.
