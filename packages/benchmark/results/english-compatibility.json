@@ -1,6 +1,6 @@
 {
   "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
-  "runtimeSha256": "062d449e2053ba2333e5e9cf7e13af297241fd059d46bd9ff8e3c38b6ee6575e",
+  "runtimeSha256": "8043d895e141c0379e4f88239ad7da1539e7a117f4a860cff029f0eaf0afeb84",
   "sourceSha256": "ba6496d7bb3eaa7ddf949143ec280286bf47003c1c66bc21934c594cdb882e96",
   "chronoVersion": "2.10.1",
   "scope": "Independently authored API behavior checks inspired by Chrono's English coverage, not copied upstream tests. Both parsers face hand-written expectations. Shared cases measure the same intended behavior; policy cases have explicit separate expectations. Date-only checks ignore implied clock defaults but enforce date, result count and endpoint presence. Explicit times are compared as exact instants. gpu-time also checks allDay, errors, truncation and absence of recurrence. This is a targeted compatibility sample, not full Chrono parity or general language accuracy.",
@@ -19,9 +19,9 @@
   ],
   "shared": {
     "total": 75,
-    "gpuTimePassed": 65,
+    "gpuTimePassed": 67,
     "chronoPassed": 67,
-    "bothPassed": 59,
+    "bothPassed": 60,
     "gpuTimeGaps": [
       "compat-008",
       "compat-016",
@@ -29,19 +29,18 @@
       "compat-036",
       "compat-054",
       "compat-061",
-      "compat-062",
-      "compat-070"
+      "compat-062"
     ],
     "chronoGaps": [
       "compat-027",
       "compat-028",
+      "compat-033",
       "compat-037",
       "compat-042",
       "compat-048",
       "compat-073"
     ],
     "bothFailed": [
-      "compat-033",
       "compat-063"
     ]
   },
@@ -209,12 +208,10 @@
     },
     "rejection": {
       "total": 11,
-      "gpuTimePassed": 10,
+      "gpuTimePassed": 11,
       "chronoPassed": 10,
-      "bothPassed": 9,
-      "gpuTimeGaps": [
-        "compat-070"
-      ],
+      "bothPassed": 10,
+      "gpuTimeGaps": [],
       "chronoGaps": [
         "compat-073"
       ],
@@ -258,14 +255,14 @@
     },
     "time-range": {
       "total": 6,
-      "gpuTimePassed": 5,
+      "gpuTimePassed": 6,
       "chronoPassed": 5,
       "bothPassed": 5,
       "gpuTimeGaps": [],
-      "chronoGaps": [],
-      "bothFailed": [
+      "chronoGaps": [
         "compat-033"
-      ]
+      ],
+      "bothFailed": []
     },
     "weekday": {
       "total": 4,
@@ -1568,17 +1565,15 @@
         }
       ],
       "gpuTime": {
-        "passed": false,
-        "actual": [],
-        "diagnostics": [
+        "passed": true,
+        "actual": [
           {
-            "code": "invalid-time",
-            "message": "Clock components are out of range.",
-            "start": 30,
-            "end": 32,
-            "severity": "error"
+            "start": "2027-01-06T17:00:00+00:00",
+            "allDay": false,
+            "end": "2027-01-07T00:00:00+00:00"
           }
-        ]
+        ],
+        "diagnostics": []
       },
       "chrono": {
         "passed": false,
@@ -2947,20 +2942,15 @@
       "comparison": "shared",
       "expected": [],
       "gpuTime": {
-        "passed": false,
-        "actual": [
-          {
-            "start": "2027-01-07T02:03:00+00:00",
-            "allDay": false
-          }
-        ],
+        "passed": true,
+        "actual": [],
         "diagnostics": [
           {
-            "code": "ambiguous-meridiem",
-            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-            "start": 22,
-            "end": 23,
-            "severity": "warning"
+            "code": "unsupported",
+            "message": "Unsupported token role MINUTE.",
+            "start": 24,
+            "end": 25,
+            "severity": "error"
           }
         ]
       },

@@ -185,10 +185,12 @@ function readClock(
   let meridiem: string | undefined;
   let next = index + 1;
 
-  // "9.30pm" is a clock; "9.5 hours" is not, so the minutes must be two digits.
+  // Minutes are always two digits: "9.30pm" and "9:05" are clocks, while
+  // "9.5 hours" and the ratio "2:3" are not.
   const separated =
     tokens[next]?.text === ":"
-      ? tokens[next + 1]?.label === Role.MINUTE
+      ? tokens[next + 1]?.label === Role.MINUTE &&
+        /^\d{2}$/.test(tokens[next + 1]?.text ?? "")
       : tokens[next]?.text === "." &&
         /^\d{1,2}$/.test(token.text) &&
         /^\d{2}$/.test(tokens[next + 1]?.text ?? "");
@@ -222,7 +224,9 @@ function readClock(
     meridiem = clockPeriods.get(meridiem) ?? meridiem;
   }
 
-  const invalidHour = !Number.isInteger(hour) || hour < 0 || hour > 23;
+  const endOfDay = hour === 24 && minute === 0 && (second ?? 0) === 0;
+  const invalidHour =
+    !Number.isInteger(hour) || hour < 0 || (hour > 23 && !endOfDay);
   const invalidMinute = !Number.isInteger(minute) || minute < 0 || minute > 59;
   const invalidSecond =
     second !== undefined &&
@@ -920,6 +924,11 @@ function compileDateAndTime(
     time.start = { hour: 0, minute: 0 };
     time.open = "start";
   }
+  // 24:00 is an end of day, which is why clock.ts takes it as a range end and
+  // refuses it as a start. Checked here, after the deadline swaps above, so a
+  // bad start reports a diagnostic instead of throwing when it resolves.
+  if (time && "hour" in time.start && time.start.hour === 24)
+    fail(clocks[0].token, "invalid-time", "24:00 is only an end of day.");
   if (time) clause.time = time;
   const firstClockIndex = tokens.findIndex((token) =>
     [Role.HOUR, Role.TIME_NAMED, Role.DAYPART, Role.CLOCK_OFFSET].includes(
