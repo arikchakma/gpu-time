@@ -86,8 +86,6 @@ FAMILY_WEIGHTS = [
     for name in FAMILIES
 ]
 DEICTICS = ["this", "next", "last"] * 5 + ["nxt"]
-# The compiler drops GLUE before it reads the qualifier, so it stays O.
-APPROXIMATE = ["about", "around", "roughly", "approximately"]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
     "could you arrange a reminder for",
@@ -112,17 +110,6 @@ def deictic(s, word):
     """Renders a deictic. "nxt" is chat spelling; the schedule keeps "next"."""
     s.add(word, "DEICTIC")
     return "next" if word == "nxt" else word
-
-
-def loosely(s, r):
-    """Renders "about" before a shift quantity and reports whether it fired."""
-    if r.random() >= 0.2:
-        return {}
-    inside = s.in_expression
-    s.in_expression = False
-    s.add(r.choice(APPROXIMATE), "O")
-    s.in_expression = inside
-    return {"approximate": True}
 
 
 def one_day(r, name):
@@ -550,15 +537,12 @@ def render(s, reserved=False, family=None, bare=False):
             ["second", "minute", "hour", "day", "week", "month", "year"]
         )
         s.add("in", "DIR_AFTER")
-        loose = loosely(s, r)
         if amount == 1 and r.random() < 0.5:
             s.add("an" if unit == "hour" else "a", "NUM")
             s.add(unit, "UNIT")
         else:
             quantity(s, amount, unit)
-        clause = {
-            "shift": {"amount": amount, "unit": unit, "direction": "after", **loose}
-        }
+        clause = {"shift": {"amount": amount, "unit": unit, "direction": "after"}}
     elif family == "imperative-shift":
         s.add("in", "DIR_AFTER")
         amount = r.choice([15, 30, 45, 60, 75, 90, 120])
@@ -578,7 +562,6 @@ def render(s, reserved=False, family=None, bare=False):
         if r.random() < 0.2:
             amount = 1
         unit = r.choice(["second", "minute", "hour", "day", "week"])
-        loose = loosely(s, r)
         # "a week from today" is the everyday form and was never rendered.
         if amount == 1 and r.random() < 0.6:
             s.add("an" if unit == "hour" else "a", "NUM")
@@ -599,7 +582,7 @@ def render(s, reserved=False, family=None, bare=False):
             date = {"kind": "relativeDay", "offset": RELATIVE_DAYS[anchor]}
         clause = {
             "date": date,
-            "shift": {"amount": amount, "unit": unit, "direction": "after", **loose},
+            "shift": {"amount": amount, "unit": unit, "direction": "after"},
         }
     elif family == "anchored-duration":
         amount = r.randint(1, 12) if r.random() < 0.7 else r.choice([15, 30, 45, 90])
