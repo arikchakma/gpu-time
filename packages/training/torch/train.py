@@ -8,6 +8,7 @@ import hashlib
 import math
 import subprocess
 import time
+from functools import cache
 from pathlib import Path
 
 import numpy as np
@@ -22,6 +23,39 @@ LABEL_GLUE = 32
 TORCH = Path(__file__).resolve().parent
 ROOT = TORCH.parent
 CORE = ROOT.parent / "core"
+
+
+def featurize(source: Path, prefix: Path):
+    subprocess.run(
+        [
+            # tsx, not node --experimental-strip-types: featurize imports core's
+            # source, whose internal ".js" specifiers and const enum Node cannot
+            # handle. See AGENTS.md.
+            "npx",
+            "tsx",
+            str(ROOT / "src" / "featurize.ts"),
+            str(source),
+            str(prefix),
+        ],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
+
+
+def merge_manifests(first: dict, second: dict) -> dict:
+    """What featurize.ts would have written had both inputs been one file."""
+    merged = dict(first)
+    for key in ("sequences", "tokens", "nonSpaceTokens", "skipped", "positiveBoundaries"):
+        merged[key] = first[key] + second[key]
+    merged["maxLength"] = max(first["maxLength"], second["maxLength"])
+    merged["labelCounts"] = {
+        label: count + second["labelCounts"][label]
+        for label, count in first["labelCounts"].items()
+    }
+    for key in ("templates", "fingerprints"):
+        merged[key] = sorted(set(first[key]) | set(second[key]))
+    return merged
 
 
 class Dataset:
@@ -39,6 +73,15 @@ class Dataset:
 
     def __len__(self):
         return len(self.lengths)
+
+    def extend(self, other: "Dataset"):
+        """Append another dataset's rows. Neighbors index within a sequence, so they carry over."""
+        tokens = np.uint32(len(self.labels))
+        for name in ("rows", "labels", "boundaries", "kinds", "neighbors"):
+            setattr(self, name, np.concatenate((getattr(self, name), getattr(other, name))))
+        self.offsets = np.concatenate((self.offsets, other.offsets[1:] + tokens))
+        self.lengths = np.diff(self.offsets)
+        self.manifest = merge_manifests(self.manifest, other.manifest)
 
     def batch(self, indices: np.ndarray, device: str):
         length = int(self.lengths[indices].max())
@@ -174,6 +217,19 @@ def path_score(emissions, transition, path, mask):
     return score
 
 
+@cache
+def featurize_real(real: Path, directory: Path) -> Dataset:
+    """Featurize the real corpus once per run. Its sha256 is the cache key."""
+    prefix = directory / "real"
+    with real.open("rb") as handle:
+        key = hashlib.file_digest(handle, "sha256").hexdigest()
+    stamp = directory / "real.key"
+    if not (stamp.exists() and stamp.read_text() == key):
+        featurize(real, prefix)
+        stamp.write_text(key)
+    return Dataset(prefix)
+
+
 def prepare(
     split: str, count: int, seed: int, directory: Path, real: Path | None = None
 ) -> Dataset:
@@ -201,25 +257,12 @@ def prepare(
                 ["--exclude", str(directory / f"{name}.fingerprints.json")]
             )
     subprocess.run(command, cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
+    featurize(Path(f"{prefix}.jsonl"), prefix)
+    dataset = Dataset(prefix)
     if split == "train" and real is not None:
-        with open(f"{prefix}.jsonl", "a") as handle:
-            handle.write(real.read_text())
-    subprocess.run(
-        [
-            # tsx, not node --experimental-strip-types: featurize imports core's
-            # source, whose internal ".js" specifiers and const enum Node cannot
-            # handle. See AGENTS.md.
-            "npx",
-            "tsx",
-            str(ROOT / "src" / "featurize.ts"),
-            f"{prefix}.jsonl",
-            str(prefix),
-        ],
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.DEVNULL,
-    )
-    return Dataset(prefix)
+        # The real corpus is identical every epoch; join the cached features instead.
+        dataset.extend(featurize_real(real, directory))
+    return dataset
 
 
 def main():
