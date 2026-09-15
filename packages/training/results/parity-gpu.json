@@ -1,6 +1,6 @@
 {
-  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
-  "browser": "152.0.7977.83",
+  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
+  "browser": "153.0.8010.47",
   "lifecycle": {
     "concurrent": true,
     "inFlightRecovery": true,
@@ -15,8 +15,8 @@
   },
   "sequences": 10000,
   "pythonSequences": 512,
-  "tokensCompared": 121080,
-  "maxError": 0.0000152587890625,
+  "tokensCompared": 121256,
+  "maxError": 0.0000133514404296875,
   "pythonMaxError": 0.000011444091796875,
   "labelMismatches": 0,
   "boundaryMismatches": 0,

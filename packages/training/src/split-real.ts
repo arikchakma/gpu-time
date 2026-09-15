@@ -42,10 +42,25 @@ const SOURCES = [
   "duration",
   "negatives",
   "teacher",
+  "taught",
+  "contrast",
+  "open-bound",
+  "missed",
+  "measurement",
+  "shorthand",
 ];
-// Authored rather than harvested, so it lives in a tracked directory: data/real
-// is ignored and a clean clone must still rebuild this mix.
 const authored = join(training, "data/teacher");
+// Written or teacher-labelled rather than harvested, so they live in a tracked
+// directory: data/real is ignored and a clean clone must still rebuild this mix.
+const authoredSources = new Set([
+  "teacher",
+  "taught",
+  "contrast",
+  "open-bound",
+  "missed",
+  "measurement",
+  "shorthand",
+]);
 // 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
 // at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
 const authoredCopies = Number(argument("--authored-copies") ?? 4);
@@ -80,7 +95,10 @@ for (const name of await readdir(goldDirectory)) {
   if (!name.endsWith(".jsonl") && !name.endsWith(".json")) continue;
   const raw = await readFile(join(goldDirectory, name), "utf8");
   const rows = name.endsWith(".jsonl")
-    ? raw.split("\n").filter(Boolean).map((line) => JSON.parse(line))
+    ? raw
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => JSON.parse(line))
     : [JSON.parse(raw)].flat();
   for (const row of rows)
     if (row && typeof row.text === "string") gold.add(normal(row.text));
@@ -88,7 +106,10 @@ for (const name of await readdir(goldDirectory)) {
 
 const rows: Row[] = [];
 for (const source of SOURCES) {
-  const path = join(source === "teacher" ? authored : directory, `${source}.jsonl`);
+  const path = join(
+    authoredSources.has(source) ? authored : directory,
+    `${source}.jsonl`,
+  );
   try {
     await access(path);
   } catch {
@@ -99,24 +120,37 @@ for (const source of SOURCES) {
     .split("\n")
     .filter(Boolean)
     .map((line) => ({ ...JSON.parse(line), source }) as Row);
-  for (let round = 0; round < (source === "teacher" ? authoredCopies : 1); round++)
+  for (
+    let round = 0;
+    round < (authoredSources.has(source) ? authoredCopies : 1);
+    round++
+  )
     rows.push(...parsed);
 }
 
 // A sentence the duration rule claims must not also appear labelled as a time.
+// Its labels are a regex forcing every token to O, so a verified row wins.
 const durations = new Set(
   rows.filter((row) => row.source === "duration").map((row) => row.text),
 );
+const verified = new Set(
+  rows
+    .filter((row) => authoredSources.has(row.source ?? ""))
+    .map((row) => row.text),
+);
+const contradicts = (row: Row) =>
+  row.source === "duration"
+    ? verified.has(row.text)
+    : !authoredSources.has(row.source ?? "") && durations.has(row.text);
 
-let frozen = new Set<string>();
+let frozenLines: string[] = [];
 try {
   const raw = await readFile(join(directory, "real-holdout.jsonl"), "utf8");
-  frozen = new Set(
-    raw.split("\n").filter(Boolean).map((line) => JSON.parse(line).text),
-  );
+  frozenLines = raw.split("\n").filter(Boolean);
 } catch {
-  frozen = new Set();
+  frozenLines = [];
 }
+const frozen = new Set(frozenLines.map((line) => JSON.parse(line).text));
 
 // Hashes the sentence so a re-harvest keeps rows on the same side.
 const bucket = (text: string) =>
@@ -126,7 +160,22 @@ const bucket = (text: string) =>
 const train: Row[] = [];
 const holdout: Row[] = [];
 const seen = new Map<string, number>();
+// A sentence relabelled here must not also arrive with its old labels.
+const relabelledSources = new Set([
+  "taught",
+  "contrast",
+  "open-bound",
+  "missed",
+  "measurement",
+  "shorthand",
+]);
+const taught = new Set(
+  rows
+    .filter((row) => relabelledSources.has(row.source ?? ""))
+    .map((row) => normal(row.text)),
+);
 let dropped = 0;
+let relabelled = 0;
 let capped = 0;
 let mislabelled = 0;
 let contradictory = 0;
@@ -135,22 +184,29 @@ for (const row of rows) {
     dropped++;
     continue;
   }
+  if (
+    !relabelledSources.has(row.source ?? "") &&
+    taught.has(normal(row.text))
+  ) {
+    relabelled++;
+    continue;
+  }
   if (frozen.size ? frozen.has(row.text) : bucket(row.text) === 0) {
     holdout.push(row);
     continue;
   }
-  if (callsTimeFiller(row)) {
+  if (!authoredSources.has(row.source ?? "") && callsTimeFiller(row)) {
     mislabelled++;
     continue;
   }
-  if (row.source !== "duration" && durations.has(row.text)) {
+  if (contradicts(row)) {
     contradictory++;
     continue;
   }
   if (row.source === "negatives") {
-    const word = /\b(may|march|august|day|year|minute|hour|week|month)\b/i.exec(
-      row.text,
-    )?.[1]?.toLowerCase();
+    const word = /\b(may|march|august|day|year|minute|hour|week|month)\b/i
+      .exec(row.text)?.[1]
+      ?.toLowerCase();
     if (word) {
       const count = (seen.get(`w:${word}`) ?? 0) + 1;
       seen.set(`w:${word}`, count);
@@ -191,30 +247,39 @@ train.push(...repeated);
 const recased: Row[] = [];
 train.forEach((row, index) => {
   if (index % recase !== 0) return;
-  const text = index % (recase * 2) === 0 ? row.text.toUpperCase() : row.text.toLowerCase();
+  const text =
+    index % (recase * 2) === 0
+      ? row.text.toUpperCase()
+      : row.text.toLowerCase();
   if (text === row.text) return;
   recased.push({ ...row, text, source: `${row.source}-case` });
 });
 
-const write = (name: string, part: Row[]) =>
-  writeFile(
-    join(directory, `${name}.jsonl`),
-    part.map((row) => JSON.stringify(row)).join("\n") + "\n",
-  );
-await write("real-train", [...train, ...recased]);
-if (!frozen.size) await write("real-holdout", holdout);
+const write = (name: string, lines: string[]) =>
+  writeFile(join(directory, `${name}.jsonl`), lines.join("\n") + "\n");
+await write(
+  "real-train",
+  [...train, ...recased].map((row) => JSON.stringify(row)),
+);
+// Rewritten every run so sources newer than the frozen file are scored, not
+// dropped. One row per sentence, later SOURCES win, frozen text set unchanged.
+const held = new Map<string, string>();
+for (const line of frozenLines) held.set(JSON.parse(line).text, line);
+for (const row of holdout) held.set(row.text, JSON.stringify(row));
+await write("real-holdout", [...held.values()]);
 console.log(
   JSON.stringify(
     {
       read: rows.length,
       droppedAsGold: dropped,
+      droppedAsRelabelled: relabelled,
       droppedAsMislabelled: mislabelled,
       droppedAsContradictory: contradictory,
       cappedByPhrase: capped,
       repeated: repeated.length,
       recased: recased.length,
       train: train.length + recased.length,
-      holdout: holdout.length,
+      holdout: held.size,
       holdoutFrozen: frozen.size > 0,
     },
     null,

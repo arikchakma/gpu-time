@@ -1,8 +1,13 @@
 {
-  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
+  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
   "generatedWeightsHashMatches": true,
   "matchingExportFiles": 5,
   "results": [
+    {
+      "checkpoint": "runs/shorthand/epoch-39.pt",
+      "checkpointHashMatches": true,
+      "matchingSourceFiles": 10
+    },
     {
       "checkpoint": "runs/lessgen2/best.pt",
       "checkpointHashMatches": true,

@@ -45,7 +45,9 @@ const agrees = async (phrase: string, known: Record<string, number>) => {
     const first = result.occurrences?.[0];
     if (!first) return false;
     const mine = read(new Date(first.start));
-    return FIELDS.every((field) => !(field in known) || known[field] === mine[field]);
+    return FIELDS.every(
+      (field) => !(field in known) || known[field] === mine[field],
+    );
   } catch {
     return false;
   }
@@ -86,7 +88,9 @@ for (const [index, row] of rows.entries()) {
     continue;
   }
 
-  if (!(await agrees(phrase, span.start.knownValues as Record<string, number>))) {
+  if (
+    !(await agrees(phrase, span.start.knownValues as Record<string, number>))
+  ) {
     tally.phraseDisagreed++;
     continue;
   }

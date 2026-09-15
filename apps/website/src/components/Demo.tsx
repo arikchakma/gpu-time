@@ -154,7 +154,10 @@ export function Demo({ initial }: { initial: Formatted }) {
             aria-atomic="true"
             aria-busy={busy}
           >
-            <p id="demo-status" className="px-4 pt-2.5 text-[11px] text-neutral-400">
+            <p
+              id="demo-status"
+              className="px-4 pt-2.5 text-[11px] text-neutral-400"
+            >
               {result.status}
             </p>
             <ul id="demo-dates" className="px-4 py-1.5 text-body">
@@ -172,7 +175,10 @@ export function Demo({ initial }: { initial: Formatted }) {
             </ul>
           </div>
 
-          <p id="demo-context" className="px-4 pb-2.5 text-[11px] text-neutral-400">
+          <p
+            id="demo-context"
+            className="px-4 pb-2.5 text-[11px] text-neutral-400"
+          >
             {result.context}
           </p>
         </div>

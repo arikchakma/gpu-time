@@ -228,6 +228,10 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 5
+            },
+            "edge": {
+              "type": "string",
+              "enum": ["start", "end"]
             }
           },
           "required": ["kind", "month"],

@@ -144,7 +144,8 @@ for (const mention of rare) {
         clauseStart: false,
       });
     }
-    const shift = inserted.length - (row.spans[last]!.end - row.spans[first]!.start);
+    const shift =
+      inserted.length - (row.spans[last]!.end - row.spans[first]!.start);
     for (let index = last + 1; index < row.spans.length; index++) {
       const span = row.spans[index]!;
       spans.push({ ...span, start: span.start + shift, end: span.end + shift });

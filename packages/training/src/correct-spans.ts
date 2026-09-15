@@ -51,7 +51,13 @@ const rows = (await readFile(join(directory, "disputed.jsonl"), "utf8"))
   .map((line) => JSON.parse(line) as { text: string; reason: string });
 
 const corrected: unknown[] = [];
-const tally = { span: 0, notLeading: 0, tokenMismatch: 0, unverified: 0, kept: 0 };
+const tally = {
+  span: 0,
+  notLeading: 0,
+  tokenMismatch: 0,
+  unverified: 0,
+  kept: 0,
+};
 
 for (const [index, row] of rows.entries()) {
   if (row.reason !== "span") continue;

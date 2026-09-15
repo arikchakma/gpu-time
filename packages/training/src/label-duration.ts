@@ -36,8 +36,10 @@ const PERFECT =
   /\b(?:has|have|had|hasn't|haven't|hadn't)\s+(?:not\s+|never\s+|ever\s+|already\s+|just\s+)?(?:been|gone|seen|done|made|read|written|eaten|taken|given|found|heard|left|lost|come|become|run|built|grown|risen|fallen|doubled|tripled|[a-z]+ed)\b/i;
 const ABILITY =
   /\b(?:can|can't|cannot|could|couldn't|able to|unable to|impossible|out of the question)\b|\btoo\s+\w+\s+to\b/i;
-const QUANTITY = /\bhow\s+(?:many|much|long|to)\b|\bthere\s+(?:are|is|were|was)\b/i;
-const FIRST_TIME = /\bfor the first time\b|\bthe (?:worst|best|biggest|largest|coldest|hottest)\b/i;
+const QUANTITY =
+  /\bhow\s+(?:many|much|long|to)\b|\bthere\s+(?:are|is|were|was)\b/i;
+const FIRST_TIME =
+  /\bfor the first time\b|\bthe (?:worst|best|biggest|largest|coldest|hottest)\b/i;
 const FUTURE =
   /\b(?:will|'ll|won't|shall|going to|gonna|let's|have to|has to|planning to)\b|\b(?:am|is|are)\s+\w+ing\b/i;
 const SCHEDULED =
@@ -75,7 +77,11 @@ if (verdicts) {
     else wrong.push(`${one.reading} -> ${reading(one.text)}: ${one.text}`);
   }
   console.log(
-    JSON.stringify({ judged: judged.length, agree, accuracy: agree / judged.length }),
+    JSON.stringify({
+      judged: judged.length,
+      agree,
+      accuracy: agree / judged.length,
+    }),
   );
   for (const line of wrong.slice(0, 12)) console.log("  x", line);
 }

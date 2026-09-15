@@ -6,6 +6,7 @@ separate sentence frames; quantities, dates and combinations vary within frames.
 
 from __future__ import annotations
 import random
+import re
 from copy import deepcopy
 import background
 from semantic import DAYS, DAY_CODES, HOLIDAYS, Specification, month_word, weekday_word
@@ -46,6 +47,22 @@ FAMILIES = [
     "contrast-date",
     "clock-place",
 ]
+# English shapes the older families never rendered. Each carries the same weight
+# as the ordinary families it sits next to.
+NEW_FAMILIES = (
+    "open-clock",
+    "bound-clock",
+    "between-dates",
+    "chat-short",
+    "weekend",
+    "month-edge",
+    "clock-offset",
+    "plural-weekday",
+    "wide-year",
+    "spelled-hour",
+    "ordinal-weekday",
+)
+FAMILIES += NEW_FAMILIES
 # Prose dates and shifts stay balanced against their contrastive negatives.
 FAMILY_WEIGHTS = [
     0.5
@@ -68,6 +85,7 @@ FAMILY_WEIGHTS = [
     else 2
     for name in FAMILIES
 ]
+DEICTICS = ["this", "next", "last"] * 5 + ["nxt"]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
     "could you arrange a reminder for",
@@ -86,6 +104,53 @@ def words(value, hyphen=False):
         return ONES[value]
     tens, ones = divmod(value, 10)
     return TENS[tens * 10] + (("-" if hyphen else " ") + ONES[ones] if ones else "")
+
+
+def deictic(s, word):
+    """Renders a deictic. "nxt" is chat spelling; the schedule keeps "next"."""
+    s.add(word, "DEICTIC")
+    return "next" if word == "nxt" else word
+
+
+def one_day(r, name):
+    """A plural weekday compiles to a weekly series, so one-off days lose the s."""
+    word = weekday_word(r, name)
+    return word[:-1] if word.lower() == name.lower() + "s" else word
+
+
+# The same words in their ordinary sense, so the shape is learned and not the
+# word. Every token here is background; the clause follows it.
+CONTRAST = [
+    "every march is composed of discrete steps, so",
+    "the band will march past the town hall. anyway,",
+    "i have six brothers and none of them replied, so",
+    "she read ten pages of the manual before",
+    "this may work, but",
+    "may i borrow the charger? also,",
+    "after four hours in the museum we gave up;",
+    "the drive takes seven hours each way, so",
+    "the weekend edition prints a longer crossword. anyway,",
+    "the start of the film was better than the end of it, so",
+    "in the past he ran the whole thing alone;",
+    "eight of the twelve chairs are broken, so",
+    "email me @sam if that is wrong. otherwise",
+    "we sat through three acts and a long interval, so",
+]
+# "wake me at eight": a spelled hour is most natural after a plain request.
+HOUR_FRAMES = [
+    "wake me",
+    "call me",
+    "ping me",
+    "let's meet",
+    "i will be there",
+    "come over",
+    "we start",
+    "see you",
+    "dinner is",
+    "be ready",
+    "the doors open",
+    "pick me up",
+]
 
 
 # A noun between the carrier and the clock is the shape "team sync tuesday 2pm"
@@ -301,9 +366,8 @@ def target(s):
     r = s.rng
     pick = r.random()
     if pick < 0.3:
-        modifier = r.choice(["next", "this", "last"])
+        modifier = deictic(s, r.choice(DEICTICS))
         unit = r.choice(["week", "month", "year"])
-        s.add(modifier, "DEICTIC")
         s.add(unit, "UNIT")
         clause = {"date": {"kind": "relativeUnit", "unit": unit, "modifier": modifier}}
     elif pick < 0.45:
@@ -314,9 +378,8 @@ def target(s):
         day = r.randrange(7)
         date = {"kind": "weekday", "days": [DAY_CODES[day]]}
         if r.random() < 0.4:
-            date["modifier"] = r.choice(["this", "next", "last"])
-            s.add(date["modifier"], "DEICTIC")
-        s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            date["modifier"] = deictic(s, r.choice(DEICTICS))
+        s.add(one_day(r, DAYS[day]), "WEEKDAY")
         clause = {"date": date}
     elif pick < 0.8:
         day = r.randint(1, 28)
@@ -404,6 +467,20 @@ def render(s, reserved=False, family=None, bare=False):
             f"from the historic Quarter, {r.choice(background.NAMES)} proposed",
             f"send the second draft to {r.choice(background.MONTH_NAMES)} and set the deadline for",
         ])
+    elif family == "clock-offset" and r.random() < 0.5:
+        # "three minutes to eight" rarely stands on its own in real writing.
+        prefix = r.choice(["it's", "it is", "the time is"])
+    elif family in ("open-clock", "weekend") and r.random() < 0.45:
+        # The corpus only had bare "until 5"; people write "free until 5" and
+        # "available weekends only".
+        prefix = r.choice(["free", "available", "busy", "open"])
+    elif family in NEW_FAMILIES and r.random() < 0.35:
+        prefix = r.choice(CONTRAST)
+    elif family == "spelled-hour" and r.random() < 0.5:
+        prefix = r.choice(HOUR_FRAMES)
+    elif family == "chat-short" and r.random() < 0.7:
+        prefix = r.choice(["mtg", "appt", "the mtg", "my appt", "team mtg",
+                           "dentist appt", "thx - mtg", "ok, appt"])
     elif (family == "prose-shift" or partial_date) and r.random() < 0.65:
         frames = (
             [
@@ -442,6 +519,8 @@ def render(s, reserved=False, family=None, bare=False):
     else:
         prefix = ""
     if prefix:
+        # A prefix ending in "about" makes the compiler read the amount as loose.
+        prefix = re.sub(r"\s+(?:about|around|roughly)$", "", prefix)
         s.add(prefix)
     s.clause()
     clause = {}
@@ -480,8 +559,15 @@ def render(s, reserved=False, family=None, bare=False):
             if r.random() < 0.65
             else r.randint(1, 120)
         )
+        if r.random() < 0.2:
+            amount = 1
         unit = r.choice(["second", "minute", "hour", "day", "week"])
-        quantity(s, amount, unit)
+        # "a week from today" is the everyday form and was never rendered.
+        if amount == 1 and r.random() < 0.6:
+            s.add("an" if unit == "hour" else "a", "NUM")
+            s.add(unit, "UNIT")
+        else:
+            quantity(s, amount, unit)
         s.add(r.choice(["from", "after"]), "DIR_AFTER")
         anchor = r.choice(["now", "today", "tomorrow", "weekday"])
         if anchor == "now":
@@ -489,7 +575,7 @@ def render(s, reserved=False, family=None, bare=False):
             date = {"kind": "now"}
         elif anchor == "weekday":
             day = r.randrange(7)
-            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
             date = {"kind": "weekday", "days": [DAY_CODES[day]]}
         else:
             s.add(anchor, "REL_DAY")
@@ -517,7 +603,7 @@ def render(s, reserved=False, family=None, bare=False):
             date = {"kind": "now"}
         elif anchor == "weekday":
             day = r.randrange(7)
-            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
             date = {"kind": "weekday", "days": [DAY_CODES[day]]}
         else:
             s.add(anchor, "REL_DAY")
@@ -669,7 +755,7 @@ def render(s, reserved=False, family=None, bare=False):
         s.add("from", "RANGE_START")
         annotated = r.random() < 0.3
         if annotated:
-            s.add(weekday_word(r, r.choice(DAYS)), "WEEKDAY")
+            s.add(one_day(r, r.choice(DAYS)), "WEEKDAY")
             s.add("the", "GLUE")
             s.add(str(start), "DOM")
             s.add(
@@ -683,7 +769,7 @@ def render(s, reserved=False, family=None, bare=False):
             calendar(s, {"month": month, "day": start})
         s.add(r.choice(["through", "until", "to", "-", "\u2013"]), "RANGE_END")
         if annotated:
-            s.add(weekday_word(r, r.choice(DAYS)), "WEEKDAY")
+            s.add(one_day(r, r.choice(DAYS)), "WEEKDAY")
             s.add("the", "GLUE")
             s.add(str(end), "DOM")
             s.add(
@@ -756,6 +842,40 @@ def render(s, reserved=False, family=None, bare=False):
         clause = {
             "recurrence": {"freq": "monthly", "interval": 1, "byMonthDay": [day]}
         }
+    elif family == "ordinal-weekday":
+        day = r.randrange(7)
+        # "last Fri of the month" is an ordinal; "last Fri" alone is a deictic.
+        # Both readings are drawn here so neither pulls the other across.
+        if r.random() < 0.5:
+            position = r.choice([1, 2, 3, 4, -1, -1])
+            s.add(
+                {1: "first", 2: "second", 3: "third", 4: "fourth", -1: "last"}[position],
+                "ORD",
+            )
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
+            s.add("of", "GLUE")
+            if r.random() < 0.4:
+                s.add(r.choice(["every", "each"]), "RECUR")
+            else:
+                s.add("the", "GLUE")
+            s.add("month", "UNIT")
+            clause = {"recurrence": {
+                "freq": "monthly",
+                "interval": 1,
+                "byDay": [DAY_CODES[day]],
+                "bySetPos": [position],
+            }}
+        else:
+            modifier = deictic(s, r.choice(DEICTICS))
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
+            clause = {"date": {
+                "kind": "weekday",
+                "days": [DAY_CODES[day]],
+                "modifier": modifier,
+            }}
+        if r.random() < 0.4:
+            join(s)
+            clause["time"] = {"start": clock(s)}
     elif family == "idiom-date":
         date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
         calendar(s, date)
@@ -793,11 +913,11 @@ def render(s, reserved=False, family=None, bare=False):
             clause[key] = {"kind": "calendar", **date}
     elif family == "datetime-range":
         day = r.randint(0, 5)
-        s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+        s.add(one_day(r, DAYS[day]), "WEEKDAY")
         join(s)
         begin = clock(s, "digits")
         s.add(r.choice(["until", "to", "-", "\u2013"]), "RANGE_END")
-        s.add(weekday_word(r, DAYS[day + 1]), "WEEKDAY")
+        s.add(one_day(r, DAYS[day + 1]), "WEEKDAY")
         join(s)
         end = clock(s, "digits")
         clause = {
@@ -815,8 +935,7 @@ def render(s, reserved=False, family=None, bare=False):
             s.add(month_word(r, month - 1), "MONTH")
             clause = {"date": {"kind": "calendarPeriod", "month": month, "week": week}}
         else:
-            modifier = r.choice(["this", "next", "last"])
-            s.add(modifier, "DEICTIC")
+            modifier = deictic(s, r.choice(DEICTICS))
             s.add(month_word(r, month - 1), "MONTH")
             clause = {
                 "date": {"kind": "calendarPeriod", "month": month, "modifier": modifier}
@@ -845,7 +964,7 @@ def render(s, reserved=False, family=None, bare=False):
             clause["date"] = {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}
         else:
             day = r.randrange(7)
-            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
             clause["date"] = {"kind": "weekday", "days": [DAY_CODES[day]]}
         choice = r.random()
         if choice < 0.45:
@@ -875,6 +994,237 @@ def render(s, reserved=False, family=None, bare=False):
             # Marking it O earlier lets Sentence trim it before "next week".
             if connector_span:
                 connector_span["label"] = "O"
+    elif family == "open-clock":
+        # One side of the day is left open: "after 3pm", "until 5", "from 3 on".
+        opening = r.choice(["after", "after", "from", "before", "until", "by"])
+        if opening == "from":
+            s.add("from", "RANGE_START")
+        elif opening == "after":
+            # "from" mostly opens a range; as a direction it competes with
+            # "a week from today", which must stay an anchored shift.
+            s.add(r.choice(["after", "after", "after", "past", "from"]), "DIR_AFTER")
+        else:
+            s.add(opening, "DIR_BEFORE")
+        hour = r.randint(1, 11)
+        mode = r.choice(["plain", "plain", "bare", "digits", "spoken"])
+        if mode == "plain":
+            value = {"hour": hour, "minute": 0}
+            s.add(words(hour) if r.random() < 0.4 else str(hour), "HOUR")
+        else:
+            value = clock(s, mode, hour=hour)
+        if opening in ("before", "until", "by"):
+            clause = {"time": {"start": {"hour": 0, "minute": 0}, "end": value,
+                               "open": "start"}}
+        else:
+            clause = {"time": {"start": value, "open": "end"}}
+        pick = r.random()
+        if pick < 0.25:
+            day = r.randrange(7)
+            s.add("on", "GLUE")
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
+            clause["date"] = {"kind": "weekday", "days": [DAY_CODES[day]]}
+        elif pick < 0.45:
+            name = r.choice(["today", "tomorrow", "tmrw"])
+            s.add(name, "REL_DAY")
+            clause["date"] = {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}
+        elif pick < 0.6:
+            date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
+            s.add("on", "GLUE")
+            calendar(s, date)
+            clause["date"] = {"kind": "calendar", **date}
+        if opening == "from" and r.random() < 0.5:
+            s.in_expression = False
+            s.add(r.choice(["onward", "onwards", "on"]), "O")
+    elif family == "bound-clock":
+        # "starting at 8:30" names the clock the clause starts at, not a date.
+        s.add(r.choice(["starting", "beginning", "starts", "begins", "start",
+                        "commencing"]), "BOUND_START")
+        if r.random() < 0.75:
+            s.add(r.choice(["at", "at", "from"]), "GLUE")
+        if r.random() < 0.35:
+            hour = r.randint(13, 23)
+            minute = r.choice([0, 15, 30, 45])
+            s.add(str(hour), "HOUR")
+            s.add(":", "GLUE", "")
+            s.add(f"{minute:02}", "MINUTE", "")
+            value = {"hour": hour, "minute": minute}
+        else:
+            value = clock(s, r.choice(["digits", "bare", "spoken"]))
+        clause = {"time": {"start": value}}
+    elif family == "between-dates":
+        first = {"month": r.randint(1, 6), "day": r.randint(1, 28)}
+        second = {"month": r.randint(7, 12), "day": r.randint(1, 28)}
+        if r.random() < 0.3:
+            second["month"] = first["month"]
+        paired = r.random() < 0.55
+        s.add("between" if paired else "from", "RANGE_START")
+        day_first = r.random() < 0.25
+        for part in (first, second):
+            if part is second:
+                s.add("and" if paired
+                      else r.choice(["to", "through", "until", "-"]), "RANGE_END")
+            calendar(s, part, day_first=day_first)
+            if not day_first and r.random() < 0.4:
+                s.add(suffixed(part["day"]), "GLUE", "")
+        clause = {"date": {"kind": "calendarRange", "from": first, "to": second}}
+    elif family == "chat-short":
+        if r.random() < 0.45:
+            # eod, eow and eom are units that carry their own end edge.
+            short = r.choice(["eod", "eow", "eom"])
+            s.add(short, "UNIT")
+            clause = {"date": {
+                "kind": "relativeUnit",
+                "unit": {"eod": "day", "eow": "week", "eom": "month"}[short],
+                "modifier": "this",
+                "edge": "end",
+            }}
+        else:
+            s.add(r.choice(["@", "@", "@", "at"]), "GLUE")
+            clause = {"time": {"start": clock(s, r.choice(["bare", "digits"]))}}
+    elif family == "weekend":
+        plural = r.random() < 0.45
+        modifier = None
+        if not plural and r.random() < 0.4:
+            modifier = deictic(s, r.choice(DEICTICS))
+        elif r.random() < 0.7:
+            s.add(r.choice(["over the", "on the", "for the", "during the"])
+                  if not plural else r.choice(["on", "on the"]), "GLUE")
+        s.add("weekends" if plural else "weekend", "DAYGROUP")
+        if plural:
+            clause = {"recurrence": {
+                "freq": "weekly", "interval": 1, "byDay": ["SA", "SU"]
+            }}
+        else:
+            clause = {"date": {
+                "kind": "dayGroup",
+                "group": "weekend",
+                **({"modifier": modifier} if modifier else {}),
+            }}
+        if r.random() < 0.3:
+            s.add(r.choice(["only", "ideally", "if possible"]), "GLUE")
+        elif r.random() < 0.45:
+            join(s)
+            clause["time"] = {"start": clock(s, r.choice(["bare", "digits"]))}
+    elif family == "month-edge":
+        word = r.choice(["start", "beginning", "end", "end", "rest", "remainder"])
+        edge = "start" if word in ("start", "beginning") else "end"
+        # "at the end of this month" is how people say it; the article is glue.
+        # "rest" and "remainder" only read as an edge behind that article.
+        if word in ("rest", "remainder"):
+            s.add("the", "GLUE")
+        elif r.random() < 0.4:
+            s.add(r.choice(["at the", "by the", "the", "towards the"]), "GLUE")
+        s.add(word, "EDGE")
+        s.add("of", "GLUE")
+        if r.random() < 0.6:
+            date = {"month": r.randint(1, 12)}
+            if r.random() < 0.25:
+                date["year"] = r.randint(2024, 2040)
+            calendar(s, date)
+            clause = {"date": {"kind": "calendarPeriod", **date, "edge": edge}}
+        else:
+            modifier = r.choice(DEICTICS + [None] * 3)
+            unit = r.choice(["week", "month", "year"])
+            if modifier:
+                modifier = deictic(s, modifier)
+            else:
+                s.add("the", "GLUE")
+            s.add(unit, "UNIT")
+            clause = {"date": {
+                "kind": "relativeUnit",
+                "unit": unit,
+                "modifier": modifier or "this",
+                "edge": edge,
+            }}
+    elif family == "clock-offset":
+        # "three minutes to eight" folds into 7:57; the hour must stay whole.
+        offset = r.choice([5, 10, 15, 20] + list(range(1, 20)))
+        direction = r.choice(["to", "past"])
+        hour = r.randint(1, 12)
+        quantity(s, offset, "minute")
+        s.add(direction, "GLUE")
+        s.add(words(hour) if r.random() < 0.5 else str(hour), "HOUR")
+        meridiem = None
+        if r.random() < 0.4:
+            meridiem = r.choice(["am", "pm"])
+            s.add(meridiem, "MERIDIEM")
+        started = hour % 12 + (12 if meridiem == "pm" else 0) if meridiem else hour
+        total = (started * 60 + (offset if direction == "past" else -offset)) % 1440
+        clause = {"time": {"start": {"hour": total // 60, "minute": total % 60}}}
+    elif family == "plural-weekday":
+        days = [r.randrange(7)]
+        if r.random() < 0.35:
+            days = r.sample(range(7), 2)
+        for index, day in enumerate(days):
+            if index:
+                s.add(r.choice(["and", "&"]), "JOIN")
+            name = DAYS[day]
+            s.add(r.choice([name + "s", name.lower() + "s"]), "WEEKDAY")
+        clause = {"recurrence": {
+            "freq": "weekly", "interval": 1, "byDay": [DAY_CODES[d] for d in days]
+        }}
+        roll = r.random()
+        if roll < 0.4:
+            join(s)
+            clause["time"] = {"start": clock(s, r.choice(["bare", "digits"]))}
+        elif roll < 0.75:
+            begin, finish = r.sample(range(1, 13), 2)
+            join(s)
+            opened = clock(s, "bare", hour=begin)
+            s.add(r.choice(["-", "–", "to", "until"]), "RANGE_END")
+            clause["time"] = {"start": opened, "end": clock(s, "bare", hour=finish)}
+    elif family == "wide-year":
+        if r.random() < 0.5:
+            date = {"month": r.randint(1, 12)}
+            if r.random() < 0.6:
+                date["day"] = r.randint(1, 28)
+            date["year"] = r.choice([
+                r.randint(1500, 1899), r.randint(1900, 1989), r.randint(2030, 2099)
+            ])
+            calendar(s, date, day_first="day" in date and r.random() < 0.3)
+            clause = {"date": {"kind": "calendar", **date}}
+        else:
+            # Two-digit years pivot at 69: "05/05/89" is 1989.
+            short = r.randint(1, 99)
+            date = {"month": r.randint(1, 12), "day": r.randint(13, 28)}
+            calendar(s, {**date, "year": f"{short:02}"}, numeric=True)
+            clause = {"date": {
+                "kind": "calendar", **date,
+                "year": (2000 if short < 69 else 1900) + short,
+            }}
+    elif family == "spelled-hour" and r.random() < 0.18:
+        # "12 noon" and "12 midnight": the hour word carries the meaning alone.
+        named = r.choice(["noon", "midnight"])
+        if r.random() < 0.7:
+            s.add("12", "O")
+        s.add(named, "TIME_NAMED")
+        clause = {"time": {"start": {"named": named}}}
+    elif family == "spelled-hour":
+        # A spelled hour with no meridiem: "at six", "seven o'clock".
+        hour = r.randint(1, 12)
+        opened = r.random() < 0.2
+        if opened:
+            s.add("from", "RANGE_START")
+        elif r.random() < 0.75:
+            s.add(r.choice(["at", "at", "around", "by"]), "GLUE")
+        s.add(words(hour), "HOUR")
+        roll = r.random()
+        if roll < 0.3:
+            s.add(r.choice(["o'clock", "o’clock", "oclock"]), "MERIDIEM")
+            started = hour
+        elif roll < 0.45:
+            meridiem = r.choice(["am", "pm"])
+            s.add(meridiem, "MERIDIEM")
+            started = hour % 12 + (12 if meridiem == "pm" else 0)
+        else:
+            started = hour
+        clause = {"time": {"start": {"hour": started, "minute": 0}}}
+        if opened:
+            clause["time"]["open"] = "end"
+        if r.random() < 0.35:
+            name = r.choice(["today", "tomorrow", "tmrw"])
+            s.add(name, "REL_DAY")
+            clause["date"] = {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}
     else:
         day = r.randrange(7)
         interval = 1
@@ -899,7 +1249,7 @@ def render(s, reserved=False, family=None, bare=False):
         if group:
             s.add("weekday" if r.random() < 0.5 else "weekdays", "DAYGROUP")
         else:
-            s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
         rule = {"freq": "weekly", "interval": interval, "byDay": [DAY_CODES[day]]}
         if group:
             rule["byDay"] = DAY_CODES[:5]
@@ -918,12 +1268,14 @@ def render(s, reserved=False, family=None, bare=False):
             s.add("except", "EXCEPT")
             # Keep the original ordinal shape while varying what is excluded.
             # Otherwise EXCEPT is learned only before another weekday.
-            shape = r.choice(["ordinal"] * 4 + ["day", "month", "date", "holiday"])
+            shape = r.choice(
+                ["ordinal"] * 4 + ["day", "month", "date", "holiday", "bare-ordinal"]
+            )
             if shape == "ordinal":
                 ordinal = r.choice([1, 2, -1])
                 s.add("the", "GLUE")
                 s.add({1: "first", 2: "second", -1: "last"}[ordinal], "ORD")
-                s.add(weekday_word(r, DAYS[day]), "WEEKDAY")
+                s.add(one_day(r, DAYS[day]), "WEEKDAY")
                 s.add("of", "GLUE")
                 s.add("each", "RECUR")
                 s.add("month", "UNIT")
@@ -938,6 +1290,14 @@ def render(s, reserved=False, family=None, bare=False):
                 name = r.choice(list(HOLIDAYS))
                 s.add(HOLIDAYS[name], "HOLIDAY")
                 excluded = {"kind": "holiday", "name": name}
+            elif shape == "bare-ordinal":
+                # "the first of the month" with no weekday is a day of month.
+                value = r.randint(1, 5)
+                s.add("the", "GLUE")
+                s.add(ORDINALS[value - 1], "ORD")
+                s.add("of the", "GLUE")
+                s.add("month", "UNIT")
+                excluded = {"kind": "calendar", "day": value}
             else:
                 excluded = {"kind": "calendar"}
                 if shape == "day":

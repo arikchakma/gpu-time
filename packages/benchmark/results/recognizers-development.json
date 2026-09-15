@@ -1,5 +1,5 @@
 {
-  "model": "27982a9b9294c33b745cfa54f597d039feed52634c6c29c8c68ad47ce18f8aa3",
+  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
   "corpus": {
     "repository": "microsoft/Recognizers-Text",
     "commit": "da7edcff59f669b2a460ab9d400e36298f0d658e",
@@ -57,13 +57,13 @@
   },
   "split": "development",
   "total": 563,
-  "correct": 227,
-  "accuracy": 0.40319715808170514,
+  "correct": 234,
+  "accuracy": 0.41563055062166965,
   "families": [
     {
       "family": "DateParser",
       "total": 113,
-      "correct": 69
+      "correct": 71
     },
     {
       "family": "TimeParser",
@@ -73,17 +73,17 @@
     {
       "family": "TimePeriodParser",
       "total": 60,
-      "correct": 35
+      "correct": 36
     },
     {
       "family": "DateTimeParser",
       "total": 53,
-      "correct": 36
+      "correct": 39
     },
     {
       "family": "DatePeriodParser",
       "total": 190,
-      "correct": 22
+      "correct": 23
     },
     {
       "family": "DateTimePeriodParser",
@@ -92,11 +92,11 @@
     }
   ],
   "stages": {
-    "value-mismatch": 181,
-    "correct": 227,
-    "interpretation-failed": 90,
+    "value-mismatch": 180,
+    "correct": 234,
+    "interpretation-failed": 96,
     "matches-upstream-past": 1,
-    "no-result": 60,
+    "no-result": 48,
     "resolution-error": 4
   },
   "results": [
@@ -132,19 +132,11 @@
             "start": 16,
             "end": 18,
             "text": "15",
-            "confidence": 0.4195679724216461
+            "confidence": 0.8826008439064026
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 16,
-            "end": 18,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -180,7 +172,7 @@
             "start": 13,
             "end": 19,
             "text": "Oct. 2",
-            "confidence": 0.999816358089447
+            "confidence": 0.9995833039283752
           }
         ],
         "truncated": false,
@@ -220,7 +212,7 @@
             "start": 13,
             "end": 17,
             "text": "Oct2",
-            "confidence": 0.9997450709342957
+            "confidence": 0.9998624920845032
           }
         ],
         "truncated": false,
@@ -260,7 +252,7 @@
             "start": 13,
             "end": 18,
             "text": "Oct/2",
-            "confidence": 0.9999171495437622
+            "confidence": 0.9998778104782104
           }
         ],
         "truncated": false,
@@ -300,7 +292,7 @@
             "start": 13,
             "end": 23,
             "text": "October. 2",
-            "confidence": 0.999800443649292
+            "confidence": 0.9995198249816895
           }
         ],
         "truncated": false,
@@ -340,7 +332,7 @@
             "start": 13,
             "end": 21,
             "text": "October2",
-            "confidence": 0.9998375773429871
+            "confidence": 0.9997199773788452
           }
         ],
         "truncated": false,
@@ -380,7 +372,7 @@
             "start": 13,
             "end": 29,
             "text": "January 12, 2016",
-            "confidence": 0.9997565150260925
+            "confidence": 0.9998202919960022
           }
         ],
         "truncated": false,
@@ -420,7 +412,7 @@
             "start": 13,
             "end": 23,
             "text": "02/22/2016",
-            "confidence": 0.7575443983078003
+            "confidence": 0.9818257689476013
           }
         ],
         "truncated": false,
@@ -460,7 +452,7 @@
             "start": 13,
             "end": 23,
             "text": "21/04/2016",
-            "confidence": 0.9967632293701172
+            "confidence": 0.9980442523956299
           }
         ],
         "truncated": false,
@@ -531,7 +523,7 @@
             "start": 13,
             "end": 23,
             "text": "21-04-2016",
-            "confidence": 0.9994157552719116
+            "confidence": 0.9992866516113281
           }
         ],
         "truncated": false,
@@ -571,11 +563,19 @@
             "start": 16,
             "end": 20,
             "text": "4.22",
-            "confidence": 0.7597079873085022
+            "confidence": 0.35846570134162903
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 16,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -605,6 +605,13 @@
             "start": 13,
             "end": 15,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 15,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -642,7 +649,7 @@
             "start": 19,
             "end": 23,
             "text": "4/22",
-            "confidence": 0.9938483834266663
+            "confidence": 0.9944589734077454
           }
         ],
         "truncated": false,
@@ -682,7 +689,7 @@
             "start": 16,
             "end": 21,
             "text": "22/04",
-            "confidence": 0.815356433391571
+            "confidence": 0.9843894839286804
           }
         ],
         "truncated": false,
@@ -722,7 +729,7 @@
             "start": 17,
             "end": 21,
             "text": "4/22",
-            "confidence": 0.9962326884269714
+            "confidence": 0.9965396523475647
           }
         ],
         "truncated": false,
@@ -762,7 +769,7 @@
             "start": 13,
             "end": 18,
             "text": "22/04",
-            "confidence": 0.6407693028450012
+            "confidence": 0.9611465930938721
           }
         ],
         "truncated": false,
@@ -802,7 +809,7 @@
             "start": 13,
             "end": 23,
             "text": "2015/08/12",
-            "confidence": 0.9975995421409607
+            "confidence": 0.9967396259307861
           }
         ],
         "truncated": false,
@@ -842,7 +849,7 @@
             "start": 13,
             "end": 23,
             "text": "08/12,2015",
-            "confidence": 0.8946303725242615
+            "confidence": 0.7105996608734131
           }
         ],
         "truncated": false,
@@ -876,6 +883,13 @@
             "start": 19,
             "end": 21,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 15,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -913,7 +927,7 @@
             "start": 13,
             "end": 20,
             "text": "1st Jan",
-            "confidence": 0.9995431900024414
+            "confidence": 0.9984208345413208
           }
         ],
         "truncated": false,
@@ -953,7 +967,7 @@
             "start": 13,
             "end": 22,
             "text": "Jan first",
-            "confidence": 0.9991310238838196
+            "confidence": 0.9996969699859619
           }
         ],
         "truncated": false,
@@ -993,7 +1007,7 @@
             "start": 13,
             "end": 29,
             "text": "May twenty-first",
-            "confidence": 0.11749889701604843
+            "confidence": 0.2750958204269409
           }
         ],
         "truncated": false,
@@ -1041,7 +1055,7 @@
             "start": 13,
             "end": 27,
             "text": "May twenty one",
-            "confidence": 0.9744433760643005
+            "confidence": 0.7096467614173889
           }
         ],
         "truncated": false,
@@ -1081,7 +1095,7 @@
             "start": 13,
             "end": 26,
             "text": "second of Aug",
-            "confidence": 0.9876518249511719
+            "confidence": 0.9809187650680542
           }
         ],
         "truncated": false,
@@ -1121,7 +1135,7 @@
             "start": 13,
             "end": 34,
             "text": "twenty second of June",
-            "confidence": 0.9084627032279968
+            "confidence": 0.8337635397911072
           }
         ],
         "truncated": false,
@@ -1161,7 +1175,7 @@
             "start": 16,
             "end": 22,
             "text": "Friday",
-            "confidence": 0.9999866485595703
+            "confidence": 0.9999812245368958
           }
         ],
         "truncated": false,
@@ -1201,7 +1215,7 @@
             "start": 14,
             "end": 20,
             "text": "Friday",
-            "confidence": 0.999483048915863
+            "confidence": 0.9995296001434326
           }
         ],
         "truncated": false,
@@ -1241,7 +1255,7 @@
             "start": 13,
             "end": 18,
             "text": "today",
-            "confidence": 0.9999707341194153
+            "confidence": 0.9999722242355347
           }
         ],
         "truncated": false,
@@ -1281,7 +1295,7 @@
             "start": 13,
             "end": 17,
             "text": "tmrw",
-            "confidence": 0.999954342842102
+            "confidence": 0.9999610781669617
           }
         ],
         "truncated": false,
@@ -1321,7 +1335,7 @@
             "start": 13,
             "end": 22,
             "text": "yesterday",
-            "confidence": 0.999961256980896
+            "confidence": 0.999967634677887
           }
         ],
         "truncated": false,
@@ -1361,7 +1375,7 @@
             "start": 13,
             "end": 37,
             "text": "the day before yesterday",
-            "confidence": 0.9829070568084717
+            "confidence": 0.9910364151000977
           }
         ],
         "truncated": false,
@@ -1401,7 +1415,7 @@
             "start": 13,
             "end": 35,
             "text": "the day after tomorrow",
-            "confidence": 0.9824413657188416
+            "confidence": 0.985612154006958
           }
         ],
         "truncated": false,
@@ -1472,7 +1486,7 @@
             "start": 0,
             "end": 22,
             "text": "The day after tomorrow",
-            "confidence": 0.9942930340766907
+            "confidence": 0.9944984316825867
           }
         ],
         "truncated": false,
@@ -1514,7 +1528,7 @@
             "start": 17,
             "end": 25,
             "text": "next day",
-            "confidence": 0.9551813006401062
+            "confidence": 0.9263312220573425
           }
         ],
         "truncated": false,
@@ -1554,7 +1568,7 @@
             "start": 13,
             "end": 24,
             "text": "this Friday",
-            "confidence": 0.984665036201477
+            "confidence": 0.9677276015281677
           }
         ],
         "truncated": false,
@@ -1594,7 +1608,7 @@
             "start": 13,
             "end": 24,
             "text": "next Sunday",
-            "confidence": 0.9995183348655701
+            "confidence": 0.9993634819984436
           }
         ],
         "truncated": false,
@@ -1634,7 +1648,7 @@
             "start": 13,
             "end": 24,
             "text": "last Sunday",
-            "confidence": 0.9993793964385986
+            "confidence": 0.9995207190513611
           }
         ],
         "truncated": false,
@@ -1674,7 +1688,7 @@
             "start": 13,
             "end": 29,
             "text": "this week Friday",
-            "confidence": 0.9919344782829285
+            "confidence": 0.9832856059074402
           }
         ],
         "truncated": false,
@@ -1714,7 +1728,7 @@
             "start": 13,
             "end": 29,
             "text": "last week Sunday",
-            "confidence": 0.8817025423049927
+            "confidence": 0.8687979578971863
           }
         ],
         "truncated": false,
@@ -1756,7 +1770,7 @@
             "start": 17,
             "end": 25,
             "text": "last day",
-            "confidence": 0.5293647050857544
+            "confidence": 0.5691854357719421
           }
         ],
         "truncated": false,
@@ -1834,7 +1848,7 @@
             "start": 13,
             "end": 25,
             "text": "15 June 2016",
-            "confidence": 0.9998721480369568
+            "confidence": 0.9996229410171509
           }
         ],
         "truncated": false,
@@ -1874,7 +1888,7 @@
             "start": 17,
             "end": 37,
             "text": "first friday of july",
-            "confidence": 0.9986512064933777
+            "confidence": 0.9966381788253784
           }
         ],
         "truncated": false,
@@ -1914,7 +1928,7 @@
             "start": 17,
             "end": 43,
             "text": "first friday in this month",
-            "confidence": 0.9915798306465149
+            "confidence": 0.992015540599823
           }
         ],
         "truncated": false,
@@ -1954,7 +1968,7 @@
             "start": 13,
             "end": 32,
             "text": "next week on Friday",
-            "confidence": 0.9943985342979431
+            "confidence": 0.97757488489151
           }
         ],
         "truncated": false,
@@ -1994,7 +2008,7 @@
             "start": 16,
             "end": 32,
             "text": "Friday next week",
-            "confidence": 0.999043345451355
+            "confidence": 0.9969454407691956
           }
         ],
         "truncated": false,
@@ -2067,7 +2081,7 @@
             "start": 13,
             "end": 21,
             "text": "this day",
-            "confidence": 0.31918010115623474
+            "confidence": 0.3273221254348755
           }
         ],
         "truncated": false,
@@ -2153,7 +2167,7 @@
             "start": 13,
             "end": 31,
             "text": "two weeks from now",
-            "confidence": 0.9903231859207153
+            "confidence": 0.9370409846305847
           }
         ],
         "truncated": false,
@@ -2193,7 +2207,7 @@
             "start": 16,
             "end": 30,
             "text": "few months ago",
-            "confidence": 0.4942127764225006
+            "confidence": 0.34342846274375916
           }
         ],
         "truncated": false,
@@ -2241,7 +2255,7 @@
             "start": 16,
             "end": 30,
             "text": "a few days ago",
-            "confidence": 0.7354809641838074
+            "confidence": 0.6850353479385376
           }
         ],
         "truncated": false,
@@ -2312,7 +2326,7 @@
             "start": 20,
             "end": 22,
             "text": "27",
-            "confidence": 0.9763455986976624
+            "confidence": 0.9183716177940369
           }
         ],
         "truncated": false,
@@ -2383,7 +2397,7 @@
             "start": 20,
             "end": 22,
             "text": "22",
-            "confidence": 0.9730203151702881
+            "confidence": 0.8039355874061584
           }
         ],
         "truncated": false,
@@ -2433,32 +2447,23 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-12-02T00:00:00+00:00",
-          "allDay": true
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "no-result",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-12-02T00:00:00+00:00",
-            "allDay": true
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
-            "start": 27,
-            "end": 33,
-            "text": "second",
-            "confidence": 0.9362055063247681
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"I went back for the twenty second\".",
+            "start": 0,
+            "end": 33
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -2494,7 +2499,7 @@
             "start": 12,
             "end": 27,
             "text": "Thursday the 21",
-            "confidence": 0.9947651028633118
+            "confidence": 0.9533047676086426
           }
         ],
         "truncated": false,
@@ -2534,7 +2539,7 @@
             "start": 12,
             "end": 25,
             "text": "Friday the 22",
-            "confidence": 0.9408472776412964
+            "confidence": 0.8375696539878845
           }
         ],
         "truncated": false,
@@ -2574,7 +2579,7 @@
             "start": 12,
             "end": 27,
             "text": "Saturday the 23",
-            "confidence": 0.9058948159217834
+            "confidence": 0.8362643122673035
           }
         ],
         "truncated": false,
@@ -2614,7 +2619,7 @@
             "start": 12,
             "end": 25,
             "text": "Friday the 15",
-            "confidence": 0.985021710395813
+            "confidence": 0.903658926486969
           }
         ],
         "truncated": false,
@@ -2654,11 +2659,19 @@
             "start": 12,
             "end": 37,
             "text": "Thursday the twenty first",
-            "confidence": 0.8726921081542969
+            "confidence": 0.1145869717001915
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 20,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -2694,7 +2707,7 @@
             "start": 12,
             "end": 18,
             "text": "Friday",
-            "confidence": 0.9999735951423645
+            "confidence": 0.9999487400054932
           }
         ],
         "truncated": false,
@@ -2734,7 +2747,7 @@
             "start": 13,
             "end": 26,
             "text": "second Sunday",
-            "confidence": 0.9991217255592346
+            "confidence": 0.9991227388381958
           }
         ],
         "truncated": false,
@@ -2774,7 +2787,7 @@
             "start": 13,
             "end": 25,
             "text": "first Sunday",
-            "confidence": 0.998818039894104
+            "confidence": 0.992416501045227
           }
         ],
         "truncated": false,
@@ -2814,7 +2827,7 @@
             "start": 13,
             "end": 26,
             "text": "third Tuesday",
-            "confidence": 0.9990596771240234
+            "confidence": 0.9973400831222534
           }
         ],
         "truncated": false,
@@ -2864,23 +2877,34 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-12-01T00:00:00+00:00",
+          "allDay": true,
+          "end": "2017-01-01T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Conflicting date specifications need separate clauses.",
-            "start": 12,
-            "end": 14,
-            "severity": "error"
+            "start": "2016-12-01T00:00:00+00:00",
+            "allDay": true,
+            "end": "2017-01-01T00:00:00+00:00"
           }
         ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 30,
+            "text": "next month",
+            "confidence": 0.9812566041946411
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -2947,7 +2971,7 @@
             "start": 13,
             "end": 29,
             "text": "January 12, 2018",
-            "confidence": 0.9997463226318359
+            "confidence": 0.9998011589050293
           }
         ],
         "truncated": false,
@@ -3025,7 +3049,7 @@
             "start": 12,
             "end": 25,
             "text": "two years ago",
-            "confidence": 0.9965725541114807
+            "confidence": 0.9883267283439636
           }
         ],
         "truncated": false,
@@ -3065,7 +3089,7 @@
             "start": 0,
             "end": 13,
             "text": "16. Nov. 2016",
-            "confidence": 0.998486340045929
+            "confidence": 0.9972003698348999
           }
         ],
         "truncated": false,
@@ -3105,7 +3129,7 @@
             "start": 17,
             "end": 36,
             "text": "1 month 21 days ago",
-            "confidence": 0.9756959676742554
+            "confidence": 0.9583980441093445
           }
         ],
         "truncated": false,
@@ -3145,7 +3169,7 @@
             "start": 12,
             "end": 39,
             "text": "2 years 1 month 21 days ago",
-            "confidence": 0.9915934801101685
+            "confidence": 0.9798163771629333
           }
         ],
         "truncated": false,
@@ -3185,7 +3209,7 @@
             "start": 17,
             "end": 38,
             "text": "2 years 21 days later",
-            "confidence": 0.7929708361625671
+            "confidence": 0.7827449440956116
           }
         ],
         "truncated": false,
@@ -3225,7 +3249,7 @@
             "start": 12,
             "end": 39,
             "text": "1 month 2 years 21 days ago",
-            "confidence": 0.9439075589179993
+            "confidence": 0.9364445805549622
           }
         ],
         "truncated": false,
@@ -3244,32 +3268,30 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2017-10-02T00:00:00+00:00",
-          "allDay": false
-        }
-      ],
-      "correct": true,
-      "stage": "correct",
+      "actual": [],
+      "correct": false,
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2017-10-02T00:00:00+00:00",
-            "allDay": false
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
-            "start": 17,
-            "end": 40,
-            "text": "1 month and 21 days ago",
-            "confidence": 0.9609935879707336
+            "code": "invalid-duration",
+            "message": "A duration needs a positive quantity and a time unit.",
+            "start": 9,
+            "end": 16,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 9,
+            "end": 16,
+            "severity": "warning"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -3307,7 +3329,7 @@
             "start": 17,
             "end": 37,
             "text": "1 month, 21 days ago",
-            "confidence": 0.9664947390556335
+            "confidence": 0.9632120728492737
           }
         ],
         "truncated": false,
@@ -3341,6 +3363,13 @@
             "start": 21,
             "end": 23,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 21,
+            "end": 23,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -3378,7 +3407,7 @@
             "start": 17,
             "end": 32,
             "text": "5 December 1391",
-            "confidence": 0.1340070217847824
+            "confidence": 0.40852412581443787
           }
         ],
         "truncated": false,
@@ -3426,7 +3455,7 @@
             "start": 0,
             "end": 28,
             "text": "monday, jan twenty two, 2018",
-            "confidence": 0.9725826382637024
+            "confidence": 0.991955578327179
           }
         ],
         "truncated": false,
@@ -3466,13 +3495,6 @@
             "message": "Ignored nineteen inside the expression.",
             "start": 30,
             "end": 38,
-            "severity": "warning"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 3,
-            "end": 12,
             "severity": "warning"
           }
         ],
@@ -3580,7 +3602,7 @@
             "start": 17,
             "end": 43,
             "text": "first Friday of next month",
-            "confidence": 0.9910150766372681
+            "confidence": 0.9708268046379089
           }
         ],
         "truncated": false,
@@ -3620,7 +3642,7 @@
             "start": 16,
             "end": 43,
             "text": "second Monday of next month",
-            "confidence": 0.9608942866325378
+            "confidence": 0.960638701915741
           }
         ],
         "truncated": false,
@@ -3660,7 +3682,7 @@
             "start": 16,
             "end": 49,
             "text": "third Wednesday of previous month",
-            "confidence": 0.9825757741928101
+            "confidence": 0.9954493045806885
           }
         ],
         "truncated": false,
@@ -3700,7 +3722,7 @@
             "start": 19,
             "end": 36,
             "text": "Tuesday next week",
-            "confidence": 0.9994088411331177
+            "confidence": 0.998598575592041
           }
         ],
         "truncated": false,
@@ -3740,7 +3762,7 @@
             "start": 19,
             "end": 38,
             "text": "Sunday of next week",
-            "confidence": 0.9902907013893127
+            "confidence": 0.983267068862915
           }
         ],
         "truncated": false,
@@ -3780,11 +3802,19 @@
             "start": 13,
             "end": 35,
             "text": "two days from tomorrow",
-            "confidence": 0.6929047107696533
+            "confidence": 0.45813533663749695
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -3801,19 +3831,17 @@
       ],
       "actual": [
         {
-          "start": "2018-04-19T00:00:00+00:00",
-          "allDay": true,
-          "end": "2018-04-23T00:00:00+00:00"
+          "start": "2018-04-23T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-04-19T00:00:00+00:00",
-            "allDay": true,
-            "end": "2018-04-23T00:00:00+00:00"
+            "start": "2018-04-23T00:00:00+00:00",
+            "allDay": true
           }
         ],
         "rrules": [],
@@ -3822,7 +3850,7 @@
             "start": 13,
             "end": 37,
             "text": "four days from yesterday",
-            "confidence": 0.9769049286842346
+            "confidence": 0.9551717042922974
           }
         ],
         "truncated": false,
@@ -3862,11 +3890,19 @@
             "start": 19,
             "end": 25,
             "text": "5.2015",
-            "confidence": 0.8229764699935913
+            "confidence": 0.2913353145122528
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 19,
+            "end": 20,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -3902,7 +3938,7 @@
             "start": 21,
             "end": 30,
             "text": "2015.5.13",
-            "confidence": 0.9431295394897461
+            "confidence": 0.7900695204734802
           }
         ],
         "truncated": false,
@@ -3942,7 +3978,7 @@
             "start": 13,
             "end": 21,
             "text": "3-7-2017",
-            "confidence": 0.6313658356666565
+            "confidence": 0.5303295850753784
           }
         ],
         "truncated": false,
@@ -4039,16 +4075,16 @@
       ],
       "actual": [
         {
-          "start": "2089-05-05T00:00:00+00:00",
+          "start": "1989-05-05T00:00:00+00:00",
           "allDay": true
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2089-05-05T00:00:00+00:00",
+            "start": "1989-05-05T00:00:00+00:00",
             "allDay": true
           }
         ],
@@ -4058,7 +4094,7 @@
             "start": 13,
             "end": 21,
             "text": "05/05/89",
-            "confidence": 0.8189067244529724
+            "confidence": 0.9625508189201355
           }
         ],
         "truncated": false,
@@ -4092,6 +4128,13 @@
             "start": 19,
             "end": 21,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 15,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -4113,6 +4156,61 @@
           "start": "2018-05-13T02:00:00+00:00",
           "allDay": false,
           "open": "end"
+        },
+        {
+          "start": "2018-05-20T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-05-27T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-03T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-10T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-17T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-06-24T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-01T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-08T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-15T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-22T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
+        },
+        {
+          "start": "2018-07-29T02:00:00+00:00",
+          "allDay": false,
+          "open": "end"
         }
       ],
       "correct": false,
@@ -4123,18 +4221,75 @@
             "start": "2018-05-13T02:00:00+00:00",
             "allDay": false,
             "open": "end"
+          },
+          {
+            "start": "2018-05-20T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-05-27T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-03T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-10T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-17T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-06-24T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-01T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-08T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-15T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-22T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
+          },
+          {
+            "start": "2018-07-29T02:00:00+00:00",
+            "allDay": false,
+            "open": "end"
           }
         ],
-        "rrules": [],
+        "rrules": [
+          "DTSTART;TZID=UTC:20180513T020000\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SU"
+        ],
         "spans": [
           {
             "start": 18,
             "end": 38,
             "text": "two sundays from now",
-            "confidence": 0.48101192712783813
+            "confidence": 0.47773754596710205
           }
         ],
-        "truncated": false,
+        "truncated": true,
         "diagnostics": [
           {
             "code": "ambiguous-meridiem",
@@ -4186,7 +4341,7 @@
             "start": 18,
             "end": 28,
             "text": "two monday",
-            "confidence": 0.9762364029884338
+            "confidence": 0.9892827868461609
           }
         ],
         "truncated": false,
@@ -4234,19 +4389,11 @@
             "start": 18,
             "end": 43,
             "text": "three weeks from tomorrow",
-            "confidence": 0.3552453815937042
+            "confidence": 0.9969045519828796
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 18,
-            "end": 23,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -4282,7 +4429,7 @@
             "start": 13,
             "end": 23,
             "text": "in 3 weeks",
-            "confidence": 0.9984226226806641
+            "confidence": 0.9981261491775513
           }
         ],
         "truncated": false,
@@ -4353,7 +4500,7 @@
             "start": 13,
             "end": 39,
             "text": "twenty second of June 2017",
-            "confidence": 0.9416772723197937
+            "confidence": 0.9099202156066895
           }
         ],
         "truncated": false,
@@ -4372,23 +4519,32 @@
           "precision": "date"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2019-09-01T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-date",
-            "message": "Both ends of a calendar range need a day.",
-            "start": 13,
-            "end": 17,
-            "severity": "error"
+            "start": "2019-09-01T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 21,
+            "text": "2019-sep",
+            "confidence": 0.93319171667099
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -4424,7 +4580,7 @@
             "start": 13,
             "end": 24,
             "text": "2019/sep/01",
-            "confidence": 0.9795088171958923
+            "confidence": 0.9770157933235168
           }
         ],
         "truncated": false,
@@ -4557,7 +4713,7 @@
             "start": 17,
             "end": 28,
             "text": "eight forty",
-            "confidence": 0.9457561373710632
+            "confidence": 0.7212048172950745
           }
         ],
         "truncated": false,
@@ -4605,7 +4761,7 @@
             "start": 17,
             "end": 31,
             "text": "eight forty am",
-            "confidence": 0.9995148181915283
+            "confidence": 0.9996480345726013
           }
         ],
         "truncated": false,
@@ -4645,7 +4801,7 @@
             "start": 17,
             "end": 31,
             "text": "eight forty pm",
-            "confidence": 0.999416172504425
+            "confidence": 0.9995893239974976
           }
         ],
         "truncated": false,
@@ -4685,7 +4841,7 @@
             "start": 17,
             "end": 31,
             "text": "ten forty five",
-            "confidence": 0.9961122870445251
+            "confidence": 0.9980069994926453
           }
         ],
         "truncated": false,
@@ -4809,7 +4965,7 @@
             "start": 17,
             "end": 24,
             "text": "ten ten",
-            "confidence": 0.9957723617553711
+            "confidence": 0.9976053237915039
           }
         ],
         "truncated": false,
@@ -4857,7 +5013,7 @@
             "start": 17,
             "end": 37,
             "text": "ten fifty five p. m.",
-            "confidence": 0.9973586797714233
+            "confidence": 0.9755170345306396
           }
         ],
         "truncated": false,
@@ -4897,7 +5053,7 @@
             "start": 16,
             "end": 17,
             "text": "7",
-            "confidence": 0.9982274770736694
+            "confidence": 0.9981786012649536
           }
         ],
         "truncated": false,
@@ -4945,7 +5101,7 @@
             "start": 16,
             "end": 17,
             "text": "7",
-            "confidence": 0.9992977380752563
+            "confidence": 0.9990693926811218
           }
         ],
         "truncated": false,
@@ -4993,7 +5149,7 @@
             "start": 16,
             "end": 21,
             "text": "seven",
-            "confidence": 0.9484968185424805
+            "confidence": 0.9817414879798889
           }
         ],
         "truncated": false,
@@ -5041,7 +5197,7 @@
             "start": 13,
             "end": 19,
             "text": "7:56pm",
-            "confidence": 0.9998239874839783
+            "confidence": 0.9999129772186279
           }
         ],
         "truncated": false,
@@ -5081,7 +5237,7 @@
             "start": 13,
             "end": 22,
             "text": "7:56:30pm",
-            "confidence": 0.9975358247756958
+            "confidence": 0.9975472092628479
           }
         ],
         "truncated": false,
@@ -5121,7 +5277,7 @@
             "start": 13,
             "end": 23,
             "text": "7:56:30 pm",
-            "confidence": 0.9984865784645081
+            "confidence": 0.9975329041481018
           }
         ],
         "truncated": false,
@@ -5161,7 +5317,7 @@
             "start": 13,
             "end": 18,
             "text": "12:34",
-            "confidence": 0.9998388290405273
+            "confidence": 0.9998559951782227
           }
         ],
         "truncated": false,
@@ -5209,7 +5365,7 @@
             "start": 5,
             "end": 14,
             "text": "7 o'clock",
-            "confidence": 0.630661129951477
+            "confidence": 0.9899756908416748
           }
         ],
         "truncated": false,
@@ -5228,13 +5384,30 @@
           "precision": "time"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "no-result",
+      "actual": [
+        {
+          "start": "2016-11-07T07:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-07T07:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 5,
+            "end": 18,
+            "text": "seven o'clock",
+            "confidence": 0.6785843372344971
+          }
+        ],
         "truncated": false,
         "diagnostics": [],
         "backend": "cpu"
@@ -5272,7 +5445,7 @@
             "start": 5,
             "end": 21,
             "text": "8 in the morning",
-            "confidence": 0.5225935578346252
+            "confidence": 0.6453317999839783
           }
         ],
         "truncated": false,
@@ -5312,19 +5485,11 @@
             "start": 5,
             "end": 19,
             "text": "8 in the night",
-            "confidence": 0.44884878396987915
+            "confidence": 0.5850644707679749
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 5,
-            "end": 6,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -5341,26 +5506,26 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T08:30:00+00:00",
+          "start": "2016-11-07T08:00:00+00:00",
           "allDay": false
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T08:30:00+00:00",
+            "start": "2016-11-07T08:00:00+00:00",
             "allDay": false
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 5,
+            "start": 15,
             "end": 20,
-            "text": "half past eight",
-            "confidence": 0.3212818205356598
+            "text": "eight",
+            "confidence": 0.9872409701347351
           }
         ],
         "truncated": false,
@@ -5370,13 +5535,6 @@
             "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 15,
             "end": 20,
-            "severity": "warning"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 5,
-            "end": 9,
             "severity": "warning"
           }
         ],
@@ -5415,7 +5573,7 @@
             "start": 5,
             "end": 18,
             "text": "half past 8pm",
-            "confidence": 0.9405021667480469
+            "confidence": 0.8677810430526733
           }
         ],
         "truncated": false,
@@ -5436,19 +5594,17 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T08:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-07T08:30:00+00:00"
+          "start": "2016-11-07T08:30:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T08:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-07T08:30:00+00:00"
+            "start": "2016-11-07T08:30:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -5457,7 +5613,7 @@
             "start": 5,
             "end": 23,
             "text": "30 mins past eight",
-            "confidence": 0.5626040697097778
+            "confidence": 0.5608893036842346
           }
         ],
         "truncated": false,
@@ -5505,7 +5661,7 @@
             "start": 7,
             "end": 25,
             "text": "quarter past eight",
-            "confidence": 0.9983694553375244
+            "confidence": 0.9962823987007141
           }
         ],
         "truncated": false,
@@ -5553,7 +5709,7 @@
             "start": 5,
             "end": 23,
             "text": "quarter past eight",
-            "confidence": 0.9985244870185852
+            "confidence": 0.9976730942726135
           }
         ],
         "truncated": false,
@@ -5601,7 +5757,7 @@
             "start": 22,
             "end": 27,
             "text": "eight",
-            "confidence": 0.9342802166938782
+            "confidence": 0.971020519733429
           }
         ],
         "truncated": false,
@@ -5630,38 +5786,30 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T07:30:00+00:00",
+          "start": "2016-11-07T07:00:00+00:00",
           "allDay": false
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T07:30:00+00:00",
+            "start": "2016-11-07T07:00:00+00:00",
             "allDay": false
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 5,
+            "start": 15,
             "end": 28,
-            "text": "half past seven o'clock",
-            "confidence": 0.3442608416080475
+            "text": "seven o'clock",
+            "confidence": 0.9346325397491455
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 5,
-            "end": 9,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -5697,11 +5845,19 @@
             "start": 5,
             "end": 35,
             "text": "half past seven in the morning",
-            "confidence": 0.8680612444877625
+            "confidence": 0.4874517619609833
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 5,
+            "end": 9,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -5737,11 +5893,19 @@
             "start": 7,
             "end": 34,
             "text": "quarter to 8 in the morning",
-            "confidence": 0.5031844973564148
+            "confidence": 0.1915242075920105
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 7,
+            "end": 14,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -5777,7 +5941,7 @@
             "start": 17,
             "end": 37,
             "text": "eight in the evening",
-            "confidence": 0.9883332848548889
+            "confidence": 0.9788914322853088
           }
         ],
         "truncated": false,
@@ -5819,7 +5983,7 @@
             "start": 24,
             "end": 33,
             "text": "10 past 9",
-            "confidence": 0.28380510210990906
+            "confidence": 0.12479650229215622
           }
         ],
         "truncated": false,
@@ -5874,7 +6038,7 @@
             "start": 13,
             "end": 26,
             "text": "seven o'clock",
-            "confidence": 0.5847178101539612
+            "confidence": 0.9588599801063538
           }
         ],
         "truncated": false,
@@ -5893,40 +6057,21 @@
           "precision": "time"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-07T10:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-07T21:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-07T10:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-07T21:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
-          {
-            "start": 24,
-            "end": 49,
-            "text": "ten past 9 in the evening",
-            "confidence": 0.05529903620481491
-          }
-        ],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 24,
-            "end": 27,
-            "severity": "warning"
+            "code": "unlinked-times",
+            "message": "Two clocks need a range separator or separate clauses.",
+            "start": 33,
+            "end": 34,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -5964,7 +6109,7 @@
             "start": 18,
             "end": 38,
             "text": "eight in the morning",
-            "confidence": 0.8810788989067078
+            "confidence": 0.7115675210952759
           }
         ],
         "truncated": false,
@@ -6004,7 +6149,7 @@
             "start": 13,
             "end": 27,
             "text": "afternoon at 7",
-            "confidence": 0.9994105696678162
+            "confidence": 0.9982239007949829
           }
         ],
         "truncated": false,
@@ -6044,7 +6189,7 @@
             "start": 13,
             "end": 27,
             "text": "afternoon 7:00",
-            "confidence": 0.9991340637207031
+            "confidence": 0.998332142829895
           }
         ],
         "truncated": false,
@@ -6084,7 +6229,7 @@
             "start": 13,
             "end": 30,
             "text": "afternoon 7:00:05",
-            "confidence": 0.9979665279388428
+            "confidence": 0.9963748455047607
           }
         ],
         "truncated": false,
@@ -6124,19 +6269,11 @@
             "start": 13,
             "end": 31,
             "text": "afternoon seven pm",
-            "confidence": 0.4576224088668823
+            "confidence": 0.635000467300415
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 22,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -6172,7 +6309,7 @@
             "start": 13,
             "end": 28,
             "text": "seven thirty pm",
-            "confidence": 0.9983068108558655
+            "confidence": 0.9992995858192444
           }
         ],
         "truncated": false,
@@ -6212,7 +6349,7 @@
             "start": 13,
             "end": 33,
             "text": "seven thirty five pm",
-            "confidence": 0.9965807199478149
+            "confidence": 0.9986391663551331
           }
         ],
         "truncated": false,
@@ -6252,7 +6389,7 @@
             "start": 13,
             "end": 29,
             "text": "eleven twenty pm",
-            "confidence": 0.9992846846580505
+            "confidence": 0.999311089515686
           }
         ],
         "truncated": false,
@@ -6292,7 +6429,7 @@
             "start": 16,
             "end": 20,
             "text": "noon",
-            "confidence": 0.9997945427894592
+            "confidence": 0.9997051358222961
           }
         ],
         "truncated": false,
@@ -6332,7 +6469,7 @@
             "start": 13,
             "end": 15,
             "text": "11",
-            "confidence": 0.8024423122406006
+            "confidence": 0.871656060218811
           }
         ],
         "truncated": false,
@@ -6405,13 +6542,6 @@
             "start": 13,
             "end": 17,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 17,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -6619,7 +6749,7 @@
             "start": 0,
             "end": 6,
             "text": "midday",
-            "confidence": 0.9998342394828796
+            "confidence": 0.9997819662094116
           }
         ],
         "truncated": false,
@@ -6721,7 +6851,7 @@
             "start": 0,
             "end": 4,
             "text": "noon",
-            "confidence": 0.9998630285263062
+            "confidence": 0.9995201826095581
           }
         ],
         "truncated": false,
@@ -6771,32 +6901,23 @@
           "precision": "time"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-07T00:00:00+00:00",
-          "allDay": false
-        }
-      ],
-      "correct": true,
-      "stage": "correct",
+      "actual": [],
+      "correct": false,
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-07T00:00:00+00:00",
-            "allDay": false
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
+            "code": "unlinked-times",
+            "message": "Two clocks need a range separator or separate clauses.",
             "start": 16,
             "end": 24,
-            "text": "midnight",
-            "confidence": 0.9998388886451721
+            "severity": "error"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -6863,7 +6984,7 @@
             "start": 26,
             "end": 36,
             "text": "11 o'clock",
-            "confidence": 0.9856398701667786
+            "confidence": 0.9956098794937134
           }
         ],
         "truncated": false,
@@ -6903,7 +7024,7 @@
             "start": 13,
             "end": 23,
             "text": "7:56:13 pm",
-            "confidence": 0.998892605304718
+            "confidence": 0.9984634518623352
           }
         ],
         "truncated": false,
@@ -6943,7 +7064,7 @@
             "start": 13,
             "end": 30,
             "text": "afternoon 7:00:25",
-            "confidence": 0.9967836141586304
+            "confidence": 0.9932489395141602
           }
         ],
         "truncated": false,
@@ -6983,7 +7104,7 @@
             "start": 13,
             "end": 28,
             "text": "seven thirty am",
-            "confidence": 0.9988150000572205
+            "confidence": 0.99943608045578
           }
         ],
         "truncated": false,
@@ -7023,7 +7144,7 @@
             "start": 16,
             "end": 27,
             "text": "eleven five",
-            "confidence": 0.9987969994544983
+            "confidence": 0.9964064359664917
           }
         ],
         "truncated": false,
@@ -7071,7 +7192,7 @@
             "start": 13,
             "end": 37,
             "text": "five thirty in the night",
-            "confidence": 0.26955676078796387
+            "confidence": 0.13157962262630463
           }
         ],
         "truncated": false,
@@ -7098,30 +7219,32 @@
           "precision": "time"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-07T17:30:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-time",
-            "message": "A time-of-day qualifier needs a clock.",
-            "start": 16,
-            "end": 19,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 16,
-            "end": 19,
-            "severity": "warning"
+            "start": "2016-11-07T17:30:00+00:00",
+            "allDay": false
           }
         ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 37,
+            "text": "night five thirty",
+            "confidence": 0.626820981502533
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -7157,7 +7280,7 @@
             "start": 13,
             "end": 17,
             "text": "noon",
-            "confidence": 0.99998539686203
+            "confidence": 0.9999326467514038
           }
         ],
         "truncated": false,
@@ -7197,7 +7320,7 @@
             "start": 26,
             "end": 36,
             "text": "12 o'clock",
-            "confidence": 0.9876173138618469
+            "confidence": 0.9964653849601746
           }
         ],
         "truncated": false,
@@ -7216,21 +7339,45 @@
           "precision": "time"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2001-11-01T07:00:00+00:00",
+          "allDay": false
+        }
+      ],
       "correct": false,
-      "stage": "no-result",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2001-11-01T07:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 16,
+            "end": 20,
+            "text": "7h01",
+            "confidence": 0.5571773052215576
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be back at 7h01\".",
-            "start": 0,
-            "end": 20
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 16,
+            "end": 17,
+            "severity": "warning"
+          },
+          {
+            "code": "filler-ignored",
+            "message": "Ignored h inside the expression.",
+            "start": 17,
+            "end": 18,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -7306,7 +7453,7 @@
             "start": 0,
             "end": 30,
             "text": "3pm : I'll be out on this week",
-            "confidence": 0.979321300983429
+            "confidence": 0.9143577814102173
           }
         ],
         "truncated": false,
@@ -7354,7 +7501,7 @@
             "start": 0,
             "end": 13,
             "text": "this week 8am",
-            "confidence": 0.9512277841567993
+            "confidence": 0.9088007211685181
           }
         ],
         "truncated": false,
@@ -7419,13 +7566,6 @@
             "start": 0,
             "end": 4,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 0,
-            "end": 4,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -7444,7 +7584,7 @@
       ],
       "actual": [
         {
-          "start": "2017-08-01T22:00:00+00:00",
+          "start": "2016-11-07T22:00:00+00:00",
           "allDay": false
         }
       ],
@@ -7453,29 +7593,21 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2017-08-01T22:00:00+00:00",
+            "start": "2016-11-07T22:00:00+00:00",
             "allDay": false
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 19,
+            "start": 21,
             "end": 26,
-            "text": "8.10 pm",
-            "confidence": 0.05621396005153656
+            "text": "10 pm",
+            "confidence": 0.8740469217300415
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 19,
-            "end": 20,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -7493,30 +7625,40 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T18:00:00+00:00",
-          "allDay": false
+          "start": "2016-11-07T17:00:00+00:00",
+          "allDay": false,
+          "end": "2016-11-07T18:00:00+00:00"
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T18:00:00+00:00",
-            "allDay": false
+            "start": "2016-11-07T17:00:00+00:00",
+            "allDay": false,
+            "end": "2016-11-07T18:00:00+00:00"
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 14,
+            "start": 12,
             "end": 20,
-            "text": "to 6pm",
-            "confidence": 0.999272346496582
+            "text": "5 to 6pm",
+            "confidence": 0.24731194972991943
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 13,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -7534,8 +7676,10 @@
       ],
       "actual": [
         {
-          "start": "2016-11-07T18:00:00+00:00",
-          "allDay": false
+          "start": "2016-11-07T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2016-11-07T18:00:00+00:00"
         }
       ],
       "correct": false,
@@ -7543,8 +7687,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-07T18:00:00+00:00",
-            "allDay": false
+            "start": "2016-11-07T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2016-11-07T18:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -7553,7 +7699,7 @@
             "start": 14,
             "end": 22,
             "text": "to 6 p.m",
-            "confidence": 0.6713719367980957
+            "confidence": 0.7032938599586487
           }
         ],
         "truncated": false,
@@ -7575,8 +7721,10 @@
       ],
       "actual": [
         {
-          "start": "2016-11-08T07:00:00+00:00",
-          "allDay": false
+          "start": "2016-11-08T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2016-11-08T07:00:00+00:00"
         }
       ],
       "correct": false,
@@ -7584,8 +7732,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-08T07:00:00+00:00",
-            "allDay": false
+            "start": "2016-11-08T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2016-11-08T07:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -7594,11 +7744,19 @@
             "start": 14,
             "end": 37,
             "text": "to seven in the morning",
-            "confidence": 0.7668969631195068
+            "confidence": 0.4435502886772156
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -7637,7 +7795,7 @@
             "start": 12,
             "end": 26,
             "text": "from 5 to 6 pm",
-            "confidence": 0.7524504065513611
+            "confidence": 0.7944784760475159
           }
         ],
         "truncated": false,
@@ -7680,7 +7838,7 @@
             "start": 28,
             "end": 39,
             "text": "for 2.5 hrs",
-            "confidence": 0.9954595565795898
+            "confidence": 0.9883275032043457
           }
         ],
         "truncated": false,
@@ -7725,7 +7883,7 @@
             "start": 21,
             "end": 54,
             "text": "from 10 am for 3 hours 30 minutes",
-            "confidence": 0.6674008369445801
+            "confidence": 0.648438036441803
           }
         ],
         "truncated": false,
@@ -7768,7 +7926,7 @@
             "start": 22,
             "end": 42,
             "text": "for 2.5 hours from 9",
-            "confidence": 0.09041377902030945
+            "confidence": 0.18700015544891357
           }
         ],
         "truncated": false,
@@ -7823,14 +7981,22 @@
         "rrules": [],
         "spans": [
           {
-            "start": 26,
+            "start": 22,
             "end": 44,
-            "text": "3 hours from 10 am",
-            "confidence": 0.9990437030792236
+            "text": "for 3 hours from 10 am",
+            "confidence": 0.06232330575585365
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 22,
+            "end": 25,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -7866,14 +8032,22 @@
         "rrules": [],
         "spans": [
           {
-            "start": 26,
+            "start": 22,
             "end": 42,
-            "text": "2 hours from 2pm",
-            "confidence": 0.9990575909614563
+            "text": "for 2 hours from 2pm",
+            "confidence": 0.12224831432104111
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 22,
+            "end": 25,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -7912,11 +8086,19 @@
             "start": 12,
             "end": 29,
             "text": "between 5 and 6pm",
-            "confidence": 0.5668697953224182
+            "confidence": 0.42327558994293213
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 19,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -7955,7 +8137,7 @@
             "start": 12,
             "end": 31,
             "text": "between 5pm and 6pm",
-            "confidence": 0.9982490539550781
+            "confidence": 0.9959109425544739
           }
         ],
         "truncated": false,
@@ -7998,7 +8180,7 @@
             "start": 12,
             "end": 44,
             "text": "between 5 and 6 in the afternoon",
-            "confidence": 0.17800608277320862
+            "confidence": 0.1482599973678589
           }
         ],
         "truncated": false,
@@ -8049,7 +8231,7 @@
             "start": 12,
             "end": 27,
             "text": "from 1am to 5pm",
-            "confidence": 0.9959636330604553
+            "confidence": 0.9948300719261169
           }
         ],
         "truncated": false,
@@ -8092,7 +8274,7 @@
             "start": 12,
             "end": 24,
             "text": "4pm till 5pm",
-            "confidence": 0.9988895058631897
+            "confidence": 0.9980378150939941
           }
         ],
         "truncated": false,
@@ -8135,7 +8317,7 @@
             "start": 12,
             "end": 28,
             "text": "4:00 to 7 oclock",
-            "confidence": 0.9614309668540955
+            "confidence": 0.9496482014656067
           }
         ],
         "truncated": false,
@@ -8186,7 +8368,7 @@
             "start": 12,
             "end": 43,
             "text": "from 3 in the morning until 5pm",
-            "confidence": 0.9627049565315247
+            "confidence": 0.6348716020584106
           }
         ],
         "truncated": false,
@@ -8229,7 +8411,7 @@
             "start": 12,
             "end": 44,
             "text": "between 3 in the morning and 5pm",
-            "confidence": 0.8372663855552673
+            "confidence": 0.5423133373260498
           }
         ],
         "truncated": false,
@@ -8272,7 +8454,7 @@
             "start": 12,
             "end": 37,
             "text": "between 4pm and 5pm today",
-            "confidence": 0.9977784156799316
+            "confidence": 0.9909666180610657
           }
         ],
         "truncated": false,
@@ -8315,7 +8497,7 @@
             "start": 18,
             "end": 25,
             "text": "morning",
-            "confidence": 0.9802773594856262
+            "confidence": 0.9966273903846741
           }
         ],
         "truncated": false,
@@ -8358,7 +8540,7 @@
             "start": 18,
             "end": 27,
             "text": "afternoon",
-            "confidence": 0.9534416794776917
+            "confidence": 0.9942513108253479
           }
         ],
         "truncated": false,
@@ -8401,7 +8583,7 @@
             "start": 18,
             "end": 23,
             "text": "night",
-            "confidence": 0.92400723695755
+            "confidence": 0.9909077286720276
           }
         ],
         "truncated": false,
@@ -8492,7 +8674,7 @@
             "start": 24,
             "end": 31,
             "text": "morning",
-            "confidence": 0.9405478239059448
+            "confidence": 0.9712987542152405
           }
         ],
         "truncated": false,
@@ -8535,7 +8717,7 @@
             "start": 23,
             "end": 30,
             "text": "morning",
-            "confidence": 0.9861541390419006
+            "confidence": 0.9905303716659546
           }
         ],
         "truncated": false,
@@ -8578,7 +8760,7 @@
             "start": 24,
             "end": 33,
             "text": "afternoon",
-            "confidence": 0.9948242902755737
+            "confidence": 0.9959517121315002
           }
         ],
         "truncated": false,
@@ -8621,7 +8803,7 @@
             "start": 23,
             "end": 32,
             "text": "afternoon",
-            "confidence": 0.9950461387634277
+            "confidence": 0.9955655932426453
           }
         ],
         "truncated": false,
@@ -8664,7 +8846,7 @@
             "start": 24,
             "end": 31,
             "text": "evening",
-            "confidence": 0.9969787001609802
+            "confidence": 0.9960823059082031
           }
         ],
         "truncated": false,
@@ -8707,7 +8889,7 @@
             "start": 23,
             "end": 30,
             "text": "evening",
-            "confidence": 0.9988206028938293
+            "confidence": 0.9984856247901917
           }
         ],
         "truncated": false,
@@ -8750,7 +8932,7 @@
             "start": 24,
             "end": 29,
             "text": "night",
-            "confidence": 0.9895309209823608
+            "confidence": 0.9880314469337463
           }
         ],
         "truncated": false,
@@ -8793,7 +8975,7 @@
             "start": 23,
             "end": 28,
             "text": "night",
-            "confidence": 0.9918193817138672
+            "confidence": 0.9887881875038147
           }
         ],
         "truncated": false,
@@ -8836,7 +9018,7 @@
             "start": 24,
             "end": 29,
             "text": "night",
-            "confidence": 0.9486936330795288
+            "confidence": 0.9860782027244568
           }
         ],
         "truncated": false,
@@ -8879,7 +9061,7 @@
             "start": 23,
             "end": 28,
             "text": "night",
-            "confidence": 0.9918720126152039
+            "confidence": 0.9970788955688477
           }
         ],
         "truncated": false,
@@ -8922,7 +9104,7 @@
             "start": 11,
             "end": 26,
             "text": "from 1p.m. to 4",
-            "confidence": 0.991020679473877
+            "confidence": 0.9489877223968506
           }
         ],
         "truncated": false,
@@ -8965,7 +9147,7 @@
             "start": 20,
             "end": 27,
             "text": "morning",
-            "confidence": 0.9944665431976318
+            "confidence": 0.9962471127510071
           }
         ],
         "truncated": false,
@@ -9008,7 +9190,7 @@
             "start": 32,
             "end": 48,
             "text": "from 1:30am to 3",
-            "confidence": 0.9666528701782227
+            "confidence": 0.9902179837226868
           }
         ],
         "truncated": false,
@@ -9051,7 +9233,7 @@
             "start": 13,
             "end": 28,
             "text": "from 11 am to 3",
-            "confidence": 0.9831554293632507
+            "confidence": 0.9858859181404114
           }
         ],
         "truncated": false,
@@ -9094,7 +9276,7 @@
             "start": 13,
             "end": 28,
             "text": "from 11 pm to 3",
-            "confidence": 0.9759037494659424
+            "confidence": 0.9663481712341309
           }
         ],
         "truncated": false,
@@ -9137,7 +9319,7 @@
             "start": 13,
             "end": 32,
             "text": "from 11:01 am to 11",
-            "confidence": 0.9976832866668701
+            "confidence": 0.9984697103500366
           }
         ],
         "truncated": false,
@@ -9180,7 +9362,7 @@
             "start": 32,
             "end": 50,
             "text": "from 11am to 11:50",
-            "confidence": 0.9988921880722046
+            "confidence": 0.9960705041885376
           }
         ],
         "truncated": false,
@@ -9223,7 +9405,7 @@
             "start": 15,
             "end": 35,
             "text": "from 1:30 pm to 3:30",
-            "confidence": 0.9993988871574402
+            "confidence": 0.9989157319068909
           }
         ],
         "truncated": false,
@@ -9266,7 +9448,7 @@
             "start": 15,
             "end": 38,
             "text": "from 1:30 pm to 3:30 pm",
-            "confidence": 0.9993855357170105
+            "confidence": 0.998959481716156
           }
         ],
         "truncated": false,
@@ -9341,7 +9523,7 @@
             "start": 15,
             "end": 29,
             "text": "from 3 to 3:30",
-            "confidence": 0.761102557182312
+            "confidence": 0.9736270308494568
           }
         ],
         "truncated": false,
@@ -9399,7 +9581,7 @@
             "start": 15,
             "end": 29,
             "text": "from 1:30 to 3",
-            "confidence": 0.9935352206230164
+            "confidence": 0.9973307251930237
           }
         ],
         "truncated": false,
@@ -9457,7 +9639,7 @@
             "start": 32,
             "end": 48,
             "text": "from 1:30 to 3pm",
-            "confidence": 0.9986622929573059
+            "confidence": 0.9966006875038147
           }
         ],
         "truncated": false,
@@ -9500,7 +9682,7 @@
             "start": 32,
             "end": 46,
             "text": "from 11 to 3pm",
-            "confidence": 0.9518293738365173
+            "confidence": 0.9606539011001587
           }
         ],
         "truncated": false,
@@ -9543,7 +9725,7 @@
             "start": 32,
             "end": 50,
             "text": "from 11 to 11:50am",
-            "confidence": 0.9202675223350525
+            "confidence": 0.9512565732002258
           }
         ],
         "truncated": false,
@@ -9586,7 +9768,7 @@
             "start": 32,
             "end": 46,
             "text": "from 11 to 3am",
-            "confidence": 0.9580525159835815
+            "confidence": 0.9636016488075256
           }
         ],
         "truncated": false,
@@ -9629,7 +9811,7 @@
             "start": 32,
             "end": 47,
             "text": "from 10 to 11am",
-            "confidence": 0.9202017188072205
+            "confidence": 0.9766219258308411
           }
         ],
         "truncated": false,
@@ -9672,7 +9854,7 @@
             "start": 32,
             "end": 46,
             "text": "from 23 to 3am",
-            "confidence": 0.7880344986915588
+            "confidence": 0.604984700679779
           }
         ],
         "truncated": false,
@@ -9715,7 +9897,7 @@
             "start": 32,
             "end": 46,
             "text": "from 23 to 3pm",
-            "confidence": 0.7697930932044983
+            "confidence": 0.5810003280639648
           }
         ],
         "truncated": false,
@@ -9758,7 +9940,7 @@
             "start": 15,
             "end": 35,
             "text": "between 10 and 11:30",
-            "confidence": 0.9928702116012573
+            "confidence": 0.9974741339683533
           }
         ],
         "truncated": false,
@@ -9816,7 +9998,7 @@
             "start": 15,
             "end": 40,
             "text": "between 10:10am and 12:50",
-            "confidence": 0.9994151592254639
+            "confidence": 0.9994922876358032
           }
         ],
         "truncated": false,
@@ -9859,7 +10041,7 @@
             "start": 15,
             "end": 33,
             "text": "from 10:10pm to 10",
-            "confidence": 0.9935246109962463
+            "confidence": 0.9981727004051208
           }
         ],
         "truncated": false,
@@ -9902,7 +10084,7 @@
             "start": 15,
             "end": 33,
             "text": "from 10:30am to 23",
-            "confidence": 0.9840908050537109
+            "confidence": 0.9796838164329529
           }
         ],
         "truncated": false,
@@ -10046,7 +10228,7 @@
             "start": 13,
             "end": 16,
             "text": "now",
-            "confidence": 0.9998844861984253
+            "confidence": 0.9996498227119446
           }
         ],
         "truncated": false,
@@ -10109,7 +10291,7 @@
             "start": 22,
             "end": 26,
             "text": "8:00",
-            "confidence": 0.9998989701271057
+            "confidence": 0.9998419880867004
           }
         ],
         "truncated": false,
@@ -10157,7 +10339,7 @@
             "start": 22,
             "end": 29,
             "text": "8:00:20",
-            "confidence": 0.9975045323371887
+            "confidence": 0.9917688965797424
           }
         ],
         "truncated": false,
@@ -10213,7 +10395,7 @@
             "start": 16,
             "end": 23,
             "text": "15, 8pm",
-            "confidence": 0.9883471727371216
+            "confidence": 0.9846428632736206
           }
         ],
         "truncated": false,
@@ -10253,7 +10435,7 @@
             "start": 16,
             "end": 29,
             "text": "5th at 4 a.m.",
-            "confidence": 0.9939643740653992
+            "confidence": 0.9877768754959106
           }
         ],
         "truncated": false,
@@ -10293,7 +10475,7 @@
             "start": 13,
             "end": 31,
             "text": "04/21/2016, 8:00pm",
-            "confidence": 0.9943182468414307
+            "confidence": 0.9894541501998901
           }
         ],
         "truncated": false,
@@ -10333,7 +10515,7 @@
             "start": 13,
             "end": 34,
             "text": "04/21/2016, 8:00:20pm",
-            "confidence": 0.9492754340171814
+            "confidence": 0.8853729367256165
           }
         ],
         "truncated": false,
@@ -10373,7 +10555,7 @@
             "start": 13,
             "end": 30,
             "text": "October 14 8:00am",
-            "confidence": 0.9997575283050537
+            "confidence": 0.9996210336685181
           }
         ],
         "truncated": false,
@@ -10413,7 +10595,7 @@
             "start": 13,
             "end": 37,
             "text": "October 14 around 8:00am",
-            "confidence": 0.9996504783630371
+            "confidence": 0.9995840191841125
           }
         ],
         "truncated": false,
@@ -10453,7 +10635,7 @@
             "start": 13,
             "end": 37,
             "text": "October 14 for 8:00:31am",
-            "confidence": 0.9963561296463013
+            "confidence": 0.994549036026001
           }
         ],
         "truncated": false,
@@ -10493,7 +10675,7 @@
             "start": 13,
             "end": 31,
             "text": "October 14, 8:00am",
-            "confidence": 0.999449610710144
+            "confidence": 0.9993208646774292
           }
         ],
         "truncated": false,
@@ -10533,7 +10715,7 @@
             "start": 13,
             "end": 34,
             "text": "October 14, 8:00:25am",
-            "confidence": 0.9949856400489807
+            "confidence": 0.9918535947799683
           }
         ],
         "truncated": false,
@@ -10604,7 +10786,7 @@
             "start": 13,
             "end": 22,
             "text": "8pm today",
-            "confidence": 0.9993122220039368
+            "confidence": 0.9995808005332947
           }
         ],
         "truncated": false,
@@ -10623,21 +10805,38 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-08T07:00:00+00:00",
+          "allDay": false
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-08T07:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 26,
+            "end": 40,
+            "text": "seven tomorrow",
+            "confidence": 0.632022500038147
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unsupported token role NUM.",
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 26,
             "end": 31,
-            "severity": "error"
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -10675,7 +10874,7 @@
             "start": 13,
             "end": 30,
             "text": "19:00, 2016-12-22",
-            "confidence": 0.9982739686965942
+            "confidence": 0.9990164041519165
           }
         ],
         "truncated": false,
@@ -10715,7 +10914,7 @@
             "start": 13,
             "end": 28,
             "text": "tomorrow 8:00am",
-            "confidence": 0.9992873072624207
+            "confidence": 0.9997067451477051
           }
         ],
         "truncated": false,
@@ -10755,7 +10954,7 @@
             "start": 13,
             "end": 34,
             "text": "tomorrow morning at 7",
-            "confidence": 0.9989809989929199
+            "confidence": 0.9983771443367004
           }
         ],
         "truncated": false,
@@ -10795,7 +10994,7 @@
             "start": 13,
             "end": 29,
             "text": "tonight around 7",
-            "confidence": 0.9888734817504883
+            "confidence": 0.9958489537239075
           }
         ],
         "truncated": false,
@@ -10835,7 +11034,7 @@
             "start": 13,
             "end": 42,
             "text": "7:00 on next Sunday afternoon",
-            "confidence": 0.999454140663147
+            "confidence": 0.9987561106681824
           }
         ],
         "truncated": false,
@@ -10856,19 +11055,17 @@
       ],
       "actual": [
         {
-          "start": "2016-11-08T05:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T05:20:00+00:00"
+          "start": "2016-11-08T05:20:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-08T05:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T05:20:00+00:00"
+            "start": "2016-11-08T05:20:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -10877,7 +11074,7 @@
             "start": 13,
             "end": 54,
             "text": "twenty minutes past five tomorrow morning",
-            "confidence": 0.7251748442649841
+            "confidence": 0.6524646282196045
           }
         ],
         "truncated": false,
@@ -10917,7 +11114,7 @@
             "start": 13,
             "end": 28,
             "text": "7, this morning",
-            "confidence": 0.939903974533081
+            "confidence": 0.9293620586395264
           }
         ],
         "truncated": false,
@@ -10957,7 +11154,7 @@
             "start": 13,
             "end": 24,
             "text": "10, tonight",
-            "confidence": 0.9626665115356445
+            "confidence": 0.9789859056472778
           }
         ],
         "truncated": false,
@@ -10997,7 +11194,7 @@
             "start": 13,
             "end": 39,
             "text": "8pm in the evening, Sunday",
-            "confidence": 0.9951372742652893
+            "confidence": 0.9924601912498474
           }
         ],
         "truncated": false,
@@ -11024,21 +11221,38 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2017-01-01T20:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2017-01-01T20:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 40,
+            "text": "8pm in the evening, 1st Jan",
+            "confidence": 0.4852868616580963
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-time",
-            "message": "Clock components are out of range.",
-            "start": 13,
-            "end": 14,
-            "severity": "error"
+            "code": "filler-ignored",
+            "message": "Ignored in inside the expression.",
+            "start": 17,
+            "end": 19,
+            "severity": "warning"
           },
           {
             "code": "low-confidence",
@@ -11121,7 +11335,7 @@
             "start": 13,
             "end": 25,
             "text": "10pm tonight",
-            "confidence": 0.999024510383606
+            "confidence": 0.9994531273841858
           }
         ],
         "truncated": false,
@@ -11161,7 +11375,7 @@
             "start": 13,
             "end": 29,
             "text": "8am this morning",
-            "confidence": 0.9928913116455078
+            "confidence": 0.9954904317855835
           }
         ],
         "truncated": false,
@@ -11201,7 +11415,7 @@
             "start": 13,
             "end": 29,
             "text": "8pm this evening",
-            "confidence": 0.9984971284866333
+            "confidence": 0.9971053004264832
           }
         ],
         "truncated": false,
@@ -11241,7 +11455,7 @@
             "start": 24,
             "end": 30,
             "text": "sunday",
-            "confidence": 0.9995198845863342
+            "confidence": 0.9909713268280029
           }
         ],
         "truncated": false,
@@ -11281,7 +11495,7 @@
             "start": 13,
             "end": 23,
             "text": "in 5 hours",
-            "confidence": 0.9982239007949829
+            "confidence": 0.9944829344749451
           }
         ],
         "truncated": false,
@@ -11321,7 +11535,7 @@
             "start": 22,
             "end": 29,
             "text": "8:00:24",
-            "confidence": 0.9980335831642151
+            "confidence": 0.9932371973991394
           }
         ],
         "truncated": false,
@@ -11369,7 +11583,7 @@
             "start": 13,
             "end": 34,
             "text": "04/21/2016, 8:00:24pm",
-            "confidence": 0.9722779393196106
+            "confidence": 0.9598211050033569
           }
         ],
         "truncated": false,
@@ -11409,11 +11623,19 @@
             "start": 13,
             "end": 30,
             "text": "this morning at 7",
-            "confidence": 0.9993359446525574
+            "confidence": 0.9981309175491333
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "filler-ignored",
+            "message": "Ignored this inside the expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -11449,11 +11671,19 @@
             "start": 13,
             "end": 32,
             "text": "this morning at 7am",
-            "confidence": 0.9992687702178955
+            "confidence": 0.997826099395752
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "filler-ignored",
+            "message": "Ignored this inside the expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -11489,7 +11719,7 @@
             "start": 13,
             "end": 34,
             "text": "this morning at seven",
-            "confidence": 0.936530351638794
+            "confidence": 0.9768527746200562
           }
         ],
         "truncated": false,
@@ -11537,7 +11767,7 @@
             "start": 13,
             "end": 28,
             "text": "this night at 7",
-            "confidence": 0.9274519085884094
+            "confidence": 0.906352698802948
           }
         ],
         "truncated": false,
@@ -11577,7 +11807,7 @@
             "start": 13,
             "end": 25,
             "text": "tonight at 7",
-            "confidence": 0.9991596937179565
+            "confidence": 0.9990227222442627
           }
         ],
         "truncated": false,
@@ -11617,7 +11847,7 @@
             "start": 13,
             "end": 32,
             "text": "2016-12-16T12:23:59",
-            "confidence": 0.9561352133750916
+            "confidence": 0.8806753158569336
           }
         ],
         "truncated": false,
@@ -11696,7 +11926,7 @@
             "start": 0,
             "end": 19,
             "text": "16. Nov. 2016 10:38",
-            "confidence": 0.9967449307441711
+            "confidence": 0.9900205731391907
           }
         ],
         "truncated": false,
@@ -11744,7 +11974,7 @@
             "start": 13,
             "end": 32,
             "text": "1 day 2 hours later",
-            "confidence": 0.9639130234718323
+            "confidence": 0.8623631596565247
           }
         ],
         "truncated": false,
@@ -11784,7 +12014,7 @@
             "start": 7,
             "end": 41,
             "text": "1 month 2 days 2 hours 30 mins ago",
-            "confidence": 0.9542383551597595
+            "confidence": 0.916089653968811
           }
         ],
         "truncated": false,
@@ -11824,7 +12054,7 @@
             "start": 15,
             "end": 25,
             "text": "in an hour",
-            "confidence": 0.8893300890922546
+            "confidence": 0.8665553331375122
           }
         ],
         "truncated": false,
@@ -11913,7 +12143,15 @@
         "rrules": [],
         "spans": [],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"Bob and Alice usually exchange their encrypted messages at the eod.\".",
+            "start": 0,
+            "end": 67
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -11949,7 +12187,7 @@
             "start": 18,
             "end": 42,
             "text": "wed Oct 26 15:50:06 2016",
-            "confidence": 0.6550617814064026
+            "confidence": 0.6662431955337524
           }
         ],
         "truncated": false,
@@ -11989,11 +12227,19 @@
             "start": 16,
             "end": 28,
             "text": "8.30pm today",
-            "confidence": 0.8953757882118225
+            "confidence": 0.4794537425041199
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 16,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -12029,7 +12275,7 @@
             "start": 13,
             "end": 28,
             "text": "today at 8.30pm",
-            "confidence": 0.8915444612503052
+            "confidence": 0.9519331455230713
           }
         ],
         "truncated": false,
@@ -12048,30 +12294,32 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2018-12-26T20:30:00+00:00",
+          "allDay": false
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "invalid-time",
-            "message": "Clock components are out of range.",
-            "start": 15,
-            "end": 17,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 14,
-            "severity": "warning"
+            "start": "2018-12-26T20:30:00+00:00",
+            "allDay": false
           }
         ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 13,
+            "end": 25,
+            "text": "8.30pm today",
+            "confidence": 0.6854304075241089
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -12105,8 +12353,8 @@
           {
             "code": "low-confidence",
             "message": "The model is uncertain about this expression.",
-            "start": 13,
-            "end": 14,
+            "start": 15,
+            "end": 17,
             "severity": "warning"
           }
         ],
@@ -12218,6 +12466,13 @@
             "start": 31,
             "end": 35,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -12258,7 +12513,7 @@
             "start": 12,
             "end": 53,
             "text": "from Friday the 11th until Tuesday the 15",
-            "confidence": 0.9799655079841614
+            "confidence": 0.661748468875885
           }
         ],
         "truncated": false,
@@ -12372,7 +12627,7 @@
             "start": 12,
             "end": 38,
             "text": "from 4 to 22 January, 1995",
-            "confidence": 0.9212775230407715
+            "confidence": 0.5059891939163208
           }
         ],
         "truncated": false,
@@ -12415,19 +12670,11 @@
             "start": 12,
             "end": 38,
             "text": "between 4-22 January, 1995",
-            "confidence": 0.281719833612442
+            "confidence": 0.653581440448761
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 19,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -12466,7 +12713,7 @@
             "start": 12,
             "end": 53,
             "text": "between september 4th through september 8",
-            "confidence": 0.9613194465637207
+            "confidence": 0.7676819562911987
           }
         ],
         "truncated": false,
@@ -12509,7 +12756,7 @@
             "start": 15,
             "end": 24,
             "text": "this week",
-            "confidence": 0.9923326969146729
+            "confidence": 0.9736332893371582
           }
         ],
         "truncated": false,
@@ -12552,7 +12799,7 @@
             "start": 19,
             "end": 30,
             "text": "coming week",
-            "confidence": 0.8390701413154602
+            "confidence": 0.8671920299530029
           }
         ],
         "truncated": false,
@@ -12574,7 +12821,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -12582,11 +12829,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out on current week\".",
-            "start": 0,
-            "end": 27
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 23,
+            "end": 27,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -12625,7 +12872,7 @@
             "start": 12,
             "end": 20,
             "text": "February",
-            "confidence": 0.9832334518432617
+            "confidence": 0.9986771941184998
           }
         ],
         "truncated": false,
@@ -12668,7 +12915,7 @@
             "start": 12,
             "end": 26,
             "text": "this September",
-            "confidence": 0.9952354431152344
+            "confidence": 0.984048068523407
           }
         ],
         "truncated": false,
@@ -12711,7 +12958,7 @@
             "start": 12,
             "end": 21,
             "text": "last sept",
-            "confidence": 0.9978160858154297
+            "confidence": 0.9961963295936584
           }
         ],
         "truncated": false,
@@ -12754,7 +13001,7 @@
             "start": 12,
             "end": 21,
             "text": "next june",
-            "confidence": 0.9998329877853394
+            "confidence": 0.9997230768203735
           }
         ],
         "truncated": false,
@@ -12840,7 +13087,7 @@
       ],
       "actual": [
         {
-          "start": "2015-11-03T00:00:00+00:00",
+          "start": "2015-11-01T00:00:00+00:00",
           "allDay": true
         }
       ],
@@ -12849,7 +13096,7 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2015-11-03T00:00:00+00:00",
+            "start": "2015-11-01T00:00:00+00:00",
             "allDay": true
           }
         ],
@@ -12857,21 +13104,13 @@
         "spans": [
           {
             "start": 12,
-            "end": 18,
-            "text": "2015.3",
-            "confidence": 0.26403582096099854
+            "end": 16,
+            "text": "2015",
+            "confidence": 0.9965932369232178
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 16,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -12908,7 +13147,7 @@
             "start": 12,
             "end": 18,
             "text": "2015/3",
-            "confidence": 0.9779749512672424
+            "confidence": 0.991592526435852
           }
         ],
         "truncated": false,
@@ -12949,7 +13188,7 @@
             "start": 12,
             "end": 18,
             "text": "3/2015",
-            "confidence": 0.99940425157547
+            "confidence": 0.9728468656539917
           }
         ],
         "truncated": false,
@@ -13021,14 +13260,22 @@
         "rrules": [],
         "spans": [
           {
-            "start": 5,
+            "start": 0,
             "end": 13,
-            "text": "few days",
-            "confidence": 0.9944148063659668
+            "text": "past few days",
+            "confidence": 0.021665649488568306
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 0,
+            "end": 4,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -13067,7 +13314,7 @@
             "start": 34,
             "end": 43,
             "text": "this week",
-            "confidence": 0.998841404914856
+            "confidence": 0.9986720085144043
           }
         ],
         "truncated": false,
@@ -13089,7 +13336,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -13097,11 +13344,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"my week\".",
-            "start": 0,
-            "end": 7
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 3,
+            "end": 7,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -13119,23 +13366,40 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-12T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2016-11-13T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "no-result",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"the weekend\".",
-            "start": 0,
-            "end": 11
+            "start": "2016-11-12T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2016-11-13T00:00:00+00:00",
+            "allDay": true
           }
         ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 4,
+            "end": 11,
+            "text": "weekend",
+            "confidence": 0.9755616188049316
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -13180,7 +13444,7 @@
             "start": 0,
             "end": 12,
             "text": "this weekend",
-            "confidence": 0.9996126294136047
+            "confidence": 0.9990095496177673
           }
         ],
         "truncated": false,
@@ -13229,7 +13493,7 @@
             "start": 3,
             "end": 10,
             "text": "weekend",
-            "confidence": 0.9992469549179077
+            "confidence": 0.9997411370277405
           }
         ],
         "truncated": false,
@@ -13272,7 +13536,7 @@
             "start": 12,
             "end": 32,
             "text": "Oct. 2 to October 22",
-            "confidence": 0.9953145384788513
+            "confidence": 0.9916478395462036
           }
         ],
         "truncated": false,
@@ -13315,7 +13579,7 @@
             "start": 12,
             "end": 41,
             "text": "January 12, 2016 - 01/22/2016",
-            "confidence": 0.9963780045509338
+            "confidence": 0.8699345588684082
           }
         ],
         "truncated": false,
@@ -13335,34 +13599,23 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-01-01T00:00:00+00:00",
-          "allDay": true,
-          "end": "2016-01-23T00:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-01-01T00:00:00+00:00",
-            "allDay": true,
-            "end": "2016-01-23T00:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
-            "start": 12,
-            "end": 40,
-            "text": "1st Jan until Wed, 22 of Jan",
-            "confidence": 0.951038122177124
+            "code": "invalid-date",
+            "message": "Multiple dates need a range or recurrence.",
+            "start": 31,
+            "end": 33,
+            "severity": "error"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -13378,21 +13631,38 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-08T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-08T00:00:00+00:00",
+            "allDay": true
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 31,
+            "text": "today till tomorrow",
+            "confidence": 0.9999426603317261
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unknown relative day.",
-            "start": 12,
-            "end": 17,
-            "severity": "error"
+            "code": "filler-ignored",
+            "message": "Ignored till inside the expression.",
+            "start": 18,
+            "end": 22,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -13433,7 +13703,7 @@
             "start": 12,
             "end": 37,
             "text": "from Oct. 2 to October 22",
-            "confidence": 0.9991122484207153
+            "confidence": 0.9990098476409912
           }
         ],
         "truncated": false,
@@ -13453,21 +13723,40 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-10-02T00:00:00+00:00",
+          "allDay": true,
+          "end": "2016-10-23T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-10-02T00:00:00+00:00",
+            "allDay": true,
+            "end": "2016-10-23T00:00:00+00:00"
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 20,
+            "end": 41,
+            "text": "Oct. 2 and October 22",
+            "confidence": 0.31400540471076965
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-date",
-            "message": "A calendar date has more than one month.",
-            "start": 31,
-            "end": 38,
-            "severity": "error"
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 20,
+            "end": 23,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -13508,7 +13797,7 @@
             "start": 12,
             "end": 29,
             "text": "November 19 to 20",
-            "confidence": 0.9996485710144043
+            "confidence": 0.9997485876083374
           }
         ],
         "truncated": false,
@@ -13551,7 +13840,7 @@
             "start": 12,
             "end": 38,
             "text": "November between 19 and 20",
-            "confidence": 0.963803231716156
+            "confidence": 0.9899107217788696
           }
         ],
         "truncated": false,
@@ -13563,6 +13852,55 @@
       "id": "DatePeriodParser-46",
       "family": "DatePeriodParser",
       "text": "I'll be out rest of week",
+      "reference": "2016-11-07T00:00:00Z",
+      "expected": [
+        {
+          "start": "2016-11-07T00:00:00Z",
+          "end": "2016-11-13T00:00:00Z",
+          "precision": "date"
+        }
+      ],
+      "actual": [
+        {
+          "start": "2016-11-13T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "correct": false,
+      "stage": "value-mismatch",
+      "parsed": {
+        "occurrences": [
+          {
+            "start": "2016-11-13T00:00:00+00:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 24,
+            "text": "rest of week",
+            "confidence": 0.20283998548984528
+          }
+        ],
+        "truncated": false,
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
+        "backend": "cpu"
+      }
+    },
+    {
+      "id": "DatePeriodParser-47",
+      "family": "DatePeriodParser",
+      "text": "I'll be out rest the week",
       "reference": "2016-11-07T00:00:00Z",
       "expected": [
         {
@@ -13583,41 +13921,9 @@
           {
             "code": "unsupported",
             "message": "A standalone unit needs a modifier or a quantity.",
-            "start": 20,
-            "end": 24,
+            "start": 21,
+            "end": 25,
             "severity": "error"
-          }
-        ],
-        "backend": "cpu"
-      }
-    },
-    {
-      "id": "DatePeriodParser-47",
-      "family": "DatePeriodParser",
-      "text": "I'll be out rest the week",
-      "reference": "2016-11-07T00:00:00Z",
-      "expected": [
-        {
-          "start": "2016-11-07T00:00:00Z",
-          "end": "2016-11-13T00:00:00Z",
-          "precision": "date"
-        }
-      ],
-      "actual": [],
-      "correct": false,
-      "stage": "no-result",
-      "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
-          {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out rest the week\".",
-            "start": 0,
-            "end": 25
           }
         ],
         "backend": "cpu"
@@ -13637,7 +13943,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -13645,11 +13951,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out rest of my week\".",
-            "start": 0,
-            "end": 27
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 23,
+            "end": 27,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -13669,7 +13975,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -13677,11 +13983,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out rest of current week\".",
-            "start": 0,
-            "end": 32
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 28,
+            "end": 32,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -13765,7 +14071,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -13773,11 +14079,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out rest of my week\".",
-            "start": 0,
-            "end": 27
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 23,
+            "end": 27,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -13824,7 +14130,7 @@
             "start": 15,
             "end": 27,
             "text": "this weekend",
-            "confidence": 0.9997012615203857
+            "confidence": 0.9996432065963745
           }
         ],
         "truncated": false,
@@ -13867,7 +14173,7 @@
             "start": 17,
             "end": 26,
             "text": "next year",
-            "confidence": 0.9965814352035522
+            "confidence": 0.9888715744018555
           }
         ],
         "truncated": false,
@@ -13910,7 +14216,7 @@
             "start": 12,
             "end": 21,
             "text": "next year",
-            "confidence": 0.9988066554069519
+            "confidence": 0.9931635856628418
           }
         ],
         "truncated": false,
@@ -14017,7 +14323,7 @@
             "start": 17,
             "end": 24,
             "text": "3 weeks",
-            "confidence": 0.998579740524292
+            "confidence": 0.9988940954208374
           }
         ],
         "truncated": false,
@@ -14092,7 +14398,7 @@
             "start": 4,
             "end": 21,
             "text": "first week of Oct",
-            "confidence": 0.9550107717514038
+            "confidence": 0.937591552734375
           }
         ],
         "truncated": false,
@@ -14127,6 +14433,13 @@
             "start": 16,
             "end": 21,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 16,
+            "end": 21,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -14154,8 +14467,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-ordinal",
-            "message": "An ordinal needs one weekday.",
+            "code": "invalid-date",
+            "message": "Conflicting date specifications need separate clauses.",
             "start": 16,
             "end": 21,
             "severity": "error"
@@ -14197,7 +14510,7 @@
             "start": 33,
             "end": 37,
             "text": "2016",
-            "confidence": 0.9999783039093018
+            "confidence": 0.999928891658783
           }
         ],
         "truncated": false,
@@ -14240,7 +14553,7 @@
             "start": 30,
             "end": 39,
             "text": "this year",
-            "confidence": 0.960561215877533
+            "confidence": 0.9150727391242981
           }
         ],
         "truncated": false,
@@ -14313,7 +14626,7 @@
             "start": 18,
             "end": 19,
             "text": "3",
-            "confidence": 0.9954659938812256
+            "confidence": 0.9874444603919983
           }
         ],
         "truncated": false,
@@ -14362,7 +14675,7 @@
             "start": 21,
             "end": 22,
             "text": "3",
-            "confidence": 0.9546089172363281
+            "confidence": 0.9272608160972595
           }
         ],
         "truncated": false,
@@ -14411,7 +14724,7 @@
             "start": 21,
             "end": 22,
             "text": "2",
-            "confidence": 0.9758174419403076
+            "confidence": 0.9648324251174927
           }
         ],
         "truncated": false,
@@ -14460,7 +14773,7 @@
             "start": 20,
             "end": 26,
             "text": "4 2016",
-            "confidence": 0.9940673112869263
+            "confidence": 0.9093697667121887
           }
         ],
         "truncated": false,
@@ -14501,7 +14814,7 @@
             "start": 19,
             "end": 26,
             "text": "2016 H2",
-            "confidence": 0.9720524549484253
+            "confidence": 0.9839927554130554
           }
         ],
         "truncated": false,
@@ -14591,7 +14904,7 @@
             "start": 0,
             "end": 10,
             "text": "next month",
-            "confidence": 0.9925504922866821
+            "confidence": 0.9827593564987183
           }
         ],
         "truncated": false,
@@ -14634,7 +14947,7 @@
             "start": 35,
             "end": 45,
             "text": "this month",
-            "confidence": 0.955005407333374
+            "confidence": 0.9707034230232239
           }
         ],
         "truncated": false,
@@ -14677,7 +14990,7 @@
             "start": 35,
             "end": 44,
             "text": "this week",
-            "confidence": 0.9968337416648865
+            "confidence": 0.9946098923683167
           }
         ],
         "truncated": false,
@@ -14720,7 +15033,7 @@
             "start": 36,
             "end": 45,
             "text": "next year",
-            "confidence": 0.9908082485198975
+            "confidence": 0.9551329016685486
           }
         ],
         "truncated": false,
@@ -14763,7 +15076,7 @@
             "start": 36,
             "end": 45,
             "text": "next week",
-            "confidence": 0.9994686841964722
+            "confidence": 0.9987930059432983
           }
         ],
         "truncated": false,
@@ -14806,7 +15119,7 @@
             "start": 36,
             "end": 46,
             "text": "next month",
-            "confidence": 0.9615390300750732
+            "confidence": 0.9280399680137634
           }
         ],
         "truncated": false,
@@ -14849,7 +15162,7 @@
             "start": 22,
             "end": 31,
             "text": "last year",
-            "confidence": 0.998979926109314
+            "confidence": 0.9978759288787842
           }
         ],
         "truncated": false,
@@ -14892,7 +15205,7 @@
             "start": 22,
             "end": 32,
             "text": "last month",
-            "confidence": 0.9988349080085754
+            "confidence": 0.9979363679885864
           }
         ],
         "truncated": false,
@@ -14927,6 +15240,13 @@
             "start": 71,
             "end": 78,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 61,
+            "end": 65,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -14944,22 +15264,122 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2017-11-14T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-15T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-16T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-21T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-22T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-23T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-28T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-29T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-11-30T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-12-05T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-12-06T00:00:00+00:00",
+          "allDay": true
+        },
+        {
+          "start": "2017-12-07T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
-        "rrules": [],
-        "spans": [],
-        "truncated": false,
-        "diagnostics": [
+        "occurrences": [
           {
-            "code": "open-bound-needs-time",
-            "message": "An open bound needs a clock time, as in \"after 6pm\".",
-            "start": 71,
-            "end": 75,
-            "severity": "error"
+            "start": "2017-11-14T00:00:00+00:00",
+            "allDay": true
           },
+          {
+            "start": "2017-11-15T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-16T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-21T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-22T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-23T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-28T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-29T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-11-30T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-12-05T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-12-06T00:00:00+00:00",
+            "allDay": true
+          },
+          {
+            "start": "2017-12-07T00:00:00+00:00",
+            "allDay": true
+          }
+        ],
+        "rrules": [
+          "DTSTART;VALUE=DATE:20171114\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TU,WE,TH"
+        ],
+        "spans": [
+          {
+            "start": 61,
+            "end": 87,
+            "text": "this week from Tue to Thur",
+            "confidence": 0.13695715367794037
+          }
+        ],
+        "truncated": true,
+        "diagnostics": [
           {
             "code": "low-confidence",
             "message": "The model is uncertain about this expression.",
@@ -15006,7 +15426,7 @@
             "start": 17,
             "end": 26,
             "text": "this week",
-            "confidence": 0.998465359210968
+            "confidence": 0.9962705969810486
           }
         ],
         "truncated": false,
@@ -15036,8 +15456,8 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-ordinal",
-            "message": "An ordinal needs one weekday.",
+            "code": "invalid-date",
+            "message": "Conflicting date specifications need separate clauses.",
             "start": 17,
             "end": 22,
             "severity": "error"
@@ -15151,7 +15571,7 @@
             "start": 0,
             "end": 12,
             "text": "this weekend",
-            "confidence": 0.9996126294136047
+            "confidence": 0.9990095496177673
           }
         ],
         "truncated": false,
@@ -15464,7 +15884,7 @@
             "start": 7,
             "end": 13,
             "text": "twenty",
-            "confidence": 0.9991526007652283
+            "confidence": 0.9985491037368774
           }
         ],
         "truncated": false,
@@ -15547,6 +15967,13 @@
             "start": 29,
             "end": 32,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -15579,6 +16006,13 @@
             "start": 32,
             "end": 35,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 19,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -15649,7 +16083,7 @@
             "start": 15,
             "end": 19,
             "text": "June",
-            "confidence": 0.9997298121452332
+            "confidence": 0.9994301795959473
           }
         ],
         "truncated": false,
@@ -15701,15 +16135,40 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-07T09:00:00+00:00",
+          "allDay": false
+        }
+      ],
       "correct": false,
-      "stage": "no-result",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-07T09:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 41,
+            "end": 45,
+            "text": "nine",
+            "confidence": 0.9599106907844543
+          }
+        ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 41,
+            "end": 45,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -15792,10 +16251,17 @@
         "diagnostics": [
           {
             "code": "unsupported",
-            "message": "The expression has no date or time.",
-            "start": 27,
-            "end": 31,
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 16,
+            "end": 20,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 16,
+            "end": 20,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -15847,7 +16313,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -15855,11 +16321,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out the weekend after the next\".",
-            "start": 0,
-            "end": 38
+            "code": "unsupported",
+            "message": "The expression has no date or time.",
+            "start": 34,
+            "end": 38,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -15898,11 +16364,19 @@
             "start": 13,
             "end": 22,
             "text": "2014-2018",
-            "confidence": 0.5171186923980713
+            "confidence": 0.47933539748191833
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 13,
+            "end": 17,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -15939,7 +16413,7 @@
             "start": 21,
             "end": 30,
             "text": "2014-2018",
-            "confidence": 0.9846522808074951
+            "confidence": 0.9498938322067261
           }
         ],
         "truncated": false,
@@ -15980,7 +16454,7 @@
             "start": 18,
             "end": 30,
             "text": "2014 to 2018",
-            "confidence": 0.9617783427238464
+            "confidence": 0.8236473202705383
           }
         ],
         "truncated": false,
@@ -16173,7 +16647,7 @@
             "start": 15,
             "end": 27,
             "text": "2 days hence",
-            "confidence": 0.5617771744728088
+            "confidence": 0.8024003505706787
           }
         ],
         "truncated": false,
@@ -16214,7 +16688,7 @@
             "start": 27,
             "end": 49,
             "text": "beginning of next week",
-            "confidence": 0.8925854563713074
+            "confidence": 0.8433565497398376
           }
         ],
         "truncated": false,
@@ -16255,7 +16729,7 @@
             "start": 24,
             "end": 40,
             "text": "end of next week",
-            "confidence": 0.9358484148979187
+            "confidence": 0.8463430404663086
           }
         ],
         "truncated": false,
@@ -16296,7 +16770,7 @@
             "start": 24,
             "end": 42,
             "text": "start of next week",
-            "confidence": 0.9873837232589722
+            "confidence": 0.9932780265808105
           }
         ],
         "truncated": false,
@@ -16318,7 +16792,7 @@
       ],
       "actual": [
         {
-          "start": "2018-03-01T00:00:00+00:00",
+          "start": "2017-03-31T00:00:00+00:00",
           "allDay": true
         }
       ],
@@ -16327,7 +16801,7 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-03-01T00:00:00+00:00",
+            "start": "2017-03-31T00:00:00+00:00",
             "allDay": true
           }
         ],
@@ -16337,7 +16811,7 @@
             "start": 24,
             "end": 36,
             "text": "end of March",
-            "confidence": 0.21749600768089294
+            "confidence": 0.31709015369415283
           }
         ],
         "truncated": false,
@@ -16388,7 +16862,7 @@
             "start": 35,
             "end": 44,
             "text": "next week",
-            "confidence": 0.9996910691261292
+            "confidence": 0.9989772439002991
           }
         ],
         "truncated": false,
@@ -16429,7 +16903,7 @@
             "start": 21,
             "end": 43,
             "text": "beginning of next week",
-            "confidence": 0.9147504568099976
+            "confidence": 0.8788133263587952
           }
         ],
         "truncated": false,
@@ -16472,7 +16946,7 @@
             "start": 15,
             "end": 28,
             "text": "within 5 days",
-            "confidence": 0.9822898507118225
+            "confidence": 0.9779221415519714
           }
         ],
         "truncated": false,
@@ -16515,7 +16989,7 @@
             "start": 15,
             "end": 31,
             "text": "within 10 months",
-            "confidence": 0.9930447936058044
+            "confidence": 0.9875224232673645
           }
         ],
         "truncated": false,
@@ -16558,7 +17032,7 @@
             "start": 15,
             "end": 29,
             "text": "within 3 years",
-            "confidence": 0.9857361316680908
+            "confidence": 0.9723066687583923
           }
         ],
         "truncated": false,
@@ -16601,7 +17075,7 @@
             "start": 15,
             "end": 45,
             "text": "within 5 years 1 month 12 days",
-            "confidence": 0.9638931751251221
+            "confidence": 0.9081631302833557
           }
         ],
         "truncated": false,
@@ -16644,7 +17118,7 @@
             "start": 15,
             "end": 38,
             "text": "within the next 3 years",
-            "confidence": 0.9710517525672913
+            "confidence": 0.9797407984733582
           }
         ],
         "truncated": false,
@@ -16687,7 +17161,7 @@
             "start": 35,
             "end": 58,
             "text": "5 years 1 month 12 days",
-            "confidence": 0.8723295331001282
+            "confidence": 0.8760285973548889
           }
         ],
         "truncated": false,
@@ -16730,7 +17204,7 @@
             "start": 12,
             "end": 38,
             "text": "from 4 to January 22, 1995",
-            "confidence": 0.941504716873169
+            "confidence": 0.9057339429855347
           }
         ],
         "truncated": false,
@@ -16771,7 +17245,7 @@
             "start": 14,
             "end": 33,
             "text": "from 02 to April 07",
-            "confidence": 0.9928802847862244
+            "confidence": 0.9759174585342407
           }
         ],
         "truncated": false,
@@ -16820,7 +17294,7 @@
             "start": 12,
             "end": 21,
             "text": "2016 june",
-            "confidence": 0.988518476486206
+            "confidence": 0.9664574861526489
           }
         ],
         "truncated": false,
@@ -16861,7 +17335,7 @@
             "start": 18,
             "end": 21,
             "text": "nov",
-            "confidence": 0.9999017119407654
+            "confidence": 0.9998596906661987
           }
         ],
         "truncated": false,
@@ -16902,7 +17376,7 @@
             "start": 19,
             "end": 22,
             "text": "nov",
-            "confidence": 0.999854564666748
+            "confidence": 0.9997944235801697
           }
         ],
         "truncated": false,
@@ -16943,7 +17417,7 @@
             "start": 12,
             "end": 27,
             "text": "November , 2016",
-            "confidence": 0.9998123049736023
+            "confidence": 0.9996413588523865
           }
         ],
         "truncated": false,
@@ -16984,7 +17458,7 @@
             "start": 12,
             "end": 25,
             "text": "2016 November",
-            "confidence": 0.9982776045799255
+            "confidence": 0.9960623979568481
           }
         ],
         "truncated": false,
@@ -17004,27 +17478,37 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-11-01T11:00:00+00:00",
+          "allDay": false
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-01T11:00:00+00:00",
+            "allDay": false
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 21,
+            "text": "2016 - 11",
+            "confidence": 0.8267971873283386
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-date",
-            "message": "Both ends of a calendar range need a day.",
-            "start": 12,
-            "end": 16,
-            "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 16,
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 19,
+            "end": 21,
             "severity": "warning"
           }
         ],
@@ -17045,8 +17529,8 @@
       ],
       "actual": [
         {
-          "start": "2016-11-11T00:00:00+00:00",
-          "allDay": true
+          "start": "2016-11-01T11:00:00+00:00",
+          "allDay": false
         }
       ],
       "correct": false,
@@ -17054,21 +17538,36 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-11T00:00:00+00:00",
-            "allDay": true
+            "start": "2016-11-01T11:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 18,
+            "start": 12,
             "end": 20,
-            "text": "11",
-            "confidence": 0.7179920077323914
+            "text": "2016 -11",
+            "confidence": 0.41997671127319336
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 18,
+            "end": 20,
+            "severity": "warning"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -17105,7 +17604,7 @@
             "start": 12,
             "end": 19,
             "text": "2016/11",
-            "confidence": 0.9967972040176392
+            "confidence": 0.9961643815040588
           }
         ],
         "truncated": false,
@@ -17127,8 +17626,8 @@
       ],
       "actual": [
         {
-          "start": "2016-11-11T00:00:00+00:00",
-          "allDay": true
+          "start": "2016-11-01T11:00:00+00:00",
+          "allDay": false
         }
       ],
       "correct": false,
@@ -17136,8 +17635,8 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-11T00:00:00+00:00",
-            "allDay": true
+            "start": "2016-11-01T11:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -17146,11 +17645,19 @@
             "start": 12,
             "end": 21,
             "text": "2016 / 11",
-            "confidence": 0.5455663204193115
+            "confidence": 0.5470278859138489
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 19,
+            "end": 21,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -17168,8 +17675,8 @@
       ],
       "actual": [
         {
-          "start": "2016-11-11T00:00:00+00:00",
-          "allDay": true
+          "start": "2016-11-01T11:00:00+00:00",
+          "allDay": false
         }
       ],
       "correct": false,
@@ -17177,8 +17684,8 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-11T00:00:00+00:00",
-            "allDay": true
+            "start": "2016-11-01T11:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -17187,11 +17694,26 @@
             "start": 12,
             "end": 20,
             "text": "2016 /11",
-            "confidence": 0.8304281234741211
+            "confidence": 0.40869566798210144
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 18,
+            "end": 20,
+            "severity": "warning"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -17228,7 +17750,7 @@
             "start": 17,
             "end": 21,
             "text": "2016",
-            "confidence": 0.9999681115150452
+            "confidence": 0.9998770952224731
           }
         ],
         "truncated": false,
@@ -17250,7 +17772,7 @@
       ],
       "actual": [
         {
-          "start": "2016-11-11T00:00:00+00:00",
+          "start": "2016-11-01T00:00:00+00:00",
           "allDay": true
         }
       ],
@@ -17259,17 +17781,17 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2016-11-11T00:00:00+00:00",
+            "start": "2016-11-01T00:00:00+00:00",
             "allDay": true
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 12,
+            "start": 16,
             "end": 20,
-            "text": "11 -2016",
-            "confidence": 0.917967677116394
+            "text": "2016",
+            "confidence": 0.999908447265625
           }
         ],
         "truncated": false,
@@ -17310,7 +17832,7 @@
             "start": 12,
             "end": 19,
             "text": "11/2016",
-            "confidence": 0.998418927192688
+            "confidence": 0.9808551073074341
           }
         ],
         "truncated": false,
@@ -17351,7 +17873,7 @@
             "start": 12,
             "end": 21,
             "text": "11 / 2016",
-            "confidence": 0.9945403337478638
+            "confidence": 0.9816470146179199
           }
         ],
         "truncated": false,
@@ -17371,21 +17893,40 @@
           "precision": "date"
         }
       ],
-      "actual": [],
+      "actual": [
+        {
+          "start": "2016-01-01T00:00:00+00:00",
+          "allDay": true,
+          "end": "2016-04-06T00:00:00+00:00"
+        }
+      ],
       "correct": false,
-      "stage": "interpretation-failed",
+      "stage": "value-mismatch",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-01-01T00:00:00+00:00",
+            "allDay": true,
+            "end": "2016-04-06T00:00:00+00:00"
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 43,
+            "text": "between January 1st and April 5",
+            "confidence": 0.08578191697597504
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "invalid-date",
-            "message": "A calendar date has more than one month.",
-            "start": 36,
-            "end": 41,
-            "severity": "error"
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 19,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -17456,7 +17997,7 @@
             "start": 20,
             "end": 37,
             "text": "2015 and Feb 2018",
-            "confidence": 0.9989769458770752
+            "confidence": 0.9954124093055725
           }
         ],
         "truncated": false,
@@ -17547,32 +18088,30 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2018-05-01T00:00:00+00:00",
-          "allDay": true
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2018-05-01T00:00:00+00:00",
-            "allDay": true
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
+            "code": "invalid-date",
+            "message": "Year is out of range.",
+            "start": 25,
+            "end": 28,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
             "start": 20,
-            "end": 37,
-            "text": "2015 May and 2018",
-            "confidence": 0.6617872714996338
+            "end": 24,
+            "severity": "warning"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -17609,7 +18148,7 @@
             "start": 20,
             "end": 37,
             "text": "May 2015 and 2018",
-            "confidence": 0.9998161196708679
+            "confidence": 0.9989732503890991
           }
         ],
         "truncated": false,
@@ -17682,7 +18221,7 @@
             "start": 20,
             "end": 45,
             "text": "2015 and January 5th 2018",
-            "confidence": 0.9920694828033447
+            "confidence": 0.9827470183372498
           }
         ],
         "truncated": false,
@@ -17775,7 +18314,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -17783,11 +18322,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"I'll be out between Week 31 and Week 35\".",
-            "start": 0,
-            "end": 39
+            "code": "invalid-time",
+            "message": "Clock components are out of range.",
+            "start": 37,
+            "end": 39,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -17820,13 +18359,6 @@
             "start": 37,
             "end": 41,
             "severity": "error"
-          },
-          {
-            "code": "filler-ignored",
-            "message": "Ignored to two inside the expression.",
-            "start": 26,
-            "end": 32,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -17937,7 +18469,7 @@
             "start": 21,
             "end": 28,
             "text": "weekend",
-            "confidence": 0.9994972348213196
+            "confidence": 0.9990694522857666
           }
         ],
         "truncated": false,
@@ -18044,7 +18576,7 @@
             "start": 47,
             "end": 57,
             "text": "this month",
-            "confidence": 0.869204044342041
+            "confidence": 0.8922246098518372
           }
         ],
         "truncated": false,
@@ -18087,7 +18619,7 @@
             "start": 47,
             "end": 56,
             "text": "this year",
-            "confidence": 0.9725685119628906
+            "confidence": 0.9176223874092102
           }
         ],
         "truncated": false,
@@ -18130,7 +18662,7 @@
             "start": 36,
             "end": 45,
             "text": "this week",
-            "confidence": 0.9789677858352661
+            "confidence": 0.9727158546447754
           }
         ],
         "truncated": false,
@@ -18173,7 +18705,7 @@
             "start": 36,
             "end": 46,
             "text": "this month",
-            "confidence": 0.9349850416183472
+            "confidence": 0.9613026976585388
           }
         ],
         "truncated": false,
@@ -18216,7 +18748,7 @@
             "start": 36,
             "end": 45,
             "text": "this year",
-            "confidence": 0.97540682554245
+            "confidence": 0.9756619334220886
           }
         ],
         "truncated": false,
@@ -18288,7 +18820,7 @@
             "start": 31,
             "end": 50,
             "text": "2 weeks after today",
-            "confidence": 0.9790789484977722
+            "confidence": 0.9702529907226562
           }
         ],
         "truncated": false,
@@ -18329,7 +18861,7 @@
             "start": 27,
             "end": 45,
             "text": "2 weeks from today",
-            "confidence": 0.8403027057647705
+            "confidence": 0.8338851928710938
           }
         ],
         "truncated": false,
@@ -18372,7 +18904,7 @@
             "start": 17,
             "end": 42,
             "text": "within 2 weeks from today",
-            "confidence": 0.6008110046386719
+            "confidence": 0.5708352327346802
           }
         ],
         "truncated": false,
@@ -18415,7 +18947,7 @@
             "start": 12,
             "end": 33,
             "text": "1 week, from 20th dec",
-            "confidence": 0.9826003313064575
+            "confidence": 0.9875968098640442
           }
         ],
         "truncated": false,
@@ -18458,7 +18990,7 @@
             "start": 8,
             "end": 30,
             "text": "for 3 days, from today",
-            "confidence": 0.6941115856170654
+            "confidence": 0.9421815276145935
           }
         ],
         "truncated": false,
@@ -18480,30 +19012,40 @@
       ],
       "actual": [
         {
-          "start": "2018-05-26T00:00:00+00:00",
-          "allDay": true
+          "start": "2018-05-23T00:00:00+00:00",
+          "allDay": true,
+          "end": "2018-05-26T00:00:00+00:00"
         }
       ],
-      "correct": false,
-      "stage": "value-mismatch",
+      "correct": true,
+      "stage": "correct",
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-05-26T00:00:00+00:00",
-            "allDay": true
+            "start": "2018-05-23T00:00:00+00:00",
+            "allDay": true,
+            "end": "2018-05-26T00:00:00+00:00"
           }
         ],
         "rrules": [],
         "spans": [
           {
-            "start": 12,
+            "start": 8,
             "end": 29,
-            "text": "3 days from today",
-            "confidence": 0.5891698002815247
+            "text": "for 3 days from today",
+            "confidence": 0.16781584918498993
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 8,
+            "end": 11,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -18540,7 +19082,7 @@
             "start": 33,
             "end": 54,
             "text": "3 days after tomorrow",
-            "confidence": 0.9395027756690979
+            "confidence": 0.9582552909851074
           }
         ],
         "truncated": false,
@@ -18560,32 +19102,23 @@
           "precision": "date"
         }
       ],
-      "actual": [
-        {
-          "start": "2018-06-15T00:00:00+00:00",
-          "allDay": true
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2018-06-15T00:00:00+00:00",
-            "allDay": true
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
-            "start": 14,
-            "end": 16,
-            "text": "15",
-            "confidence": 0.98086017370224
+            "code": "open-bound-needs-time",
+            "message": "An open bound needs a clock time, as in \"after 6pm\".",
+            "start": 11,
+            "end": 13,
+            "severity": "error"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -18656,7 +19189,7 @@
             "start": 43,
             "end": 52,
             "text": "this week",
-            "confidence": 0.9987421631813049
+            "confidence": 0.9980801343917847
           }
         ],
         "truncated": false,
@@ -18699,7 +19232,7 @@
             "start": 21,
             "end": 30,
             "text": "this week",
-            "confidence": 0.9745903015136719
+            "confidence": 0.9633756279945374
           }
         ],
         "truncated": false,
@@ -18740,7 +19273,7 @@
             "start": 34,
             "end": 45,
             "text": "November 15",
-            "confidence": 0.9998746514320374
+            "confidence": 0.9996646642684937
           }
         ],
         "truncated": false,
@@ -18813,7 +19346,7 @@
             "start": 0,
             "end": 30,
             "text": "3pm : I'll be out on this week",
-            "confidence": 0.979321300983429
+            "confidence": 0.9143577814102173
           }
         ],
         "truncated": false,
@@ -18862,7 +19395,7 @@
             "start": 0,
             "end": 13,
             "text": "this week 8am",
-            "confidence": 0.9523398876190186
+            "confidence": 0.9044039249420166
           }
         ],
         "truncated": false,
@@ -18929,13 +19462,6 @@
             "start": 0,
             "end": 4,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 0,
-            "end": 4,
-            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -18974,16 +19500,16 @@
             "start": 18,
             "end": 45,
             "text": "next friday to Oct 1st 2020",
-            "confidence": 0.9968032240867615
+            "confidence": 0.22010581195354462
           }
         ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "filler-ignored",
-            "message": "Ignored to inside the expression.",
-            "start": 30,
-            "end": 32,
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 18,
+            "end": 22,
             "severity": "warning"
           }
         ],
@@ -19055,7 +19581,7 @@
             "start": 50,
             "end": 60,
             "text": "february 4",
-            "confidence": 0.9997327327728271
+            "confidence": 0.9998248219490051
           }
         ],
         "truncated": false,
@@ -19096,7 +19622,7 @@
             "start": 39,
             "end": 58,
             "text": "starting february 4",
-            "confidence": 0.9937245845794678
+            "confidence": 0.9869882464408875
           }
         ],
         "truncated": false,
@@ -19136,14 +19662,22 @@
         "rrules": [],
         "spans": [
           {
-            "start": 35,
+            "start": 31,
             "end": 67,
-            "text": "3 days starting from next Monday",
-            "confidence": 0.9634492993354797
+            "text": "for 3 days starting from next Monday",
+            "confidence": 0.09380823373794556
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 31,
+            "end": 34,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -19182,11 +19716,19 @@
             "start": 12,
             "end": 36,
             "text": "a week starting tomorrow",
-            "confidence": 0.5401758551597595
+            "confidence": 0.4425407350063324
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 13,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -19225,7 +19767,7 @@
             "start": 8,
             "end": 35,
             "text": "for 2 weeks starting May 20",
-            "confidence": 0.7664369344711304
+            "confidence": 0.8254215121269226
           }
         ],
         "truncated": false,
@@ -19266,7 +19808,7 @@
             "start": 51,
             "end": 61,
             "text": "february 4",
-            "confidence": 0.999740481376648
+            "confidence": 0.9998559951782227
           }
         ],
         "truncated": false,
@@ -19307,7 +19849,7 @@
             "start": 52,
             "end": 62,
             "text": "february 4",
-            "confidence": 0.99953293800354
+            "confidence": 0.9998030066490173
           }
         ],
         "truncated": false,
@@ -19348,7 +19890,7 @@
             "start": 39,
             "end": 59,
             "text": "beginning february 4",
-            "confidence": 0.9848071336746216
+            "confidence": 0.9831508994102478
           }
         ],
         "truncated": false,
@@ -19389,7 +19931,7 @@
             "start": 43,
             "end": 47,
             "text": "2000",
-            "confidence": 0.9998276233673096
+            "confidence": 0.9995633959770203
           }
         ],
         "truncated": false,
@@ -19430,7 +19972,7 @@
             "start": 49,
             "end": 53,
             "text": "2000",
-            "confidence": 0.9996819496154785
+            "confidence": 0.9994154572486877
           }
         ],
         "truncated": false,
@@ -19450,21 +19992,54 @@
           "precision": "datetime"
         }
       ],
-      "actual": [],
-      "correct": false,
-      "stage": "interpretation-failed",
+      "actual": [
+        {
+          "start": "2016-11-07T05:00:00+00:00",
+          "allDay": false,
+          "end": "2016-11-07T07:00:00+00:00"
+        }
+      ],
+      "correct": true,
+      "stage": "correct",
       "parsed": {
-        "occurrences": [],
+        "occurrences": [
+          {
+            "start": "2016-11-07T05:00:00+00:00",
+            "allDay": false,
+            "end": "2016-11-07T07:00:00+00:00"
+          }
+        ],
         "rrules": [],
-        "spans": [],
+        "spans": [
+          {
+            "start": 12,
+            "end": 31,
+            "text": "five to seven today",
+            "confidence": 0.16556867957115173
+          }
+        ],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "unsupported",
-            "message": "Unsupported token role NUM.",
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
+          },
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 20,
             "end": 25,
-            "severity": "error"
+            "severity": "warning"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -19497,6 +20072,13 @@
             "start": 29,
             "end": 31,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -19529,6 +20111,13 @@
             "start": 27,
             "end": 28,
             "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 12,
+            "end": 16,
+            "severity": "warning"
           }
         ],
         "backend": "cpu"
@@ -19569,7 +20158,7 @@
             "start": 12,
             "end": 31,
             "text": "3pm to 4pm tomorrow",
-            "confidence": 0.9994456768035889
+            "confidence": 0.9993863105773926
           }
         ],
         "truncated": false,
@@ -19612,7 +20201,7 @@
             "start": 12,
             "end": 43,
             "text": "half past seven to 4pm tomorrow",
-            "confidence": 0.6650352478027344
+            "confidence": 0.972190797328949
           }
         ],
         "truncated": false,
@@ -19655,7 +20244,7 @@
             "start": 12,
             "end": 54,
             "text": "from 2:00pm, 2016-2-21 to 3:32, 04/23/2016",
-            "confidence": 0.8270601630210876
+            "confidence": 0.9301551580429077
           }
         ],
         "truncated": false,
@@ -19706,7 +20295,7 @@
             "start": 12,
             "end": 37,
             "text": "between 4pm and 5pm today",
-            "confidence": 0.9977784156799316
+            "confidence": 0.9909666180610657
           }
         ],
         "truncated": false,
@@ -19730,7 +20319,11 @@
         {
           "start": "2016-01-01T16:00:00+00:00",
           "allDay": false,
-          "end": "2016-01-01T17:00:00+00:00"
+          "open": "end"
+        },
+        {
+          "start": "2016-11-07T17:00:00+00:00",
+          "allDay": false
         }
       ],
       "correct": false,
@@ -19740,7 +20333,11 @@
           {
             "start": "2016-01-01T16:00:00+00:00",
             "allDay": false,
-            "end": "2016-01-01T17:00:00+00:00"
+            "open": "end"
+          },
+          {
+            "start": "2016-11-07T17:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -19749,19 +20346,11 @@
             "start": 12,
             "end": 52,
             "text": "between 4pm on Jan 1, 2016 and 5pm today",
-            "confidence": 0.07968468219041824
+            "confidence": 0.9039991497993469
           }
         ],
         "truncated": false,
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 19,
-            "severity": "warning"
-          }
-        ],
+        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -19800,7 +20389,7 @@
             "start": 21,
             "end": 53,
             "text": "14th Feb for 7 hours from 9:30am",
-            "confidence": 0.28382644057273865
+            "confidence": 0.19731581211090088
           }
         ],
         "truncated": false,
@@ -19853,7 +20442,7 @@
             "start": 21,
             "end": 53,
             "text": "14th Feb from 9:30am for 7 hours",
-            "confidence": 0.972192108631134
+            "confidence": 0.9523170590400696
           }
         ],
         "truncated": false,
@@ -19894,7 +20483,7 @@
             "start": 13,
             "end": 20,
             "text": "tonight",
-            "confidence": 0.999944269657135
+            "confidence": 0.9999521970748901
           }
         ],
         "truncated": false,
@@ -19935,7 +20524,7 @@
             "start": 13,
             "end": 26,
             "text": "tonight for 8",
-            "confidence": 0.9966822266578674
+            "confidence": 0.9972111582756042
           }
         ],
         "truncated": false,
@@ -19978,7 +20567,7 @@
             "start": 13,
             "end": 23,
             "text": "this night",
-            "confidence": 0.8938642144203186
+            "confidence": 0.8981120586395264
           }
         ],
         "truncated": false,
@@ -20021,7 +20610,7 @@
             "start": 13,
             "end": 25,
             "text": "this evening",
-            "confidence": 0.9970508813858032
+            "confidence": 0.9955002069473267
           }
         ],
         "truncated": false,
@@ -20072,7 +20661,7 @@
             "start": 13,
             "end": 25,
             "text": "this morning",
-            "confidence": 0.996587872505188
+            "confidence": 0.9966179728507996
           }
         ],
         "truncated": false,
@@ -20123,7 +20712,7 @@
             "start": 13,
             "end": 27,
             "text": "this afternoon",
-            "confidence": 0.9983500838279724
+            "confidence": 0.9968578219413757
           }
         ],
         "truncated": false,
@@ -20174,7 +20763,7 @@
             "start": 13,
             "end": 23,
             "text": "last night",
-            "confidence": 0.9911985993385315
+            "confidence": 0.9907678365707397
           }
         ],
         "truncated": false,
@@ -20217,7 +20806,7 @@
             "start": 13,
             "end": 34,
             "text": "next monday afternoon",
-            "confidence": 0.9994064569473267
+            "confidence": 0.9989621639251709
           }
         ],
         "truncated": false,
@@ -20292,7 +20881,7 @@
             "start": 18,
             "end": 26,
             "text": "3 minute",
-            "confidence": 0.9999088644981384
+            "confidence": 0.9998365044593811
           }
         ],
         "truncated": false,
@@ -20344,34 +20933,23 @@
           "precision": "datetime"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-07T16:12:00+00:00",
-          "allDay": false,
-          "end": "2016-11-07T16:15:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-07T16:12:00+00:00",
-            "allDay": false,
-            "end": "2016-11-07T16:15:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
-            "start": 22,
-            "end": 27,
-            "text": "3mins",
-            "confidence": 0.9998837113380432
+            "code": "unsupported",
+            "message": "The expression has no date or time.",
+            "start": 13,
+            "end": 21,
+            "severity": "error"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -20442,7 +21020,7 @@
             "start": 13,
             "end": 24,
             "text": "last minute",
-            "confidence": 0.9957508444786072
+            "confidence": 0.9941856861114502
           }
         ],
         "truncated": false,
@@ -20485,7 +21063,7 @@
             "start": 13,
             "end": 22,
             "text": "next hour",
-            "confidence": 0.9995293617248535
+            "confidence": 0.9990893006324768
           }
         ],
         "truncated": false,
@@ -20505,34 +21083,30 @@
           "precision": "datetime"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-08T06:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T12:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-08T06:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T12:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
+        "spans": [],
+        "truncated": false,
+        "diagnostics": [
           {
-            "start": 35,
-            "end": 58,
-            "text": "morning of this Tuesday",
-            "confidence": 0.9899665117263794
+            "code": "unsupported",
+            "message": "Unknown relative day.",
+            "start": 31,
+            "end": 34,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 31,
+            "end": 34,
+            "severity": "warning"
           }
         ],
-        "truncated": false,
-        "diagnostics": [],
         "backend": "cpu"
       }
     },
@@ -20571,11 +21145,19 @@
             "start": 26,
             "end": 67,
             "text": "for 30 minutes on Tuesday, in the morning",
-            "confidence": 0.8498417735099792
+            "confidence": 0.47617316246032715
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 26,
+            "end": 29,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -20614,7 +21196,7 @@
             "start": 13,
             "end": 35,
             "text": "tuesday in the evening",
-            "confidence": 0.9983508586883545
+            "confidence": 0.9963630437850952
           }
         ],
         "truncated": false,
@@ -20657,7 +21239,7 @@
             "start": 24,
             "end": 39,
             "text": "morning Tuesday",
-            "confidence": 0.998451828956604
+            "confidence": 0.9978734850883484
           }
         ],
         "truncated": false,
@@ -20700,7 +21282,7 @@
             "start": 24,
             "end": 42,
             "text": "morning on Tuesday",
-            "confidence": 0.9886611700057983
+            "confidence": 0.9882258772850037
           }
         ],
         "truncated": false,
@@ -20743,7 +21325,7 @@
             "start": 23,
             "end": 38,
             "text": "morning Tuesday",
-            "confidence": 0.9988620281219482
+            "confidence": 0.9986690878868103
           }
         ],
         "truncated": false,
@@ -20786,7 +21368,7 @@
             "start": 24,
             "end": 41,
             "text": "afternoon Tuesday",
-            "confidence": 0.9977108836174011
+            "confidence": 0.9953415393829346
           }
         ],
         "truncated": false,
@@ -20829,7 +21411,7 @@
             "start": 23,
             "end": 40,
             "text": "afternoon Tuesday",
-            "confidence": 0.9980503916740417
+            "confidence": 0.996492326259613
           }
         ],
         "truncated": false,
@@ -20872,7 +21454,7 @@
             "start": 24,
             "end": 39,
             "text": "evening Tuesday",
-            "confidence": 0.9973069429397583
+            "confidence": 0.9967730641365051
           }
         ],
         "truncated": false,
@@ -20915,7 +21497,7 @@
             "start": 24,
             "end": 37,
             "text": "night Tuesday",
-            "confidence": 0.9974313974380493
+            "confidence": 0.9962428212165833
           }
         ],
         "truncated": false,
@@ -20958,7 +21540,7 @@
             "start": 23,
             "end": 36,
             "text": "night Tuesday",
-            "confidence": 0.9965194463729858
+            "confidence": 0.9850050806999207
           }
         ],
         "truncated": false,
@@ -21001,7 +21583,7 @@
             "start": 23,
             "end": 36,
             "text": "night Tuesday",
-            "confidence": 0.9994235634803772
+            "confidence": 0.9991436004638672
           }
         ],
         "truncated": false,
@@ -21021,39 +21603,27 @@
           "precision": "datetime"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-08T06:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T12:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-08T06:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T12:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
-          {
-            "start": 14,
-            "end": 35,
-            "text": "Tuesday early-morning",
-            "confidence": 0.9760072827339172
-          }
-        ],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "filler-ignored",
-            "message": "Ignored early inside the expression.",
+            "code": "invalid-time",
+            "message": "Clock components are out of range.",
             "start": 22,
             "end": 27,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 21,
             "severity": "warning"
           }
         ],
@@ -21095,7 +21665,7 @@
             "start": 14,
             "end": 34,
             "text": "Tuesday late-morning",
-            "confidence": 0.958847165107727
+            "confidence": 0.9378010034561157
           }
         ],
         "truncated": false,
@@ -21146,7 +21716,7 @@
             "start": 14,
             "end": 36,
             "text": "Tuesday late-afternoon",
-            "confidence": 0.9908053874969482
+            "confidence": 0.9805474877357483
           }
         ],
         "truncated": false,
@@ -21174,39 +21744,27 @@
           "precision": "datetime"
         }
       ],
-      "actual": [
-        {
-          "start": "2016-11-08T17:00:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T21:00:00+00:00"
-        }
-      ],
+      "actual": [],
       "correct": false,
-      "stage": "value-mismatch",
+      "stage": "interpretation-failed",
       "parsed": {
-        "occurrences": [
-          {
-            "start": "2016-11-08T17:00:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T21:00:00+00:00"
-          }
-        ],
+        "occurrences": [],
         "rrules": [],
-        "spans": [
-          {
-            "start": 14,
-            "end": 35,
-            "text": "Tuesday early-evening",
-            "confidence": 0.9986389875411987
-          }
-        ],
+        "spans": [],
         "truncated": false,
         "diagnostics": [
           {
-            "code": "filler-ignored",
-            "message": "Ignored early inside the expression.",
+            "code": "invalid-time",
+            "message": "Clock components are out of range.",
             "start": 22,
             "end": 27,
+            "severity": "error"
+          },
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 21,
             "severity": "warning"
           }
         ],
@@ -21248,7 +21806,7 @@
             "start": 14,
             "end": 32,
             "text": "Tuesday late-night",
-            "confidence": 0.9723636507987976
+            "confidence": 0.9348044395446777
           }
         ],
         "truncated": false,
@@ -21299,7 +21857,7 @@
             "start": 14,
             "end": 33,
             "text": "Tuesday early night",
-            "confidence": 0.9777758717536926
+            "confidence": 0.9559682607650757
           }
         ],
         "truncated": false,
@@ -21342,7 +21900,7 @@
             "start": 14,
             "end": 32,
             "text": "Tuesday late night",
-            "confidence": 0.9879060983657837
+            "confidence": 0.9893671870231628
           }
         ],
         "truncated": false,
@@ -21396,7 +21954,7 @@
       ],
       "actual": [],
       "correct": false,
-      "stage": "no-result",
+      "stage": "interpretation-failed",
       "parsed": {
         "occurrences": [],
         "rrules": [],
@@ -21404,11 +21962,11 @@
         "truncated": false,
         "diagnostics": [
           {
-            "code": "no-expression",
-            "severity": "warning",
-            "message": "No time expression was recognized in \"let's meet rest of current day\".",
-            "start": 0,
-            "end": 30
+            "code": "unsupported",
+            "message": "A standalone unit needs a modifier or a quantity.",
+            "start": 27,
+            "end": 30,
+            "severity": "error"
           }
         ],
         "backend": "cpu"
@@ -21481,7 +22039,7 @@
             "start": 19,
             "end": 27,
             "text": "this day",
-            "confidence": 0.9631591439247131
+            "confidence": 0.9744348526000977
           }
         ],
         "truncated": false,
@@ -21556,7 +22114,7 @@
             "start": 23,
             "end": 39,
             "text": "night on Tuesday",
-            "confidence": 0.9974998235702515
+            "confidence": 0.9975820183753967
           }
         ],
         "truncated": false,
@@ -21599,7 +22157,7 @@
             "start": 20,
             "end": 47,
             "text": "Dec 9th between 8am and 2pm",
-            "confidence": 0.9710831046104431
+            "confidence": 0.9731261730194092
           }
         ],
         "truncated": false,
@@ -21642,11 +22200,19 @@
             "start": 69,
             "end": 113,
             "text": "30 min meeting this Friday, in the afternoon",
-            "confidence": 0.9928631782531738
+            "confidence": 0.9597389101982117
           }
         ],
         "truncated": false,
-        "diagnostics": [],
+        "diagnostics": [
+          {
+            "code": "filler-ignored",
+            "message": "Ignored meeting inside the expression.",
+            "start": 76,
+            "end": 83,
+            "severity": "warning"
+          }
+        ],
         "backend": "cpu"
       }
     },
@@ -21685,7 +22251,7 @@
             "start": 69,
             "end": 113,
             "text": "30 min meeting in the afternoon, this Friday",
-            "confidence": 0.9939113259315491
+            "confidence": 0.9492461681365967
           }
         ],
         "truncated": false,
@@ -21736,7 +22302,7 @@
             "start": 69,
             "end": 113,
             "text": "30 min meeting in the afternoon, next Friday",
-            "confidence": 0.9935789704322815
+            "confidence": 0.9267131686210632
           }
         ],
         "truncated": false,
@@ -21787,7 +22353,7 @@
             "start": 69,
             "end": 113,
             "text": "30 min meeting in the afternoon, last Friday",
-            "confidence": 0.9948904514312744
+            "confidence": 0.94306880235672
           }
         ],
         "truncated": false,
@@ -21838,7 +22404,7 @@
             "start": 69,
             "end": 106,
             "text": "Friday afternoon between 1PM and 4 PM",
-            "confidence": 0.9925726056098938
+            "confidence": 0.9955946803092957
           }
         ],
         "truncated": false,
@@ -21881,7 +22447,7 @@
             "start": 73,
             "end": 113,
             "text": "afternoon on Friday between 1PM and 4 PM",
-            "confidence": 0.9836682081222534
+            "confidence": 0.9692308306694031
           }
         ],
         "truncated": false,
@@ -21924,7 +22490,7 @@
             "start": 41,
             "end": 62,
             "text": "2018-09-23 1p.m. to 4",
-            "confidence": 0.9007412791252136
+            "confidence": 0.7598296403884888
           }
         ],
         "truncated": false,
@@ -21965,7 +22531,7 @@
             "start": 41,
             "end": 60,
             "text": "2018-09-23 1:30p.m.",
-            "confidence": 0.917117714881897
+            "confidence": 0.7620731592178345
           }
         ],
         "truncated": false,
@@ -22006,7 +22572,7 @@
             "start": 13,
             "end": 20,
             "text": "tuesday",
-            "confidence": 0.99994957447052
+            "confidence": 0.9998791217803955
           }
         ],
         "truncated": false,
@@ -22049,7 +22615,7 @@
             "start": 22,
             "end": 32,
             "text": "15 seconds",
-            "confidence": 0.9047138690948486
+            "confidence": 0.9510353207588196
           }
         ],
         "truncated": false,
@@ -22092,7 +22658,7 @@
             "start": 15,
             "end": 31,
             "text": "within 5 minutes",
-            "confidence": 0.9923809170722961
+            "confidence": 0.9840695261955261
           }
         ],
         "truncated": false,
@@ -22135,7 +22701,7 @@
             "start": 15,
             "end": 29,
             "text": "within 5 hours",
-            "confidence": 0.9901216626167297
+            "confidence": 0.9814335107803345
           }
         ],
         "truncated": false,
@@ -22178,7 +22744,7 @@
             "start": 25,
             "end": 66,
             "text": "within 2 days 1 hour 5 minutes 30 seconds",
-            "confidence": 0.7517914772033691
+            "confidence": 0.8034024834632874
           }
         ],
         "truncated": false,
@@ -22253,7 +22819,7 @@
             "start": 15,
             "end": 28,
             "text": "monday 8 to 9",
-            "confidence": 0.21335379779338837
+            "confidence": 0.26998215913772583
           }
         ],
         "truncated": false,
@@ -22297,8 +22863,10 @@
       ],
       "actual": [
         {
-          "start": "2018-06-04T12:00:00+00:00",
-          "allDay": false
+          "start": "2018-06-04T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2018-06-04T12:00:00+00:00"
         }
       ],
       "correct": false,
@@ -22306,8 +22874,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-06-04T12:00:00+00:00",
-            "allDay": false
+            "start": "2018-06-04T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2018-06-04T12:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -22316,7 +22886,7 @@
             "start": 32,
             "end": 43,
             "text": "Monday 12-4",
-            "confidence": 0.4685261845588684
+            "confidence": 0.7866180539131165
           }
         ],
         "truncated": false,
@@ -22326,13 +22896,6 @@
             "message": "No AM/PM marker; interpreted as a 24-hour clock.",
             "start": 39,
             "end": 41,
-            "severity": "warning"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 32,
-            "end": 38,
             "severity": "warning"
           }
         ],
@@ -22353,8 +22916,10 @@
       ],
       "actual": [
         {
-          "start": "2018-06-04T11:00:00+00:00",
-          "allDay": false
+          "start": "2018-06-04T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2018-06-04T11:00:00+00:00"
         }
       ],
       "correct": false,
@@ -22362,8 +22927,10 @@
       "parsed": {
         "occurrences": [
           {
-            "start": "2018-06-04T11:00:00+00:00",
-            "allDay": false
+            "start": "2018-06-04T00:00:00+00:00",
+            "allDay": false,
+            "open": "start",
+            "end": "2018-06-04T11:00:00+00:00"
           }
         ],
         "rrules": [],
@@ -22372,7 +22939,7 @@
             "start": 32,
             "end": 43,
             "text": "Monday 11-4",
-            "confidence": 0.8504891991615295
+            "confidence": 0.8207665681838989
           }
         ],
         "truncated": false,
@@ -22423,7 +22990,7 @@
             "start": 15,
             "end": 47,
             "text": "between 10 and 11:30 on 1/1/2015",
-            "confidence": 0.002876515965908766
+            "confidence": 0.011522112414240837
           }
         ],
         "truncated": false,
@@ -22525,7 +23092,7 @@
             "start": 34,
             "end": 42,
             "text": "1/1/2015",
-            "confidence": 0.8751783967018127
+            "confidence": 0.9600286483764648
           }
         ],
         "truncated": false,
@@ -22568,7 +23135,7 @@
             "start": 15,
             "end": 44,
             "text": "from 3:30 to 5:55 on 1/1/2015",
-            "confidence": 0.7981209754943848
+            "confidence": 0.9458043575286865
           }
         ],
         "truncated": false,
@@ -22626,7 +23193,7 @@
             "start": 23,
             "end": 59,
             "text": "Friday next week between 8am and 2pm",
-            "confidence": 0.8113088607788086
+            "confidence": 0.8379015326499939
           }
         ],
         "truncated": false,
@@ -22649,18 +23216,24 @@
       "actual": [
         {
           "start": "2016-11-08T07:30:00+00:00",
-          "allDay": false,
-          "end": "2016-11-08T16:00:00+00:00"
+          "allDay": false
+        },
+        {
+          "start": "2016-11-08T16:00:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": true,
-      "stage": "correct",
+      "correct": false,
+      "stage": "value-mismatch",
       "parsed": {
         "occurrences": [
           {
             "start": "2016-11-08T07:30:00+00:00",
-            "allDay": false,
-            "end": "2016-11-08T16:00:00+00:00"
+            "allDay": false
+          },
+          {
+            "start": "2016-11-08T16:00:00+00:00",
+            "allDay": false
           }
         ],
         "rrules": [],
@@ -22669,11 +23242,18 @@
             "start": 20,
             "end": 55,
             "text": "half past seven and 4pm of tomorrow",
-            "confidence": 0.06835051625967026
+            "confidence": 0.4452458620071411
           }
         ],
         "truncated": false,
         "diagnostics": [
+          {
+            "code": "ambiguous-meridiem",
+            "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+            "start": 30,
+            "end": 35,
+            "severity": "warning"
+          },
           {
             "code": "low-confidence",
             "message": "The model is uncertain about this expression.",

@@ -18,15 +18,19 @@ export function buildShader(
       segment.offset,
     ]),
   );
-  // A single-layer model has no second block; alias its offsets onto the first
-  // so the layer loop compiles without branching on which tensors exist.
+  // A model with fewer layers has no later block; alias each missing one onto
+  // the block before it, so the layer loop compiles whatever the weights hold.
   for (const name of ["GATE", "CANDIDATE", "COMBINE"])
     for (const kind of ["WEIGHT", "BIAS"])
-      if (!offsets.has(`${name}2_${kind}_OFFSET`))
-        offsets.set(
-          `${name}2_${kind}_OFFSET`,
-          offsets.get(`${name}_${kind}_OFFSET`)!,
-        );
+      for (const [later, earlier] of [
+        ["2", ""],
+        ["3", "2"],
+      ])
+        if (!offsets.has(`${name}${later}_${kind}_OFFSET`))
+          offsets.set(
+            `${name}${later}_${kind}_OFFSET`,
+            offsets.get(`${name}${earlier}_${kind}_OFFSET`)!,
+          );
   const constants = [...offsets]
     .map(([name, offset]) => `const ${name}: u32 = ${offset}u;`)
     .join("\n");

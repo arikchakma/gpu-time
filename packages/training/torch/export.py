@@ -16,7 +16,7 @@ import numpy as np
 import torch
 
 from model import ROLE_CLASSES, TimeTagger, decode as decode_roles
-from train import Dataset, evaluate
+from train import Dataset, evaluate, featurize
 from calibrate import calibrate
 
 TORCH = Path(__file__).resolve().parent
@@ -135,17 +135,6 @@ def corpus_digest(prefix: Path) -> str:
     for suffix in ("rows", "labels", "boundaries", "kinds", "neighbors", "offsets"):
         running.update(Path(f"{prefix}.{suffix}.bin").read_bytes())
     return running.hexdigest()
-
-
-def featurize(source: Path, prefix: Path):
-    subprocess.run(
-        # tsx, not node --experimental-strip-types: featurize imports core's
-        # source, whose const enums plain type stripping cannot handle.
-        ["npx", "tsx", str(ROOT / "src/featurize.ts"), str(source), str(prefix)],
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.DEVNULL,
-    )
 
 
 def sequence_scores(

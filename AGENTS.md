@@ -1,49 +1,66 @@
 # Project context
 
-`gpu-time` is a pnpm workspace. Its structure follows [gpu-lexer](https://github.com/vercel-labs/gpu-lexer); keep new files consistent with that layout and its kebab-case naming.
+`gpu-time` is a pnpm workspace. Its layout follows [gpu-lexer](https://github.com/vercel-labs/gpu-lexer). Keep new files consistent with that layout and its kebab-case naming.
 
 ## Layout
 
-- `packages/core` — the publishable `gpu-time` package. Library source, WGSL kernel, calendar resolver, build, and unit tests. **Zero runtime dependencies; keep it that way.**
-- `packages/training` — `torch/` for Python (uv project), `src/` for TypeScript drivers, `data/gold/` for tracked evaluation corpora, `data/synth/` for generated data (ignored), `active/` for the promoted model report, provenance, and parity fixtures, `runs/` and `exports/` for selected current and historical reports and source snapshots. Checkpoints remain local and ignored.
-- `packages/benchmark` — size, browser performance, and cross-library comparisons. Measures the **built** `packages/core/dist`, never the source.
-- `apps/website` — the Astro site. This is the public-facing site.
-- `video` — ManimGL explainer source, storyboard in `scenes.md`.
+- `packages/core` — the publishable `gpu-time` package: library source, WGSL kernel, calendar resolver, build, and unit tests. It has zero runtime dependencies. Keep it that way.
+- `packages/training` — the model pipeline. `torch/` holds Python (a uv project) and `src/` holds TypeScript drivers. `data/gold/` tracks evaluation corpora and `data/synth/` holds generated data, which Git ignores. `active/` holds the promoted report and parity fixtures. `runs/` and `exports/` hold reports and source snapshots. Checkpoints stay local and ignored.
+- `packages/benchmark` — size, browser performance, and cross-library comparisons. It measures the built `packages/core/dist`, never the source.
+- `apps/website` — the public Astro site.
+- `video` — ManimGL explainer source, with the storyboard in `scenes.md`.
 
 ## Validation
 
 ```sh
 pnpm install
-pnpm test           # core tests, authored English coverage, benchmark utils, website checks
+pnpm test           # core tests, authored English, benchmark utils, website checks
 pnpm build:core     # emits packages/core/dist
 pnpm size:gate      # strict 50,000-byte Brotli release limit
 pnpm test:browser   # real WebGPU parity and packaged-shader check
 pnpm benchmark      # full benchmark, writes packages/benchmark/results/
 ```
 
-Node 24+ runs TypeScript directly via `--experimental-strip-types`; `bun` is gone. Node's type stripping does **not** rewrite `./foo.js` to `foo.ts`, so relative imports in scripts run this way must use explicit `.ts` extensions. The one exception is a script that imports `packages/core/src` directly, where core's own internal `.js` specifiers make that impossible — those run under `tsx` instead (see `video/render.sh`).
+Node 24 or later runs TypeScript directly through `--experimental-strip-types`. Type stripping does not rewrite `./foo.js` to `foo.ts`, so a relative import in a script run this way must use an explicit `.ts` extension. A script that imports `packages/core/src` directly runs under `tsx` instead, because core's own internal `.js` specifiers make stripping impossible. See `video/render.sh`.
 
-Python is always invoked through `uv`. There are three separate Python environments by design: `packages/training/.venv` (a uv project), `packages/benchmark/.venv`, and `video/.venv`.
+Always call Python through `uv`. Three separate Python environments exist by design: `packages/training/.venv`, `packages/benchmark/.venv`, and `video/.venv`.
 
 ## Rules
 
-- Do not lower an existing release gate. The Brotli budget is 50,000 bytes; `pnpm size:gate` blocks CI, so a change that breaches it fails the build rather than being waived.
-- Preserve benchmark evaluation corpora. `pnpm benchmark` reuses them unless `--refresh-corpus` is passed explicitly. Changing a training renderer must not silently change comparison inputs.
+- Do not lower a release gate. The Brotli budget is 50,000 bytes and `pnpm size:gate` blocks CI.
+- Read every score from `packages/training/active/export-report.json`. Never quote a score from this file or from memory. Generated scores share rendering families with training, so they are not language accuracy. See `MODEL_CARD.md`.
+- Run `pnpm test` before you believe any promotion. `scoreboard.ts` does not cover the `english-compatibility` and `recognizers-development` floors, and a promotion once shipped that failed the Chrono floor.
+- Score a built package with `packages/training/src/scoreboard.ts` instead of one evaluator at a time. A gain on one axis often hides a loss on another.
 - Never train on the runtime parser's own output. Supervision comes from the generators in `packages/training/torch/`.
-- Export is gated. Reserved-carrier labels and boundaries must improve, or tie an already perfect baseline, with no family regression. Gold schedule counts must not regress in any set or family, and bare expressions must not regress. Compare matching frozen corpora with the deployed decoder. Use `--force` only deliberately; it records what it overrode.
-- Keep `natural.py::RESERVED` unreachable from the training carrier grammar. Those surrounding phrases must remain absent from training.
-- Timezone stays out of the model. Calendar arithmetic has exact answers; resolve it in TypeScript.
-- The historical `terse-f32` score is **993/1000 exact schedules on unseen carriers**. The current export (`runs/lessgen2`) records **1000/1000 reserved-carrier schedules**, **995/1000 exact Viterbi labels and boundaries** on those carriers, **1000/1000 bare expressions**, **71/71 authored English regressions**, and **580/624 pooled gold**. Earlier CRF reports used argmax for this metric; remeasure both models with the deployed decoder before comparing. Generated scores share rendering families with training and must not be quoted as language accuracy. See `MODEL_CARD.md`.
-- Train with `--storage f32 --feature-rows 580 --layers 2 --transitions --init runs/<promoted>/best.pt` to preserve the current model's tensor shapes. The defaults use f16, one layer, and a cold start. A cold start or incompatible feature shape can lose learned forms.
-- Add `--samples 60000 --epochs 40`. At 60,000 rows every terse-syntax gold set held, both carrier gates broke nothing, and real English gained 79 cases. The rows we removed were copies of shapes the corpus already held. Raise the epochs so the model still sees a similar number of tokens. Nobody has swept this ratio.
-- Add `--distill runs/<promoted>/best.pt --distill-alpha 0 --distill-beta 5 --distill-lambda 0.05` to any warm-started run. Without it a run that learns a new family flips unrelated cases the promoted model already answers; with it the update held every gold and recognizers family. See `architecture.md` for the loss and the paper.
-- Add `--risk-lambda 0.005 --risk-margin 4` to train on whole sequences as well as tokens. It only moves sequences the decoder gets wrong. Keep lambda near 0.005; the penalty is averaged per wrong sequence and swamps `crf_nll` above roughly 0.01.
-- The release gates tolerate seed noise. A group fails only when losing that many examples by chance is under one in twenty, groups under ten examples warn instead of failing, and the generated corpora are graded on the schedule the built package returns rather than on token labels. Label drift is still reported as a warning.
-- Add `--real packages/training/data/real/real-train.jsonl` to train on labelled real English alongside the generated corpus. Rebuild it with `pnpm --filter @gpu-time/training harvest`. Without it the model can only learn the generator, which is its own ceiling.
-- `packages/training/data/teacher/teacher.jsonl` holds written sentences, so Git tracks it. Git ignores `data/real/`. `split-real.ts` reads it as the `teacher` source and repeats it `--authored-copies` times, 4 by default. Agreement harvesting cannot reach what chrono-node cannot read, which is why `every <month>` had no correct label. Propose labels with a teacher. Accept them with the compiler, never with the teacher alone. See `todos/14-09-2026-teacher-labelling.md`.
-- `packages/training/src/scoreboard.ts` scores a built package on every benchmark at once. Use it instead of one evaluator at a time; a gain on one axis routinely hides a loss on another.
-- `packages/core/src/model/weights.gen.ts` is generated by the training export and hash-verified against `packages/training/active/export-report.json`. Do not hand-edit it.
+- Accept a teacher label only when the compiler produces the schedule the label claims. Never accept it on the teacher's word. `split-real.ts` reads the files under `data/teacher/` as authored sources and repeats each one `--authored-copies` times, 4 by default.
+- Check a hard negative against the model's features, not against the generated string. The tokenizer splits `2027.06.24` into five tokens, and the padding survives as one number bucket. The model learned that a dotted run in prose is filler, and it stopped reading real dates. See `torch/test_negatives.py`.
+- Keep `natural.py::RESERVED` unreachable from the training carrier grammar. Those surrounding phrases must stay absent from training.
+- Keep timezone out of the model. Calendar arithmetic has exact answers, so resolve it in TypeScript.
+- Preserve the benchmark evaluation corpora. `pnpm benchmark` reuses them unless you pass `--refresh-corpus`. A changed training renderer must not silently change comparison inputs.
+- Do not hand-edit `packages/core/src/model/weights.gen.ts`. The training export generates it and hash-verifies it against `export-report.json`.
+- The release gates tolerate seed noise. A group fails only when chance explains the loss with a probability under one in twenty. A group under ten examples warns instead of failing.
+
+## Training
+
+Train a warm run with the flags that keep the current tensor shapes:
+
+```sh
+uv run --project . python torch/train.py \
+  --storage f32 --feature-rows 580 --layers 2 --transitions \
+  --init runs/<promoted>/best.pt \
+  --distill runs/<promoted>/best.pt --distill-alpha 0 --distill-beta 5 --distill-lambda 0.05 \
+  --risk-lambda 0.005 --risk-margin 4 \
+  --real packages/training/data/real/real-train.jsonl \
+  --samples 60000 --epochs 40 --save-epochs
+```
+
+- `--storage f32 --feature-rows 580 --layers 2 --transitions` holds the shipped shapes. The defaults use f16 and one layer.
+- `--init` warm-starts from the promoted checkpoint. Measured on 15 September 2026, a cold start answered 26 of the 37 reported failures against a warm run's 15. It also dropped the Chrono comparison from 74 to 67, which fails `pnpm test`. Choose deliberately. Do not cold start by accident.
+- `--distill` holds the promoted model's answers. Without it, a run that learns a new family flips unrelated cases the promoted model already answers. `architecture.md` records the loss and the paper.
+- `--risk-lambda` trains on whole sequences as well as tokens, and only moves sequences the decoder gets wrong. Keep lambda near 0.005, because the penalty swamps `crf_nll` above roughly 0.01.
+- `--real` adds labelled real English. Rebuild that file with `pnpm --filter @gpu-time/training harvest`. Without it the model can only learn the generator, which is its own ceiling.
+- `--save-epochs` writes every epoch. Find the releasable checkpoint by sweeping all of them. Chat varies by 17 cases between neighbouring epochs at one seed, and `best.pt` selects on validation and once picked noise.
 
 ## History
 
-The retired implementation is on the `archive/legacy-gpu-time` branch. Its model, public AST, and performance numbers do not describe the current library. Superseded training runs and exports were untracked during the monorepo restructure and remain recoverable from Git history.
+The current model, public API, and performance numbers replace an earlier implementation. Superseded training runs and exports were untracked during the monorepo restructure and remain recoverable from Git history.

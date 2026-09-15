@@ -66,6 +66,7 @@ class ProseTests(unittest.TestCase):
             "monthly-ordinal",
             "idiom-date",
             "contrast-date",
+            *natural.NEW_FAMILIES,
         ):
             for seed in range(100):
                 sentence = Sentence(random.Random(seed), augment=0.35)

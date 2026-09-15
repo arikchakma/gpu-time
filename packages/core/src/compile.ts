@@ -21,6 +21,7 @@ import type {
 } from "./types.js";
 import {
   compoundOrdinal,
+  dayNames,
   holidayNames,
   month,
   number,
@@ -31,7 +32,9 @@ import {
 
 import { readDuration, readNumber } from "./quantity.js";
 
+const approximately = new Set(["about", "around", "roughly"]);
 const filler = new Set([
+  ...approximately,
   "at",
   "on",
   "the",
@@ -66,6 +69,7 @@ const relativeDays: Record<string, number> = {
   "the day before yesterday": -2,
   tmrw: 1,
   tmr: 1,
+  tmw: 1,
   tonite: 0,
 };
 const dayParts: Record<string, DayPart> = {
@@ -82,6 +86,7 @@ const recurrenceBounds = new Set([
 const modifiers: Record<string, Modifier> = {
   this: "this",
   next: "next",
+  nxt: "next",
   coming: "next",
   upcoming: "next",
   last: "last",
@@ -180,10 +185,12 @@ function readClock(
   let meridiem: string | undefined;
   let next = index + 1;
 
-  // "9.30pm" is a clock; "9.5 hours" is not, so the minutes must be two digits.
+  // Minutes are always two digits: "9.30pm" and "9:05" are clocks, while
+  // "9.5 hours" and the ratio "2:3" are not.
   const separated =
     tokens[next]?.text === ":"
-      ? tokens[next + 1]?.label === Role.MINUTE
+      ? tokens[next + 1]?.label === Role.MINUTE &&
+        /^\d{2}$/.test(tokens[next + 1]?.text ?? "")
       : tokens[next]?.text === "." &&
         /^\d{1,2}$/.test(token.text) &&
         /^\d{2}$/.test(tokens[next + 1]?.text ?? "");
@@ -217,7 +224,9 @@ function readClock(
     meridiem = clockPeriods.get(meridiem) ?? meridiem;
   }
 
-  const invalidHour = !Number.isInteger(hour) || hour < 0 || hour > 23;
+  const endOfDay = hour === 24 && minute === 0 && (second ?? 0) === 0;
+  const invalidHour =
+    !Number.isInteger(hour) || hour < 0 || (hour > 23 && !endOfDay);
   const invalidMinute = !Number.isInteger(minute) || minute < 0 || minute > 59;
   const invalidSecond =
     second !== undefined &&
@@ -291,7 +300,12 @@ function literalSeconds(clock: ClockTime): number | undefined {
 }
 
 function qualifyClock(clock: ParsedClock, part: DayPart): void {
-  if (!("hour" in clock.value) || clock.meridiem) return;
+  // "o'clock" names no half of the day, so "ten o'clock in the evening" is 22:00.
+  if (
+    !("hour" in clock.value) ||
+    (clock.meridiem && clock.meridiem !== "o'clock")
+  )
+    return;
   const hour = clock.value.hour;
   if (hour < 1 || hour > 12) return;
 
@@ -438,9 +452,9 @@ function compileDateAndTime(
       }
 
       case Role.EDGE:
-        if (!["start", "beginning", "end"].includes(word))
+        if (!["start", "beginning", "end", "rest", "remainder"].includes(word))
           fail(token, "unsupported", "Unknown calendar edge.");
-        edge = word === "end" ? "end" : "start";
+        edge = word === "start" || word === "beginning" ? "start" : "end";
         break;
 
       case Role.NOW:
@@ -459,7 +473,8 @@ function compileDateAndTime(
         if (!value) fail(token, "unsupported", "Unknown calendar unit.");
         const boundary =
           edge ??
-          (tokens.some((part) => part.text.toLowerCase() === "end")
+          (/^eo[dwm]$/.test(word) ||
+          tokens.some((part) => part.text.toLowerCase() === "end")
             ? "end"
             : undefined);
         if (ordinal !== undefined && value === "week") {
@@ -515,9 +530,23 @@ function compileDateAndTime(
         break;
       }
 
+      case Role.NUM:
       case Role.CLOCK_OFFSET: {
-        const offset = word === "half" ? 30 : word === "quarter" ? 15 : NaN;
         let target = index + 1;
+        // "three minutes to eight" offsets an hour the way "quarter to" does.
+        const offset =
+          token.label === Role.NUM
+            ? // "ten past six" says the unit only by position.
+              ["past", "to"].includes(tokens[target]?.text.toLowerCase() ?? "")
+              ? number(word)
+              : unit(tokens[target++]?.text ?? "") === "minute"
+                ? number(word)
+                : NaN
+            : word === "half"
+              ? 30
+              : word === "quarter"
+                ? 15
+                : NaN;
         const direction = tokens[target]?.text.toLowerCase();
         if (!["past", "to"].includes(direction) || !Number.isFinite(offset))
           fail(
@@ -626,7 +655,8 @@ function compileDateAndTime(
         const value = number(word);
         if (!Number.isInteger(value) || value < 1 || value > 9999)
           fail(token, "invalid-date", "Year is out of range.");
-        const year = value < 100 ? 2000 + value : value;
+        // Two-digit years pivot at 69, the POSIX strptime rule.
+        const year = value < 100 ? (value < 69 ? 2000 : 1900) + value : value;
         calendar ??= {};
         if (calendarEnd) calendarEnd.year = year;
         if (!calendarEnd || calendar.year === undefined) calendar.year = year;
@@ -689,6 +719,12 @@ function compileDateAndTime(
       ...(calendar.year ? { year: calendar.year } : {}),
     };
     calendar = undefined;
+    ordinal = undefined;
+  }
+  if (ordinal !== undefined && ordinal > 0 && !days.length) {
+    // "the first of the month" names a calendar day; only a weekday makes it ordinal.
+    calendar ??= {};
+    calendar.day ??= ordinal;
     ordinal = undefined;
   }
   if (ordinal !== undefined) {
@@ -774,13 +810,14 @@ function compileDateAndTime(
     } else if (
       calendar.month !== undefined &&
       calendar.day === undefined &&
-      modifier
+      (modifier || edge)
     )
       clause.date = {
         kind: "calendarPeriod",
         month: calendar.month,
         ...(calendar.year ? { year: calendar.year } : {}),
-        modifier,
+        ...(modifier ? { modifier } : {}),
+        ...(edge ? { edge } : {}),
       };
     else clause.date = { kind: "calendar", ...calendar };
   }
@@ -825,6 +862,16 @@ function compileDateAndTime(
     );
   }
   const time = compileTime(clocks, diagnostics);
+  // "later this week" carries no clock, so the open bound names an edge of the period.
+  if (
+    openBound &&
+    !time &&
+    clause.date?.kind === "relativeUnit" &&
+    !clause.date.edge
+  ) {
+    clause.date = { ...clause.date, edge: openBound };
+    openBound = undefined;
+  }
   if (openToken && openBound) {
     if (!time)
       fail(
@@ -856,7 +903,32 @@ function compileDateAndTime(
     // instant and drop the openness, which a caller could not detect. A
     // "from" that opens a real range ("from 8 to 10pm") keeps both edges.
     time.open = "end";
+  } else if (
+    time &&
+    !time.end &&
+    clocks.length === 1 &&
+    !tokens.some((token) => token.label === Role.RANGE_START) &&
+    tokens.some(
+      (token, index) =>
+        token.label === Role.RANGE_END &&
+        // Only when the separator belongs to the clock. In "14-15 jul at 9:45"
+        // it joins two days, and that clause is a date range, not a deadline.
+        tokens
+          .slice(index + 1, tokens.indexOf(clocks[0].token))
+          .every((between) => filler.has(lower(between))),
+    )
+  ) {
+    // The mirror of the branch above: "until 3pm" has no reading where 3pm
+    // starts the window, so a range end with nothing opening it is a deadline.
+    time.end = time.start;
+    time.start = { hour: 0, minute: 0 };
+    time.open = "start";
   }
+  // 24:00 is an end of day, which is why clock.ts takes it as a range end and
+  // refuses it as a start. Checked here, after the deadline swaps above, so a
+  // bad start reports a diagnostic instead of throwing when it resolves.
+  if (time && "hour" in time.start && time.start.hour === 24)
+    fail(clocks[0].token, "invalid-time", "24:00 is only an end of day.");
   if (time) clause.time = time;
   const firstClockIndex = tokens.findIndex((token) =>
     [Role.HOUR, Role.TIME_NAMED, Role.DAYPART, Role.CLOCK_OFFSET].includes(
@@ -959,6 +1031,9 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
         ? { components: quantity.duration.components }
         : {}),
       ...(endAmount === undefined ? {} : { endAmount }),
+      ...(approximately.has(lower(tokens[amountIndex - 1]))
+        ? { approximate: true }
+        : {}),
       unit: durationUnit,
       direction:
         tokens[directionIndex].label === Role.DIR_BEFORE ? "before" : "after",
@@ -1010,10 +1085,14 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       (token) => token.label === Role.UNIT && unit(token.text) === "month",
     ) &&
     !selectors.some((token) => token.label === Role.DEICTIC);
-  // Only a plural group repeats on its own: "weekends" recurs, "the weekend"
-  // names the coming one. An explicit RECUR marker still turns either into a series.
+  // Only a plural name repeats on its own: "weekends" and "tuesdays" recur, "the
+  // weekend" names the coming one. An explicit RECUR marker still makes a series.
   const pluralDayGroup = selectors.some(
-    (token) => token.label === Role.DAYGROUP && /s$/i.test(token.text),
+    (token) =>
+      (token.label === Role.DAYGROUP ||
+        (token.label === Role.WEEKDAY &&
+          dayNames.includes(token.text.toLowerCase().replace(/s$/, "")))) &&
+      /s$/i.test(token.text),
   );
   // The weekly default belongs to a weekday. "every morning" repeats once a day
   // and "every May" once a year, so a lone day part or month sets its own period.
@@ -1108,7 +1187,13 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       const value = number(token.text);
       if (!Number.isInteger(value) || value === 0 || Math.abs(value) > 5)
         fail(token, "invalid-ordinal", "Use first through fifth, or last.");
-      (recurrence.bySetPos ??= []).push(value);
+      // "the last day of every month" picks a day of the month, not an occurrence.
+      if (
+        tokens[index + 1]?.label === Role.UNIT &&
+        unit(tokens[index + 1].text) === "day"
+      )
+        (recurrence.byMonthDay ??= []).push(value);
+      else (recurrence.bySetPos ??= []).push(value);
       continue;
     }
     if (recurrence && token.label === Role.DOM) {
@@ -1138,10 +1223,15 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       continue;
     }
 
+    // "three minutes to eight" is a clock, not a three-minute duration.
+    const clockOffset =
+      ["past", "to"].includes(tokens[index + 2]?.text.toLowerCase() ?? "") &&
+      tokens[index + 3]?.label === Role.HOUR;
     const bareDuration =
       !recurrence &&
       token.label === Role.NUM &&
-      tokens[index + 1]?.label === Role.UNIT;
+      tokens[index + 1]?.label === Role.UNIT &&
+      !clockOffset;
     if (token.label === Role.DUR || bareDuration) {
       let amountIndex = index + (bareDuration ? 0 : 1);
       while (
@@ -1159,9 +1249,12 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
         );
       const value = quantity.duration;
       const durationUnit = value.unit;
+      // After hours or minutes only an explicit "from" anchors; the glue kind
+      // states a start clock, as in "last for 2 hours from 2pm".
       const fromAnchor =
-        tokens[quantity.next]?.label === Role.RANGE_START &&
-        tokens[quantity.next].text.toLowerCase() === "from";
+        lower(tokens[quantity.next]) === "from" &&
+        (tokens[quantity.next].label === Role.RANGE_START ||
+          !["second", "minute", "hour"].includes(durationUnit));
       if (bareDuration && !shift && fromAnchor) {
         // "a week from Tuesday" moves the anchor; it does not span a week.
         shift = { ...value, direction: "after" };
@@ -1232,6 +1325,12 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       if (!bound.length) fail(token, "invalid-bound", "A bound needs a date.");
       const compiled = compileDateAndTime(bound, diagnostics);
       const date = compiled.date;
+      // "starting at 8:30" names a clock, not a date; it is the clause's own time.
+      if (!date && token.label === Role.BOUND_START && compiled.time?.start) {
+        boundTime ??= compiled.time;
+        index = end - 1;
+        continue;
+      }
       if (!date) fail(token, "invalid-bound", "A bound needs a date.");
       // "every Monday until Friday at 5pm" states the series clock inside the
       // bound; keeping only the date used to drop it without a word.
@@ -1355,6 +1454,13 @@ function splitExpressions(tokens: Token[]): Token[][] {
         lower(leading.at(-1)) === "this"
       )
         current.push(leading.at(-1)!);
+      // "about 20 minutes" leads with the qualifier that makes the shift loose.
+      else if (
+        !current.length &&
+        token.label === Role.NUM &&
+        approximately.has(lower(leading.at(-1)))
+      )
+        current.push(leading.at(-1)!);
       leading = [];
       if (aside.length > asideLimit) {
         expressions.push(current);
@@ -1377,7 +1483,9 @@ function splitExpressions(tokens: Token[]): Token[][] {
     const startsWithTimeCue = () =>
       sameTimePair(expression[0], expression[1]) ||
       (lower(expression[0]) === "this" &&
-        expression[1]?.label === Role.DAYPART);
+        expression[1]?.label === Role.DAYPART) ||
+      (approximately.has(lower(expression[0])) &&
+        expression[1]?.label === Role.NUM);
     while (
       expression[0] &&
       [Role.O, Role.GLUE, Role.JOIN].includes(expression[0].label) &&
@@ -1500,7 +1608,7 @@ function compileExpression(text: string, tokens: Token[]): Expression {
             (token) =>
               token.label !== Role.GLUE ||
               token.kind === 2 ||
-              ["past", "to", "and", "a", "an"].includes(
+              ["past", "to", "and", "a", "an", "from"].includes(
                 token.text.toLowerCase(),
               ),
           )
