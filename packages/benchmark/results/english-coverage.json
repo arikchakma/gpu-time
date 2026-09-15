@@ -1,6 +1,6 @@
 {
-  "model": "bb67f60962c7d7b42d35fa005f9a0e0a2b0f68b01823c091be3ab83409afc099",
-  "runtimeSha256": "f33b281d27a034b87f71770a3a1ee1b4e9cde36a3db86fe0031a5a7e43c3799d",
+  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
+  "runtimeSha256": "062d449e2053ba2333e5e9cf7e13af297241fd059d46bd9ff8e3c38b6ee6575e",
   "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
   "total": 71,
@@ -899,13 +899,6 @@
           "start": 30,
           "end": 31,
           "severity": "error"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 18,
-          "end": 22,
-          "severity": "warning"
         }
       ],
       "correct": true
@@ -1149,7 +1142,15 @@
           "end": "2027-08-01T00:00:00+06:00"
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 8,
+          "end": 12,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -1370,18 +1371,11 @@
       "actual": [],
       "diagnostics": [
         {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 8,
-          "severity": "warning"
-        },
-        {
           "code": "resolution-error",
           "severity": "error",
           "message": "The expression names an invalid calendar date.",
           "start": 0,
-          "end": 17
+          "end": 11
         }
       ],
       "correct": true

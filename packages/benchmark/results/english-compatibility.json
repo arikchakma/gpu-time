@@ -1,6 +1,6 @@
 {
-  "model": "bb67f60962c7d7b42d35fa005f9a0e0a2b0f68b01823c091be3ab83409afc099",
-  "runtimeSha256": "f33b281d27a034b87f71770a3a1ee1b4e9cde36a3db86fe0031a5a7e43c3799d",
+  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
+  "runtimeSha256": "062d449e2053ba2333e5e9cf7e13af297241fd059d46bd9ff8e3c38b6ee6575e",
   "sourceSha256": "ba6496d7bb3eaa7ddf949143ec280286bf47003c1c66bc21934c594cdb882e96",
   "chronoVersion": "2.10.1",
   "scope": "Independently authored API behavior checks inspired by Chrono's English coverage, not copied upstream tests. Both parsers face hand-written expectations. Shared cases measure the same intended behavior; policy cases have explicit separate expectations. Date-only checks ignore implied clock defaults but enforce date, result count and endpoint presence. Explicit times are compared as exact instants. gpu-time also checks allDay, errors, truncation and absence of recurrence. This is a targeted compatibility sample, not full Chrono parity or general language accuracy.",
@@ -21,10 +21,11 @@
     "total": 75,
     "gpuTimePassed": 65,
     "chronoPassed": 67,
-    "bothPassed": 60,
+    "bothPassed": 59,
     "gpuTimeGaps": [
       "compat-008",
       "compat-016",
+      "compat-017",
       "compat-036",
       "compat-054",
       "compat-061",
@@ -36,12 +37,12 @@
       "compat-028",
       "compat-037",
       "compat-042",
-      "compat-048"
+      "compat-048",
+      "compat-073"
     ],
     "bothFailed": [
       "compat-033",
-      "compat-063",
-      "compat-073"
+      "compat-063"
     ]
   },
   "policy": {
@@ -106,11 +107,12 @@
     },
     "date-time-join": {
       "total": 6,
-      "gpuTimePassed": 5,
+      "gpuTimePassed": 4,
       "chronoPassed": 6,
-      "bothPassed": 5,
+      "bothPassed": 4,
       "gpuTimeGaps": [
-        "compat-016"
+        "compat-016",
+        "compat-017"
       ],
       "chronoGaps": [],
       "bothFailed": []
@@ -207,16 +209,16 @@
     },
     "rejection": {
       "total": 11,
-      "gpuTimePassed": 9,
+      "gpuTimePassed": 10,
       "chronoPassed": 10,
       "bothPassed": 9,
       "gpuTimeGaps": [
         "compat-070"
       ],
-      "chronoGaps": [],
-      "bothFailed": [
+      "chronoGaps": [
         "compat-073"
-      ]
+      ],
+      "bothFailed": []
     },
     "relative-day": {
       "total": 6,
@@ -542,7 +544,15 @@
             "allDay": true
           }
         ],
-        "diagnostics": []
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 18,
+            "end": 20,
+            "severity": "warning"
+          }
+        ]
       },
       "chrono": {
         "passed": true,
@@ -583,13 +593,6 @@
             "start": 29,
             "end": 31,
             "severity": "error"
-          },
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 23,
-            "end": 25,
-            "severity": "warning"
           }
         ]
       },
@@ -929,14 +932,17 @@
         }
       ],
       "gpuTime": {
-        "passed": true,
-        "actual": [
+        "passed": false,
+        "actual": [],
+        "diagnostics": [
           {
-            "start": "2027-05-18T14:45:00+00:00",
-            "allDay": false
+            "code": "invalid-date",
+            "message": "Both ends of a calendar range need a day.",
+            "start": 12,
+            "end": 14,
+            "severity": "error"
           }
-        ],
-        "diagnostics": []
+        ]
       },
       "chrono": {
         "passed": true,
@@ -974,15 +980,7 @@
             "allDay": false
           }
         ],
-        "diagnostics": [
-          {
-            "code": "low-confidence",
-            "message": "The model is uncertain about this expression.",
-            "start": 12,
-            "end": 14,
-            "severity": "warning"
-          }
-        ]
+        "diagnostics": []
       },
       "chrono": {
         "passed": true,
@@ -2802,16 +2800,16 @@
           },
           {
             "code": "filler-ignored",
-            "message": "Ignored call is call is inside the expression.",
-            "start": 12,
+            "message": "Ignored call is inside the expression.",
+            "start": 57,
             "end": 64,
             "severity": "warning"
           },
           {
             "code": "low-confidence",
             "message": "The model is uncertain about this expression.",
-            "start": 4,
-            "end": 11,
+            "start": 20,
+            "end": 23,
             "severity": "warning"
           }
         ]
@@ -3041,14 +3039,17 @@
       "comparison": "shared",
       "expected": [],
       "gpuTime": {
-        "passed": false,
-        "actual": [
+        "passed": true,
+        "actual": [],
+        "diagnostics": [
           {
-            "start": "2027-06-01T00:00:00+00:00",
-            "allDay": true
+            "code": "no-expression",
+            "severity": "warning",
+            "message": "No time expression was recognized in \"Please forward the draft to June.\".",
+            "start": 0,
+            "end": 33
           }
-        ],
-        "diagnostics": []
+        ]
       },
       "chrono": {
         "passed": false,
@@ -3370,7 +3371,15 @@
             "end": "2027-05-21T00:00:00+00:00"
           }
         ],
-        "diagnostics": []
+        "diagnostics": [
+          {
+            "code": "low-confidence",
+            "message": "The model is uncertain about this expression.",
+            "start": 14,
+            "end": 17,
+            "severity": "warning"
+          }
+        ]
       },
       "chrono": {
         "passed": true,
