@@ -28,13 +28,14 @@ const { defineParser } = await import(
 const parser = await defineParser({ backend: "cpu", tokens: true });
 
 const RECURRENCE =
-  /\b(?:every|each)\s+(?:day|morning|afternoon|evening|night|week|month|year|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b|\b(?:daily|weekly|monthly|yearly|hourly|nightly|annually)\b/i;
+  /\b(?:every|each)\s+(?:day|morning|afternoon|evening|night|week|month|year|monday|tuesday|wednesday|thursday|friday|saturday|sunday|january|february|march|april|may|june|july|august|september|october|november|december)\b|\b(?:daily|weekly|monthly|yearly|hourly|nightly|annually)\b/i;
 
 type Token = { start: number; end: number; kind: number; label: string };
 
 const sentences = (await readFile(source, "utf8")).split("\n").filter(Boolean);
 const rows: unknown[] = [];
 const tally = {
+  read: 0,
   candidates: 0,
   noSchedule: 0,
   notRecurrence: 0,
@@ -43,6 +44,7 @@ const tally = {
 };
 
 for (const [index, text] of sentences.entries()) {
+  tally.read++;
   const found = RECURRENCE.exec(text);
   if (!found) continue;
   tally.candidates++;

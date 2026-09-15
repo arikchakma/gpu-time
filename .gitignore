@@ -46,3 +46,6 @@ __pycache__
 .ruff_cache/
 
 todos/
+
+# Teacher batches and raw answers; open-bound.jsonl is the tracked result.
+packages/training/data/teacher/relabel/
