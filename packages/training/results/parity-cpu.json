@@ -1,7 +1,7 @@
 {
-  "model": "408aefbf59e65ec500321eacb9fd7caa5bc4659a81caee8257a143077d876a9e",
+  "model": "bb67f60962c7d7b42d35fa005f9a0e0a2b0f68b01823c091be3ab83409afc099",
   "sequences": 512,
-  "tokens": 10687,
+  "tokens": 10812,
   "labelMismatches": 0,
   "boundaryMismatches": 0,
   "maxError": 0.000011444091796875

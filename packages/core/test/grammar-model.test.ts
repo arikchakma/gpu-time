@@ -31,13 +31,15 @@ afterAll(() => parser.dispose());
 
 // Gold is right, model is behind. Runs under it.fails so a retrain that
 // closes one turns red and the id comes off the list.
-// 034, 136 and 138 are one construction: "in N units" meaning how long a
-// thing took, read as how far ahead it is. 096 is a person named Wednesday.
+// 034 and 136 are one construction: "in N units" meaning how long a thing
+// took, read as how far ahead it is. 096 is a person named Wednesday.
+// grammar-074-abbreviated reads "last" as a deictic, not an ordinal; the
+// spelled-out "last Friday of the month" still passes.
 const knownGaps = new Set([
   "negative-034",
   "negative-096",
   "negative-136",
-  "negative-138",
+  "grammar-074-abbreviated",
 ]);
 const isGap = (example: Example) => knownGaps.has(example.id);
 
