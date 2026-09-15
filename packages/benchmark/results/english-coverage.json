@@ -1,6 +1,6 @@
 {
-  "model": "c45581a4832b8d410b2b2fc7a06e09de570180a22a385ae760ae7aeb00f6b25b",
-  "runtimeSha256": "897d5885a796fd3202a72d423f8cb9daecadd7711fe9ff3b876f73461624dfe6",
+  "model": "408aefbf59e65ec500321eacb9fd7caa5bc4659a81caee8257a143077d876a9e",
+  "runtimeSha256": "97569b860b40974ca52dadb56cea68b7d49f10301369486e9ec95813b68a8084",
   "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
   "total": 71,
@@ -265,15 +265,7 @@
           "allDay": false
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 8,
-          "end": 13,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -549,15 +541,7 @@
           "allDay": true
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 12,
-          "end": 17,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -609,6 +593,13 @@
           "message": "Ignored exactly same time inside the expression.",
           "start": 13,
           "end": 43,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 8,
+          "end": 9,
           "severity": "warning"
         }
       ],
@@ -765,7 +756,15 @@
           "end": "2026-09-13T02:00:00+06:00"
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 21,
+          "end": 25,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -910,11 +909,18 @@
       "actual": [],
       "diagnostics": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"The ratio changed from 3-5 to 4-7.\".",
-          "start": 0,
-          "end": 34
+          "code": "invalid-date",
+          "message": "Multiple dates need a range or recurrence.",
+          "start": 30,
+          "end": 31,
+          "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 18,
+          "end": 22,
+          "severity": "warning"
         }
       ],
       "correct": true
@@ -985,7 +991,15 @@
           "allDay": true
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 15,
+          "end": 16,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {

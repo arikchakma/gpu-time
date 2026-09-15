@@ -1,10 +1,10 @@
 {
   "prefix": "active/parity",
   "sequences": 512,
-  "tokens": 10725,
+  "tokens": 10687,
   "rowsPerToken": 17,
   "rolesPerToken": 40,
-  "boundaryThreshold": 2.25,
+  "boundaryThreshold": 1.75,
   "layers": 2,
   "transitions": true
 }
