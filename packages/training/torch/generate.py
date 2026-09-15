@@ -989,7 +989,12 @@ def generate(
                 sentence.add(background.sentence(rng))
             # "next thursday?" is one token of punctuation away from a shape the
             # generator never showed the tokenizer's catch-all punctuation class.
-            if rng.random() < 0.4 and sentence.text[-1:] not in ".!?)\"":
+            # Sentences that still end inside the expression get the mark more
+            # often; a background tail otherwise takes it before they can.
+            ends_expression = bool(sentence.spans) and sentence.spans[-1]["label"] != "O"
+            if sentence.text[-1:] not in ".!?)\"" and rng.random() < (
+                0.7 if ends_expression else 0.4
+            ):
                 sentence.in_expression = False
                 sentence.add(background.terminator(rng, sentence.text), separator="")
             row = {

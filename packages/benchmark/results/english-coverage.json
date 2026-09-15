@@ -1,6 +1,6 @@
 {
-  "model": "408aefbf59e65ec500321eacb9fd7caa5bc4659a81caee8257a143077d876a9e",
-  "runtimeSha256": "97569b860b40974ca52dadb56cea68b7d49f10301369486e9ec95813b68a8084",
+  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
+  "runtimeSha256": "062d449e2053ba2333e5e9cf7e13af297241fd059d46bd9ff8e3c38b6ee6575e",
   "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
   "runtime": "packages/core/dist",
   "total": 71,
@@ -594,13 +594,6 @@
           "start": 13,
           "end": 43,
           "severity": "warning"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 8,
-          "end": 9,
-          "severity": "warning"
         }
       ],
       "correct": true
@@ -756,15 +749,7 @@
           "end": "2026-09-13T02:00:00+06:00"
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 21,
-          "end": 25,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -914,13 +899,6 @@
           "start": 30,
           "end": 31,
           "severity": "error"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 18,
-          "end": 22,
-          "severity": "warning"
         }
       ],
       "correct": true

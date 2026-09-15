@@ -278,9 +278,17 @@ def _broad_question(rng: random.Random) -> tuple[str, tuple[str, ...]]:
 def _greeting(rng: random.Random) -> tuple[str, tuple[str, ...]]:
     nouns, _ = vocabulary()
     name = rng.choice(NAMES)
+    # "good afternoon" opens a letter; the day part belongs to the greeting and
+    # never to the clause that follows it.
+    part = rng.choice(["morning", "afternoon", "evening"])
     return (
         rng.choice(
             [
+                f"good {part}. we are writing to confirm the {rng.choice(nouns)}",
+                f"good {part} {name}. a quick note on the {rng.choice(nouns)}",
+                f"good {part} all, the {rng.choice(nouns)} is confirmed",
+                f"good {part}! thanks for sending the {rng.choice(nouns)}",
+                f"good {part}, everyone. the {rng.choice(nouns)} moves",
                 f"hi {name}, quick note about the {rng.choice(nouns)}",
                 f"hey! hope the {rng.choice(nouns)} went well",
                 f"thanks {name}. the {rng.choice(nouns)} is ready",
@@ -517,6 +525,8 @@ def numeric(rng: random.Random) -> str:
     high = low + rng.randint(1, 40)
     address = f"{rng.randint(1, 499)} {rng.choice(nouns).title()} {rng.choice(['Street', 'Road', 'Avenue', 'Lane', 'Drive', 'Way'])}"
     numbered_plural = rng.choice(["seats", "rooms", "pages", "tracks", "tables", "gates"])
+    quarter, second_quarter = rng.sample(["Q1", "Q2", "Q3", "Q4"], 2)
+    year = rng.randint(1995, 2038)
     groups = [
         # Measured duration, all O. Keep "in N units" to 2 of 6 frames or real shifts regress.
         [
@@ -641,6 +651,20 @@ def numeric(rng: random.Random) -> str:
             f"The old quarter borders the {noun} and the river.",
             f"They live in the {rng.choice(['French', 'Historic', 'Old', 'Riverside'])} Quarter.",
             f"Send the second {noun} draft to {month} for review.",
+        ],
+        # A fiscal quarter code. The schema has no quarters, so "Q3" must read
+        # as filler; the tokenizer splits it, leaving a bare digit beside "Q".
+        [
+            f"{quarter} revenue on the {noun} beat the forecast.",
+            f"{year} {quarter} was the strongest run for the {noun}.",
+            f"The {noun} slipped to {quarter} and then to {second_quarter}.",
+            f"Compare {quarter} and {second_quarter} before you {verb} the {noun}.",
+            f"{name} owns the {noun} roadmap from {quarter} onwards.",
+            f"The {quarter} numbers for the {noun} are in the {other}.",
+            f"{year} {quarter} and {year} {second_quarter} both missed the {noun}.",
+            f"We shipped the {noun} in {quarter} and the {other} in {second_quarter}.",
+            f"Their {year} {quarter} filing lists the {noun}.",
+            f"{quarter} closes before the {noun} is ready.",
         ],
         # A vague count of ordinary objects, not of days or weeks.
         [

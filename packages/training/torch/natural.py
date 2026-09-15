@@ -47,8 +47,8 @@ FAMILIES = [
     "contrast-date",
     "clock-place",
 ]
-# English shapes the older families never rendered. Each stays a quarter of the
-# weight of the ordinary families it sits next to.
+# English shapes the older families never rendered. Each carries the same weight
+# as the ordinary families it sits next to.
 NEW_FAMILIES = (
     "open-clock",
     "bound-clock",
@@ -60,13 +60,13 @@ NEW_FAMILIES = (
     "plural-weekday",
     "wide-year",
     "spelled-hour",
+    "ordinal-weekday",
 )
 FAMILIES += NEW_FAMILIES
 # Prose dates and shifts stay balanced against their contrastive negatives.
 FAMILY_WEIGHTS = [
     0.5
-    if name in NEW_FAMILIES
-    or name in (
+    if name in (
         "prose-month",
         "compact-named-date",
         "shared-month-range",
@@ -85,6 +85,7 @@ FAMILY_WEIGHTS = [
     else 2
     for name in FAMILIES
 ]
+DEICTICS = ["this", "next", "last"] * 5 + ["nxt"]
 RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
 RESERVED = [
     "could you arrange a reminder for",
@@ -103,6 +104,12 @@ def words(value, hyphen=False):
         return ONES[value]
     tens, ones = divmod(value, 10)
     return TENS[tens * 10] + (("-" if hyphen else " ") + ONES[ones] if ones else "")
+
+
+def deictic(s, word):
+    """Renders a deictic. "nxt" is chat spelling; the schedule keeps "next"."""
+    s.add(word, "DEICTIC")
+    return "next" if word == "nxt" else word
 
 
 def one_day(r, name):
@@ -359,9 +366,8 @@ def target(s):
     r = s.rng
     pick = r.random()
     if pick < 0.3:
-        modifier = r.choice(["next", "this", "last"])
+        modifier = deictic(s, r.choice(DEICTICS))
         unit = r.choice(["week", "month", "year"])
-        s.add(modifier, "DEICTIC")
         s.add(unit, "UNIT")
         clause = {"date": {"kind": "relativeUnit", "unit": unit, "modifier": modifier}}
     elif pick < 0.45:
@@ -372,8 +378,7 @@ def target(s):
         day = r.randrange(7)
         date = {"kind": "weekday", "days": [DAY_CODES[day]]}
         if r.random() < 0.4:
-            date["modifier"] = r.choice(["this", "next", "last"])
-            s.add(date["modifier"], "DEICTIC")
+            date["modifier"] = deictic(s, r.choice(DEICTICS))
         s.add(one_day(r, DAYS[day]), "WEEKDAY")
         clause = {"date": date}
     elif pick < 0.8:
@@ -462,6 +467,13 @@ def render(s, reserved=False, family=None, bare=False):
             f"from the historic Quarter, {r.choice(background.NAMES)} proposed",
             f"send the second draft to {r.choice(background.MONTH_NAMES)} and set the deadline for",
         ])
+    elif family == "clock-offset" and r.random() < 0.5:
+        # "three minutes to eight" rarely stands on its own in real writing.
+        prefix = r.choice(["it's", "it is", "the time is"])
+    elif family in ("open-clock", "weekend") and r.random() < 0.45:
+        # The corpus only had bare "until 5"; people write "free until 5" and
+        # "available weekends only".
+        prefix = r.choice(["free", "available", "busy", "open"])
     elif family in NEW_FAMILIES and r.random() < 0.35:
         prefix = r.choice(CONTRAST)
     elif family == "spelled-hour" and r.random() < 0.5:
@@ -830,6 +842,40 @@ def render(s, reserved=False, family=None, bare=False):
         clause = {
             "recurrence": {"freq": "monthly", "interval": 1, "byMonthDay": [day]}
         }
+    elif family == "ordinal-weekday":
+        day = r.randrange(7)
+        # "last Fri of the month" is an ordinal; "last Fri" alone is a deictic.
+        # Both readings are drawn here so neither pulls the other across.
+        if r.random() < 0.5:
+            position = r.choice([1, 2, 3, 4, -1, -1])
+            s.add(
+                {1: "first", 2: "second", 3: "third", 4: "fourth", -1: "last"}[position],
+                "ORD",
+            )
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
+            s.add("of", "GLUE")
+            if r.random() < 0.4:
+                s.add(r.choice(["every", "each"]), "RECUR")
+            else:
+                s.add("the", "GLUE")
+            s.add("month", "UNIT")
+            clause = {"recurrence": {
+                "freq": "monthly",
+                "interval": 1,
+                "byDay": [DAY_CODES[day]],
+                "bySetPos": [position],
+            }}
+        else:
+            modifier = deictic(s, r.choice(DEICTICS))
+            s.add(one_day(r, DAYS[day]), "WEEKDAY")
+            clause = {"date": {
+                "kind": "weekday",
+                "days": [DAY_CODES[day]],
+                "modifier": modifier,
+            }}
+        if r.random() < 0.4:
+            join(s)
+            clause["time"] = {"start": clock(s)}
     elif family == "idiom-date":
         date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
         calendar(s, date)
@@ -889,8 +935,7 @@ def render(s, reserved=False, family=None, bare=False):
             s.add(month_word(r, month - 1), "MONTH")
             clause = {"date": {"kind": "calendarPeriod", "month": month, "week": week}}
         else:
-            modifier = r.choice(["this", "next", "last"])
-            s.add(modifier, "DEICTIC")
+            modifier = deictic(s, r.choice(DEICTICS))
             s.add(month_word(r, month - 1), "MONTH")
             clause = {
                 "date": {"kind": "calendarPeriod", "month": month, "modifier": modifier}
@@ -1040,8 +1085,7 @@ def render(s, reserved=False, family=None, bare=False):
         plural = r.random() < 0.45
         modifier = None
         if not plural and r.random() < 0.4:
-            modifier = r.choice(["this", "next", "last"])
-            s.add(modifier, "DEICTIC")
+            modifier = deictic(s, r.choice(DEICTICS))
         elif r.random() < 0.7:
             s.add(r.choice(["over the", "on the", "for the", "during the"])
                   if not plural else r.choice(["on", "on the"]), "GLUE")
@@ -1062,10 +1106,13 @@ def render(s, reserved=False, family=None, bare=False):
             join(s)
             clause["time"] = {"start": clock(s, r.choice(["bare", "digits"]))}
     elif family == "month-edge":
-        word = r.choice(["start", "beginning", "end", "end"])
-        edge = "end" if word == "end" else "start"
+        word = r.choice(["start", "beginning", "end", "end", "rest", "remainder"])
+        edge = "start" if word in ("start", "beginning") else "end"
         # "at the end of this month" is how people say it; the article is glue.
-        if r.random() < 0.4:
+        # "rest" and "remainder" only read as an edge behind that article.
+        if word in ("rest", "remainder"):
+            s.add("the", "GLUE")
+        elif r.random() < 0.4:
             s.add(r.choice(["at the", "by the", "the", "towards the"]), "GLUE")
         s.add(word, "EDGE")
         s.add("of", "GLUE")
@@ -1076,10 +1123,10 @@ def render(s, reserved=False, family=None, bare=False):
             calendar(s, date)
             clause = {"date": {"kind": "calendarPeriod", **date, "edge": edge}}
         else:
-            modifier = r.choice(["this", "next", "last", None])
+            modifier = r.choice(DEICTICS + [None] * 3)
             unit = r.choice(["week", "month", "year"])
             if modifier:
-                s.add(modifier, "DEICTIC")
+                modifier = deictic(s, modifier)
             else:
                 s.add("the", "GLUE")
             s.add(unit, "UNIT")

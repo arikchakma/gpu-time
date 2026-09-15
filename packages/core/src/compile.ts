@@ -445,9 +445,9 @@ function compileDateAndTime(
       }
 
       case Role.EDGE:
-        if (!["start", "beginning", "end"].includes(word))
+        if (!["start", "beginning", "end", "rest", "remainder"].includes(word))
           fail(token, "unsupported", "Unknown calendar edge.");
-        edge = word === "end" ? "end" : "start";
+        edge = word === "start" || word === "beginning" ? "start" : "end";
         break;
 
       case Role.NOW:
@@ -896,6 +896,26 @@ function compileDateAndTime(
     // instant and drop the openness, which a caller could not detect. A
     // "from" that opens a real range ("from 8 to 10pm") keeps both edges.
     time.open = "end";
+  } else if (
+    time &&
+    !time.end &&
+    clocks.length === 1 &&
+    !tokens.some((token) => token.label === Role.RANGE_START) &&
+    tokens.some(
+      (token, index) =>
+        token.label === Role.RANGE_END &&
+        // Only when the separator belongs to the clock. In "14-15 jul at 9:45"
+        // it joins two days, and that clause is a date range, not a deadline.
+        tokens
+          .slice(index + 1, tokens.indexOf(clocks[0].token))
+          .every((between) => filler.has(lower(between))),
+    )
+  ) {
+    // The mirror of the branch above: "until 3pm" has no reading where 3pm
+    // starts the window, so a range end with nothing opening it is a deadline.
+    time.end = time.start;
+    time.start = { hour: 0, minute: 0 };
+    time.open = "start";
   }
   if (time) clause.time = time;
   const firstClockIndex = tokens.findIndex((token) =>

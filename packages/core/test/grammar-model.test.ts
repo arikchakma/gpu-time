@@ -32,7 +32,10 @@ afterAll(() => parser.dispose());
 // Gold is right, model is behind. Runs under it.fails so a retrain that
 // closes one turns red and the id comes off the list.
 // 034, 136 and 138 are one construction: "in N units" meaning how long a
-// thing took, read as how far ahead it is. 096 is a person named Wednesday.
+// thing took, read as how far ahead it is. Three of its four gold rows are
+// here; 138 has flipped in and out three times today, so treat the whole
+// class as unstable rather than these ids as settled. 096 is a person named
+// Wednesday, which the warm chain has never answered.
 const knownGaps = new Set([
   "negative-034",
   "negative-096",
