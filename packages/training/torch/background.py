@@ -735,7 +735,452 @@ def month_part(rng: random.Random) -> str:
     )
 
 
+# Class A hard negatives: a bare integer with no time unit anywhere near it.
+SETTINGS = [
+    "volume", "brightness", "font size", "temperature", "contrast", "zoom",
+    "speed", "threshold", "margin", "line height", "gain", "opacity",
+    "difficulty", "pressure", "resolution", "bitrate", "sensitivity",
+    "saturation", "indent", "thermostat", "tempo", "quota", "row limit",
+    "batch size", "column width", "border radius", "page count", "priority",
+    "retry count", "seat number", "shutter speed", "aperture", "bass",
+    "treble", "altitude", "torque", "voltage", "word count", "zoom level",
+]
+KNOBS = ["dial", "knob", "slider", "lever", "switch", "dimmer", "throttle",
+         "regulator", "handle", "wheel", "stopper", "valve"]
+SET_VERBS = [
+    ("set", "set"), ("increase", "increased"), ("decrease", "decreased"),
+    ("raise", "raised"), ("lower", "lowered"), ("change", "changed"),
+    ("turn", "turned"), ("bump", "bumped"), ("adjust", "adjusted"),
+    ("drop", "dropped"), ("reset", "reset"), ("cap", "capped"),
+    ("limit", "limited"), ("tune", "tuned"), ("nudge", "nudged"),
+    ("crank", "cranked"), ("round", "rounded"), ("pin", "pinned"),
+    ("restrict", "restricted"), ("scale", "scaled"), ("trim", "trimmed"),
+]
+TRACKED = [
+    "pull request", "issue", "ticket", "bug", "case", "order", "invoice",
+    "patch", "changeset", "merge request", "work item", "incident", "form",
+    "claim", "docket", "permit", "receipt", "purchase order", "complaint",
+]
+COUNTABLES = [
+    "chairs", "shirts", "assertions", "pages", "rows", "columns", "seats",
+    "tickets", "boxes", "screws", "files", "tests", "errors", "warnings",
+    "photos", "slides", "passengers", "crates", "envelopes", "candles",
+    "mugs", "bricks", "sockets", "cables", "sensors", "entries", "records",
+    "commits", "branches", "plugins", "fonts", "icons", "pixels", "spare keys",
+    "towels", "plates", "napkins", "batteries", "bolts", "washers", "labels",
+    "stamps", "postcards", "buttons", "sleeves", "pairs of shoes", "shelves",
+    "drawers", "pillows", "blankets", "saucers", "cartridges", "lenses",
+]
+RELATIONS = [
+    "friend", "cousin", "flatmate", "neighbour", "colleague", "landlord",
+    "tutor", "dentist", "aunt", "nephew", "goddaughter", "boss", "lodger",
+    "coach", "accountant", "plumber", "co-author", "sister-in-law",
+]
+# Class B hard negatives: a weekday, a month or a unit used as a name or a noun.
+WEEKDAY_PEOPLE = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+                  "Saturday", "Sunday"]
+MONTH_PEOPLE = ["April", "May", "June", "August", "January", "March", "July"]
+SURNAMES = [
+    "Addams", "Jones", "Ferreira", "Okonkwo", "Lindqvist", "Vance", "Bello",
+    "Nakamura", "Petrov", "Silva", "Hart", "Osei", "Kaur", "Novak", "Reyes",
+    "Whitfield", "Duarte", "Ivanova", "Haddad", "Larsen",
+]
+PAPERS = [
+    "Times", "Herald", "Post", "Review", "Gazette", "Journal", "Observer",
+    "Telegraph", "Mail", "Express", "Tribune", "Chronicle", "Standard",
+    "Mirror", "Bulletin", "Courier", "Dispatch", "Sentinel",
+]
+UNIT_WORDS = ["second", "minute", "hour", "day", "week", "month", "year",
+              "decade", "century", "fortnight"]
+PRONOUNS = [("she", "her", "her"), ("he", "him", "his"), ("they", "them", "their")]
+
+
+def _plain_int(rng: random.Random) -> int:
+    """Weighted to the ranges a clock, a day of month or a year would occupy."""
+    roll = rng.random()
+    if roll < 0.30:
+        return rng.randint(1, 12)
+    if roll < 0.50:
+        return rng.randint(13, 31)
+    if roll < 0.65:
+        return rng.randint(1900, 2099)
+    if roll < 0.85:
+        return rng.randint(32, 99)
+    return rng.randint(100, 9999)
+
+
+def setting_number(rng: random.Random) -> str:
+    """A bare integer with no unit beside it: a setting, a label, or a count.
+
+    "set the volume to 7" shares its whole surface with a clock and a range
+    end, so the integer has to be seen next to a non-temporal noun in training.
+    """
+    nouns, verbs = vocabulary()
+    noun, other, verb = rng.choice(nouns), rng.choice(nouns), rng.choice(verbs)
+    name = rng.choice(NAMES)
+    value, second = _plain_int(rng), _plain_int(rng)
+    # A setting or a divisor is small; a label or a count runs to four digits.
+    level, divisor = rng.randint(1, 99), rng.randint(2, 60)
+    count, count2 = max(2, value), max(2, second)
+    base, past = rng.choice(SET_VERBS)
+    setting, knob = rng.choice(SETTINGS), rng.choice(KNOBS)
+    thing, other_thing = rng.choice(COUNTABLES), rng.choice(COUNTABLES)
+    label, ticket = rng.choice(NUMBERED), rng.choice(TRACKED)
+    subject, _, possessive = rng.choice(PRONOUNS)
+    groups = [
+        # "to 14" after a scheduling-shaped verb is exactly a clock or a range end.
+        [
+            f"{base.capitalize()} the {setting} to {level}.",
+            f"Please {base} the {setting} to {level}.",
+            f"{name} {past} the {setting} to {level}.",
+            f"{base.capitalize()} the {knob} to {level}.",
+            f"{subject.capitalize()} {past} the {knob} to {level}.",
+            f"Can you {base} the {setting} to {level}?",
+            f"{base.capitalize()} the {setting} to {level} and save the {noun}.",
+            f"The {setting} is {past} to {value} by default.",
+            f"Leave the {setting} at {level}.",
+            f"Keep the {knob} at {level} while you {verb} the {noun}.",
+            f"Cap the {setting} at {level} for now.",
+            f"The default {setting} is {level}.",
+            f"{name} wants the {setting} {past} to {value}.",
+            f"Try the {knob} at {level} instead.",
+        ],
+        # A noun that is simply numbered, bare and inside a sentence.
+        [
+            f"Please review {ticket} {value}.",
+            f"{ticket.capitalize()} {value} is still open.",
+            f"Close {ticket} {value} and raise a fresh one.",
+            f"{name} assigned {ticket} {value} to the {noun} team.",
+            f"{label.capitalize()} {value} covers the {noun}.",
+            f"Open {label} {value} of the {noun}.",
+            f"Skip to {label} {value}.",
+            f"See {label} {value} for the {other}.",
+            f"Build {value} broke the {noun}.",
+            f"Version {value} replaced version {second}.",
+            f"Option {value} is greyed out.",
+            f"Choose option {value}.",
+            f"The error points at {label} {value}.",
+            f"{name} filed {ticket} {value} about the {noun}.",
+            f"Merge {ticket} {value} into the main {noun}.",
+            f"{label.capitalize()} {value} of the {noun} is blank.",
+        ],
+        # A plain count of countable objects, never a quantity of time.
+        [
+            f"The test suite has {count} {thing}.",
+            f"There are {count} {thing} in the {noun}.",
+            f"Pack {count} {thing} and {count2} {other_thing}.",
+            f"We ordered {count} {thing} for the {noun}.",
+            f"The {noun} ships with {count} {thing}.",
+            f"{name} counted {count} {thing} on the {noun}.",
+            f"Only {count} {thing} survived the {noun}.",
+            f"The report lists {count} {thing} and {count2} {other_thing}.",
+            f"Bring {count} {thing}.",
+            f"That box holds {count} {thing}.",
+            f"Add {count} {thing} to the {noun}.",
+            f"{count} {thing} went missing from the {noun}.",
+            f"The form has {count} {thing} left blank.",
+            f"{subject.capitalize()} packed {count} {thing} into {possessive} bag.",
+        ],
+        # "60 by 12" and "7 to 5": the connectors a range uses, with no unit.
+        [
+            f"Divide {value} by {divisor}.",
+            f"Multiply {value} by {divisor}.",
+            f"{value} divided by {divisor} is not a whole number.",
+            f"Round {value} down to {divisor}.",
+            f"The score was {level} to {divisor}.",
+            f"They won {level} to {divisor}.",
+            f"The ratio of {noun} to {other} is {level} to {divisor}.",
+            f"Compare {value} to {second}.",
+            f"Change {value} to {second} in the {noun}.",
+            f"Rename {label} {value} to {label} {second}.",
+            f"The vote went {value} to {divisor}.",
+            f"Convert {value} to {second} using the {noun}.",
+            f"Sort the {thing} from {value} to {second}.",
+            f"The {thing} are numbered {value} to {second}.",
+        ],
+    ]
+    return rng.choice(rng.choice(groups))
+
+
+def time_word_name(rng: random.Random) -> str:
+    """A weekday, a month or a unit used as a person, a title or a bare noun.
+
+    The carrier grammar can only ever render these words as dates, so nothing
+    teaches the model that "Wednesday" is sometimes just somebody's name.
+    """
+    nouns, _ = vocabulary()
+    noun = rng.choice(nouns)
+    name, surname = rng.choice(NAMES), rng.choice(SURNAMES)
+    who = rng.choice(WEEKDAY_PEOPLE + MONTH_PEOPLE)
+    paper, relation = rng.choice(PAPERS), rng.choice(RELATIONS)
+    subject, objective, possessive = rng.choice(PRONOUNS)
+    unit, second_unit = rng.sample(UNIT_WORDS, 2)
+    groups = [
+        # Somebody's given name that happens to be a weekday or a month.
+        [
+            f"My {relation} {who} never returns {possessive} calls.",
+            f"{who} sent the invoice through.",
+            f"{who} signed the {noun} and {name} countersigned it.",
+            f"Ask {who} about the {noun}.",
+            f"{who} {surname} runs the {noun} department.",
+            f"They named {possessive} daughter {who}.",
+            f"A {relation} called {who} joined the {noun} team.",
+            f"{who} is the main character in the {noun}.",
+            f"{who} lent me {possessive} copy of the {noun}.",
+            f"I sat next to {who} at the {noun}.",
+            f"{who} and {name} split the {noun} between them.",
+            f"{who} answered the door holding a {noun}.",
+            f"{name} introduced me to {who} at the {noun}.",
+            f"{who} teaches the {noun} class downstairs.",
+            f"Everyone calls {objective} {who} because of the {noun}.",
+            f"{who} would rather work on the {noun} alone.",
+        ],
+        # A title that contains one: a paper, a film, a programme.
+        [
+            f"The {who} {paper} ran the story on its front page.",
+            f"{subject.capitalize()} writes a column for the {who} {paper}.",
+            f"The {who} {paper} printed a correction about the {noun}.",
+            f"I cancelled my {who} {paper} subscription.",
+            f"The {who} {paper} costs more than the plain edition.",
+            f"{who} Night Football clashed with the {noun}.",
+            f"The {who} Club meets in the back room.",
+            f"{who} is the title of that film, not a date.",
+            f"The horror sequel {who} went straight to streaming.",
+            f"The novel {who} sold out at the {noun}.",
+            f"{who} {surname} plays the lead in the film.",
+            f"The {who} {paper} archive is not searchable.",
+            f"{subject.capitalize()} read the obituary in the {who} {paper}.",
+            f"The {who} {paper} broke the {noun} story.",
+            f"Our cat is called {who}, after the {noun}.",
+        ],
+        # The unit word itself as a glossary entry or a grammar example.
+        [
+            f"A {unit} is a unit of measurement and nothing more.",
+            f"The word {unit} has {len(unit)} letters.",
+            f"The word {unit} appears twice on that page.",
+            f"The plural of {unit} is {unit}s.",
+            f"{unit.capitalize()} is a noun in this sentence.",
+            f"Spell the word {unit} backwards.",
+            f"The glossary defines {unit} and {second_unit} in one entry.",
+            f"The entry for {unit} is missing from the glossary.",
+            f"The term {unit} is defined on page {rng.randint(2, 400)}.",
+            f"{name} underlined the word {unit} in the {noun}.",
+            f"The crossword answer was {unit}.",
+            f"The column header reads {unit}.",
+            f"How would you translate the word {unit}?",
+            f"{unit.capitalize()} and {second_unit} are both nouns.",
+            f"Type the word {unit} into the search box.",
+            f"The {noun} spells {unit} with a capital letter.",
+            f"A {unit} and a {second_unit} are different words for different things.",
+        ],
+    ]
+    return rng.choice(rng.choice(groups))
+
+
+# Class C hard negatives: a dotted or dashed numeric string that is not a date.
+ARTEFACTS = [
+    "build", "release", "patch", "hotfix", "rollout", "image", "firmware",
+    "driver", "schema", "runtime", "bundle", "package", "snapshot", "installer",
+    "client", "agent", "plugin", "extension", "toolchain", "kernel", "sdk",
+    "binary", "container", "manifest", "changelog", "tarball", "branch cut",
+]
+SHIP_VERBS = [
+    ("ship", "shipped"), ("deploy", "deployed"), ("tag", "tagged"),
+    ("pin", "pinned"), ("promote", "promoted"), ("publish", "published"),
+    ("install", "installed"), ("revert", "reverted"), ("cut", "cut"),
+    ("sign", "signed"), ("mirror", "mirrored"), ("roll back", "rolled back"),
+    ("cherry-pick", "cherry-picked"), ("rebuild", "rebuilt"), ("vendor", "vendored"),
+]
+HOSTS = [
+    "gateway", "proxy", "load balancer", "database", "cache node", "mail relay",
+    "print server", "access point", "firewall", "jump box", "router",
+    "staging box", "build agent", "name server", "broker", "file share",
+    "monitoring box", "test rig", "camera", "printer", "thermostat",
+]
+ENVIRONMENTS = [
+    "production", "staging", "the sandbox", "the test cluster", "the lab",
+    "the demo tenant", "canary", "the mirror", "the field units", "preview",
+]
+SPEC_DOCS = [
+    "RFC 3339", "RFC 2119", "RFC 7231", "RFC 5322", "RFC 6749", "RFC 4122",
+    "ISO 8601", "ISO 9001", "ISO 3166", "IEEE 754", "IEEE 802.11", "UTF-8",
+    "SHA-256", "X.509", "ECMA-262", "PEP 8", "HTTP/2", "TLS 1.0", "ASCII 65",
+]
+PART_LABELS = [
+    "SKU", "part", "model", "serial", "asset tag", "batch", "lot", "item",
+    "catalogue number", "unit", "die", "mould", "fixture", "coupler",
+]
+# Listed, not drawn from letters: random pairs produce "PM", "SAT" and "DEC",
+# and the tokenizer splits "PM-84233" into a bare meridiem token.
+PART_CODES = [
+    "BK", "CR", "DX", "FG", "HP", "KL", "NX", "PQ", "RV", "TZ", "VB", "XG",
+    "ZL", "QD", "BRK", "CLP", "DRV", "FLX", "GRN", "HLX", "KPR", "NVL", "PLT",
+    "RDX", "TRB", "VLX", "ZNC", "GSK", "LTP", "WRN",
+]
+RANGE_NOUNS = [
+    "pages", "rows", "lines", "ports", "records", "entries", "frames",
+    "columns", "offsets", "channels", "slots", "blocks", "sectors", "bins",
+    "shelves", "lockers", "plots", "readings", "samples", "cells",
+]
+
+
+def _dotted_version(rng: random.Random, fields: int = 0) -> str:
+    """A dotted number the positive calendar can never render.
+
+    semantic.py dots only two or three fields, never pads them, and always puts
+    a 1990-2040 year in the three-field form; natural.py never dots at all. So a
+    four-field address, a small three-field triple, and a two-field pair whose
+    minor is 0 or above 28 are all outside that grammar.
+
+    A padded year-first stamp is not, whatever the strings say: the tokenizer
+    splits it into five tokens and the padding survives only as one number
+    bucket, so "Calibration date: 2027.06.24." read as filler. See test.
+    """
+    fields = fields or rng.choice([2, 3, 3])  # a four-field address is asked for by name.
+    if fields == 4:
+        return f"{rng.choice([10, 172, 192])}.{rng.randint(0, 254)}.{rng.randint(0, 254)}.{rng.randint(1, 254)}"
+    if fields == 3:
+        return f"{rng.randint(1, 40)}.{rng.randint(0, 40)}.{rng.randint(0, 40)}"
+    minor = 0 if rng.random() < 0.6 else rng.randint(29, 99)
+    return f"{rng.randint(1, 40)}.{minor}"
+
+
+def _commit(rng: random.Random) -> str:
+    """A short hash. A letter every third place, or the tokenizer splits
+    "2023e23" and leaves a bare year token labelled O."""
+    body = [rng.choice("0123456789abcdef") for _ in range(rng.choice([7, 7, 8, 10]))]
+    for index in range(0, len(body), 3):
+        body[index] = rng.choice("abcdef")
+    return "".join(body)
+
+
+def numeric_identifier(rng: random.Random) -> str:
+    """A dotted or dashed numeric string that looks like a date and is not one.
+
+    "Use build 2026.09.12 in production" is the whole class: a version, a build
+    stamp, an address, a part number or a numeric range. Nothing in the carrier
+    grammar shows these, so the model reads the digits and answers with a date.
+    """
+    nouns, verbs = vocabulary()
+    noun, other, verb = rng.choice(nouns), rng.choice(nouns), rng.choice(verbs)
+    name = rng.choice(NAMES)
+    artefact, host = rng.choice(ARTEFACTS), rng.choice(HOSTS)
+    base, past = rng.choice(SHIP_VERBS)
+    environment, spec = rng.choice(ENVIRONMENTS), rng.choice(SPEC_DOCS)
+    version, older = _dotted_version(rng), _dotted_version(rng)
+    calver = _dotted_version(rng, 3)
+    address, second_address = _dotted_version(rng, 4), _dotted_version(rng, 4)
+    port, commit = rng.choice([80, 443, 3000, 5432, 8000, 8080, 9090]), _commit(rng)
+    stamp = f"{rng.randint(2019, 2031)}{rng.randint(1, 12):02}{rng.randint(1, 28):02}"
+    part_label, letters = rng.choice(PART_LABELS), rng.choice(PART_CODES)
+    part = f"{letters}-{rng.randint(10000, 99999)}"
+    isbn = f"978-{rng.randint(0, 1)}-{rng.randint(10, 99)}-{rng.randint(100000, 999999)}-{rng.randint(0, 9)}"
+    phone = f"{rng.randint(200, 989)}-{rng.choice([rng.randint(0, 1860), rng.randint(2100, 9999)]):04}"
+    # Both ends clear 31, so a dashed pair is never a day range or a clock range,
+    # and the band a year could occupy is skipped outright.
+    low = rng.choice([rng.randint(32, 1860), rng.randint(2100, 8000)])
+    high = low + rng.randint(1, 120)
+    ranged = rng.choice(RANGE_NOUNS)
+    groups = [
+        # A dotted version, with and without a prefix word.
+        [
+            f"Use {artefact} {calver} in {environment} until the {noun} lands.",
+            f"{base.capitalize()} {artefact} {version} to {environment}.",
+            f"{name} {past} {version} after the {noun} failed.",
+            f"We are still on {artefact} {older} here.",
+            f"Version {version} of the {noun} dropped the {other}.",
+            f"{artefact.capitalize()} {calver} replaced {artefact} {older}.",
+            f"The {noun} needs {artefact} {version} or newer.",
+            f"v{version} of the {noun} is the last one that works.",
+            f"Pin the {noun} to v{version} until we {verb} the {other}.",
+            f"release {version} is tagged but not announced.",
+            f"{name} asked whether {version} fixes the {noun}.",
+            f"Downgrade to {older} if the {noun} breaks.",
+            f"The changelog jumps from {older} to {version} with no note.",
+            f"Our {noun} pins {artefact} {calver} in the lockfile.",
+            f"{base.capitalize()} v{version} and tell {name}.",
+            f"Anything above {version} needs a new {noun}.",
+        ],
+        # A build stamp or a commit hash.
+        [
+            f"{artefact.capitalize()} {stamp} never reached {environment}.",
+            f"The {noun} ships as {artefact} {stamp}.",
+            f"{name} {past} {artefact} {stamp} by hand.",
+            f"Compare {artefact} {stamp} against {artefact} {calver}.",
+            f"Commit {commit} touched the {noun}.",
+            f"{name} reverted commit {commit} on the {noun} branch.",
+            f"The {noun} regression starts at {commit}.",
+            f"Cherry-pick {commit} into the {noun} branch.",
+            f"{commit} and {_commit(rng)} both change the {noun}.",
+            f"The bug report only quotes {artefact} {stamp}.",
+            f"Tag {commit} as {artefact} {version}.",
+            f"Our {noun} logs show {artefact} {stamp} everywhere.",
+            f"{base.capitalize()} the {noun} from {commit} instead.",
+            f"The stack trace names {artefact} {stamp} and nothing else.",
+        ],
+        # An address, a port, a phone number: dots and colons that carry no time.
+        [
+            f"The {host} answers on {address}.",
+            f"Point the {noun} at {address} instead of {second_address}.",
+            f"{name} moved the {host} to {address}:{port}.",
+            f"Only {address} may reach the {noun}.",
+            f"The {host} at {address} keeps dropping the {noun}.",
+            f"Whitelist {address} and {second_address} for the {noun}.",
+            f"Bind the {noun} to {address}:{port}.",
+            f"{address} is the old {host}; use {second_address}.",
+            f"Port {port} on {address} is closed.",
+            f"Ring {phone} and ask about the {noun}.",
+            f"{name} left {phone} as the callback number.",
+            f"The {noun} lists {phone} as the support line.",
+            f"Our {host} and the {noun} share {address}.",
+            f"Route the {noun} through {address} for now.",
+        ],
+        # A part number, an SKU, an ISBN, a standard.
+        [
+            f"{part_label.capitalize()} {part} is out of stock.",
+            f"Order {part_label} {part} for the {noun}.",
+            f"{name} quoted {part_label} {part} instead of the {noun}.",
+            f"The {noun} takes {part_label} {part} or the older {letters} range.",
+            f"{part_label.capitalize()} {part} and {part_label} {rng.choice(PART_CODES)}-{rng.randint(10000, 99999)} are not interchangeable.",
+            f"The ISBN on the {noun} is {isbn}.",
+            f"Catalogue the {noun} under {isbn}.",
+            f"{isbn} is a reprint, not a new edition.",
+            f"The {noun} follows {spec} to the letter.",
+            f"{spec} says nothing about the {noun}.",
+            f"{name} cited {spec} in the {noun} review.",
+            f"Read {spec} before you {verb} the {noun}.",
+            f"The {noun} predates {spec}.",
+            f"{spec} and {rng.choice(SPEC_DOCS)} disagree about the {other}.",
+        ],
+        # A dashed numeric range over things that are not days.
+        [
+            f"{ranged.capitalize()} {low}-{high} describe the {noun}.",
+            f"Reread {ranged} {low}-{high} of the {noun}.",
+            f"The {noun} fills {ranged} {low}-{high}.",
+            f"{name} flagged {ranged} {low}-{high} as wrong.",
+            f"Copy {ranged} {low}-{high} into the {other}.",
+            f"Ports {low}-{high} are reserved for the {noun}.",
+            f"Open ports {low}-{high} on the {host}.",
+            f"The {noun} reads {ranged} {low}-{high} in one pass.",
+            f"Delete {ranged} {low}-{high} and rerun the {noun}.",
+            f"{ranged.capitalize()} {low}-{high} are blank in the {noun}.",
+            f"The error covers {ranged} {low}-{high} only.",
+            f"Everything in {ranged} {low}-{high} needs a second {noun}.",
+            f"{base.capitalize()} the {noun} across {ranged} {low}-{high}.",
+            f"Check {ranged} {low}-{high} before you {verb} the {other}.",
+        ],
+    ]
+    return rng.choice(rng.choice(groups))
+
+
 def sentence(rng: random.Random) -> str:
+    # The three hard-negative classes go first, so their share is the stated one.
+    if rng.random() < 0.12:
+        return setting_number(rng)
+    if rng.random() < 0.09:
+        return time_word_name(rng)
+    if rng.random() < 0.07:
+        return numeric_identifier(rng)
     pool = borrowed()
     if pool and rng.random() < 0.15:
         return rng.choice(pool)
