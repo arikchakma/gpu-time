@@ -46,6 +46,7 @@ const SOURCES = [
   "contrast",
   "open-bound",
   "missed",
+  "measurement",
 ];
 const authored = join(training, "data/teacher");
 // Written or teacher-labelled rather than harvested, so they live in a tracked
@@ -56,6 +57,7 @@ const authoredSources = new Set([
   "contrast",
   "open-bound",
   "missed",
+  "measurement",
 ]);
 // 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
 // at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
@@ -152,6 +154,7 @@ const relabelledSources = new Set([
   "contrast",
   "open-bound",
   "missed",
+  "measurement",
 ]);
 const taught = new Set(
   rows
