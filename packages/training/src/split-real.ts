@@ -95,7 +95,10 @@ for (const name of await readdir(goldDirectory)) {
   if (!name.endsWith(".jsonl") && !name.endsWith(".json")) continue;
   const raw = await readFile(join(goldDirectory, name), "utf8");
   const rows = name.endsWith(".jsonl")
-    ? raw.split("\n").filter(Boolean).map((line) => JSON.parse(line))
+    ? raw
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => JSON.parse(line))
     : [JSON.parse(raw)].flat();
   for (const row of rows)
     if (row && typeof row.text === "string") gold.add(normal(row.text));
@@ -103,7 +106,10 @@ for (const name of await readdir(goldDirectory)) {
 
 const rows: Row[] = [];
 for (const source of SOURCES) {
-  const path = join(authoredSources.has(source) ? authored : directory, `${source}.jsonl`);
+  const path = join(
+    authoredSources.has(source) ? authored : directory,
+    `${source}.jsonl`,
+  );
   try {
     await access(path);
   } catch {
@@ -114,7 +120,11 @@ for (const source of SOURCES) {
     .split("\n")
     .filter(Boolean)
     .map((line) => ({ ...JSON.parse(line), source }) as Row);
-  for (let round = 0; round < (authoredSources.has(source) ? authoredCopies : 1); round++)
+  for (
+    let round = 0;
+    round < (authoredSources.has(source) ? authoredCopies : 1);
+    round++
+  )
     rows.push(...parsed);
 }
 
@@ -174,7 +184,10 @@ for (const row of rows) {
     dropped++;
     continue;
   }
-  if (!relabelledSources.has(row.source ?? "") && taught.has(normal(row.text))) {
+  if (
+    !relabelledSources.has(row.source ?? "") &&
+    taught.has(normal(row.text))
+  ) {
     relabelled++;
     continue;
   }
@@ -191,9 +204,9 @@ for (const row of rows) {
     continue;
   }
   if (row.source === "negatives") {
-    const word = /\b(may|march|august|day|year|minute|hour|week|month)\b/i.exec(
-      row.text,
-    )?.[1]?.toLowerCase();
+    const word = /\b(may|march|august|day|year|minute|hour|week|month)\b/i
+      .exec(row.text)?.[1]
+      ?.toLowerCase();
     if (word) {
       const count = (seen.get(`w:${word}`) ?? 0) + 1;
       seen.set(`w:${word}`, count);
@@ -234,14 +247,20 @@ train.push(...repeated);
 const recased: Row[] = [];
 train.forEach((row, index) => {
   if (index % recase !== 0) return;
-  const text = index % (recase * 2) === 0 ? row.text.toUpperCase() : row.text.toLowerCase();
+  const text =
+    index % (recase * 2) === 0
+      ? row.text.toUpperCase()
+      : row.text.toLowerCase();
   if (text === row.text) return;
   recased.push({ ...row, text, source: `${row.source}-case` });
 });
 
 const write = (name: string, lines: string[]) =>
   writeFile(join(directory, `${name}.jsonl`), lines.join("\n") + "\n");
-await write("real-train", [...train, ...recased].map((row) => JSON.stringify(row)));
+await write(
+  "real-train",
+  [...train, ...recased].map((row) => JSON.stringify(row)),
+);
 // Rewritten every run so sources newer than the frozen file are scored, not
 // dropped. One row per sentence, later SOURCES win, frozen text set unchanged.
 const held = new Map<string, string>();

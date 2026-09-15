@@ -13,14 +13,16 @@ const argument = (name: string) => {
   const index = process.argv.indexOf(name);
   if (index < 0) return undefined;
   const value = process.argv[index + 1];
-  if (!value || value.startsWith("--")) throw new Error(`Missing value for ${name}.`);
+  if (!value || value.startsWith("--"))
+    throw new Error(`Missing value for ${name}.`);
   return value;
 };
 
 const labelSet = new Set<string>(LABELS);
 
 /** Content tokens are the only ones a teacher is asked to label. */
-const content = (text: string, token: Token) => /\S/.test(text.slice(token.start, token.end));
+const content = (text: string, token: Token) =>
+  /\S/.test(text.slice(token.start, token.end));
 
 if (process.argv.includes("--emit")) {
   const source = argument("--in")!;
@@ -48,7 +50,10 @@ if (process.argv.includes("--emit")) {
         id: `taught-${start + offset}`,
         text: row.text,
         tokens: tokens
-          .map((token, index) => ({ index, text: row.text.slice(token.start, token.end) }))
+          .map((token, index) => ({
+            index,
+            text: row.text.slice(token.start, token.end),
+          }))
           .filter((_, index) => content(row.text, tokens[index]!)),
       };
     });
@@ -69,8 +74,12 @@ if (process.argv.includes("--verify")) {
   // The teacher returns ids and labels only, so the text comes back from the batch.
   const batches = argument("--batches");
   const texts = new Map<string, string>();
-  for (const name of batches ? readdirSync(batches).filter((one) => one.endsWith(".json")) : [])
-    for (const row of JSON.parse(readFileSync(join(batches!, name), "utf8")) as {
+  for (const name of batches
+    ? readdirSync(batches).filter((one) => one.endsWith(".json"))
+    : [])
+    for (const row of JSON.parse(
+      readFileSync(join(batches!, name), "utf8"),
+    ) as {
       id: string;
       text: string;
     }[])
@@ -88,8 +97,12 @@ if (process.argv.includes("--verify")) {
   };
   const accepted: unknown[] = [];
 
-  for (const name of readdirSync(directory).filter((one) => one.endsWith(".json"))) {
-    const proposals = JSON.parse(readFileSync(join(directory, name), "utf8")) as {
+  for (const name of readdirSync(directory).filter((one) =>
+    one.endsWith(".json"),
+  )) {
+    const proposals = JSON.parse(
+      readFileSync(join(directory, name), "utf8"),
+    ) as {
       id: string;
       text: string;
       labels: Record<string, string>;
@@ -143,7 +156,12 @@ if (process.argv.includes("--verify")) {
           id: proposal.id,
           template,
           text: proposal.text,
-          spans: tokens.map(({ start, end, label }) => ({ start, end, label, clauseStart: false })),
+          spans: tokens.map(({ start, end, label }) => ({
+            start,
+            end,
+            label,
+            clauseStart: false,
+          })),
         });
         continue;
       }
@@ -152,13 +170,15 @@ if (process.argv.includes("--verify")) {
         continue;
       }
       // The teacher states the schedule; the compiler decides whether to believe it.
-      if (proposal.schedule && !isDeepStrictEqual(schedules[0]!.schedule, proposal.schedule)) {
+      if (
+        proposal.schedule &&
+        !isDeepStrictEqual(schedules[0]!.schedule, proposal.schedule)
+      ) {
         tally.mismatch++;
         continue;
       }
-      const clause = (schedules[0]!.schedule as { clauses?: unknown[] })?.clauses?.[0] as
-        | Record<string, unknown>
-        | undefined;
+      const clause = (schedules[0]!.schedule as { clauses?: unknown[] })
+        ?.clauses?.[0] as Record<string, unknown> | undefined;
       if (require && !(clause && require in clause)) {
         tally.wrongShape++;
         continue;
@@ -168,11 +188,19 @@ if (process.argv.includes("--verify")) {
         id: proposal.id,
         template,
         text: proposal.text,
-        spans: tokens.map(({ start, end, label }) => ({ start, end, label, clauseStart: false })),
+        spans: tokens.map(({ start, end, label }) => ({
+          start,
+          end,
+          label,
+          clauseStart: false,
+        })),
         schedule: schedules[0]!.schedule,
       });
     }
   }
-  writeFileSync(out, accepted.map((row) => JSON.stringify(row)).join("\n") + "\n");
+  writeFileSync(
+    out,
+    accepted.map((row) => JSON.stringify(row)).join("\n") + "\n",
+  );
   console.log(JSON.stringify(tally, null, 2));
 }

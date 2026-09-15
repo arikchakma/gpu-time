@@ -44,7 +44,9 @@ for (const [index, text] of sentences.entries()) {
 
   const bare = found[1]!;
   const alone = await parser.parse(bare);
-  const role = (alone.tokens as Token[]).find((token) => token.kind !== 3)?.label;
+  const role = (alone.tokens as Token[]).find(
+    (token) => token.kind !== 3,
+  )?.label;
   if (!role || role === "O") {
     tally.noRole++;
     continue;

@@ -75,7 +75,9 @@ for (const [index, text] of sentences.entries()) {
   }
 
   const labels = new Map<number, string>();
-  inside.forEach((token, position) => labels.set(token.start, words[position]!.label));
+  inside.forEach((token, position) =>
+    labels.set(token.start, words[position]!.label),
+  );
 
   tally.kept++;
   rows.push({

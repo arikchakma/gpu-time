@@ -106,15 +106,15 @@ The generator writes both the sentences and their labels, so the model could onl
 ever learn the generator. `pnpm --filter @gpu-time/training harvest` adds text
 written by people, labelled by whichever teacher can actually judge it:
 
-| Source | Teacher | Rows |
-| --- | --- | --- |
-| `agreed` | chrono-node and our tagger agree on span and every stated field | 54,0k |
-| `negatives` | both parsers silent, so the time-shaped words are not times | 7,9k |
-| `recurrence` | our tagger alone; chrono has no recurrence support | 6,4k |
-| `rescued` | chrono's span, our roles, for sentences we went silent on | 3,0k |
-| `possessive` | our tagger on the bare word behind `'s` | 1,2k |
-| `corrected` | chrono's span with the dropped modifier forced to `DEICTIC` | 1,0k |
-| `duration` | three language judgements distilled into one rule | 0,7k |
+| Source       | Teacher                                                         | Rows  |
+| ------------ | --------------------------------------------------------------- | ----- |
+| `agreed`     | chrono-node and our tagger agree on span and every stated field | 54,0k |
+| `negatives`  | both parsers silent, so the time-shaped words are not times     | 7,9k  |
+| `recurrence` | our tagger alone; chrono has no recurrence support              | 6,4k  |
+| `rescued`    | chrono's span, our roles, for sentences we went silent on       | 3,0k  |
+| `possessive` | our tagger on the bare word behind `'s`                         | 1,2k  |
+| `corrected`  | chrono's span with the dropped modifier forced to `DEICTIC`     | 1,0k  |
+| `duration`   | three language judgements distilled into one rule               | 0,7k  |
 
 Every row outside `agreed` is verified by compiling its labels and checking the
 result against what the sentence states, so a wrong guess cannot enter the corpus.

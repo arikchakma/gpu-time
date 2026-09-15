@@ -5,6 +5,7 @@ pnpm-lock.yaml
 packages/core/src/model/weights.gen.ts
 packages/training/.venv/
 packages/training/data/synth/
+packages/training/active/
 packages/training/runs/
 packages/training/exports/
 packages/training/results/

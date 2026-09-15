@@ -39,7 +39,10 @@ const resolver = await defineResolver({ backend: "cpu" });
 // between the parsers without disagreeing on meaning.
 const LEADING = /^(?:on|at|in|by|from|until|till|before|after|during)\s+/i;
 const shape = (span: string) =>
-  span.replace(LEADING, "").replace(/(\d)(?:st|nd|rd|th)\b/gi, "$1").toLowerCase();
+  span
+    .replace(LEADING, "")
+    .replace(/(\d)(?:st|nd|rd|th)\b/gi, "$1")
+    .toLowerCase();
 
 const trim = (text: string, start: number, end: number) => {
   while (start < end && /[\s,.;:!?"')(]/.test(text[start]!)) start++;
@@ -110,7 +113,11 @@ for (const [index, text] of sentences.entries()) {
     tally.chronoSilent++;
     // Neither parser sees a time, so these time-shaped words are not times.
     if (expressions.length > 0) {
-      unjudged.push({ text, reason: "chrono-blind", ours: text.slice(expressions[0]!.start, expressions[0]!.end) });
+      unjudged.push({
+        text,
+        reason: "chrono-blind",
+        ours: text.slice(expressions[0]!.start, expressions[0]!.end),
+      });
     }
     if (expressions.length === 0) {
       tally.negatives++;
@@ -135,7 +142,12 @@ for (const [index, text] of sentences.entries()) {
   }
   if (theirs.length > 1 || expressions.length > 1) {
     tally.multiple++;
-    unjudged.push({ text, reason: "multiple", chrono: theirs.length, ours: expressions.length });
+    unjudged.push({
+      text,
+      reason: "multiple",
+      chrono: theirs.length,
+      ours: expressions.length,
+    });
     continue;
   }
 

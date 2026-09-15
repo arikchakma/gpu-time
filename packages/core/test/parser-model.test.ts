@@ -130,7 +130,8 @@ it("ignores boundary whitespace during inference while preserving every source t
 });
 
 it("reports where each resolved expression was read from", async () => {
-  const { defineParser: defineResolvingParser } = await import("../src/index.js");
+  const { defineParser: defineResolvingParser } =
+    await import("../src/index.js");
   const parser = await defineResolvingParser({ backend: "cpu" });
   const text = "Dinner at 8 at Nobu";
   const result = await parser.parse(text, {
@@ -145,7 +146,8 @@ it("reports where each resolved expression was read from", async () => {
 });
 
 it("omits a span when nothing resolved", async () => {
-  const { defineParser: defineResolvingParser } = await import("../src/index.js");
+  const { defineParser: defineResolvingParser } =
+    await import("../src/index.js");
   const parser = await defineResolvingParser({ backend: "cpu" });
   const result = await parser.parse("Tom likes fish.", {
     reference: "2026-09-14T12:00:00+06:00",

@@ -38,9 +38,10 @@ const recognizers = run("packages/benchmark/src/external.ts", []);
 
 const sets: Record<string, number> = {};
 for (const line of gold.split("\n")) {
-  const found = /^(\S+): (\d+)\/(\d+) (?:exact schedules|correct abstentions)/.exec(
-    line.trim(),
-  );
+  const found =
+    /^(\S+): (\d+)\/(\d+) (?:exact schedules|correct abstentions)/.exec(
+      line.trim(),
+    );
   if (found) sets[found[1]!] = Number(found[2]);
 }
 const pooled = Object.values(sets).reduce((total, one) => total + one, 0);

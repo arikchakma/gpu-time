@@ -24,14 +24,27 @@ const taught = new Set(
 );
 
 const words = [
-  "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-  "ten", "eleven", "twelve",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+  "eleven",
+  "twelve",
 ];
 const units = ["second", "minute", "hour", "day", "week", "month", "year"];
 const amount = `(?:${words.join("|")}|\\d{1,3})`;
 const unitWord = `(?:${units.map((one) => `${one}s?`).join("|")})`;
 // One clause only: a second time word would need a second label we cannot guess.
-const quantity = new RegExp(`\\b(in|for|after)\\s+(${amount})\\s+(${unitWord})\\b`, "i");
+const quantity = new RegExp(
+  `\\b(in|for|after)\\s+(${amount})\\s+(${unitWord})\\b`,
+  "i",
+);
 const named = new RegExp(`\\b(12)\\s+(noon|midnight)\\b`, "i");
 
 const value = (text: string) =>
@@ -63,10 +76,17 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
       spans[at] = label;
       return at + needle.length;
     };
-    let cursor = place(direction!, direction!.toLowerCase() === "for" ? "DUR" : "DIR_AFTER", start);
+    let cursor = place(
+      direction!,
+      direction!.toLowerCase() === "for" ? "DUR" : "DIR_AFTER",
+      start,
+    );
     cursor = place(count!, "NUM", cursor);
     place(unit!, "UNIT", cursor);
-    const single = { amount: value(count!), unit: unit!.toLowerCase().replace(/s$/, "") as never };
+    const single = {
+      amount: value(count!),
+      unit: unit!.toLowerCase().replace(/s$/, "") as never,
+    };
     schedule = {
       clauses: [
         direction!.toLowerCase() === "for"
@@ -79,7 +99,11 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
     const at = noon!.index;
     spans[at] = "O";
     spans[at + noon![1]!.length + 1] = "TIME_NAMED";
-    schedule = { clauses: [{ time: { start: { named: noon![2]!.toLowerCase() as never } } }] };
+    schedule = {
+      clauses: [
+        { time: { start: { named: noon![2]!.toLowerCase() as never } } },
+      ],
+    };
     tally.named++;
   }
 
@@ -97,7 +121,10 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
     tally.rejected++;
     continue;
   }
-  if (compiled.length !== 1 || !isDeepStrictEqual(compiled[0]!.schedule, schedule)) {
+  if (
+    compiled.length !== 1 ||
+    !isDeepStrictEqual(compiled[0]!.schedule, schedule)
+  ) {
     tally.rejected++;
     continue;
   }
@@ -105,7 +132,12 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
     id: `contrast-${rows.length}`,
     template: "teacher/contrast",
     text,
-    spans: tokens.map(({ start, end, label }) => ({ start, end, label, clauseStart: false })),
+    spans: tokens.map(({ start, end, label }) => ({
+      start,
+      end,
+      label,
+      clauseStart: false,
+    })),
     schedule,
   });
 }

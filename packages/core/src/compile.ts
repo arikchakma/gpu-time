@@ -297,7 +297,10 @@ function literalSeconds(clock: ClockTime): number | undefined {
 
 function qualifyClock(clock: ParsedClock, part: DayPart): void {
   // "o'clock" names no half of the day, so "ten o'clock in the evening" is 22:00.
-  if (!("hour" in clock.value) || (clock.meridiem && clock.meridiem !== "o'clock"))
+  if (
+    !("hour" in clock.value) ||
+    (clock.meridiem && clock.meridiem !== "o'clock")
+  )
     return;
   const hour = clock.value.hour;
   if (hour < 1 || hour > 12) return;
