@@ -34,6 +34,7 @@ describe("English coverage fixtures", () => {
         "shared-month-range",
         "month-year",
         "calendar-edge-shift",
+        "compact-clock",
       ]),
     );
     for (const fixture of fixtures) {

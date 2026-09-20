@@ -1,33 +1,34 @@
 {
-  "checkpoint": "runs/shorthand/epoch-39.pt",
-  "checkpointSha256": "53cf3708eddb080a259defbe77936cd382f30e68f8f1f6eeccd6584afde3d23b",
-  "artifactSha256": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
-  "exportSourceDirectory": "exports/168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410/5e711fd6d8e61eeeb04b70a82ce231beaedb422f9f3ddb48f7dc3d7553f45245/source",
+  "checkpoint": "runs/avg-0.95/best.pt",
+  "checkpointSha256": "0409c0554fec0a21b5ce5921c80d4164b90efeae408bc85f50b052b08dc95b7c",
+  "artifactSha256": "2e1a5550df9bbeb6f01d443a20b07c006d81dcc6f71b125744199f464e392ea3",
+  "exportSourceDirectory": "exports/2e1a5550df9bbeb6f01d443a20b07c006d81dcc6f71b125744199f464e392ea3/bd2c28737fb8659780f804089705d6e5a6868818301e2c643fc50c91194149ff/source",
   "exportSourceHashes": {
     "training/export.py": "83901e0e521378687982e26a5e9f3a131ce902a3d3c34d580473b3c1a265b439",
     "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
     "training/model.py": "311367991f360d1a862f933faf346ea94da36500a734c210f7744139f2b047de",
     "training/train.py": "12aebb8dad8afc6e3d67a77ab6bbf2ae5f457068422f79f209b624f2c772fba2",
-    "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
+    "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f",
+    "training/average.py": "86910a99c1d12deb48e70b34168cb64b0801070f5bb7e6eaa935af10dca51ee8"
   },
-  "boundaryThreshold": 1.5,
+  "boundaryThreshold": 2.0,
   "calibration": {
-    "threshold": 1.5,
+    "threshold": 2.0,
     "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
     "grid": [
       {
         "threshold": 0.0,
         "metrics": {
           "validation": {
-            "f1": 0.9947328818660647,
-            "truePositive": 661,
-            "falsePositive": 5,
-            "falseNegative": 2
+            "f1": 0.9937694704049844,
+            "truePositive": 638,
+            "falsePositive": 7,
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.9920760697305864,
-            "truePositive": 626,
-            "falsePositive": 10,
+            "f1": 0.9957734573119188,
+            "truePositive": 589,
+            "falsePositive": 5,
             "falseNegative": 0
           }
         }
@@ -36,15 +37,15 @@
         "threshold": 0.25,
         "metrics": {
           "validation": {
-            "f1": 0.9947328818660647,
-            "truePositive": 661,
-            "falsePositive": 5,
+            "f1": 0.9937597503900156,
+            "truePositive": 637,
+            "falsePositive": 6,
             "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.992862807295797,
-            "truePositive": 626,
-            "falsePositive": 9,
+            "f1": 0.9957734573119188,
+            "truePositive": 589,
+            "falsePositive": 5,
             "falseNegative": 0
           }
         }
@@ -53,15 +54,15 @@
         "threshold": 0.5,
         "metrics": {
           "validation": {
-            "f1": 0.9939759036144579,
-            "truePositive": 660,
+            "f1": 0.994535519125683,
+            "truePositive": 637,
             "falsePositive": 5,
-            "falseNegative": 3
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.992862807295797,
-            "truePositive": 626,
-            "falsePositive": 9,
+            "f1": 0.9966159052453468,
+            "truePositive": 589,
+            "falsePositive": 4,
             "falseNegative": 0
           }
         }
@@ -70,15 +71,15 @@
         "threshold": 0.75,
         "metrics": {
           "validation": {
-            "f1": 0.9939759036144579,
-            "truePositive": 660,
-            "falsePositive": 5,
+            "f1": 0.9945269741985927,
+            "truePositive": 636,
+            "falsePositive": 4,
             "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9936507936507937,
-            "truePositive": 626,
-            "falsePositive": 8,
+            "f1": 0.9966159052453468,
+            "truePositive": 589,
+            "falsePositive": 4,
             "falseNegative": 0
           }
         }
@@ -87,15 +88,15 @@
         "threshold": 1.0,
         "metrics": {
           "validation": {
-            "f1": 0.9939668174962293,
-            "truePositive": 659,
+            "f1": 0.9945269741985927,
+            "truePositive": 636,
             "falsePositive": 4,
-            "falseNegative": 4
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9952305246422893,
-            "truePositive": 626,
-            "falsePositive": 6,
+            "f1": 0.9974597798475868,
+            "truePositive": 589,
+            "falsePositive": 3,
             "falseNegative": 0
           }
         }
@@ -104,16 +105,16 @@
         "threshold": 1.25,
         "metrics": {
           "validation": {
-            "f1": 0.9932075471698113,
-            "truePositive": 658,
+            "f1": 0.9945269741985927,
+            "truePositive": 636,
             "falsePositive": 4,
-            "falseNegative": 5
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9968152866242038,
-            "truePositive": 626,
-            "falsePositive": 4,
-            "falseNegative": 0
+            "f1": 0.9974554707379135,
+            "truePositive": 588,
+            "falsePositive": 2,
+            "falseNegative": 1
           }
         }
       },
@@ -121,16 +122,16 @@
         "threshold": 1.5,
         "metrics": {
           "validation": {
-            "f1": 0.9947089947089947,
-            "truePositive": 658,
-            "falsePositive": 2,
-            "falseNegative": 5
+            "f1": 0.9945269741985927,
+            "truePositive": 636,
+            "falsePositive": 4,
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.9976095617529881,
-            "truePositive": 626,
-            "falsePositive": 3,
-            "falseNegative": 0
+            "f1": 0.9974554707379135,
+            "truePositive": 588,
+            "falsePositive": 2,
+            "falseNegative": 1
           }
         }
       },
@@ -138,15 +139,15 @@
         "threshold": 1.75,
         "metrics": {
           "validation": {
-            "f1": 0.9939485627836612,
-            "truePositive": 657,
-            "falsePositive": 2,
-            "falseNegative": 6
+            "f1": 0.9945184025058731,
+            "truePositive": 635,
+            "falsePositive": 3,
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.9968102073365231,
-            "truePositive": 625,
-            "falsePositive": 3,
+            "f1": 0.9974554707379135,
+            "truePositive": 588,
+            "falsePositive": 2,
             "falseNegative": 1
           }
         }
@@ -155,15 +156,15 @@
         "threshold": 2.0,
         "metrics": {
           "validation": {
-            "f1": 0.9939485627836612,
-            "truePositive": 657,
+            "f1": 0.9952978056426333,
+            "truePositive": 635,
             "falsePositive": 2,
-            "falseNegative": 6
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.9968102073365231,
-            "truePositive": 625,
-            "falsePositive": 3,
+            "f1": 0.9974554707379135,
+            "truePositive": 588,
+            "falsePositive": 2,
             "falseNegative": 1
           }
         }
@@ -172,14 +173,14 @@
         "threshold": 2.25,
         "metrics": {
           "validation": {
-            "f1": 0.9939485627836612,
-            "truePositive": 657,
+            "f1": 0.9945098039215686,
+            "truePositive": 634,
             "falsePositive": 2,
-            "falseNegative": 6
+            "falseNegative": 5
           },
           "heldoutDevelopment": {
-            "f1": 0.9976057462090981,
-            "truePositive": 625,
+            "f1": 0.9974554707379135,
+            "truePositive": 588,
             "falsePositive": 2,
             "falseNegative": 1
           }
@@ -189,16 +190,16 @@
         "threshold": 2.5,
         "metrics": {
           "validation": {
-            "f1": 0.9939393939393939,
-            "truePositive": 656,
+            "f1": 0.9952904238618524,
+            "truePositive": 634,
             "falsePositive": 1,
-            "falseNegative": 7
+            "falseNegative": 5
           },
           "heldoutDevelopment": {
-            "f1": 0.9976057462090981,
-            "truePositive": 625,
-            "falsePositive": 2,
-            "falseNegative": 1
+            "f1": 0.9974511469838573,
+            "truePositive": 587,
+            "falsePositive": 1,
+            "falseNegative": 2
           }
         }
       },
@@ -206,15 +207,15 @@
         "threshold": 2.75,
         "metrics": {
           "validation": {
-            "f1": 0.9939393939393939,
-            "truePositive": 656,
+            "f1": 0.9952904238618524,
+            "truePositive": 634,
             "falsePositive": 1,
-            "falseNegative": 7
+            "falseNegative": 5
           },
           "heldoutDevelopment": {
-            "f1": 0.9968051118210862,
-            "truePositive": 624,
-            "falsePositive": 2,
+            "f1": 0.9974511469838573,
+            "truePositive": 587,
+            "falsePositive": 1,
             "falseNegative": 2
           }
         }
@@ -223,16 +224,16 @@
         "threshold": 3.0,
         "metrics": {
           "validation": {
-            "f1": 0.9931766489764974,
-            "truePositive": 655,
+            "f1": 0.9952904238618524,
+            "truePositive": 634,
             "falsePositive": 1,
-            "falseNegative": 8
+            "falseNegative": 5
           },
           "heldoutDevelopment": {
-            "f1": 0.9976019184652278,
-            "truePositive": 624,
+            "f1": 0.9957446808510638,
+            "truePositive": 585,
             "falsePositive": 1,
-            "falseNegative": 2
+            "falseNegative": 4
           }
         }
       },
@@ -240,16 +241,16 @@
         "threshold": 3.25,
         "metrics": {
           "validation": {
-            "f1": 0.992412746585736,
-            "truePositive": 654,
+            "f1": 0.9945011783189317,
+            "truePositive": 633,
             "falsePositive": 1,
-            "falseNegative": 9
+            "falseNegative": 6
           },
           "heldoutDevelopment": {
-            "f1": 0.9976019184652278,
-            "truePositive": 624,
+            "f1": 0.9948892674616695,
+            "truePositive": 584,
             "falsePositive": 1,
-            "falseNegative": 2
+            "falseNegative": 5
           }
         }
       },
@@ -257,16 +258,16 @@
         "threshold": 3.5,
         "metrics": {
           "validation": {
-            "f1": 0.992412746585736,
-            "truePositive": 654,
+            "f1": 0.9945011783189317,
+            "truePositive": 633,
             "falsePositive": 1,
-            "falseNegative": 9
+            "falseNegative": 6
           },
           "heldoutDevelopment": {
-            "f1": 0.9968,
-            "truePositive": 623,
+            "f1": 0.9948892674616695,
+            "truePositive": 584,
             "falsePositive": 1,
-            "falseNegative": 3
+            "falseNegative": 5
           }
         }
       },
@@ -274,16 +275,16 @@
         "threshold": 3.75,
         "metrics": {
           "validation": {
-            "f1": 0.9916476841305999,
-            "truePositive": 653,
+            "f1": 0.9945011783189317,
+            "truePositive": 633,
             "falsePositive": 1,
-            "falseNegative": 10
+            "falseNegative": 6
           },
           "heldoutDevelopment": {
-            "f1": 0.9968,
-            "truePositive": 623,
+            "f1": 0.9948892674616695,
+            "truePositive": 584,
             "falsePositive": 1,
-            "falseNegative": 3
+            "falseNegative": 5
           }
         }
       },
@@ -291,16 +292,16 @@
         "threshold": 4.0,
         "metrics": {
           "validation": {
-            "f1": 0.9908814589665653,
-            "truePositive": 652,
-            "falsePositive": 1,
-            "falseNegative": 11
+            "f1": 0.994492525570417,
+            "truePositive": 632,
+            "falsePositive": 0,
+            "falseNegative": 7
           },
           "heldoutDevelopment": {
-            "f1": 0.9968,
-            "truePositive": 623,
-            "falsePositive": 1,
-            "falseNegative": 3
+            "f1": 0.9931623931623932,
+            "truePositive": 581,
+            "falsePositive": 0,
+            "falseNegative": 8
           }
         }
       },
@@ -308,16 +309,16 @@
         "threshold": 4.25,
         "metrics": {
           "validation": {
-            "f1": 0.9908675799086758,
-            "truePositive": 651,
+            "f1": 0.9937007874015747,
+            "truePositive": 631,
             "falsePositive": 0,
-            "falseNegative": 12
+            "falseNegative": 8
           },
           "heldoutDevelopment": {
-            "f1": 0.9975980784627703,
-            "truePositive": 623,
+            "f1": 0.9923011120615911,
+            "truePositive": 580,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 9
           }
         }
       },
@@ -325,16 +326,16 @@
         "threshold": 4.5,
         "metrics": {
           "validation": {
-            "f1": 0.9900990099009901,
-            "truePositive": 650,
+            "f1": 0.9929078014184397,
+            "truePositive": 630,
             "falsePositive": 0,
-            "falseNegative": 13
+            "falseNegative": 9
           },
           "heldoutDevelopment": {
-            "f1": 0.9975980784627703,
-            "truePositive": 623,
+            "f1": 0.9905741216795202,
+            "truePositive": 578,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 11
           }
         }
       },
@@ -342,16 +343,16 @@
         "threshold": 4.75,
         "metrics": {
           "validation": {
-            "f1": 0.989329268292683,
-            "truePositive": 649,
+            "f1": 0.9929078014184397,
+            "truePositive": 630,
             "falsePositive": 0,
-            "falseNegative": 14
+            "falseNegative": 9
           },
           "heldoutDevelopment": {
-            "f1": 0.9975980784627703,
-            "truePositive": 623,
+            "f1": 0.9871023215821152,
+            "truePositive": 574,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 15
           }
         }
       },
@@ -359,24 +360,36 @@
         "threshold": 5.0,
         "metrics": {
           "validation": {
-            "f1": 0.9877862595419847,
-            "truePositive": 647,
+            "f1": 0.9921135646687698,
+            "truePositive": 629,
             "falsePositive": 0,
-            "falseNegative": 16
+            "falseNegative": 10
           },
           "heldoutDevelopment": {
-            "f1": 0.9975980784627703,
-            "truePositive": 623,
+            "f1": 0.9844827586206897,
+            "truePositive": 571,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 18
           }
         }
       }
     ]
   },
-  "epoch": 39,
-  "tokensSeenAtCheckpoint": 1212656181,
+  "epoch": 0,
+  "tokensSeenAtCheckpoint": 1225435509,
   "lineage": [
+    {
+      "checkpoint": "runs/avg-0.95/best.pt",
+      "sha256": "0409c0554fec0a21b5ce5921c80d4164b90efeae408bc85f50b052b08dc95b7c",
+      "epoch": 0,
+      "trainingTokens": 0
+    },
+    {
+      "checkpoint": "runs/compact-bound/epoch-2.pt",
+      "sha256": "f9c7f6f027b1e87744f659ba0903f954b1e1dcf8f77b24d26039756f33d0d87b",
+      "epoch": 2,
+      "trainingTokens": 6379530
+    },
     {
       "checkpoint": "runs/shorthand/epoch-39.pt",
       "sha256": "53cf3708eddb080a259defbe77936cd382f30e68f8f1f6eeccd6584afde3d23b",
@@ -496,8 +509,29 @@
       "sha256": "6276c3d45c6ab8bfeadd292feee204c8fb14a18dda0a5df84fa29dae9d87d4cf",
       "epoch": 2,
       "trainingTokens": 14427956
+    },
+    {
+      "checkpoint": "runs/compact-repair2/epoch-2.pt",
+      "sha256": "2b4bbfaecfcbe07c3b8a2c919c2e0665dbf09ce417e194406d9116d57e80dd91",
+      "epoch": 2,
+      "trainingTokens": 6399798
     }
   ],
+  "derivation": {
+    "method": "weighted-checkpoint-average",
+    "parents": [
+      {
+        "checkpoint": "runs/compact-bound/epoch-2.pt",
+        "sha256": "f9c7f6f027b1e87744f659ba0903f954b1e1dcf8f77b24d26039756f33d0d87b",
+        "coefficient": 0.050000000000000044
+      },
+      {
+        "checkpoint": "runs/compact-repair2/epoch-2.pt",
+        "sha256": "2b4bbfaecfcbe07c3b8a2c919c2e0665dbf09ce417e194406d9116d57e80dd91",
+        "coefficient": 0.95
+      }
+    ]
+  },
   "parameters": 38745,
   "quantizationBits": 6,
   "quantizationScheme": "tensor",
@@ -508,9 +542,9 @@
   },
   "logicalPackedBytes": 29059,
   "encodedCharacters": 38745,
-  "moduleBytes": 41750,
-  "moduleGzipBytes": 25934,
-  "moduleBrotliBytes": 22501,
+  "moduleBytes": 41752,
+  "moduleGzipBytes": 25851,
+  "moduleBrotliBytes": 22492,
   "labels": [
     "O",
     "NUM",
@@ -550,38 +584,38 @@
   ],
   "metrics": {
     "validation": {
-      "tokens": 137327,
+      "tokens": 138660,
       "sequences": 10000,
-      "tokenAccuracy": 0.9925943186700358,
-      "exactLabelAndBoundarySequence": 0.9322,
-      "boundaryPrecision": 0.996969696969697,
-      "boundaryRecall": 0.9924585218702866,
-      "boundaryF1": 0.9947089947089947,
+      "tokenAccuracy": 0.9931487090725516,
+      "exactLabelAndBoundarySequence": 0.9335,
+      "boundaryPrecision": 0.9968602825745683,
+      "boundaryRecall": 0.9937402190923318,
+      "boundaryF1": 0.9952978056426331,
       "boundaryCounts": {
-        "truePositive": 658,
+        "truePositive": 635,
         "falsePositive": 2,
-        "falseNegative": 5
+        "falseNegative": 4
       }
     },
     "heldout": {
-      "tokens": 121256,
+      "tokens": 121255,
       "sequences": 10000,
-      "tokenAccuracy": 0.9884954146598931,
-      "exactLabelAndBoundarySequence": 0.8889,
-      "boundaryPrecision": 0.9952305246422893,
-      "boundaryRecall": 1.0,
-      "boundaryF1": 0.997609561752988,
+      "tokenAccuracy": 0.9886850026803018,
+      "exactLabelAndBoundarySequence": 0.89,
+      "boundaryPrecision": 0.9966101694915255,
+      "boundaryRecall": 0.99830220713073,
+      "boundaryF1": 0.9974554707379135,
       "boundaryCounts": {
-        "truePositive": 626,
-        "falsePositive": 3,
-        "falseNegative": 0
+        "truePositive": 588,
+        "falsePositive": 2,
+        "falseNegative": 1
       }
     }
   },
   "corpora": {
-    "validation": "552bde146d0f827ca1b6e829e7376ad5aa92082363468f9d54cf3bace8720935",
-    "heldout": "40da1f6e8130edab7a6820231e5a644557644bc8d364dc775d3dd60456bf04fe",
-    "reservedCarrier": "08dac1e495d0dc25ce32793de03e969bb9861264a482983797edd48dcb11998a"
+    "validation": "cc7d49c74af3305f404b8dc4df599e6035ebaa1b7422108b492302c87b66b8c3",
+    "heldout": "0ba6621b013ed065cfc722e5cc151520c306423efa8c15c45f6ea95d00bec436",
+    "reservedCarrier": "c3b10b92780965f167e5da1f3c42c47a7440ddd1d10fab43e765afc155f0146c"
   },
   "promotion": {
     "criterion": "gold-schedule-accuracy",
@@ -594,46 +628,48 @@
     ],
     "candidate": {
       "total": 625,
-      "correct": 593,
+      "correct": 591,
       "sets": {
         "chat": {
           "total": 331,
-          "correct": 303,
+          "correct": 301,
           "sha256": "1c5ecc602b5247130f29fe86ebf426b673fd0a1fc8b3d7425fd6670423e9f6e2",
           "failures": [
-            "chat-009",
             "chat-012",
             "chat-016",
             "chat-017",
-            "chat-044",
+            "chat-027",
             "chat-075",
             "chat-076",
+            "chat-079",
+            "chat-084",
+            "chat-086",
             "chat-087",
             "chat-113",
             "chat-115",
-            "chat-117",
-            "chat-120",
             "chat-128",
             "chat-130",
+            "chat-132",
             "chat-133",
             "chat-134",
             "chat-140",
             "chat-154",
-            "chat-183",
+            "chat-157",
             "chat-205",
             "chat-221",
+            "chat-236",
             "chat-238",
             "chat-240",
             "chat-245",
-            "chat-262",
-            "chat-294",
+            "chat-248",
+            "chat-305",
             "chat-321",
             "chat-329"
           ],
           "families": {
             "chat-abbrev": {
               "total": 28,
-              "correct": 27
+              "correct": 28
             },
             "chat-calendar": {
               "total": 51,
@@ -649,23 +685,23 @@
             },
             "chat-prose": {
               "total": 22,
-              "correct": 21
+              "correct": 22
             },
             "chat-question": {
               "total": 27,
-              "correct": 26
+              "correct": 25
             },
             "chat-recognizers": {
               "total": 63,
-              "correct": 53
+              "correct": 54
             },
             "chat-relative": {
               "total": 22,
-              "correct": 19
+              "correct": 17
             },
             "chat-tatoeba": {
               "total": 86,
-              "correct": 79
+              "correct": 77
             }
           }
         },
@@ -834,47 +870,47 @@
     },
     "baseline": {
       "total": 625,
-      "correct": 593,
+      "correct": 592,
       "sets": {
         "chat": {
           "total": 331,
           "correct": 302,
           "sha256": "1c5ecc602b5247130f29fe86ebf426b673fd0a1fc8b3d7425fd6670423e9f6e2",
           "failures": [
+            "chat-009",
+            "chat-012",
             "chat-016",
             "chat-017",
+            "chat-044",
             "chat-075",
+            "chat-076",
+            "chat-079",
             "chat-087",
+            "chat-113",
             "chat-115",
-            "chat-119",
+            "chat-117",
             "chat-120",
             "chat-128",
             "chat-130",
-            "chat-132",
             "chat-133",
             "chat-134",
             "chat-140",
             "chat-154",
             "chat-183",
-            "chat-184",
-            "chat-185",
-            "chat-186",
             "chat-205",
             "chat-221",
             "chat-238",
             "chat-240",
             "chat-245",
             "chat-262",
-            "chat-268",
-            "chat-275",
-            "chat-305",
+            "chat-294",
             "chat-321",
             "chat-329"
           ],
           "families": {
             "chat-abbrev": {
               "total": 28,
-              "correct": 24
+              "correct": 27
             },
             "chat-calendar": {
               "total": 51,
@@ -890,7 +926,7 @@
             },
             "chat-prose": {
               "total": 22,
-              "correct": 19
+              "correct": 21
             },
             "chat-question": {
               "total": 27,
@@ -906,7 +942,7 @@
             },
             "chat-tatoeba": {
               "total": 86,
-              "correct": 83
+              "correct": 78
             }
           }
         },
@@ -948,17 +984,18 @@
         },
         "negatives": {
           "total": 192,
-          "correct": 189,
+          "correct": 188,
           "sha256": "08afe5bf7ddfb403ce61398cb0e8fd86171c34ac3697be48c53f72e323bb1a6e",
           "failures": [
             "negative-034",
             "negative-096",
-            "negative-136"
+            "negative-136",
+            "negative-138"
           ],
           "families": {
             "non-temporal": {
               "total": 192,
-              "correct": 189
+              "correct": 188
             }
           }
         },
@@ -1072,22 +1109,22 @@
         }
       }
     },
-    "improvement": 0.0,
+    "improvement": -0.0016,
     "failures": [],
     "warnings": [
-      "gold chat/chat-tatoeba: lost 4",
-      "gold negatives: lost 1, gained 0",
-      "gold negatives/non-temporal: lost 1",
-      "reserved: lost 1 schedules, gained 0",
-      "reserved: token labels drifted on 9 sequences"
+      "gold chat: lost 8, gained 7",
+      "gold chat/chat-question: lost 1",
+      "gold chat/chat-relative: lost 2",
+      "gold chat/chat-tatoeba: lost 1",
+      "reserved: token labels drifted on 7 sequences"
     ],
     "accepted": true,
     "missingSets": [],
     "baselineIdentity": {
       "report": "active/export-report.json",
-      "checkpoint": "runs/widen/epoch-22.pt",
-      "checkpointSha256": "57bcc0a2472f7c86a99f378930fb62cdb22d8fbeea72e57ce8e09db8bd6082a1",
-      "artifactSha256": "bb67f60962c7d7b42d35fa005f9a0e0a2b0f68b01823c091be3ab83409afc099",
+      "checkpoint": "runs/shorthand/epoch-39.pt",
+      "checkpointSha256": "53cf3708eddb080a259defbe77936cd382f30e68f8f1f6eeccd6584afde3d23b",
+      "artifactSha256": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
       "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
     },
     "synthetic": {
@@ -1097,230 +1134,570 @@
       "reserved": {
         "corpus": {
           "path": "data/synth/natural-reserved.jsonl",
-          "sha256": "ed9778e18f6aed9894bf26d1b46a367e3c6583bd0b40598815110f3e71b3ddb7",
-          "featurizedSha256": "08dac1e495d0dc25ce32793de03e969bb9861264a482983797edd48dcb11998a",
+          "sha256": "e578ee65f1bcb8ed4a1a4d318e8b7c211f657e834a6c2a327d7340308a536883",
+          "featurizedSha256": "c3b10b92780965f167e5da1f3c42c47a7440ddd1d10fab43e765afc155f0146c",
           "sequences": 1000,
-          "families": 17
+          "families": 43
         },
         "answers": {
           "total": 1000,
-          "correct": 973,
+          "correct": 921,
           "failures": [
-            "natural-424242-33",
-            "natural-424242-76",
-            "natural-424242-135",
+            "natural-424242-23",
+            "natural-424242-25",
+            "natural-424242-32",
+            "natural-424242-40",
+            "natural-424242-68",
+            "natural-424242-109",
+            "natural-424242-123",
+            "natural-424242-126",
+            "natural-424242-128",
+            "natural-424242-154",
+            "natural-424242-159",
+            "natural-424242-166",
+            "natural-424242-168",
+            "natural-424242-183",
+            "natural-424242-197",
             "natural-424242-203",
-            "natural-424242-220",
-            "natural-424242-254",
-            "natural-424242-280",
-            "natural-424242-297",
-            "natural-424242-305",
-            "natural-424242-314",
-            "natural-424242-348",
-            "natural-424242-390",
+            "natural-424242-212",
+            "natural-424242-238",
+            "natural-424242-240",
+            "natural-424242-245",
+            "natural-424242-246",
+            "natural-424242-247",
+            "natural-424242-252",
+            "natural-424242-260",
+            "natural-424242-270",
+            "natural-424242-283",
+            "natural-424242-295",
+            "natural-424242-341",
+            "natural-424242-351",
+            "natural-424242-369",
+            "natural-424242-379",
+            "natural-424242-381",
+            "natural-424242-383",
+            "natural-424242-384",
+            "natural-424242-412",
             "natural-424242-424",
-            "natural-424242-441",
-            "natural-424242-475",
-            "natural-424242-501",
-            "natural-424242-628",
-            "natural-424242-764",
-            "natural-424242-781",
-            "natural-424242-798",
+            "natural-424242-426",
+            "natural-424242-453",
+            "natural-424242-462",
+            "natural-424242-467",
+            "natural-424242-470",
+            "natural-424242-504",
+            "natural-424242-566",
+            "natural-424242-584",
+            "natural-424242-590",
+            "natural-424242-591",
+            "natural-424242-595",
+            "natural-424242-596",
+            "natural-424242-598",
+            "natural-424242-601",
+            "natural-424242-625",
+            "natural-424242-642",
+            "natural-424242-644",
+            "natural-424242-668",
+            "natural-424242-670",
+            "natural-424242-685",
+            "natural-424242-694",
+            "natural-424242-695",
+            "natural-424242-713",
+            "natural-424242-763",
+            "natural-424242-768",
+            "natural-424242-770",
+            "natural-424242-811",
+            "natural-424242-814",
+            "natural-424242-828",
+            "natural-424242-842",
             "natural-424242-849",
-            "natural-424242-866",
-            "natural-424242-883",
-            "natural-424242-924",
-            "natural-424242-943",
-            "natural-424242-951",
-            "natural-424242-977"
+            "natural-424242-854",
+            "natural-424242-856",
+            "natural-424242-871",
+            "natural-424242-873",
+            "natural-424242-897",
+            "natural-424242-900",
+            "natural-424242-912",
+            "natural-424242-940",
+            "natural-424242-969",
+            "natural-424242-971",
+            "natural-424242-979",
+            "natural-424242-985"
           ]
         },
         "answersBaseline": {
           "total": 1000,
-          "correct": 974,
+          "correct": 894,
           "failures": [
-            "natural-424242-33",
+            "natural-424242-23",
+            "natural-424242-25",
+            "natural-424242-31",
+            "natural-424242-40",
+            "natural-424242-54",
+            "natural-424242-68",
+            "natural-424242-73",
             "natural-424242-76",
-            "natural-424242-135",
-            "natural-424242-203",
-            "natural-424242-220",
-            "natural-424242-254",
-            "natural-424242-280",
+            "natural-424242-77",
+            "natural-424242-82",
+            "natural-424242-109",
+            "natural-424242-123",
+            "natural-424242-125",
+            "natural-424242-126",
+            "natural-424242-128",
+            "natural-424242-152",
+            "natural-424242-154",
+            "natural-424242-159",
+            "natural-424242-162",
+            "natural-424242-165",
+            "natural-424242-166",
+            "natural-424242-168",
+            "natural-424242-212",
+            "natural-424242-240",
+            "natural-424242-245",
+            "natural-424242-246",
+            "natural-424242-247",
+            "natural-424242-251",
+            "natural-424242-252",
+            "natural-424242-257",
+            "natural-424242-270",
+            "natural-424242-283",
+            "natural-424242-288",
+            "natural-424242-295",
             "natural-424242-297",
-            "natural-424242-305",
-            "natural-424242-314",
-            "natural-424242-348",
-            "natural-424242-390",
+            "natural-424242-341",
+            "natural-424242-343",
+            "natural-424242-351",
+            "natural-424242-378",
+            "natural-424242-381",
+            "natural-424242-384",
+            "natural-424242-386",
+            "natural-424242-412",
+            "natural-424242-421",
             "natural-424242-424",
-            "natural-424242-441",
-            "natural-424242-475",
-            "natural-424242-501",
-            "natural-424242-628",
-            "natural-424242-764",
-            "natural-424242-781",
-            "natural-424242-798",
+            "natural-424242-426",
+            "natural-424242-453",
+            "natural-424242-461",
+            "natural-424242-462",
+            "natural-424242-464",
+            "natural-424242-467",
+            "natural-424242-470",
+            "natural-424242-472",
+            "natural-424242-504",
+            "natural-424242-547",
+            "natural-424242-555",
+            "natural-424242-558",
+            "natural-424242-566",
+            "natural-424242-584",
+            "natural-424242-590",
+            "natural-424242-591",
+            "natural-424242-593",
+            "natural-424242-595",
+            "natural-424242-596",
+            "natural-424242-598",
+            "natural-424242-601",
+            "natural-424242-638",
+            "natural-424242-642",
+            "natural-424242-644",
+            "natural-424242-652",
+            "natural-424242-668",
+            "natural-424242-670",
+            "natural-424242-681",
+            "natural-424242-684",
+            "natural-424242-685",
+            "natural-424242-713",
+            "natural-424242-721",
+            "natural-424242-724",
+            "natural-424242-727",
+            "natural-424242-763",
+            "natural-424242-765",
+            "natural-424242-767",
+            "natural-424242-768",
+            "natural-424242-770",
+            "natural-424242-806",
+            "natural-424242-811",
+            "natural-424242-813",
+            "natural-424242-823",
+            "natural-424242-842",
+            "natural-424242-847",
             "natural-424242-849",
-            "natural-424242-866",
-            "natural-424242-883",
-            "natural-424242-943",
-            "natural-424242-951",
-            "natural-424242-977"
+            "natural-424242-854",
+            "natural-424242-856",
+            "natural-424242-871",
+            "natural-424242-891",
+            "natural-424242-897",
+            "natural-424242-914",
+            "natural-424242-928",
+            "natural-424242-937",
+            "natural-424242-940",
+            "natural-424242-969",
+            "natural-424242-971",
+            "natural-424242-977",
+            "natural-424242-979",
+            "natural-424242-985",
+            "natural-424242-988"
           ]
         },
         "labels": {
           "candidate": {
-            "boundaryThreshold": 1.5,
+            "boundaryThreshold": 2.0,
             "total": 1000,
-            "correct": 947,
+            "correct": 802,
             "families": {
+              "anchored-duration": {
+                "total": 23,
+                "correct": 22
+              },
+              "anchored-shift": {
+                "total": 23,
+                "correct": 16
+              },
+              "between-dates": {
+                "total": 23,
+                "correct": 20
+              },
+              "bound-clock": {
+                "total": 23,
+                "correct": 9
+              },
+              "carrier-date": {
+                "total": 23,
+                "correct": 22
+              },
+              "chat-short": {
+                "total": 23,
+                "correct": 19
+              },
+              "clock-offset": {
+                "total": 23,
+                "correct": 10
+              },
+              "clock-place": {
+                "total": 23,
+                "correct": 5
+              },
+              "compact-24h": {
+                "total": 23,
+                "correct": 8
+              },
+              "compact-named-date": {
+                "total": 24,
+                "correct": 23
+              },
               "compound-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "compound-shift": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "contrast-date": {
+                "total": 23,
+                "correct": 23
               },
               "date-range": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "datetime-range": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 22
+              },
+              "daypart-clock": {
+                "total": 23,
+                "correct": 1
               },
               "fraction-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "fraction-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "idiom-date": {
+                "total": 23,
+                "correct": 23
+              },
+              "imperative-shift": {
+                "total": 23,
+                "correct": 18
+              },
+              "month-edge": {
+                "total": 23,
+                "correct": 12
+              },
+              "month-led-range": {
+                "total": 23,
+                "correct": 23
               },
               "month-period": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 22
               },
               "month-week": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "monthly-exception": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
+              },
+              "monthly-ordinal": {
+                "total": 23,
+                "correct": 23
               },
               "numeric-date": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "open-clock": {
+                "total": 23,
+                "correct": 16
+              },
+              "ordinal-weekday": {
+                "total": 23,
+                "correct": 23
+              },
+              "plural-weekday": {
+                "total": 23,
+                "correct": 23
               },
               "prose-date": {
-                "total": 59,
-                "correct": 58
+                "total": 24,
+                "correct": 23
+              },
+              "prose-month": {
+                "total": 24,
+                "correct": 21
+              },
+              "prose-shift": {
+                "total": 23,
+                "correct": 23
               },
               "qualified-clock": {
-                "total": 59,
-                "correct": 33
+                "total": 24,
+                "correct": 6
               },
               "recurrence": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "recurrence-bound": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
+              },
+              "shared-month-range": {
+                "total": 23,
+                "correct": 20
               },
               "shared-times": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
               },
               "slot-request": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 22
+              },
+              "spelled-hour": {
+                "total": 23,
+                "correct": 7
               },
               "spoken-clock": {
-                "total": 59,
-                "correct": 33
+                "total": 24,
+                "correct": 11
+              },
+              "weekend": {
+                "total": 23,
+                "correct": 11
+              },
+              "wide-year": {
+                "total": 23,
+                "correct": 16
               }
             }
           },
           "baseline": {
-            "boundaryThreshold": 2.5,
+            "boundaryThreshold": 1.5,
             "total": 1000,
-            "correct": 956,
+            "correct": 809,
             "families": {
+              "anchored-duration": {
+                "total": 23,
+                "correct": 22
+              },
+              "anchored-shift": {
+                "total": 23,
+                "correct": 17
+              },
+              "between-dates": {
+                "total": 23,
+                "correct": 18
+              },
+              "bound-clock": {
+                "total": 23,
+                "correct": 6
+              },
+              "carrier-date": {
+                "total": 23,
+                "correct": 23
+              },
+              "chat-short": {
+                "total": 23,
+                "correct": 15
+              },
+              "clock-offset": {
+                "total": 23,
+                "correct": 10
+              },
+              "clock-place": {
+                "total": 23,
+                "correct": 5
+              },
+              "compact-24h": {
+                "total": 23,
+                "correct": 6
+              },
+              "compact-named-date": {
+                "total": 24,
+                "correct": 24
+              },
               "compound-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "compound-shift": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "contrast-date": {
+                "total": 23,
+                "correct": 23
               },
               "date-range": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "datetime-range": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 22
+              },
+              "daypart-clock": {
+                "total": 23,
+                "correct": 6
               },
               "fraction-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "fraction-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "idiom-date": {
+                "total": 23,
+                "correct": 23
+              },
+              "imperative-shift": {
+                "total": 23,
+                "correct": 23
+              },
+              "month-edge": {
+                "total": 23,
+                "correct": 10
+              },
+              "month-led-range": {
+                "total": 23,
+                "correct": 23
               },
               "month-period": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "month-week": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "monthly-exception": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
+              },
+              "monthly-ordinal": {
+                "total": 23,
+                "correct": 23
               },
               "numeric-date": {
-                "total": 59,
-                "correct": 58
+                "total": 24,
+                "correct": 23
+              },
+              "open-clock": {
+                "total": 23,
+                "correct": 14
+              },
+              "ordinal-weekday": {
+                "total": 23,
+                "correct": 23
+              },
+              "plural-weekday": {
+                "total": 23,
+                "correct": 23
               },
               "prose-date": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 23
+              },
+              "prose-month": {
+                "total": 24,
+                "correct": 21
+              },
+              "prose-shift": {
+                "total": 23,
+                "correct": 23
               },
               "qualified-clock": {
-                "total": 59,
-                "correct": 38
+                "total": 24,
+                "correct": 13
               },
               "recurrence": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "recurrence-bound": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
+              },
+              "shared-month-range": {
+                "total": 23,
+                "correct": 20
               },
               "shared-times": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
               },
               "slot-request": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
+              },
+              "spelled-hour": {
+                "total": 23,
+                "correct": 11
               },
               "spoken-clock": {
-                "total": 59,
-                "correct": 37
+                "total": 24,
+                "correct": 14
+              },
+              "weekend": {
+                "total": 23,
+                "correct": 11
+              },
+              "wide-year": {
+                "total": 23,
+                "correct": 10
               }
             },
             "report": "active/export-report.json",
-            "checkpoint": "runs/widen/epoch-22.pt",
-            "checkpointSha256": "57bcc0a2472f7c86a99f378930fb62cdb22d8fbeea72e57ce8e09db8bd6082a1",
-            "artifactSha256": "bb67f60962c7d7b42d35fa005f9a0e0a2b0f68b01823c091be3ab83409afc099",
+            "checkpoint": "runs/shorthand/epoch-39.pt",
+            "checkpointSha256": "53cf3708eddb080a259defbe77936cd382f30e68f8f1f6eeccd6584afde3d23b",
+            "artifactSha256": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
             "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights.gen.ts"
           }
         },
@@ -1330,217 +1707,541 @@
           "reason": null,
           "warning": null,
           "support": 1000,
-          "delta": 0.001,
-          "fixed": 0,
-          "broke": 1
+          "delta": -0.027,
+          "fixed": 44,
+          "broke": 17
         }
       },
       "bare": {
         "corpus": {
           "path": "data/synth/natural-bare.jsonl",
-          "sha256": "beed95f8a5f56b39bcb28b28255394238cf37ff1a2b5f8b8dc3c8a42646c729a",
-          "featurizedSha256": "b5799438108134d2402b3b1218c246f493ece1102b13952c4a1bb2a5a77ff752",
+          "sha256": "3b67711198979bcfc0147f37090e4ff8f99fcae815b93ad4ba133f518b21e4e0",
+          "featurizedSha256": "185c458a3d6c585ea7ecffebc17ee74679505a2504422e38df25f90c01694971",
           "sequences": 1000,
-          "families": 17
+          "families": 43
         },
         "answers": {
           "total": 1000,
-          "correct": 981,
+          "correct": 933,
           "failures": [
-            "natural-424242-8",
-            "natural-424242-25",
-            "natural-424242-42",
-            "natural-424242-59",
-            "natural-424242-67",
+            "natural-424242-7",
+            "natural-424242-50",
+            "natural-424242-52",
+            "natural-424242-63",
+            "natural-424242-66",
+            "natural-424242-74",
             "natural-424242-93",
-            "natural-424242-127",
-            "natural-424242-169",
-            "natural-424242-237",
-            "natural-424242-433",
-            "natural-424242-543",
-            "natural-424242-739",
-            "natural-424242-790",
+            "natural-424242-109",
+            "natural-424242-136",
+            "natural-424242-152",
+            "natural-424242-161",
+            "natural-424242-179",
+            "natural-424242-203",
+            "natural-424242-238",
+            "natural-424242-267",
+            "natural-424242-274",
+            "natural-424242-298",
+            "natural-424242-308",
+            "natural-424242-332",
+            "natural-424242-340",
+            "natural-424242-351",
+            "natural-424242-353",
+            "natural-424242-375",
+            "natural-424242-383",
+            "natural-424242-394",
+            "natural-424242-398",
+            "natural-424242-410",
+            "natural-424242-427",
+            "natural-424242-437",
+            "natural-424242-482",
+            "natural-424242-512",
+            "natural-424242-513",
+            "natural-424242-536",
+            "natural-424242-547",
+            "natural-424242-548",
+            "natural-424242-556",
+            "natural-424242-566",
+            "natural-424242-580",
+            "natural-424242-591",
+            "natural-424242-613",
+            "natural-424242-632",
+            "natural-424242-633",
+            "natural-424242-634",
+            "natural-424242-641",
+            "natural-424242-652",
+            "natural-424242-676",
+            "natural-424242-695",
+            "natural-424242-727",
+            "natural-424242-728",
+            "natural-424242-738",
+            "natural-424242-767",
+            "natural-424242-771",
+            "natural-424242-781",
+            "natural-424242-805",
+            "natural-424242-807",
+            "natural-424242-824",
+            "natural-424242-840",
+            "natural-424242-848",
             "natural-424242-849",
-            "natural-424242-866",
-            "natural-424242-875",
-            "natural-424242-900",
-            "natural-424242-926",
-            "natural-424242-968"
+            "natural-424242-867",
+            "natural-424242-910",
+            "natural-424242-934",
+            "natural-424242-942",
+            "natural-424242-953",
+            "natural-424242-955",
+            "natural-424242-969",
+            "natural-424242-988"
           ]
         },
         "answersBaseline": {
           "total": 1000,
-          "correct": 981,
+          "correct": 913,
           "failures": [
-            "natural-424242-8",
-            "natural-424242-25",
-            "natural-424242-42",
-            "natural-424242-59",
-            "natural-424242-67",
+            "natural-424242-7",
+            "natural-424242-31",
+            "natural-424242-32",
+            "natural-424242-50",
+            "natural-424242-52",
+            "natural-424242-63",
+            "natural-424242-79",
+            "natural-424242-82",
             "natural-424242-93",
-            "natural-424242-127",
-            "natural-424242-169",
-            "natural-424242-237",
-            "natural-424242-433",
-            "natural-424242-543",
-            "natural-424242-739",
-            "natural-424242-790",
+            "natural-424242-109",
+            "natural-424242-122",
+            "natural-424242-125",
+            "natural-424242-136",
+            "natural-424242-138",
+            "natural-424242-152",
+            "natural-424242-160",
+            "natural-424242-161",
+            "natural-424242-168",
+            "natural-424242-179",
+            "natural-424242-203",
+            "natural-424242-208",
+            "natural-424242-238",
+            "natural-424242-247",
+            "natural-424242-294",
+            "natural-424242-300",
+            "natural-424242-308",
+            "natural-424242-332",
+            "natural-424242-340",
+            "natural-424242-351",
+            "natural-424242-353",
+            "natural-424242-375",
+            "natural-424242-380",
+            "natural-424242-383",
+            "natural-424242-394",
+            "natural-424242-396",
+            "natural-424242-410",
+            "natural-424242-423",
+            "natural-424242-426",
+            "natural-424242-427",
+            "natural-424242-429",
+            "natural-424242-437",
+            "natural-424242-472",
+            "natural-424242-512",
+            "natural-424242-513",
+            "natural-424242-525",
+            "natural-424242-547",
+            "natural-424242-548",
+            "natural-424242-568",
+            "natural-424242-580",
+            "natural-424242-582",
+            "natural-424242-591",
+            "natural-424242-601",
+            "natural-424242-625",
+            "natural-424242-632",
+            "natural-424242-633",
+            "natural-424242-634",
+            "natural-424242-641",
+            "natural-424242-652",
+            "natural-424242-676",
+            "natural-424242-684",
+            "natural-424242-695",
+            "natural-424242-724",
+            "natural-424242-727",
+            "natural-424242-728",
+            "natural-424242-738",
+            "natural-424242-767",
+            "natural-424242-771",
+            "natural-424242-781",
+            "natural-424242-805",
+            "natural-424242-810",
+            "natural-424242-824",
+            "natural-424242-840",
+            "natural-424242-848",
             "natural-424242-849",
-            "natural-424242-866",
-            "natural-424242-875",
-            "natural-424242-900",
-            "natural-424242-926",
-            "natural-424242-968"
+            "natural-424242-856",
+            "natural-424242-867",
+            "natural-424242-883",
+            "natural-424242-891",
+            "natural-424242-899",
+            "natural-424242-910",
+            "natural-424242-934",
+            "natural-424242-942",
+            "natural-424242-945",
+            "natural-424242-953",
+            "natural-424242-955",
+            "natural-424242-969",
+            "natural-424242-982"
           ]
         },
         "labels": {
           "candidate": {
-            "boundaryThreshold": 1.5,
+            "boundaryThreshold": 2.0,
             "total": 1000,
-            "correct": 1000,
+            "correct": 899,
             "families": {
+              "anchored-duration": {
+                "total": 23,
+                "correct": 22
+              },
+              "anchored-shift": {
+                "total": 23,
+                "correct": 15
+              },
+              "between-dates": {
+                "total": 23,
+                "correct": 22
+              },
+              "bound-clock": {
+                "total": 23,
+                "correct": 6
+              },
+              "carrier-date": {
+                "total": 23,
+                "correct": 21
+              },
+              "chat-short": {
+                "total": 23,
+                "correct": 23
+              },
+              "clock-offset": {
+                "total": 23,
+                "correct": 23
+              },
+              "clock-place": {
+                "total": 23,
+                "correct": 22
+              },
+              "compact-24h": {
+                "total": 23,
+                "correct": 19
+              },
+              "compact-named-date": {
+                "total": 24,
+                "correct": 19
+              },
               "compound-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "compound-shift": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "contrast-date": {
+                "total": 23,
+                "correct": 23
               },
               "date-range": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "datetime-range": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
+              },
+              "daypart-clock": {
+                "total": 23,
+                "correct": 21
               },
               "fraction-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "fraction-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "idiom-date": {
+                "total": 23,
+                "correct": 23
+              },
+              "imperative-shift": {
+                "total": 23,
+                "correct": 22
+              },
+              "month-edge": {
+                "total": 23,
+                "correct": 20
+              },
+              "month-led-range": {
+                "total": 23,
+                "correct": 23
               },
               "month-period": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "month-week": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "monthly-exception": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 21
+              },
+              "monthly-ordinal": {
+                "total": 23,
+                "correct": 23
               },
               "numeric-date": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 23
+              },
+              "open-clock": {
+                "total": 23,
+                "correct": 12
+              },
+              "ordinal-weekday": {
+                "total": 23,
+                "correct": 23
+              },
+              "plural-weekday": {
+                "total": 23,
+                "correct": 23
               },
               "prose-date": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "prose-month": {
+                "total": 24,
+                "correct": 6
+              },
+              "prose-shift": {
+                "total": 23,
+                "correct": 22
               },
               "qualified-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "recurrence": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "recurrence-bound": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 21
+              },
+              "shared-month-range": {
+                "total": 23,
+                "correct": 21
               },
               "shared-times": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
               },
               "slot-request": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
+              },
+              "spelled-hour": {
+                "total": 23,
+                "correct": 17
               },
               "spoken-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "weekend": {
+                "total": 23,
+                "correct": 16
+              },
+              "wide-year": {
+                "total": 23,
+                "correct": 17
               }
             }
           },
           "baseline": {
-            "boundaryThreshold": 2.5,
+            "boundaryThreshold": 1.5,
             "total": 1000,
-            "correct": 1000,
+            "correct": 880,
             "families": {
+              "anchored-duration": {
+                "total": 23,
+                "correct": 22
+              },
+              "anchored-shift": {
+                "total": 23,
+                "correct": 12
+              },
+              "between-dates": {
+                "total": 23,
+                "correct": 23
+              },
+              "bound-clock": {
+                "total": 23,
+                "correct": 4
+              },
+              "carrier-date": {
+                "total": 23,
+                "correct": 22
+              },
+              "chat-short": {
+                "total": 23,
+                "correct": 23
+              },
+              "clock-offset": {
+                "total": 23,
+                "correct": 23
+              },
+              "clock-place": {
+                "total": 23,
+                "correct": 22
+              },
+              "compact-24h": {
+                "total": 23,
+                "correct": 14
+              },
+              "compact-named-date": {
+                "total": 24,
+                "correct": 17
+              },
               "compound-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "compound-shift": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "contrast-date": {
+                "total": 23,
+                "correct": 23
               },
               "date-range": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "datetime-range": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
+              },
+              "daypart-clock": {
+                "total": 23,
+                "correct": 23
               },
               "fraction-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "fraction-duration": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "idiom-date": {
+                "total": 23,
+                "correct": 23
+              },
+              "imperative-shift": {
+                "total": 23,
+                "correct": 23
+              },
+              "month-edge": {
+                "total": 23,
+                "correct": 11
+              },
+              "month-led-range": {
+                "total": 23,
+                "correct": 23
               },
               "month-period": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "month-week": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "monthly-exception": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 22
+              },
+              "monthly-ordinal": {
+                "total": 23,
+                "correct": 23
               },
               "numeric-date": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "open-clock": {
+                "total": 23,
+                "correct": 10
+              },
+              "ordinal-weekday": {
+                "total": 23,
+                "correct": 23
+              },
+              "plural-weekday": {
+                "total": 23,
+                "correct": 23
               },
               "prose-date": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "prose-month": {
+                "total": 24,
+                "correct": 7
+              },
+              "prose-shift": {
+                "total": 23,
+                "correct": 22
               },
               "qualified-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
               },
               "recurrence": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
               },
               "recurrence-bound": {
-                "total": 59,
-                "correct": 59
+                "total": 23,
+                "correct": 23
+              },
+              "shared-month-range": {
+                "total": 23,
+                "correct": 23
               },
               "shared-times": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
               },
               "slot-request": {
-                "total": 58,
-                "correct": 58
+                "total": 23,
+                "correct": 23
+              },
+              "spelled-hour": {
+                "total": 23,
+                "correct": 19
               },
               "spoken-clock": {
-                "total": 59,
-                "correct": 59
+                "total": 24,
+                "correct": 24
+              },
+              "weekend": {
+                "total": 23,
+                "correct": 13
+              },
+              "wide-year": {
+                "total": 23,
+                "correct": 10
               }
             }
           }
@@ -1551,9 +2252,9 @@
           "reason": null,
           "warning": null,
           "support": 1000,
-          "delta": 0.0,
-          "fixed": 0,
-          "broke": 0
+          "delta": -0.02,
+          "fixed": 33,
+          "broke": 13
         }
       }
     },
@@ -1563,10 +2264,10 @@
   "parity": {
     "prefix": "active/parity",
     "sequences": 512,
-    "tokens": 10986,
+    "tokens": 10525,
     "rowsPerToken": 17,
     "rolesPerToken": 40,
-    "boundaryThreshold": 1.5,
+    "boundaryThreshold": 2.0,
     "layers": 2,
     "transitions": true
   }
