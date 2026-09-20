@@ -531,6 +531,7 @@ def numeric(rng: random.Random) -> str:
         # Measured duration, all O. Keep "in N units" to 2 of 6 frames or real shifts regress.
         [
             f"{name} {rng.choice(COMPLETED)} the {rng.choice(DISTANCES)} in {duration}.",
+            f"{name} {rng.choice(COMPLETED)} the {rng.choice(DISTANCES)} in {duration}.",
             f"They {rng.choice(PRODUCED)} the whole {noun} in {duration} flat.",
             f"The {noun} took {duration} to {verb} start to finish.",
             f"Our fastest {rng.choice(DISTANCES)} was {duration}.",
@@ -851,6 +852,11 @@ def setting_number(rng: random.Random) -> str:
     thing, other_thing = rng.choice(COUNTABLES), rng.choice(COUNTABLES)
     label, ticket = rng.choice(NUMBERED), rng.choice(TRACKED)
     subject, _, possessive = rng.choice(PRONOUNS)
+    # Four digits that read exactly as a compact 24-hour clock, plus a year in
+    # the band that overlaps one. Only the surrounding words say they are not.
+    clocklike = f"{rng.randint(0, 23):02}{rng.randrange(60):02}"
+    other_clocklike = f"{rng.randint(0, 23):02}{rng.randrange(60):02}"
+    year = rng.randint(1990, 2040)
     groups = [
         # "to 14" after a scheduling-shaped verb is exactly a clock or a range end.
         [
@@ -904,6 +910,26 @@ def setting_number(rng: random.Random) -> str:
             f"{count} {thing} went missing from the {noun}.",
             f"The form has {count} {thing} left blank.",
             f"{subject.capitalize()} packed {count} {thing} into {possessive} bag.",
+        ],
+        # A bare four-digit run shaped like a compact clock. "Room 2200" and
+        # "since 1995" share their whole surface with "at 2200".
+        [
+            f"Room {clocklike} is booked for the {noun}.",
+            f"{name} moved the {noun} to room {clocklike}.",
+            f"Flight {clocklike} leaves from the wrong gate.",
+            f"The zip code is {clocklike}.",
+            f"Order {clocklike} shipped without the {noun}.",
+            f"Part {clocklike} is out of stock.",
+            f"Model {clocklike} replaced model {other_clocklike}.",
+            f"The invoice came to {clocklike} dollars.",
+            f"We sold {clocklike} {thing} last quarter.",
+            f"{ticket.capitalize()} {clocklike} is still open.",
+            f"Please review {ticket} {clocklike}.",
+            f"Take another look at {ticket} {clocklike}.",
+            f"{subject.capitalize()} has worked on the {noun} since {year}.",
+            f"The {noun} dates from {year}.",
+            f"Nothing about the {noun} has changed since {year}.",
+            f"{name} joined in {year}.",
         ],
         # "60 by 12" and "7 to 5": the connectors a range uses, with no unit.
         [

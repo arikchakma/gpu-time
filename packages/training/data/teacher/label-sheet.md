@@ -59,6 +59,13 @@ compiles to the schedule the teacher stated.
 5. **Do not invent.** If the sentence is vague (`soon`, `ASAP`, `early next
 year`), return `"schedule": "none"`.
 6. Punctuation inside a date is `GLUE`. Punctuation outside is `O`.
+7. **A four-digit run needs an anchor before it is a clock.** `1150`, `2200`
+   and `0930` are clocks: no year looks like that. `1900` to `2059` is both a
+   clock and a year, so label it `HOUR` only when an anchor sits beside it -
+   `at`, `@`, a weekday, or a dash to another clock. `at 1930` is 19:30.
+   `since 1930` and `born in 1930` are `YEAR`. A bare `1930` with nothing
+   beside it is a `YEAR`. A run that no clock can be, such as `2400` or
+   `1170`, is never an `HOUR`.
 
 ## Output
 

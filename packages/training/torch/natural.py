@@ -61,6 +61,7 @@ NEW_FAMILIES = (
     "wide-year",
     "spelled-hour",
     "ordinal-weekday",
+    "compact-24h",
 )
 FAMILIES += NEW_FAMILIES
 # Prose dates and shifts stay balanced against their contrastive negatives.
@@ -71,22 +72,32 @@ FAMILY_WEIGHTS = [
         "compact-named-date",
         "shared-month-range",
         "month-led-range",
+        # Rare in real English, and it competes with every four-digit year.
+        "compact-24h",
     )
     else 1
     if name in (
         "monthly-ordinal",
         "carrier-date",
-        "prose-shift",
-        "imperative-shift",
         "daypart-clock",
     )
     else 6
     if name == "clock-place"
+    # The compact-clock teacher rows crowd this family out, and the weekday
+    # recurrence with an inclusive bound is the one case they cost.
+    else 4
+    if name in ("recurrence-bound", "recurrence")
+    else 2
+    if name in ("prose-shift", "imperative-shift")
     else 2
     for name in FAMILIES
 ]
 DEICTICS = ["this", "next", "last"] * 5 + ["nxt"]
-RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1}
+RELATIVE_DAYS = {"today": 0, "tomorrow": 1, "yesterday": -1, "tmrw": 1, "tmr": 1,
+                 "the day after tomorrow": 2, "the day before yesterday": -2}
+# The two-step phrases are real but rare, so they stay about one pick in ten.
+REL_DAY_NAMES = [name for name in RELATIVE_DAYS if " " not in name] * 4 + [
+    "the day after tomorrow", "the day before yesterday"]
 RESERVED = [
     "could you arrange a reminder for",
     "our rehearsal begins at",
@@ -371,7 +382,7 @@ def target(s):
         s.add(unit, "UNIT")
         clause = {"date": {"kind": "relativeUnit", "unit": unit, "modifier": modifier}}
     elif pick < 0.45:
-        name = r.choice(list(RELATIVE_DAYS))
+        name = r.choice(REL_DAY_NAMES)
         s.add(name, "REL_DAY")
         clause = {"date": {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}}
     elif pick < 0.65:
@@ -959,7 +970,7 @@ def render(s, reserved=False, family=None, bare=False):
             s.add(r.choice(FILLERS))
         clause = {"duration": {"amount": amount, "unit": unit}}
         if r.random() < 0.35:
-            name = r.choice(list(RELATIVE_DAYS))
+            name = r.choice(REL_DAY_NAMES)
             s.add(name, "REL_DAY")
             clause["date"] = {"kind": "relativeDay", "offset": RELATIVE_DAYS[name]}
         else:
@@ -1051,6 +1062,80 @@ def render(s, reserved=False, family=None, bare=False):
         else:
             value = clock(s, r.choice(["digits", "bare", "spoken"]))
         clause = {"time": {"start": value}}
+    elif family == "compact-24h":
+        # A bare four-digit 24-hour clock: "1150" is 11:50, "0930" is 09:30.
+        # The tokenizer cannot split a digit run, so the whole number is one
+        # HOUR span and the compiler splits the digits.
+        def compact(hour, minute, separator=" "):
+            s.add(f"{hour:02}{minute:02}", "HOUR", separator)
+            return {"hour": hour, "minute": minute}
+
+        # A calendar box is written both ways: the day can lead the clock
+        # ("Sat Sun 1300-2000") or trail it ("1300 on Friday").
+        days = None
+        if r.random() < 0.35:
+            days = sorted(r.sample(range(7), r.choice([1, 1, 2])))
+            for day in days:
+                s.add(one_day(r, DAYS[day]), "WEEKDAY")
+        hour = r.randint(0, 23)
+        minute = r.choice([0, 0, 15, 30, 45, r.randrange(60)])
+        # 1900 to 2059 is also a year that a calendar writes, and wide-year
+        # renders those same digits bare as a YEAR. Give this band an anchor
+        # every time, so the corpus never labels one bare token both ways.
+        anchored = hour in (19, 20)
+        if days is None and (anchored or r.random() < 0.7):
+            s.add(r.choice(["at", "at", "at", "@", "from"]), "GLUE")
+        elif days is not None and r.random() < 0.3:
+            s.add(r.choice(["at", "@", "from"]), "GLUE")
+        value = compact(hour, minute)
+        start_minutes = hour * 60 + minute
+        # Clamped to the end of the day, so the range has to keep moving forward.
+        end_minutes = min(23 * 60 + 59,
+                          start_minutes + r.choice([30, 60, 90, 120, 180, 240]))
+        if r.random() < 0.55 and end_minutes > start_minutes:
+            end_hour, end_minute = divmod(end_minutes, 60)
+            dash = r.choice(["-", "\u2013", "to", "until"])
+            # "1150-1230" is written closed up as often as it is spaced out.
+            gap = " " if dash in ("to", "until") or r.random() < 0.5 else ""
+            s.add(dash, "RANGE_END", gap)
+            clause = {"time": {"start": value,
+                               "end": compact(end_hour, end_minute, gap)}}
+        else:
+            clause = {"time": {"start": value}}
+        if days is not None:
+            clause["date"] = {"kind": "weekday",
+                              "days": [DAY_CODES[day] for day in days]}
+        else:
+            pick = r.random()
+            if pick < 0.3:
+                day = r.randrange(7)
+                if r.random() < 0.6:
+                    s.add("on", "GLUE")
+                s.add(one_day(r, DAYS[day]), "WEEKDAY")
+                clause["date"] = {"kind": "weekday", "days": [DAY_CODES[day]]}
+            elif pick < 0.45:
+                name = r.choice(["today", "tomorrow", "tmrw"])
+                s.add(name, "REL_DAY")
+                clause["date"] = {"kind": "relativeDay",
+                                  "offset": RELATIVE_DAYS[name]}
+            elif pick < 0.55:
+                date = {"month": r.randint(1, 12), "day": r.randint(1, 28)}
+                s.add("on", "GLUE")
+                calendar(s, date)
+                clause["date"] = {"kind": "calendar", **date}
+    elif family == "between-dates" and r.random() < 0.25:
+        begin = r.randint(1, 20)
+        finish = begin + r.randint(1, 8)
+        for index, day in enumerate((begin, finish)):
+            if index:
+                s.add(r.choice(["until", "to", "through", "-"]), "RANGE_END")
+            if r.random() < 0.8:
+                s.add(one_day(r, DAYS[r.randrange(7)]), "WEEKDAY")
+            s.add("the", "GLUE")
+            s.add(str(day), "DOM")
+            s.add(suffixed(day), "GLUE", "")
+        clause = {"date": {"kind": "calendarRange",
+                           "from": {"day": begin}, "to": {"day": finish}}}
     elif family == "between-dates":
         first = {"month": r.randint(1, 6), "day": r.randint(1, 28)}
         second = {"month": r.randint(7, 12), "day": r.randint(1, 28)}

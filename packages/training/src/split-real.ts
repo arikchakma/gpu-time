@@ -48,6 +48,7 @@ const SOURCES = [
   "missed",
   "measurement",
   "shorthand",
+  "compact-clock",
 ];
 const authored = join(training, "data/teacher");
 // Written or teacher-labelled rather than harvested, so they live in a tracked
@@ -60,6 +61,7 @@ const authoredSources = new Set([
   "missed",
   "measurement",
   "shorthand",
+  "compact-clock",
 ]);
 // 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
 // at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
