@@ -1068,3 +1068,77 @@ it("compiles seconds as a shift unit", () => {
     clauses: [{ shift: { amount: 30, unit: "second", direction: "after" } }],
   });
 });
+
+it("splits a bare four-digit clock and asks for no meridiem", () => {
+  for (const [text, hour, minute] of [
+    ["1150", 11, 50],
+    ["0930", 9, 30],
+    ["2200", 22, 0],
+    ["0000", 0, 0],
+  ] as const) {
+    const result = compile(text, oracle(text, ["HOUR"]))[0];
+    expect(result.schedule).toEqual({
+      clauses: [{ time: { start: { hour, minute } } }],
+    });
+    expect(result.diagnostics.map((value) => value.code)).not.toContain(
+      "ambiguous-meridiem",
+    );
+  }
+});
+
+it("rejects a four-digit run that is not a clock", () => {
+  for (const text of ["2400", "1170", "9999"]) {
+    const result = compile(text, oracle(text, ["HOUR"]))[0];
+    expect(result.diagnostics.map((value) => value.code)).toContain(
+      "invalid-time",
+    );
+  }
+});
+
+it("keeps a separated clock reading its own minute token", () => {
+  const text = "11:15";
+  expect(compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0].schedule)
+    .toEqual({ clauses: [{ time: { start: { hour: 11, minute: 15 } } }] });
+});
+
+it("repairs a compact clock range the model read as a date", () => {
+  // The labels are the ones the shipped model actually predicts.
+  const cases: [string, Label[], number[], number[]][] = [
+    ["1430-1600", ["DOM", "RANGE_END", "YEAR"], [14, 30], [16, 0]],
+    ["0930-1030", ["MONTH", "GLUE", "YEAR"], [9, 30], [10, 30]],
+    ["0900-1000", ["DOM", "RANGE_END", "MINUTE"], [9, 0], [10, 0]],
+  ];
+  for (const [text, labels, start, end] of cases) {
+    expect(compile(text, oracle(text, labels))[0].schedule).toEqual({
+      clauses: [
+        {
+          time: {
+            start: { hour: start[0], minute: start[1] },
+            end: { hour: end[0], minute: end[1] },
+          },
+        },
+      ],
+    });
+  }
+});
+
+it("reads a four-digit clock that only a meridiem marks", () => {
+  const text = "1115 am";
+  expect(compile(text, oracle(text, ["O", "MERIDIEM"]))[0].schedule).toEqual({
+    clauses: [{ time: { start: { hour: 11, minute: 15 } } }],
+  });
+});
+
+it("leaves a year alone when no clock opened the range", () => {
+  const years = "2026-2027";
+  const schedule = compile(years, oracle(years, ["YEAR", "RANGE_END", "YEAR"]))[0]
+    .schedule;
+  expect(JSON.stringify(schedule ?? {})).not.toContain("hour");
+  const iso = "2026-03-04";
+  expect(
+    compile(iso, oracle(iso, ["YEAR", "GLUE", "MONTH", "GLUE", "DOM"]))[0]
+      .schedule,
+  ).toEqual({
+    clauses: [{ date: { kind: "calendar", year: 2026, month: 3, day: 4 } }],
+  });
+});

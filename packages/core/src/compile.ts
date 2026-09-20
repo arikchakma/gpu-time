@@ -179,8 +179,11 @@ function readClock(
   index: number,
 ): { clock: ParsedClock; next: number } {
   const token = tokens[index];
-  let hour = number(token.text.toLowerCase());
-  let minute = 0;
+  // A bare four-digit clock: "1150" is 11:15 and "0930" is 09:30. The model
+  // decides the token is an hour; the compiler only splits the digits.
+  const compact = /^([01]\d|2[0-3])([0-5]\d)$/.exec(token.text);
+  let hour = compact ? Number(compact[1]) : number(token.text.toLowerCase());
+  let minute = compact ? Number(compact[2]) : 0;
   let second: number | undefined;
   let meridiem: string | undefined;
   let next = index + 1;
@@ -188,12 +191,13 @@ function readClock(
   // Minutes are always two digits: "9.30pm" and "9:05" are clocks, while
   // "9.5 hours" and the ratio "2:3" are not.
   const separated =
-    tokens[next]?.text === ":"
+    !compact &&
+    (tokens[next]?.text === ":"
       ? tokens[next + 1]?.label === Role.MINUTE &&
         /^\d{2}$/.test(tokens[next + 1]?.text ?? "")
       : tokens[next]?.text === "." &&
         /^\d{1,2}$/.test(token.text) &&
-        /^\d{2}$/.test(tokens[next + 1]?.text ?? "");
+        /^\d{2}$/.test(tokens[next + 1]?.text ?? ""));
   if (separated) {
     minute = number(tokens[next + 1].text);
     next += 2;
@@ -251,7 +255,7 @@ function readClock(
       value,
       token,
       meridiem,
-      needsMeridiem: !meridiem && hour > 0 && hour <= 12,
+      needsMeridiem: !meridiem && !compact && hour > 0 && hour <= 12,
     },
     next,
   };
@@ -1735,16 +1739,87 @@ function contextualBounds(tokens: Token[]): Token[] {
   return result;
 }
 
+// A four-digit clock the model read as a date. Both repairs only fire where the
+// date is arithmetically impossible or where a clock already opened the range,
+// so a reading that resolves today keeps its answer.
+function compactClock(input: Token[]): Token[] {
+  const tokens = input.filter((token) => token.kind !== 3);
+  const clock = (token: Token | undefined) => {
+    if (!token || !/^\d{4}$/.test(token.text)) return false;
+    const value = Number(token.text);
+    return value <= 2359 && value % 100 <= 59;
+  };
+  const separator = (token: Token | undefined) =>
+    token &&
+    (token.label === Role.RANGE_END ||
+      ([Role.O, Role.GLUE].includes(token.label) &&
+        ["-", "\u2013", "to", "until"].includes(token.text.toLowerCase())));
+
+  // No month runs to 930, no day of the month to 1430, no minute to 1000. An
+  // impossible date role alone is not enough, because the model also hands one
+  // to a locker number: a second clock across a separator has to corroborate it,
+  // which is what "1430-1600" has and "Locker 0930" does not.
+  const paired = (index: number) => {
+    const before = separator(tokens[index - 1]) && clock(tokens[index - 2]);
+    const after = separator(tokens[index + 1]) && clock(tokens[index + 2]);
+    return before || after;
+  };
+  const result = tokens.map((token, index) => {
+    const value = Number(token.text);
+    const impossible =
+      (token.label === Role.MONTH && value > 12) ||
+      (token.label === Role.DOM && value > 31) ||
+      (token.label === Role.MINUTE && value > 59);
+    return impossible && clock(token) && paired(index)
+      ? { ...token, label: Role.HOUR }
+      : token;
+  });
+
+  // "1115 am": a meridiem only ever follows a clock, which is the anchor
+  // Microsoft Recognizers reads "1140 a.m." by.
+  for (let index = 0; index + 1 < result.length; index++) {
+    const token = result[index];
+    if (token.label !== Role.O || !clock(token)) continue;
+    if (result[index + 1].label !== Role.MERIDIEM) continue;
+    result[index] = { ...token, label: Role.HOUR };
+  }
+
+  // "1300-1700": a year cannot close a range that a clock opened.
+  for (let index = 2; index < result.length; index++) {
+    const end = result[index];
+    if (end.label !== Role.YEAR || !clock(end) || end.clauseStart) continue;
+    if (!separator(result[index - 1])) continue;
+    if (result[index - 2]?.label !== Role.HOUR) continue;
+    result[index] = { ...end, label: Role.HOUR };
+  }
+
+  // "0930-1030": a dash between two compact clocks opens a range, not a date.
+  for (let index = 1; index + 1 < result.length; index++) {
+    const dash = result[index];
+    if (dash.label !== Role.O && dash.label !== Role.GLUE) continue;
+    if (!["-", "\u2013"].includes(dash.text)) continue;
+    const before = result[index - 1];
+    const after = result[index + 1];
+    if (before.label !== Role.HOUR || after.label !== Role.HOUR) continue;
+    if (!clock(before) || !clock(after) || after.clauseStart) continue;
+    result[index] = { ...dash, label: Role.RANGE_END };
+  }
+
+  const changed = new Map(
+    result.filter((token, index) => token !== tokens[index]).map((t) => [t.start, t]),
+  );
+  return changed.size
+    ? input.map((token) => changed.get(token.start) ?? token)
+    : input;
+}
+
 export function compilePredictions(
   text: string,
   tokens: Token[],
   options: Pick<ParserOptions, "dateOrder"> = {},
 ): Expression[] {
-  return splitExpressions(tokens).map((expression) =>
-    compileExpression(
-      text,
-      numericDateOrder(expression, options.dateOrder ?? "MDY"),
-    ),
+  return splitExpressions(compactClock(tokens)).map((expression) =>
+    compileExpression(text, numericDateOrder(expression, options.dateOrder ?? "MDY")),
   );
 }
 

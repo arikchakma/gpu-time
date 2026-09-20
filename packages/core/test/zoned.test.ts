@@ -114,3 +114,14 @@ it.each(cases)(
     expect(civil(actual.epochMs, timeZone).hour).toBe(expected.hour);
   },
 );
+
+it("prints a whole-minute offset for a pre-standard local mean time", () => {
+  // Dhaka ran on local mean time (+06:01:40) before it adopted a standard zone.
+  const { epochMs } = zonedToEpoch(
+    { year: 1230, month: 9, day: 1, hour: 11, minute: 50, second: 0 },
+    "Asia/Dhaka",
+  );
+  expect(iso(epochMs, "Asia/Dhaka")).toMatch(
+    /^[\d-]{10}T[\d:]{8}[+-]\d{2}:\d{2}$/,
+  );
+});
