@@ -32,15 +32,16 @@ The generated scores below share rendering families with training. They measure 
 
 The shipped checkpoint scores:
 
-- Real English: 5,866 of 6,011 exact schedules (97.6%). These sentences come from a public corpus and were never shown to training. Gold texts are excluded.
-- Authored English coverage: 71 of 71, with no open gaps.
-- Chat gold: 303 of 331. Pooled over the five promotion sets: 593 of 625.
-- Reported user failures: 25 of 37.
-- Microsoft Recognizers, development split: 234 of 563 (41.6%). Policy differences count as failures, and the test split stays unused.
-- Chrono comparison: 76 of 85. Shared behavior is 67 of 75 and policy cases are 9 of 10.
+- Real English: 5,869 of 6,011 exact schedules (97.6%). These sentences come from a public corpus and were never shown to training. Gold texts are excluded. This checkpoint won a screen of about 600 on this set, so the score means "no regression", not a gain.
+- Authored English coverage: 77 of 77, with no open gaps.
+- Chat gold: 301 of 331. Pooled over the five promotion sets: 591 of 625.
+- Reported user failures: 26 of 37.
+- Microsoft Recognizers, development split: 239 of 563 (42.5%). Policy differences count as failures, and the test split stays unused.
+- Chrono comparison: 76 of 85. Shared behavior is 68 of 75 and policy cases are 8 of 10.
 - Non-temporal negatives: 188 of 192.
-- Reserved carriers: 973 of 1,000 schedules and 981 of 1,000 bare expressions.
-- Token accuracy: 99.26% on validation and 98.85% on heldout.
+- Reserved carriers: 921 of 1,000 schedules and 933 of 1,000 bare expressions. The checkpoint this one replaces scores 894 and 913 on the same corpus. That corpus now draws all 43 families, not 17, so it is harder than the one that gave the 973 and 981 reported here before.
+- Compact 24-hour clocks: 15 of 17 shapes, and no false fire on the four look-alike numbers.
+- Token accuracy: 99.31% on validation and 98.87% on heldout.
 
 Parity is a separate gate. 512 fixtures compare decoded int6 inference against PyTorch logits, and `pnpm test:browser` compares 1,000 sequences in real WebGPU.
 
@@ -49,6 +50,8 @@ The timing numbers in `packages/benchmark/results/summary.json` were recorded fo
 ## Limitations
 
 - "in N units" meaning elapsed time reads as future time. "He ran a quarter mile in four minutes" returns a time. Four negatives fail this way.
+- A bare four-digit clock from 1900 to 2059 reads as a year, so `at 1930` returns the year 1930. A calendar writes those digits as a year more often than as an evening. Other compact clocks read: `2200`, `0930`, `1150`, `1430-1600`.
+- A four-digit year below 1900 can read as a clock. "signed in February 1819" is the shape that fails.
 - A person named after a weekday reads as the weekday. "My friend Wednesday never answers her phone" returns a date.
 - A trailing two-digit field in a slash triple reads as a day, not a year, so `07/19/27` fails.
 - The em dash is unsupported and `13:20—15:50` returns nothing. The en dash works, on a weaker feature path.
