@@ -83,9 +83,28 @@ it(
       }
       expect(offset).toBe(text.length);
     }
-    // Captured from the original tokenizer before the performance refactor.
+    // Captured from the original tokenizer before the performance refactor,
+    // then recaptured when a four-digit clock joined the zero-padded number
+    // bucket. Only change it with a feature change the model retrains on.
     expect(hash.digest("hex")).toBe(
-      "26ba3e2881c34406cd23ccd095b55e06c1fe34987fb720e417afc65adcde2e7a",
+      "3a8ee1eea95c4bd16bb29181f5382b42864797c686f40f5e4ceacf646af3c9c3",
     );
   },
 );
+
+it("gives a four-digit clock its own number bucket, and leaves years alone", () => {
+  const bucket = (text: string) =>
+    featureRows(tokenize(text)[0].features).find(
+      (row) => row >= 564 && row < 580,
+    );
+  const clock = bucket("0930");
+  // Times a calendar user types, whatever their leading digit.
+  for (const text of ["0930", "1150", "1430", "2200", "2359"])
+    expect(bucket(text)).toBe(clock);
+  // A year, an impossible clock, and a plain count keep their own buckets.
+  for (const text of ["2026", "1995", "2400", "1170", "9999", "730"])
+    expect(bucket(text)).not.toBe(clock);
+  // An evening inside the year band stays a year: "1930" is unreadable as a
+  // clock, which MODEL_CARD.md records as a limitation.
+  expect(bucket("1930")).toBe(bucket("2026"));
+});

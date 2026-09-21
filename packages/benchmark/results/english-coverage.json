@@ -1,10 +1,10 @@
 {
-  "model": "168f22682e6f62cc09697f9acad8a396ef44240825cd8634777f9e6cf8e77410",
-  "runtimeSha256": "8043d895e141c0379e4f88239ad7da1539e7a117f4a860cff029f0eaf0afeb84",
-  "sourceSha256": "0e62f5168a2ddb38a8bd124ee2c17d48d0c66b9657c6e8a831d52c0d2a52ff3f",
+  "model": "2e1a5550df9bbeb6f01d443a20b07c006d81dcc6f71b125744199f464e392ea3",
+  "runtimeSha256": "2f3ec5388b4427451e432fbfa6fdacae78da3522a86446d5793de1357740ce04",
+  "sourceSha256": "d14ab3be7992c4a91ab5cf4e92d77149472176f72e0bc76c1488f9820cc3f499",
   "runtime": "packages/core/dist",
-  "total": 71,
-  "correct": 71,
+  "total": 77,
+  "correct": 77,
   "accuracy": 1,
   "families": {
     "calendar-edge-shift": {
@@ -14,6 +14,10 @@
     "clock-with-place": {
       "correct": 15,
       "total": 15
+    },
+    "compact-clock": {
+      "correct": 4,
+      "total": 4
     },
     "compact-named-date": {
       "correct": 4,
@@ -36,8 +40,8 @@
       "total": 6
     },
     "negative": {
-      "correct": 7,
-      "total": 7
+      "correct": 9,
+      "total": 9
     },
     "range": {
       "correct": 6,
@@ -265,7 +269,15 @@
           "allDay": false
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 8,
+          "end": 13,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -749,7 +761,15 @@
           "end": "2026-09-13T02:00:00+06:00"
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 21,
+          "end": 25,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -899,6 +919,13 @@
           "start": 30,
           "end": 31,
           "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 18,
+          "end": 22,
+          "severity": "warning"
         }
       ],
       "correct": true
@@ -1142,15 +1169,7 @@
           "end": "2027-08-01T00:00:00+06:00"
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 8,
-          "end": 12,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -1866,6 +1885,142 @@
           "start": 11,
           "end": 12,
           "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "english-072",
+      "family": "compact-clock",
+      "text": "Standup at 0930 tomorrow.",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-13T09:30:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [
+        {
+          "start": "2026-09-13T09:30:00+06:00",
+          "allDay": false
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "english-073",
+      "family": "compact-clock",
+      "text": "Call me at 2200.",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-12T22:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [
+        {
+          "start": "2026-09-12T22:00:00+06:00",
+          "allDay": false
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "english-074",
+      "family": "compact-clock",
+      "text": "The review runs 1430-1600.",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-12T14:30:00+06:00",
+          "allDay": false,
+          "end": "2026-09-12T16:00:00+06:00"
+        }
+      ],
+      "actual": [
+        {
+          "start": "2026-09-12T14:30:00+06:00",
+          "allDay": false,
+          "end": "2026-09-12T16:00:00+06:00"
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "english-075",
+      "family": "compact-clock",
+      "text": "Meeting at 1815 on Friday.",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [
+        {
+          "start": "2026-09-18T18:15:00+06:00",
+          "allDay": false
+        }
+      ],
+      "actual": [
+        {
+          "start": "2026-09-18T18:15:00+06:00",
+          "allDay": false
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "english-076",
+      "family": "negative",
+      "text": "Room 2200 is booked all week.",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"Room 2200 is booked all week.\".",
+          "start": 0,
+          "end": 29
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "english-077",
+      "family": "negative",
+      "text": "Please review pull request 1150.",
+      "context": {
+        "reference": "2026-09-12T12:00:00+06:00",
+        "timeZone": "Asia/Dhaka"
+      },
+      "occurrences": [],
+      "actual": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"Please review pull request 1150.\".",
+          "start": 0,
+          "end": 32
         }
       ],
       "correct": true

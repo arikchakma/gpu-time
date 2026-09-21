@@ -74,6 +74,17 @@ function numberBucket(text: string, kind: RawToken["kind"]): number {
   if (text.length > 1 && text.startsWith("0")) return 14;
 
   const value = Number(text);
+  // A four-digit run that reads as a 24-hour clock shares the zero-padded
+  // bucket, so "1430" is separable from a plain count. The years a calendar
+  // writes keep their own bucket: "2026" is a year before it is 20:26, and a
+  // clock in that band stays unreadable.
+  if (
+    text.length === 4 &&
+    (value < 1900 || value > 2099) &&
+    value <= 2359 &&
+    value % 100 <= 59
+  )
+    return 14;
   return numberBuckets.findIndex((upperBound) => value <= upperBound);
 }
 

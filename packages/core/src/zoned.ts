@@ -202,8 +202,10 @@ export function iso(epoch: number, timeZone: string): string {
   const local = civil(epoch, timeZone);
   const offsetMinutes = (utc(local) - Math.floor(epoch / 1000) * 1000) / 60_000;
   const offsetSign = offsetMinutes < 0 ? "-" : "+";
-  const offsetHours = twoDigits(Math.floor(Math.abs(offsetMinutes) / 60));
-  const offsetRemainder = twoDigits(Math.abs(offsetMinutes) % 60);
+  // Offsets print as whole minutes. Pre-standard local mean time is not.
+  const offsetTotal = Math.round(Math.abs(offsetMinutes));
+  const offsetHours = twoDigits(Math.floor(offsetTotal / 60));
+  const offsetRemainder = twoDigits(offsetTotal % 60);
   const year = String(local.year).padStart(4, "0");
   const date = `${year}-${twoDigits(local.month)}-${twoDigits(local.day)}`;
   const time = [local.hour, local.minute, local.second]
