@@ -1,12 +1,19 @@
 import { Role } from "./labels.js";
-import { number, unit } from "./lexicon.js";
 import type { Duration, PredictionToken as Token } from "./types.js";
+import { fold, type Language } from "./languages/language.js";
 
 /** Read the numeric pieces selected by the model, preserving their source tokens. */
-export function readNumber(tokens: Token[], index: number, label = Role.NUM) {
+export function readNumber(
+  tokens: Token[],
+  language: Language,
+  index: number,
+  label = Role.NUM,
+) {
+  const number = (text: string) => language.number(text);
+  const word = (at: number) => fold(tokens[at]?.text.toLowerCase() ?? "");
   // "a few" and "a couple" carry the article as its own number token.
   if (
-    /^an?$/i.test(tokens[index]?.text ?? "") &&
+    language.articles.has(word(index)) &&
     tokens[index + 1]?.label === label &&
     Number.isFinite(number(tokens[index + 1].text))
   )
@@ -18,7 +25,7 @@ export function readNumber(tokens: Token[], index: number, label = Role.NUM) {
     next += 2;
   } else {
     if (tokens[next]?.text === "-" && tokens[next + 1]?.label === label) next++;
-    if (/^of$/i.test(tokens[next]?.text ?? "") && tokens[next]?.label === label)
+    if (language.ofWords.has(word(next)) && tokens[next]?.label === label)
       next++;
     const suffix =
       tokens[next]?.label === label ? number(tokens[next].text) : NaN;
@@ -32,16 +39,18 @@ export function readNumber(tokens: Token[], index: number, label = Role.NUM) {
 
 export function readDuration(
   tokens: Token[],
+  language: Language,
   index: number,
 ): { duration: Duration; next: number } | undefined {
+  const unit = (text: string) => language.unit(text);
+  const word = (at: number) => fold(tokens[at]?.text.toLowerCase() ?? "");
   const components = [];
   let next = index;
   while (tokens[next]?.label === Role.NUM) {
-    const quantity = readNumber(tokens, next);
+    const quantity = readNumber(tokens, language, next);
     next = quantity.next;
     // "half an hour": the article belongs to the same quantity.
-    if (quantity.value < 1 && /^(a|an)$/i.test(tokens[next]?.text ?? ""))
-      next++;
+    if (quantity.value < 1 && language.articles.has(word(next))) next++;
     const durationUnit =
       tokens[next]?.label === Role.UNIT ? unit(tokens[next].text) : undefined;
     if (
@@ -51,14 +60,14 @@ export function readDuration(
     )
       return;
     let amount = quantity.value;
-    if (/^fortnights?$/i.test(tokens[next].text)) amount *= 2;
+    if (language.fortnightWords.has(word(next))) amount *= 2;
     next++;
-    if (tokens[next]?.text.toLowerCase() === "and") {
+    if (language.andWords.has(word(next))) {
       let tail = next + 1;
-      if (/^(a|an)$/i.test(tokens[tail]?.text ?? "")) tail++;
+      if (language.articles.has(word(tail))) tail++;
       if (
         tokens[tail]?.label === Role.NUM &&
-        tokens[tail].text.toLowerCase() === "half"
+        language.number(tokens[tail].text) === 0.5
       ) {
         amount += 0.5;
         next = tail + 1;
@@ -71,10 +80,9 @@ export function readDuration(
     )
       return;
     components.push({ amount, unit: durationUnit });
-    const candidate =
-      tokens[next]?.text.toLowerCase() === "and" ? next + 1 : next;
+    const candidate = language.andWords.has(word(next)) ? next + 1 : next;
     if (tokens[candidate]?.label !== Role.NUM) break;
-    const following = readNumber(tokens, candidate).next;
+    const following = readNumber(tokens, language, candidate).next;
     if (tokens[following]?.label !== Role.UNIT) break;
     next = candidate;
   }

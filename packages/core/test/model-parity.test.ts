@@ -3,15 +3,15 @@ import { createHash } from "node:crypto";
 import { expect, it } from "vitest";
 import { inferRows } from "../src/model/cpu.js";
 import { roundHalfFallback } from "../src/model/half.js";
-import { weights } from "../src/model/weights.gen.js";
+import { metadata, weights } from "../src/model/weights.gen.js";
 import { LABELS } from "../src/labels.js";
 
 const activePath = (name: string) =>
   `${import.meta.dirname}/../../training/active/${name}`;
 
 it("exports the current role vocabulary without a timezone role", () => {
-  expect(weights.labels).toEqual(LABELS);
-  expect(weights.labels).not.toContain("TZ");
+  expect(metadata.labels).toEqual(LABELS);
+  expect(metadata.labels).not.toContain("TZ");
 });
 
 function bytes(path: string): ArrayBuffer {

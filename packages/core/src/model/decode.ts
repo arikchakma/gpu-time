@@ -7,7 +7,6 @@ export interface EncodedWeights {
   layers?: number;
   /** Whether a role transition matrix ships and roles decode by Viterbi. */
   transitions?: boolean;
-  labels: readonly string[];
   q: string;
   segments: readonly {
     name: string;
@@ -15,8 +14,16 @@ export interface EncodedWeights {
     length: number;
     scale: number;
     rowScales?: string;
-    shape: readonly number[];
   }[];
+}
+
+/** Tools and tests read this; the runtime must not. An import from runtime
+ *  code puts it back in the bundle. */
+export interface ModelMetadata {
+  version: number;
+  hidden: number;
+  labels: readonly string[];
+  shapes: Readonly<Record<string, readonly number[]>>;
 }
 
 export function decodeWeights(

@@ -2,6 +2,7 @@ import { compilePredictions } from "./compile.js";
 import { LABELS } from "./labels.js";
 import { createTagger, type TagResult } from "./tagger.js";
 import type { ParseResult, ParserOptions } from "./types.js";
+import type { Language } from "./languages/language.js";
 
 export * from "./types.js";
 export { resolve } from "./resolve.js";
@@ -10,10 +11,14 @@ export { resolve } from "./resolve.js";
 export async function defineParser(options: ParserOptions = {}) {
   const tagger = await createTagger({ backend: options.backend });
 
-  function assemble(text: string, result: TagResult): ParseResult {
+  function assemble(
+    text: string,
+    result: TagResult,
+    language?: Language,
+  ): ParseResult {
     const started = performance.now();
     const expressions = !result.unknownLabels
-      ? compilePredictions(text, result.tokens, options)
+      ? compilePredictions(text, result.tokens, { ...options, language })
       : [
           {
             start: 0,
@@ -51,12 +56,17 @@ export async function defineParser(options: ParserOptions = {}) {
   }
 
   return {
-    async parse(text: string): Promise<ParseResult> {
-      return assemble(text, await tagger.tag(text));
+    async parse(text: string, language?: Language): Promise<ParseResult> {
+      return assemble(text, await tagger.tag(text), language);
     },
-    async parseMany(texts: string[]): Promise<ParseResult[]> {
+    async parseMany(
+      texts: string[],
+      language?: Language,
+    ): Promise<ParseResult[]> {
       const predictions = await tagger.tagMany(texts);
-      return predictions.map((result, index) => assemble(texts[index], result));
+      return predictions.map((result, index) =>
+        assemble(texts[index], result, language),
+      );
     },
     dispose: tagger.dispose,
   };

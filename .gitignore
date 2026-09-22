@@ -1,6 +1,7 @@
 node_modules
 .pnpm-store/
 dist
+dist-es
 coverage
 *.tsbuildinfo
 .DS_Store

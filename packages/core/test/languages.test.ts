@@ -1,0 +1,69 @@
+import { describe, expect, it } from "vitest";
+import { defineParser, detectLanguage, en } from "../src/index.ts";
+import es from "../src/languages/es.ts";
+import type { Language } from "../src/languages/language.ts";
+
+const context = { reference: "2026-09-16T12:00:00Z", timeZone: "UTC" };
+// A stand-in pack: only the code differs, so any routing error shows up as a
+// wrong result rather than a crash.
+const clone: Language = { ...en, code: "xx" };
+
+describe("language selection", () => {
+  it("defaults to the first loaded language", async () => {
+    const parser = await defineParser({ languages: [en, clone] });
+    const result = await parser.parse("next Monday at 9am", context);
+    expect(result.occurrences).toHaveLength(1);
+  });
+
+  it("routes an explicit code to its pack", async () => {
+    const parser = await defineParser({ languages: [en, clone] });
+    const result = await parser.parse("next Monday at 9am", {
+      ...context,
+      language: "xx",
+    });
+    expect(result.occurrences).toHaveLength(1);
+  });
+
+  it("rejects a language that is not loaded instead of guessing", async () => {
+    const parser = await defineParser({ languages: [en] });
+    await expect(
+      parser.parse("next Monday", { ...context, language: "es" }),
+    ).rejects.toThrow(/not loaded/);
+  });
+
+  it("keeps English as the default with no languages option", async () => {
+    const parser = await defineParser();
+    const result = await parser.parse("every Tuesday", context);
+    expect(result.rrules[0]).toContain("FREQ=WEEKLY");
+  });
+});
+
+describe("automatic language selection", () => {
+  it("picks the pack whose vocabulary fits, with no language passed", async () => {
+    const cases: [string, string][] = [
+      ["el lunes que viene a las 9", "es"],
+      ["cada dos semanas los martes", "es"],
+      ["el último viernes de cada mes", "es"],
+      ["mañana por la tarde", "es"],
+      ["every other Friday at noon", "en"],
+      ["book dinner for October 2 at eight pm", "en"],
+      ["the last Friday of each month", "en"],
+      ["in 20 minutes for half an hour", "en"],
+    ];
+    for (const [text, code] of cases)
+      expect([text, detectLanguage(text, [en, es])?.code]).toEqual([
+        text,
+        code,
+      ]);
+  });
+
+  it("stays undecided when the text fits both equally", () => {
+    // A bare numeric date reads the same in either language; the caller's
+    // first entry wins rather than a coin flip.
+    expect(detectLanguage("25/12/2026", [en, es])).toBeUndefined();
+  });
+
+  it("never spends a decision when one language is loaded", () => {
+    expect(detectLanguage("cualquier cosa", [en])).toBe(en);
+  });
+});

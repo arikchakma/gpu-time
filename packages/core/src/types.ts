@@ -1,4 +1,5 @@
 import type { Label, Role } from "./labels.js";
+import type { Language } from "./languages/language.js";
 export type { Label };
 export type Weekday = "MO" | "TU" | "WE" | "TH" | "FR" | "SA" | "SU";
 export type Unit =
@@ -155,6 +156,8 @@ export interface ParserOptions {
   tokens?: boolean;
   /** Ambiguous numeric dates only; defaults to MDY. Named months and year-first dates are unchanged. */
   dateOrder?: "MDY" | "DMY";
+  /** Vocabulary pack the compiler reads; defaults to English. */
+  language?: Language;
 }
 export interface ResolveOptions {
   reference: string;

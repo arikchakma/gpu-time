@@ -3,6 +3,8 @@ dist/
 pnpm-lock.yaml
 
 packages/core/src/model/weights.gen.ts
+packages/core/src/model/weights-es.gen.ts
+packages/core/src/model/weights-es.report.json
 packages/training/.venv/
 packages/training/data/synth/
 packages/training/active/

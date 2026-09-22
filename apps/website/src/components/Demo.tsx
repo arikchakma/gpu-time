@@ -1,11 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import { demoDefault, format, kinds } from "../lib/demo";
+import { LanguageToggle, type Language } from "./LanguageToggle";
 import { Mark } from "./Mark";
 
 type Formatted = ReturnType<typeof format>;
 type Parser = Awaited<ReturnType<typeof import("gpu-time").defineParser>>;
 
+// The Spanish model is a preview: exported with --skip-gate, no gold corpus.
+// It ships as its own bundle because one build carries one weight set.
+const spanish = () => import("../../../../packages/core/dist-es/index.js");
+const spanishPack = () =>
+  import("../../../../packages/core/dist-es/languages/es.js");
+
+const spanishDefault = "el lunes que viene a las 9";
+
+/** Undefined when the text fits both packs, so the current one stays put. */
+async function detect(text: string): Promise<Language | undefined> {
+  const [{ detectLanguage, en }, pack] = await Promise.all([
+    import("gpu-time"),
+    spanishPack(),
+  ]);
+  const found = detectLanguage(text, [en, pack.default]);
+  return found?.code === "es" ? "es" : found?.code === "en" ? "en" : undefined;
+}
+
 export function Demo({ initial }: { initial: Formatted }) {
+  const [language, setLanguage] = useState<Language>("en");
   const [text, setText] = useState(demoDefault);
   const [result, setResult] = useState(initial);
   const [busy, setBusy] = useState(false);
@@ -15,31 +35,45 @@ export function Demo({ initial }: { initial: Formatted }) {
   const gpu = useRef(true);
   const seq = useRef(0);
 
+  async function makeParser(backend: "cpu" | "webgpu") {
+    if (language === "es") {
+      const [{ defineParser }, pack] = await Promise.all([
+        spanish(),
+        spanishPack(),
+      ]);
+      return defineParser({ backend, languages: [pack.default] });
+    }
+    const { defineParser } = await import("gpu-time");
+    return defineParser({ backend });
+  }
+
   async function cpuParser() {
     gpu.current = false;
-    const { defineParser } = await import("gpu-time");
-    return defineParser({ backend: "cpu" });
+    return makeParser("cpu");
   }
 
   async function parseWith(
     value: string,
     context: { reference: string; timeZone: string; limit: number },
   ) {
-    if (!parser.current) {
-      const { defineParser } = await import("gpu-time");
+    let active = parser.current;
+    if (!active) {
       try {
-        parser.current = await defineParser({ backend: "webgpu" });
+        gpu.current = true;
+        active = await makeParser("webgpu");
       } catch {
-        parser.current = await cpuParser();
+        active = await cpuParser();
       }
+      parser.current = active;
     }
     try {
-      return await parser.current.parse(value, context);
+      return await active.parse(value, context);
     } catch (error) {
       if (!gpu.current) throw error;
-      parser.current.dispose();
-      parser.current = await cpuParser();
-      return parser.current.parse(value, context);
+      active.dispose();
+      active = await cpuParser();
+      parser.current = active;
+      return active.parse(value, context);
     }
   }
 
@@ -86,12 +120,22 @@ export function Demo({ initial }: { initial: Formatted }) {
     return () => window.removeEventListener("demo:example", pick);
   }, []);
 
+  useEffect(() => {
+    parser.current?.dispose();
+    parser.current = undefined;
+  }, [language]);
+
+  function pickLanguage(next: Language) {
+    setLanguage(next);
+    setText(next === "es" ? spanishDefault : demoDefault);
+  }
+
   // The server already parsed the default phrase, so the first render skips a run.
   useEffect(() => {
     if (text === demoDefault && seq.current === 0) return;
     const timer = setTimeout(() => void run(text), 150);
     return () => clearTimeout(timer);
-  }, [text]);
+  }, [text, language]);
 
   return (
     <>
@@ -104,9 +148,14 @@ export function Demo({ initial }: { initial: Formatted }) {
           <span className="text-label font-medium uppercase text-neutral-500">
             Try It Out
           </span>
-          <span className="text-[11px] text-neutral-400">
-            Type any date or time
-          </span>
+          <div className="flex items-center gap-3">
+            <LanguageToggle value={language} onChange={pickLanguage} />
+            <span className="text-label text-neutral-400">
+              {language === "es"
+                ? "Detectado · vista previa"
+                : "Detected automatically"}
+            </span>
+          </div>
         </div>
 
         <form
@@ -136,7 +185,13 @@ export function Demo({ initial }: { initial: Formatted }) {
               required
               spellCheck={false}
               autoComplete="off"
-              onChange={(event) => setText(event.target.value)}
+              onChange={(event) => {
+                const value = event.target.value;
+                setText(value);
+                void detect(value).then((found) => {
+                  if (found && found !== language) setLanguage(found);
+                });
+              }}
               onScroll={() => {
                 if (layer.current && input.current)
                   layer.current.scrollLeft = input.current.scrollLeft;

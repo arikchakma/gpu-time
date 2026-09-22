@@ -106,7 +106,7 @@ class ProseTests(unittest.TestCase):
 
     def test_family_weights_keep_prose_contrasts_small(self):
         weights = dict(zip(natural.FAMILIES, natural.FAMILY_WEIGHTS))
-        self.assertEqual(weights["prose-shift"], 1)
+        self.assertEqual(weights["prose-shift"], 2)
         self.assertEqual(weights["carrier-date"], 1)
         self.assertEqual(weights["compound-shift"], 2)
         self.assertEqual(weights["prose-date"], 2)

@@ -12,6 +12,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./languages/es": {
+      "types": "./dist/languages/es.d.ts",
+      "import": "./dist/languages/es.js",
+      "default": "./dist/languages/es.js"
     }
   },
   "files": [
@@ -20,6 +25,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "node --experimental-strip-types scripts/build.ts --report-only",
+    "build:es": "node --experimental-strip-types scripts/build.ts --weights src/model/weights-es.gen.ts --outdir dist-es --report-only",
     "build:release": "node --experimental-strip-types scripts/build.ts",
     "prepack": "pnpm build",
     "release": "bumpp",
@@ -34,11 +40,11 @@
     "@types/node": "24.13.3",
     "@webgpu/types": "0.1.72",
     "ajv": "8.20.0",
-    "esbuild": "0.28.2",
     "playwright": "1.63.0",
     "rrule": "2.8.1",
     "terser": "5.51.2",
     "ts-json-schema-generator": "2.9.0",
+    "tsdown": "^0.23.0",
     "typescript": "5.9.3",
     "vite": "7.3.6",
     "vitest": "4.1.11",

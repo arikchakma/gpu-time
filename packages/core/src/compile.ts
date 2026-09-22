@@ -19,84 +19,34 @@ import type {
   Unit,
   ParserOptions,
 } from "./types.js";
-import {
-  compoundOrdinal,
-  dayNames,
-  holidayNames,
-  month,
-  number,
-  unit,
-  weekday,
-  weekdays,
-} from "./lexicon.js";
+import { weekdays } from "./lexicon.js";
+import { fold, type Language } from "./languages/language.js";
+import english from "./languages/en.js";
 
 import { readDuration, readNumber } from "./quantity.js";
 
-const approximately = new Set(["about", "around", "roughly"]);
-const filler = new Set([
-  ...approximately,
-  "at",
-  "on",
-  "the",
-  "of",
-  "a",
-  "an",
-  "and",
-  "then",
-  "from",
-  "for",
-  "end",
-  "start",
-  ",",
-  ";",
-  "&",
-  ":",
-  "-",
-  "–",
-  "—",
-  ".",
-  "st",
-  "nd",
-  "rd",
-  "th",
-]);
-const relativeDays: Record<string, number> = {
-  today: 0,
-  tonight: 0,
-  tomorrow: 1,
-  yesterday: -1,
-  "the day after tomorrow": 2,
-  "the day before yesterday": -2,
-  tmrw: 1,
-  tmr: 1,
-  tmw: 1,
-  tonite: 0,
-};
-const dayParts: Record<string, DayPart> = {
-  morning: "morning",
-  afternoon: "afternoon",
-  evening: "evening",
-  night: "night",
-};
 const recurrenceBounds = new Set([
   Role.BOUND_START,
   Role.BOUND_END,
   Role.EXCEPT,
 ]);
-const modifiers: Record<string, Modifier> = {
-  this: "this",
-  next: "next",
-  nxt: "next",
-  coming: "next",
-  upcoming: "next",
-  last: "last",
-  previous: "last",
-  past: "last",
-};
 
 const lower = (token?: Token) => token?.text.toLowerCase() ?? "";
-const sameTimePair = (first?: Token, second?: Token) =>
-  ["same", "this"].includes(lower(first)) && lower(second) === "time";
+// Guards every table lookup: a bare `table[key]` resolves to an inherited
+// Object.prototype member when the key is "constructor".
+function lookup<T>(
+  table: Readonly<Record<string, T>>,
+  key: string,
+): T | undefined {
+  return Object.hasOwn(table, key) ? table[key] : undefined;
+}
+const sameTimePair = (
+  first: Token | undefined,
+  second: Token | undefined,
+  language: Language,
+) => language.isSameTimeCue(lower(first), lower(second));
+const isThisWord = (text: string, language: Language) =>
+  lookup(language.modifiers, fold(text.toLowerCase())) === "this";
 
 const unitFrequencies: Partial<Record<Unit, Recurrence["freq"]>> = {
   hour: "hourly",
@@ -105,28 +55,9 @@ const unitFrequencies: Partial<Record<Unit, Recurrence["freq"]>> = {
   month: "monthly",
   year: "yearly",
 };
-const frequencyWords: Record<string, Recurrence["freq"]> = {
-  hourly: "hourly",
-  daily: "daily",
-  nightly: "daily",
-  weekly: "weekly",
-  biweekly: "weekly",
-  fortnightly: "weekly",
-  monthly: "monthly",
-  bimonthly: "monthly",
-  quarterly: "monthly",
-  yearly: "yearly",
-  annually: "yearly",
-};
-const frequencyIntervals: Record<string, number> = {
-  biweekly: 2,
-  fortnightly: 2,
-  bimonthly: 2,
-  quarterly: 3,
-};
 
-function frequencyFor(token: Token): Recurrence["freq"] {
-  const value = unit(token.text);
+function frequencyFor(token: Token, language: Language): Recurrence["freq"] {
+  const value = language.unit(token.text);
   const frequency = value && unitFrequencies[value];
   if (!frequency)
     fail(
@@ -163,26 +94,34 @@ function fail(token: Token, code: string, message: string): never {
   throw new CompileError(diagnostic(token, code, message));
 }
 
-const clockPeriods = new Map([
-  ["inmorning", "am"],
-  ["inthemorning", "am"],
-  ["inafternoon", "pm"],
-  ["intheafternoon", "pm"],
-  ["inevening", "pm"],
-  ["intheevening", "pm"],
-  ["atnight", "pm"],
-  ["inthenight", "pm"],
-]);
+// A meridiem phrase can prefix an exact-hour marker ("o'clock in the morning"):
+// strip that marker's own key and resolve whatever qualifier follows it.
+function resolveMeridiem(phrase: string, language: Language): string {
+  if (Object.hasOwn(language.meridiemPhrases, phrase))
+    return language.meridiemPhrases[phrase];
+  for (const [key, value] of Object.entries(language.meridiemPhrases)) {
+    if (
+      value === "o'clock" &&
+      phrase.startsWith(key) &&
+      phrase.length > key.length
+    )
+      return resolveMeridiem(phrase.slice(key.length), language);
+  }
+  return phrase;
+}
 
 function readClock(
   tokens: Token[],
+  language: Language,
   index: number,
 ): { clock: ParsedClock; next: number } {
   const token = tokens[index];
   // A bare four-digit clock: "1150" is 11:15 and "0930" is 09:30. The model
   // decides the token is an hour; the compiler only splits the digits.
   const compact = /^([01]\d|2[0-3])([0-5]\d)$/.exec(token.text);
-  let hour = compact ? Number(compact[1]) : number(token.text.toLowerCase());
+  let hour = compact
+    ? Number(compact[1])
+    : language.number(token.text.toLowerCase());
   let minute = compact ? Number(compact[2]) : 0;
   let second: number | undefined;
   let meridiem: string | undefined;
@@ -199,33 +138,51 @@ function readClock(
         /^\d{1,2}$/.test(token.text) &&
         /^\d{2}$/.test(tokens[next + 1]?.text ?? ""));
   if (separated) {
-    minute = number(tokens[next + 1].text);
+    minute = language.number(tokens[next + 1].text);
     next += 2;
   }
 
   if (tokens[next]?.label === Role.MINUTE) {
-    const spoken = readNumber(tokens, next, Role.MINUTE);
+    const spoken = readNumber(tokens, language, next, Role.MINUTE);
     minute = spoken.value;
     next = spoken.next;
   }
 
   if (tokens[next]?.text === ":" && tokens[next + 1]?.label === Role.SECOND) {
-    second = number(tokens[next + 1].text);
+    second = language.number(tokens[next + 1].text);
     next += 2;
   }
 
+  // Some languages put the fraction after the hour ("seis y media"), not before
+  // it ("half past six"). Runs after meridiem resolution so "menos cuarto" can
+  // wrap under 1 before a trailing "de la tarde" lifts it to pm.
+  let pendingFraction: { direction: "past" | "to"; offset: number } | undefined;
+  if (minute === 0 && second === undefined) {
+    const direction = lookup(
+      language.clockDirections,
+      fold(tokens[next]?.text.toLowerCase() ?? ""),
+    );
+    const offset =
+      tokens[next + 1]?.label === Role.CLOCK_OFFSET
+        ? lookup(
+            language.clockFractions,
+            fold(tokens[next + 1].text.toLowerCase()),
+          )
+        : undefined;
+    if (direction && offset !== undefined) {
+      pendingFraction = { direction, offset };
+      next += 2;
+    }
+  }
+
   while (tokens[next]?.label === Role.MERIDIEM) {
-    const part = tokens[next].text.toLowerCase().replace(/\./g, "");
+    const part = fold(tokens[next].text.toLowerCase().replace(/[.'’]/g, ""));
     meridiem = (meridiem ?? "") + part;
     next++;
   }
   if (meridiem) {
-    meridiem = meridiem.replace(/[’]/g, "'").replace(/^oclock/, "o'clock");
-    if (meridiem.startsWith("o'clock") && meridiem.length > 7)
-      meridiem = meridiem.slice(7);
-    if (hour === 12 && ["atnight", "inthenight"].includes(meridiem))
-      meridiem = "am";
-    meridiem = clockPeriods.get(meridiem) ?? meridiem;
+    meridiem = resolveMeridiem(meridiem, language);
+    if (meridiem === "night") meridiem = hour === 12 ? "am" : "pm";
   }
 
   const endOfDay = hour === 24 && minute === 0 && (second ?? 0) === 0;
@@ -245,6 +202,14 @@ function readClock(
 
   if (meridiem === "am" || meridiem === "pm") {
     hour = (hour % 12) + (meridiem === "pm" ? 12 : 0);
+  }
+
+  if (pendingFraction) {
+    const { direction, offset } = pendingFraction;
+    const total =
+      (hour * 60 + (direction === "to" ? -offset : offset) + 1440) % 1440;
+    hour = Math.floor(total / 60);
+    minute = total % 60;
   }
 
   const value: ClockTime = { hour, minute };
@@ -385,6 +350,7 @@ function compileTime(
 
 function compileDateAndTime(
   tokens: Token[],
+  language: Language,
   diagnostics: Diagnostic[],
 ): Clause {
   const clause: Clause = {};
@@ -412,9 +378,11 @@ function compileDateAndTime(
       Role.DAYPART,
       Role.MONTH,
     ].includes(token.label);
-    const word = possessive
-      ? token.text.toLowerCase().replace(/['\u2019]s$/, "")
-      : token.text.toLowerCase();
+    const word = fold(
+      possessive
+        ? token.text.toLowerCase().replace(/['\u2019]s$/, "")
+        : token.text.toLowerCase(),
+    );
 
     switch (token.label) {
       case Role.O:
@@ -448,37 +416,54 @@ function compileDateAndTime(
       case Role.REL_DAY: {
         let phrase = word;
         while (tokens[index + 1]?.label === Role.REL_DAY)
-          phrase += " " + tokens[++index].text.toLowerCase();
-        if (!Object.hasOwn(relativeDays, phrase))
+          phrase += " " + fold(tokens[++index].text.toLowerCase());
+        if (!Object.hasOwn(language.relativeDays, phrase))
           fail(token, "unsupported", "Unknown relative day.");
-        clause.date = { kind: "relativeDay", offset: relativeDays[phrase] };
+        clause.date = {
+          kind: "relativeDay",
+          offset: language.relativeDays[phrase],
+        };
         break;
       }
 
       case Role.EDGE:
-        if (!["start", "beginning", "end", "rest", "remainder"].includes(word))
+        if (!Object.hasOwn(language.edges, word))
           fail(token, "unsupported", "Unknown calendar edge.");
-        edge = word === "start" || word === "beginning" ? "start" : "end";
+        edge = language.edges[word];
         break;
 
-      case Role.NOW:
-        if (!["now", "immediately"].includes(word))
+      case Role.NOW: {
+        // "ahora mismo": one cue, two tokens.
+        let phrase = word;
+        while (tokens[index + 1]?.label === Role.NOW)
+          phrase += " " + fold(tokens[++index].text.toLowerCase());
+        if (!language.now.has(phrase))
           fail(token, "unsupported", "Unknown immediate-time expression.");
         clause.date = { kind: "now" };
         break;
+      }
 
-      case Role.DEICTIC:
-        modifier = Object.hasOwn(modifiers, word) ? modifiers[word] : undefined;
+      case Role.DEICTIC: {
+        // "que viene": one modifier, two tokens.
+        let phrase = word;
+        while (tokens[index + 1]?.label === Role.DEICTIC)
+          phrase += " " + fold(tokens[++index].text.toLowerCase());
+        modifier = Object.hasOwn(language.modifiers, phrase)
+          ? language.modifiers[phrase]
+          : undefined;
         if (!modifier) fail(token, "unsupported", "Unknown date modifier.");
         break;
+      }
 
       case Role.UNIT: {
-        const value = unit(word);
+        const value = language.unit(word);
         if (!value) fail(token, "unsupported", "Unknown calendar unit.");
         const boundary =
           edge ??
-          (/^eo[dwm]$/.test(word) ||
-          tokens.some((part) => part.text.toLowerCase() === "end")
+          (language.endAbbreviations.has(word) ||
+          tokens.some(
+            (part) => language.edges[fold(part.text.toLowerCase())] === "end",
+          )
             ? "end"
             : undefined);
         if (ordinal !== undefined && value === "week") {
@@ -504,7 +489,7 @@ function compileDateAndTime(
       }
 
       case Role.ORD:
-        ordinal = number(word);
+        ordinal = language.number(word);
         if (
           !Number.isInteger(ordinal) ||
           ordinal === 0 ||
@@ -514,17 +499,11 @@ function compileDateAndTime(
         break;
 
       case Role.DAYGROUP: {
-        // "business day" arrives as two tokens, like a compound holiday.
-        const text =
-          tokens[index + 1]?.label === Role.DAYGROUP &&
-          /^days?$/.test(tokens[index + 1].text.toLowerCase())
-            ? word + tokens[++index].text.toLowerCase()
-            : word;
-        const group = /^weekends?$/.test(text)
-          ? "weekend"
-          : /^((week|work)(day|night)s?|businessdays?)$/.test(text)
-            ? "weekday"
-            : undefined;
+        // "business day" and "fin de semana" arrive as several tokens.
+        let text = word;
+        while (tokens[index + 1]?.label === Role.DAYGROUP)
+          text += fold(tokens[++index].text.toLowerCase());
+        const group = language.dayGroup(text);
         if (!group) fail(token, "unsupported", "Unknown day group.");
         clause.date = {
           kind: "dayGroup",
@@ -541,18 +520,20 @@ function compileDateAndTime(
         const offset =
           token.label === Role.NUM
             ? // "ten past six" says the unit only by position.
-              ["past", "to"].includes(tokens[target]?.text.toLowerCase() ?? "")
-              ? number(word)
-              : unit(tokens[target++]?.text ?? "") === "minute"
-                ? number(word)
+              Object.hasOwn(
+                language.clockDirections,
+                fold(tokens[target]?.text.toLowerCase() ?? ""),
+              )
+              ? language.number(word)
+              : language.unit(tokens[target++]?.text ?? "") === "minute"
+                ? language.number(word)
                 : NaN
-            : word === "half"
-              ? 30
-              : word === "quarter"
-                ? 15
-                : NaN;
-        const direction = tokens[target]?.text.toLowerCase();
-        if (!["past", "to"].includes(direction) || !Number.isFinite(offset))
+            : (lookup(language.clockFractions, fold(word)) ?? NaN);
+        const direction = lookup(
+          language.clockDirections,
+          fold(tokens[target]?.text.toLowerCase() ?? ""),
+        );
+        if (!direction || !Number.isFinite(offset))
           fail(
             token,
             "invalid-time",
@@ -561,7 +542,7 @@ function compileDateAndTime(
         target++;
         if (tokens[target]?.label !== Role.HOUR)
           fail(token, "invalid-time", "A fractional clock needs an hour.");
-        const { clock, next } = readClock(tokens, target);
+        const { clock, next } = readClock(tokens, language, target);
         if (!("hour" in clock.value) || clock.value.minute !== 0)
           fail(token, "invalid-time", "A fractional clock needs a whole hour.");
         const total =
@@ -575,18 +556,17 @@ function compileDateAndTime(
         break;
       }
 
-      case Role.TIME_NAMED:
-        if (!["noon", "midday", "midnight"].includes(word))
-          fail(token, "unsupported", "Unknown named clock time.");
-        clocks.push({
-          value: { named: word === "midnight" ? "midnight" : "noon" },
-          token,
-          needsMeridiem: false,
-        });
+      case Role.TIME_NAMED: {
+        const named = lookup(language.timeNamed, word);
+        if (!named) fail(token, "unsupported", "Unknown named clock time.");
+        clocks.push({ value: { named }, token, needsMeridiem: false });
         break;
+      }
 
       case Role.DAYPART: {
-        const part = Object.hasOwn(dayParts, word) ? dayParts[word] : undefined;
+        const part = Object.hasOwn(language.dayParts, word)
+          ? language.dayParts[word]
+          : undefined;
         if (!part) fail(token, "unsupported", "Unknown day part.");
         // "last night" names a day. Without this the modifier is dropped and
         // the day part lands on today. A weekday already consumed it.
@@ -613,7 +593,7 @@ function compileDateAndTime(
       }
 
       case Role.MONTH: {
-        const value = month(word) ?? number(word);
+        const value = language.month(word) ?? language.number(word);
         if (!Number.isInteger(value) || value < 1 || value > 12)
           fail(token, "invalid-date", "Unknown month.");
         calendar ??= {};
@@ -629,15 +609,21 @@ function compileDateAndTime(
       }
 
       case Role.DOM: {
-        let value = number(word);
+        let value = language.number(word);
         // "twenty-first" arrives as separate tokens, optionally hyphenated.
         const onesIndex =
           tokens[index + 1]?.text === "-" ? index + 2 : index + 1;
         const ones = tokens[onesIndex];
         if (ones) {
-          const combined = compoundOrdinal(word, ones.text);
+          const combined = language.compoundOrdinal(word, ones.text);
           if (Number.isInteger(combined)) {
             value = combined;
+            index = onesIndex;
+          } else if (
+            ones.label === Role.DOM &&
+            language.ordinalMarks.has(fold(ones.text.toLowerCase()))
+          ) {
+            // "1º"/"1ª": a suffix mark glued to the digit, not a second number.
             index = onesIndex;
           }
         }
@@ -656,7 +642,7 @@ function compileDateAndTime(
       }
 
       case Role.YEAR: {
-        const value = number(word);
+        const value = language.number(word);
         if (!Number.isInteger(value) || value < 1 || value > 9999)
           fail(token, "invalid-date", "Year is out of range.");
         // Two-digit years pivot at 69, the POSIX strptime rule.
@@ -668,7 +654,7 @@ function compileDateAndTime(
       }
 
       case Role.WEEKDAY: {
-        const day = weekday(word);
+        const day = language.weekday(word);
         if (!day) fail(token, "unsupported", "Unknown weekday.");
         if (firstDayIndex < 0) firstDayIndex = index;
         if (pendingDayRange) {
@@ -685,21 +671,25 @@ function compileDateAndTime(
       case Role.HOLIDAY: {
         let text = word;
         while (tokens[index + 1]?.label === Role.HOLIDAY)
-          text += tokens[++index].text.toLowerCase();
+          text += fold(tokens[++index].text.toLowerCase());
         const key = text.replace(/['’\s-]/g, "");
-        if (!Object.hasOwn(holidayNames, key))
+        if (!Object.hasOwn(language.holidays, key))
           fail(token, "unsupported", "Unknown fixed-date holiday.");
-        clause.date = { kind: "holiday", name: holidayNames[key] };
+        clause.date = { kind: "holiday", name: language.holidays[key] };
         break;
       }
 
       case Role.MERIDIEM:
-        // "at" introduces a following clock; it is also part of "at night".
-        if (word === "at" && tokens[index + 1]?.label === Role.HOUR) break;
+        // A lead word like "at" introduces a following clock.
+        if (
+          language.meridiemLead.has(word) &&
+          tokens[index + 1]?.label === Role.HOUR
+        )
+          break;
         fail(token, "invalid-time", "A time-of-day qualifier needs a clock.");
 
       case Role.HOUR: {
-        const { clock, next } = readClock(tokens, index);
+        const { clock, next } = readClock(tokens, language, index);
         clocks.push(clock);
         index = next - 1;
         break;
@@ -755,7 +745,7 @@ function compileDateAndTime(
       ...(tokens.some(
         (value) =>
           value.label === Role.RECUR ||
-          (value.label === Role.UNIT && unit(value.text) === "month"),
+          (value.label === Role.UNIT && language.unit(value.text) === "month"),
       ) && !modifier
         ? { recurring: true }
         : {}),
@@ -834,7 +824,7 @@ function compileDateAndTime(
       if (
         !clause.date &&
         (modifier === "this" ||
-          tokens.some((token) => token.text.toLowerCase() === "this"))
+          tokens.some((token) => isThisWord(token.text, language)))
       )
         clause.date = { kind: "relativeDay", offset: 0 };
     } else clocks.push(dayPartClock);
@@ -844,7 +834,7 @@ function compileDateAndTime(
     tokens.some(
       (token) =>
         token.label === Role.REL_DAY &&
-        ["tonight", "tonite"].includes(token.text.toLowerCase()),
+        language.tonightWords.has(fold(token.text.toLowerCase())),
     )
   ) {
     for (const clock of clocks) qualifyClock(clock, "night");
@@ -919,7 +909,7 @@ function compileDateAndTime(
         // it joins two days, and that clause is a date range, not a deadline.
         tokens
           .slice(index + 1, tokens.indexOf(clocks[0].token))
-          .every((between) => filler.has(lower(between))),
+          .every((between) => language.filler.has(lower(between))),
     )
   ) {
     // The mirror of the branch above: "until 3pm" has no reading where 3pm
@@ -969,12 +959,24 @@ function compileDateAndTime(
   return clause;
 }
 
-function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
+function extractShift(
+  tokens: Token[],
+  language: Language,
+): { tokens: Token[]; shift?: Shift } {
   const directionIndex = tokens.findIndex(
     (token) =>
       token.label === Role.DIR_BEFORE || token.label === Role.DIR_AFTER,
   );
   if (directionIndex < 0) return { tokens };
+  // "después de" is a multi-word direction, unlike English "after". Every token
+  // in the run carries the same role.
+  const directionRole = tokens[directionIndex].label;
+  let directionEnd = directionIndex + 1;
+  while (tokens[directionEnd]?.label === directionRole) directionEnd++;
+  const directionRun = Array.from(
+    { length: directionEnd - directionIndex },
+    (_, offset) => directionIndex + offset,
+  );
 
   const amountIndex = tokens.findIndex((token) => token.label === Role.NUM);
   const unitIndex = tokens.findIndex((token) => token.label === Role.UNIT);
@@ -989,12 +991,15 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
     durationIndex < amountIndex &&
     amountIndex < directionIndex
   )
-    return { tokens: tokens.filter((_, index) => index !== directionIndex) };
+    return {
+      tokens: tokens.filter((_, index) => !directionRun.includes(index)),
+    };
 
   const amountToken = tokens[amountIndex];
-  const quantity = readDuration(tokens, amountIndex);
-  const amount = quantity?.duration.amount ?? number(amountToken.text);
-  const durationUnit = quantity?.duration.unit ?? unit(tokens[unitIndex].text);
+  const quantity = readDuration(tokens, language, amountIndex);
+  const amount = quantity?.duration.amount ?? language.number(amountToken.text);
+  const durationUnit =
+    quantity?.duration.unit ?? language.unit(tokens[unitIndex].text);
 
   if (
     !durationUnit ||
@@ -1005,7 +1010,7 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
     fail(amountToken, "invalid-shift", "Invalid relative quantity.");
   }
 
-  const consumed = new Set([amountIndex, unitIndex, directionIndex]);
+  const consumed = new Set([amountIndex, unitIndex, ...directionRun]);
   if (quantity)
     for (let i = amountIndex; i < quantity.next; i++) consumed.add(i);
   let endAmount: number | undefined;
@@ -1017,7 +1022,8 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
   );
   if (rangeIndex >= 0) {
     const endToken = tokens[rangeIndex + 1];
-    endAmount = endToken?.label === Role.NUM ? number(endToken.text) : NaN;
+    endAmount =
+      endToken?.label === Role.NUM ? language.number(endToken.text) : NaN;
     if (!Number.isInteger(endAmount) || endAmount < amount)
       fail(
         tokens[rangeIndex],
@@ -1035,7 +1041,7 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
         ? { components: quantity.duration.components }
         : {}),
       ...(endAmount === undefined ? {} : { endAmount }),
-      ...(approximately.has(lower(tokens[amountIndex - 1]))
+      ...(language.approximately.has(lower(tokens[amountIndex - 1]))
         ? { approximate: true }
         : {}),
       unit: durationUnit,
@@ -1045,12 +1051,16 @@ function extractShift(tokens: Token[]): { tokens: Token[]; shift?: Shift } {
   };
 }
 
-function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
-  input = contextualBounds(input);
+function compileClause(
+  input: Token[],
+  language: Language,
+  diagnostics: Diagnostic[],
+): Clause {
+  input = contextualBounds(input, language);
   const last = input.findLast((token) => token.label !== Role.O);
   if (last?.label === Role.RANGE_END) {
     if (
-      last.text.toLowerCase() === "until" &&
+      language.deadlineWords.has(last.text.toLowerCase()) &&
       input.some((token) =>
         [Role.RECUR, Role.FREQ, Role.DAYGROUP].includes(token.label),
       )
@@ -1076,7 +1086,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       "incomplete-recurrence",
       "A recurrence needs a frequency or calendar selector.",
     );
-  let { tokens, shift } = extractShift(input);
+  let { tokens, shift } = extractShift(input, language);
   const body: Token[] = [];
   const boundIndex = tokens.findIndex((token) =>
     recurrenceBounds.has(token.label),
@@ -1086,18 +1096,24 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
     selectors.some((token) => token.label === Role.ORD) &&
     selectors.some((token) => token.label === Role.WEEKDAY) &&
     selectors.some(
-      (token) => token.label === Role.UNIT && unit(token.text) === "month",
+      (token) =>
+        token.label === Role.UNIT && language.unit(token.text) === "month",
     ) &&
     !selectors.some((token) => token.label === Role.DEICTIC);
   // Only a plural name repeats on its own: "weekends" and "tuesdays" recur, "the
   // weekend" names the coming one. An explicit RECUR marker still makes a series.
-  const pluralDayGroup = selectors.some(
-    (token) =>
-      (token.label === Role.DAYGROUP ||
-        (token.label === Role.WEEKDAY &&
-          dayNames.includes(token.text.toLowerCase().replace(/s$/, "")))) &&
-      /s$/i.test(token.text),
-  );
+  // Some weekday nouns never inflect: Spanish "lunes" is singular and plural,
+  // so the article carries the plural instead ("los lunes").
+  const pluralDayGroup = selectors.some((token, index) => {
+    if (token.label === Role.DAYGROUP) return /s$/i.test(token.text);
+    if (token.label !== Role.WEEKDAY) return false;
+    if (language.isPluralWeekday(token.text)) return true;
+    for (let lead = index - 1; lead >= 0; lead--) {
+      if (selectors[lead].kind === 3) continue;
+      return language.pluralArticles.has(lower(selectors[lead]));
+    }
+    return false;
+  });
   // The weekly default belongs to a weekday. "every morning" repeats once a day
   // and "every May" once a year, so a lone day part or month sets its own period.
   const alone = (label: Role) =>
@@ -1141,12 +1157,13 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
 
     if (token.label === Role.FREQ) {
       const word = token.text.toLowerCase();
-      if (!Object.hasOwn(frequencyWords, word))
+      if (!Object.hasOwn(language.frequencyWords, word))
         fail(token, "unsupported", "Unknown recurrence frequency.");
       recurrence = {
         ...recurrence,
-        freq: frequencyWords[word],
-        interval: frequencyIntervals[word] ?? recurrence?.interval ?? 1,
+        freq: language.frequencyWords[word],
+        interval:
+          language.frequencyIntervals[word] ?? recurrence?.interval ?? 1,
       };
       continue;
     }
@@ -1155,7 +1172,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       token.label === Role.TIMES ||
       (token.label === Role.NUM && tokens[index + 1]?.label === Role.TIMES)
     ) {
-      const count = number(token.text);
+      const count = language.number(token.text);
       let period = index + (token.label === Role.NUM ? 2 : 1);
       while (
         tokens[period]?.label === Role.O ||
@@ -1174,7 +1191,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
         );
       recurrence = {
         ...recurrence,
-        freq: frequencyFor(tokens[period]),
+        freq: frequencyFor(tokens[period], language),
         interval: recurrence?.interval ?? 1,
         timesPer: count,
       };
@@ -1183,32 +1200,39 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
     }
 
     if (recurrence && token.label === Role.UNIT) {
-      recurrence.freq = frequencyFor(token);
-      if (/^fortnights?$/i.test(token.text)) recurrence.interval = 2;
+      recurrence.freq = frequencyFor(token, language);
+      if (language.fortnightWords.has(fold(token.text.toLowerCase())))
+        recurrence.interval = 2;
       continue;
     }
     if (recurrence && token.label === Role.ORD) {
-      const value = number(token.text);
+      const value = language.number(token.text);
       if (!Number.isInteger(value) || value === 0 || Math.abs(value) > 5)
         fail(token, "invalid-ordinal", "Use first through fifth, or last.");
       // "the last day of every month" picks a day of the month, not an occurrence.
       if (
         tokens[index + 1]?.label === Role.UNIT &&
-        unit(tokens[index + 1].text) === "day"
+        language.unit(tokens[index + 1].text) === "day"
       )
         (recurrence.byMonthDay ??= []).push(value);
       else (recurrence.bySetPos ??= []).push(value);
       continue;
     }
     if (recurrence && token.label === Role.DOM) {
-      const value = number(token.text);
+      const value = language.number(token.text);
+      // "1º": an ordinal suffix mark glued to the digit, not a second day.
+      if (
+        tokens[index + 1]?.label === Role.DOM &&
+        language.ordinalMarks.has(fold(tokens[index + 1].text.toLowerCase()))
+      )
+        index++;
       if (!Number.isInteger(value) || value < 1 || value > 31)
         fail(token, "invalid-date", "Day of month is out of range.");
       (recurrence.byMonthDay ??= []).push(value);
       continue;
     }
     if (recurrence && token.label === Role.MONTH) {
-      const value = month(token.text) ?? number(token.text);
+      const value = language.month(token.text) ?? language.number(token.text);
       if (!Number.isInteger(value) || value < 1 || value > 12)
         fail(token, "invalid-date", "Month is out of range.");
       (recurrence.byMonth ??= []).push(value);
@@ -1219,7 +1243,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       token.label === Role.NUM &&
       tokens[index + 1]?.label === Role.COUNT
     ) {
-      const count = number(token.text);
+      const count = language.number(token.text);
       if (!Number.isInteger(count) || count < 1)
         fail(token, "invalid-count", "Occurrence count must be positive.");
       recurrence.count = count;
@@ -1244,7 +1268,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       )
         amountIndex++;
       const amountToken = tokens[amountIndex];
-      const quantity = readDuration(tokens, amountIndex);
+      const quantity = readDuration(tokens, language, amountIndex);
       if (!quantity)
         fail(
           token,
@@ -1256,7 +1280,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       // After hours or minutes only an explicit "from" anchors; the glue kind
       // states a start clock, as in "last for 2 hours from 2pm".
       const fromAnchor =
-        lower(tokens[quantity.next]) === "from" &&
+        language.fromWords.has(fold(lower(tokens[quantity.next]))) &&
         (tokens[quantity.next].label === Role.RANGE_START ||
           !["second", "minute", "hour"].includes(durationUnit));
       if (bareDuration && !shift && fromAnchor) {
@@ -1268,7 +1292,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       if (
         recurrence &&
         !["minute", "hour"].includes(durationUnit) &&
-        token.text.toLowerCase() !== "lasting"
+        !language.lastingWords.has(fold(token.text.toLowerCase()))
       ) {
         if (recurrence.span)
           fail(
@@ -1297,7 +1321,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
         tokens[index + 1]?.label,
       );
     if (recurrence && isWeekdayInterval) {
-      const interval = number(token.text);
+      const interval = language.number(token.text);
       if (!Number.isInteger(interval) || interval < 1) {
         fail(
           token,
@@ -1313,7 +1337,12 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       if (!recurrence && token.label !== Role.BOUND_START)
         fail(token, "unsupported", "This bound requires recurrence.");
 
-      let end = index + 1;
+      // "a partir de"/"empezando" is a multi-word marker: every token in the
+      // run carries the same role, unlike English's single-word "starting".
+      let markerEnd = index + 1;
+      while (tokens[markerEnd]?.label === token.label) markerEnd++;
+
+      let end = markerEnd;
       while (
         end < tokens.length &&
         !recurrenceBounds.has(tokens[end].label) &&
@@ -1325,9 +1354,9 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
       )
         end++;
 
-      const bound = tokens.slice(index + 1, end);
+      const bound = tokens.slice(markerEnd, end);
       if (!bound.length) fail(token, "invalid-bound", "A bound needs a date.");
-      const compiled = compileDateAndTime(bound, diagnostics);
+      const compiled = compileDateAndTime(bound, language, diagnostics);
       const date = compiled.date;
       // "starting at 8:30" names a clock, not a date; it is the clause's own time.
       if (!date && token.label === Role.BOUND_START && compiled.time?.start) {
@@ -1354,7 +1383,9 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
   }
 
   const hasDateOrTime = body.some((token) => token.label !== Role.O);
-  const clause = hasDateOrTime ? compileDateAndTime(body, diagnostics) : {};
+  const clause = hasDateOrTime
+    ? compileDateAndTime(body, language, diagnostics)
+    : {};
   if (shift) clause.shift = shift;
   if (duration) clause.duration = duration;
   if (boundTime) {
@@ -1380,7 +1411,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
   }
 
   const sameTime = input.some((token, index) =>
-    sameTimePair(input[index - 1], token),
+    sameTimePair(input[index - 1], token, language),
   );
   if (clause.date?.kind === "relativeUnit" && !clause.date.edge && sameTime) {
     const { modifier, unit } = clause.date;
@@ -1428,7 +1459,7 @@ function compileClause(input: Token[], diagnostics: Diagnostic[]): Clause {
 // ("friday, say, around 3"), not the end of the expression.
 const asideLimit = 3;
 
-function splitExpressions(tokens: Token[]): Token[][] {
+function splitExpressions(tokens: Token[], language: Language): Token[][] {
   const expressions: Token[][] = [];
   let current: Token[] = [];
   let aside: Token[] = [];
@@ -1438,7 +1469,7 @@ function splitExpressions(tokens: Token[]): Token[][] {
     let token = tokens[index];
     if (token.kind === 3) continue;
     if (
-      token.text.toLowerCase() === "until" &&
+      language.deadlineWords.has(token.text.toLowerCase()) &&
       [Role.O, Role.GLUE].includes(token.label) &&
       current.some((part) => [Role.RECUR, Role.FREQ].includes(part.label))
     )
@@ -1449,20 +1480,26 @@ function splitExpressions(tokens: Token[]): Token[][] {
       continue;
     }
 
-    if (token.label !== Role.O || filler.has(token.text.toLowerCase())) {
-      if (!current.length && sameTimePair(leading.at(-2), leading.at(-1)))
+    if (
+      token.label !== Role.O ||
+      language.filler.has(token.text.toLowerCase())
+    ) {
+      if (
+        !current.length &&
+        sameTimePair(leading.at(-2), leading.at(-1), language)
+      )
         current.push(...leading.slice(-2));
       else if (
         !current.length &&
         token.label === Role.DAYPART &&
-        lower(leading.at(-1)) === "this"
+        isThisWord(lower(leading.at(-1)), language)
       )
         current.push(leading.at(-1)!);
       // "about 20 minutes" leads with the qualifier that makes the shift loose.
       else if (
         !current.length &&
         token.label === Role.NUM &&
-        approximately.has(lower(leading.at(-1)))
+        language.approximately.has(lower(leading.at(-1)))
       )
         current.push(leading.at(-1)!);
       leading = [];
@@ -1478,17 +1515,17 @@ function splitExpressions(tokens: Token[]): Token[][] {
   }
 
   if (current.length) {
-    if (aside.length === 2 && sameTimePair(aside[0], aside[1]))
+    if (aside.length === 2 && sameTimePair(aside[0], aside[1], language))
       current.push(...aside);
     expressions.push(current);
   }
 
   return expressions.filter((expression) => {
     const startsWithTimeCue = () =>
-      sameTimePair(expression[0], expression[1]) ||
-      (lower(expression[0]) === "this" &&
+      sameTimePair(expression[0], expression[1], language) ||
+      (isThisWord(lower(expression[0]), language) &&
         expression[1]?.label === Role.DAYPART) ||
-      (approximately.has(lower(expression[0])) &&
+      (language.approximately.has(lower(expression[0])) &&
         expression[1]?.label === Role.NUM);
     while (
       expression[0] &&
@@ -1497,7 +1534,7 @@ function splitExpressions(tokens: Token[]): Token[][] {
     )
       expression.shift();
     const endsWithTimeCue = () =>
-      sameTimePair(expression.at(-2), expression.at(-1));
+      sameTimePair(expression.at(-2), expression.at(-1), language);
     while (
       expression.length &&
       [Role.O, Role.GLUE, Role.JOIN].includes(expression.at(-1)!.label) &&
@@ -1523,7 +1560,11 @@ function splitClauses(tokens: Token[]): Token[][] {
   return clauses;
 }
 
-function compileGroup(tokens: Token[], diagnostics: Diagnostic[]): Clause[] {
+function compileGroup(
+  tokens: Token[],
+  language: Language,
+  diagnostics: Diagnostic[],
+): Clause[] {
   let clocks = 0;
   for (const token of tokens) {
     if (
@@ -1532,7 +1573,7 @@ function compileGroup(tokens: Token[], diagnostics: Diagnostic[]): Clause[] {
     )
       break;
   }
-  if (clocks < 2) return [compileClause(tokens, diagnostics)];
+  if (clocks < 2) return [compileClause(tokens, language, diagnostics)];
   const hasRecurrence = tokens.some((token) =>
     [Role.RECUR, Role.FREQ, Role.DAYGROUP].includes(token.label),
   );
@@ -1554,8 +1595,8 @@ function compileGroup(tokens: Token[], diagnostics: Diagnostic[]): Clause[] {
       left.some(isClock) &&
       right.some(isClock)
     ) {
-      const start = compileDateAndTime(left, diagnostics);
-      const end = compileDateAndTime(right, diagnostics);
+      const start = compileDateAndTime(left, language, diagnostics);
+      const end = compileDateAndTime(right, language, diagnostics);
       if (!start.date || !end.date || !start.time || !end.time)
         fail(
           tokens[separator],
@@ -1576,8 +1617,11 @@ function compileGroup(tokens: Token[], diagnostics: Diagnostic[]): Clause[] {
     const groups: Token[][] = [[]];
     for (let index = 0; index < tokens.length; index++) {
       const token = tokens[index];
+      const conjunction = token.text.toLowerCase();
       if (
-        ["and", ",", "&"].includes(token.text.toLowerCase()) &&
+        (conjunction === "," ||
+          conjunction === "&" ||
+          language.conjunctions.has(fold(conjunction))) &&
         groups.at(-1)!.some(isClock) &&
         isClock(tokens[index + 1] ?? token)
       ) {
@@ -1585,20 +1629,24 @@ function compileGroup(tokens: Token[], diagnostics: Diagnostic[]): Clause[] {
       } else groups.at(-1)!.push(token);
     }
     if (groups.length > 1) {
-      const first = compileClause(groups[0], diagnostics);
+      const first = compileClause(groups[0], language, diagnostics);
       return [
         first,
         ...groups.slice(1).map((group) => {
-          const next = compileClause(group, diagnostics);
+          const next = compileClause(group, language, diagnostics);
           return { ...structuredClone(first), ...next };
         }),
       ];
     }
   }
-  return [compileClause(tokens, diagnostics)];
+  return [compileClause(tokens, language, diagnostics)];
 }
 
-function compileExpression(text: string, tokens: Token[]): Expression {
+function compileExpression(
+  text: string,
+  tokens: Token[],
+  language: Language,
+): Expression {
   const start = tokens[0].start;
   const end = tokens.at(-1)!.end;
   const diagnostics: Diagnostic[] = [];
@@ -1612,15 +1660,14 @@ function compileExpression(text: string, tokens: Token[]): Expression {
             (token) =>
               token.label !== Role.GLUE ||
               token.kind === 2 ||
-              ["past", "to", "and", "a", "an", "from"].includes(
-                token.text.toLowerCase(),
-              ),
+              language.keepGlue.has(fold(token.text.toLowerCase())),
           )
           .map((token) =>
             token.label === Role.GLUE || token.label === Role.JOIN
               ? { ...token, label: Role.O }
               : token,
           ),
+        language,
         diagnostics,
       ),
     );
@@ -1634,7 +1681,7 @@ function compileExpression(text: string, tokens: Token[]): Expression {
     (token) =>
       token.label === Role.O &&
       token.kind !== 3 &&
-      !filler.has(token.text.toLowerCase()),
+      !language.filler.has(token.text.toLowerCase()),
   );
   if (ignored.length) {
     diagnostics.push({
@@ -1711,13 +1758,16 @@ function numericDateOrder(tokens: Token[], order: "MDY" | "DMY"): Token[] {
   return result;
 }
 
-function contextualBounds(tokens: Token[]): Token[] {
+function contextualBounds(tokens: Token[], language: Language): Token[] {
   if (!tokens.some((token) => [Role.RECUR, Role.FREQ].includes(token.label)))
     return tokens;
   const result = [...tokens];
   for (let index = 0; index < tokens.length; index++) {
     const token = tokens[index];
-    if (token.label !== Role.RANGE_END || token.text.toLowerCase() !== "until")
+    if (
+      token.label !== Role.RANGE_END ||
+      !language.deadlineWords.has(token.text.toLowerCase())
+    )
       continue;
     const operand = tokens
       .slice(index + 1)
@@ -1806,7 +1856,9 @@ function compactClock(input: Token[]): Token[] {
   }
 
   const changed = new Map(
-    result.filter((token, index) => token !== tokens[index]).map((t) => [t.start, t]),
+    result
+      .filter((token, index) => token !== tokens[index])
+      .map((t) => [t.start, t]),
   );
   return changed.size
     ? input.map((token) => changed.get(token.start) ?? token)
@@ -1816,10 +1868,15 @@ function compactClock(input: Token[]): Token[] {
 export function compilePredictions(
   text: string,
   tokens: Token[],
-  options: Pick<ParserOptions, "dateOrder"> = {},
+  options: Pick<ParserOptions, "dateOrder" | "language"> = {},
 ): Expression[] {
-  return splitExpressions(compactClock(tokens)).map((expression) =>
-    compileExpression(text, numericDateOrder(expression, options.dateOrder ?? "MDY")),
+  const language = options.language ?? english;
+  return splitExpressions(compactClock(tokens), language).map((expression) =>
+    compileExpression(
+      text,
+      numericDateOrder(expression, options.dateOrder ?? "MDY"),
+      language,
+    ),
   );
 }
 
@@ -1827,7 +1884,7 @@ export function compilePredictions(
 export function compile(
   text: string,
   tokens: SourceToken[],
-  options: Pick<ParserOptions, "dateOrder"> = {},
+  options: Pick<ParserOptions, "dateOrder" | "language"> = {},
 ): Expression[] {
   return compilePredictions(
     text,

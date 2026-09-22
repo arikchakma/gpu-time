@@ -11,5 +11,5 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src", "test", "scripts"]
+  "include": ["src", "test", "scripts", "tsdown.config.ts"]
 }

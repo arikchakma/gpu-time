@@ -1097,8 +1097,9 @@ it("rejects a four-digit run that is not a clock", () => {
 
 it("keeps a separated clock reading its own minute token", () => {
   const text = "11:15";
-  expect(compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0].schedule)
-    .toEqual({ clauses: [{ time: { start: { hour: 11, minute: 15 } } }] });
+  expect(
+    compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0].schedule,
+  ).toEqual({ clauses: [{ time: { start: { hour: 11, minute: 15 } } }] });
 });
 
 it("repairs a compact clock range the model read as a date", () => {
@@ -1131,8 +1132,10 @@ it("reads a four-digit clock that only a meridiem marks", () => {
 
 it("leaves a year alone when no clock opened the range", () => {
   const years = "2026-2027";
-  const schedule = compile(years, oracle(years, ["YEAR", "RANGE_END", "YEAR"]))[0]
-    .schedule;
+  const schedule = compile(
+    years,
+    oracle(years, ["YEAR", "RANGE_END", "YEAR"]),
+  )[0].schedule;
   expect(JSON.stringify(schedule ?? {})).not.toContain("hour");
   const iso = "2026-03-04";
   expect(
