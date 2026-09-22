@@ -113,7 +113,9 @@ function key(text: string): string {
 }
 
 function weekday(text: string): Weekday | undefined {
-  const word = key(text);
+  let word = key(text);
+  if (!DAY_NAMES.includes(word) && DAY_NAMES.includes(word.replace(/s$/, "")))
+    word = word.replace(/s$/, "");
   const index =
     DAY_NAMES.indexOf(word) >= 0
       ? DAY_NAMES.indexOf(word)
@@ -296,13 +298,18 @@ const spanish: Language = {
   },
   holidays: HOLIDAYS,
 
-  now: new Set(["ahora", "ya", "ahora mismo"]),
+  now: new Set(["ahora", "ya", "ahora mismo", "justo ahora"]),
   edges: {
     principio: "start",
+    principios: "start",
     inicio: "start",
+    inicios: "start",
     comienzo: "start",
+    comienzos: "start",
     final: "end",
+    finales: "end",
     fin: "end",
+    fines: "end",
   },
   endAbbreviations: new Set(),
   timeNamed: { mediodia: "noon", medianoche: "midnight" },
@@ -330,7 +337,7 @@ const spanish: Language = {
   fromWords: new Set(["desde"]),
   lastingWords: new Set(),
   conjunctions: new Set(["y"]),
-  keepGlue: new Set(["y", "menos", "a"]),
+  keepGlue: new Set(["y", "menos", "a", "los", "las"]),
   articles: new Set(["un", "una"]),
   ofWords: new Set(),
   andWords: new Set(["y"]),

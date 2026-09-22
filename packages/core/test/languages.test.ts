@@ -4,6 +4,8 @@ import es from "../src/languages/es.ts";
 import type { Language } from "../src/languages/language.ts";
 import { weights } from "../src/model/weights.gen.ts";
 import { shaderShape } from "../src/model/shader-source.ts";
+import { compile } from "../src/compile.ts";
+import { tokenize } from "../src/tokenizer.ts";
 
 const context = { reference: "2026-09-16T12:00:00Z", timeZone: "UTC" };
 // A stand-in pack: only the code differs, so any routing error shows up as a
@@ -67,6 +69,131 @@ describe("automatic language selection", () => {
 
   it("never spends a decision when one language is loaded", () => {
     expect(detectLanguage("cualquier cosa", [en])).toBe(en);
+  });
+});
+
+describe("numeric date order", () => {
+  it("reads a bare numeric date the way the pack declares", async () => {
+    const parser = await defineParser({ languages: [en, es] });
+    const spanish = await parser.parse("9/2/2016", {
+      ...context,
+      language: "es",
+    });
+    const english = await parser.parse("9/2/2016", {
+      ...context,
+      language: "en",
+    });
+    expect(spanish.occurrences[0].start.slice(0, 10)).toBe("2016-02-09");
+    expect(english.occurrences[0].start.slice(0, 10)).toBe("2016-09-02");
+  });
+});
+
+describe("modifier after the unit", () => {
+  const read = (text: string, labels: string[]) => {
+    let next = 0;
+    const tokens = tokenize(text).map((token) => ({
+      ...token,
+      label: token.kind === 3 ? "O" : (labels[next++] ?? "O"),
+      clauseStart: false,
+      score: 1,
+    }));
+    return compile(text, tokens as never, { language: es })[0]?.schedule;
+  };
+
+  it("reads the Spanish order, where the modifier follows the noun", () => {
+    expect(read("el mes pasado", ["O", "UNIT", "DEICTIC"])).toEqual({
+      clauses: [
+        { date: { kind: "relativeUnit", unit: "month", modifier: "last" } },
+      ],
+    });
+    expect(
+      read("la semana que viene", ["O", "UNIT", "DEICTIC", "DEICTIC"]),
+    ).toEqual({
+      clauses: [
+        { date: { kind: "relativeUnit", unit: "week", modifier: "next" } },
+      ],
+    });
+  });
+
+  it("reads a modifier after a day group", () => {
+    expect(
+      read("el fin de semana próximo", [
+        "O",
+        "DAYGROUP",
+        "DAYGROUP",
+        "DAYGROUP",
+        "DEICTIC",
+      ]),
+    ).toEqual({
+      clauses: [
+        { date: { kind: "dayGroup", group: "weekend", modifier: "next" } },
+      ],
+    });
+  });
+
+  it("repeats a weekday that the article or the noun makes plural", () => {
+    const weekly = (day: string) => ({
+      clauses: [{ recurrence: { freq: "weekly", interval: 1, byDay: [day] } }],
+    });
+    expect(read("los lunes", ["GLUE", "WEEKDAY"])).toEqual(weekly("MO"));
+    expect(
+      read("tengo clase los lunes", ["O", "O", "GLUE", "WEEKDAY"]),
+    ).toEqual(weekly("MO"));
+    expect(read("los sábados", ["GLUE", "WEEKDAY"])).toEqual(weekly("SA"));
+    expect(read("el lunes", ["GLUE", "WEEKDAY"])).toEqual({
+      clauses: [{ date: { kind: "weekday", days: ["MO"] } }],
+    });
+  });
+
+  it("keeps a recurrence when hasta in later prose bounds nothing", () => {
+    expect(
+      read("todos los días excepto Navidad no podemos salir hasta que llegue", [
+        "RECUR",
+        "RECUR",
+        "UNIT",
+        "EXCEPT",
+        "HOLIDAY",
+      ]),
+    ).toEqual({
+      clauses: [
+        {
+          recurrence: {
+            freq: "daily",
+            interval: 1,
+            except: [{ kind: "holiday", name: "christmas" }],
+          },
+        },
+      ],
+    });
+  });
+
+  it("reads justo ahora as now", () => {
+    expect(read("justo ahora", ["NOW", "NOW"])).toEqual({
+      clauses: [{ date: { kind: "now" } }],
+    });
+  });
+
+  it("keeps a plural edge in front", () => {
+    expect(
+      read("a principios del año pasado", [
+        "O",
+        "EDGE",
+        "O",
+        "UNIT",
+        "DEICTIC",
+      ]),
+    ).toEqual({
+      clauses: [
+        {
+          date: {
+            kind: "relativeUnit",
+            unit: "year",
+            modifier: "last",
+            edge: "start",
+          },
+        },
+      ],
+    });
   });
 });
 

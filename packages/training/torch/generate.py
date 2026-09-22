@@ -934,7 +934,7 @@ def generate_es(
         while index < count:
             spec = None
             sentence = Sentence(
-                rng, connectors=spanish.SPANISH_CONNECTORS, fillers=spanish.SPANISH_FILLERS
+                rng, connectors=spanish.SPANISH_CONNECTORS, fillers=spanish.SPANISH_DROPPABLE
             )
             if rng.random() < NEGATIVE_SHARE_ES:
                 sentence.add(spanish.sentence_es(rng))

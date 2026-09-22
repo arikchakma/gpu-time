@@ -56,7 +56,7 @@ def _plural_weekday(s, r) -> dict:
     for index, day in enumerate(days):
         if index:
             s.add(r.choice(["y", ","]), "JOIN")
-        s.add(spanish.weekday_word(r, day), "WEEKDAY")
+        s.add(spanish.weekday_word(r, day, plural=True), "WEEKDAY")
     clause = {"recurrence": {"freq": "weekly", "interval": 1, "byDay": codes}}
     if r.random() < 0.5:
         time = _time(r)
@@ -242,7 +242,7 @@ if __name__ == "__main__":
     hits = 0
     for _ in range(20000):
         sentence = Sentence(
-            rng, connectors=spanish.SPANISH_CONNECTORS, fillers=spanish.SPANISH_FILLERS
+            rng, connectors=spanish.SPANISH_CONNECTORS, fillers=spanish.SPANISH_DROPPABLE
         )
         render(sentence)
         if background.normal(sentence.text) in spanish._RESERVED_ES:

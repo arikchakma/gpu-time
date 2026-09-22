@@ -57,10 +57,9 @@ NAMED_ES = {"noon": "mediodía", "midnight": "medianoche"}
 # Spanish has no separate "evening" word; both fold to "noche".
 DAYPART_ES = {"morning": "mañana", "afternoon": "tarde", "evening": "noche", "night": "noche"}
 DAYGROUP_ES = {"weekday": "día laborable", "weekend": "fin de semana"}
-EDGE_ES = {"start": "principio", "end": "final"}
 REL_DAY_ES = {-1: "ayer", 0: "hoy", 1: "mañana", 2: "pasado mañana"}
 ORD_MASC = ["primer", "segundo", "tercer", "cuarto", "quinto"]
-DAYGROUP_PLURAL_ES = {"weekday": "día laborable", "weekend": "fin de semana"}
+DAYGROUP_PLURAL_ES = {"weekday": "días laborables", "weekend": "fines de semana"}
 
 # Held-out-only carrier prefixes, the Spanish counterpart of natural.py's
 # RESERVED: these strings never appear in a training row (see render_heldout
@@ -76,14 +75,16 @@ _RESERVED_ES = frozenset(
     background.normal(phrase) for phrase in RESERVED_ES + RESERVED_DURATION_ES
 )
 
-# "el/la/los/las/a/al/de/del/en" are grammar words, droppable the same way
-# English drops "the"/"at"/"on"/"of" for texting-register variety.
+# "el/la/los/las/a/al/de/del/en" are grammar words a carrier connector can meet.
+# Only "el" and "a" are droppable for texting-register variety.
 SPANISH_FILLERS = ("a", "al", "el", "la", "los", "las", "de", "del", "en")
+SPANISH_DROPPABLE = ("a", "el")
 SPANISH_CONNECTORS = frozenset(SPANISH_FILLERS + ("por", "para", "entre"))
 
 
-def weekday_word(rng: random.Random, index: int) -> str:
-    return rng.choice([DAYS_ES[index], DAYS_ES[index], SHORT_DAYS_ES[index]])
+def weekday_word(rng: random.Random, index: int, plural: bool = False) -> str:
+    word = rng.choice([DAYS_ES[index], DAYS_ES[index], SHORT_DAYS_ES[index]])
+    return word + "s" if plural and word.endswith("o") else word
 
 
 def month_word(rng: random.Random, index: int) -> str:
@@ -137,14 +138,20 @@ def quantity_unit(
     sentence.add(singular if amount == 1 else plural, "UNIT")
 
 
-def render_days(days: list[str], sentence: Sentence, article: bool = True) -> None:
+def render_days(
+    days: list[str], sentence: Sentence, article: bool = True, habitual: bool = False
+) -> None:
     rng = sentence.rng
-    if article:
-        sentence.add("los" if len(days) > 1 else "el", "O")
+    if article and habitual:
+        sentence.add("los", "O")
     for position, day in enumerate(days):
         if position:
             sentence.add(rng.choice(["y", ","]), "JOIN")
-        sentence.add(weekday_word(rng, DAY_CODES.index(day)), "WEEKDAY")
+        if article and not habitual:
+            sentence.add("el", "O")
+        sentence.add(
+            weekday_word(rng, DAY_CODES.index(day), plural=habitual), "WEEKDAY"
+        )
 
 
 def clock(value: dict, sentence: Sentence, style: int, lead: bool = True) -> None:
@@ -159,9 +166,7 @@ def clock(value: dict, sentence: Sentence, style: int, lead: bool = True) -> Non
         # the schedule to match what the text can actually tell apart.
         if value["part"] == "evening":
             value["part"] = "night"
-        if lead:
-            sentence.add(rng.choice(["por", "en"]))
-        sentence.add("la", "O")
+        sentence.add(rng.choice(["por la", "en la"]) if lead else "la")
         sentence.add(DAYPART_ES[value["part"]], "DAYPART")
         return
     hour, minute = value["hour"], value["minute"]
@@ -263,13 +268,22 @@ def render_date(
         sentence.add(REL_DAY_ES[date["offset"]], "REL_DAY")
     elif kind == "weekday":
         modifier = date.get("modifier")
-        if modifier == "next" and rng.random() < 0.4:
-            render_days(date["days"], sentence)
+        if modifier == "this":
+            sentence.add(deictic(rng, modifier), "DEICTIC")
+            render_days(date["days"], sentence, article=False)
+        elif modifier == "last":
+            render_days(date["days"], sentence, article=article)
+            sentence.add(deictic(rng, modifier), "DEICTIC")
+        elif modifier == "next" and rng.random() < 0.5:
+            render_days(date["days"], sentence, article=article)
             sentence.add("que viene", "DEICTIC")
+        elif modifier == "next":
+            if article:
+                sentence.add("el")
+            sentence.add(deictic(rng, modifier), "DEICTIC")
+            render_days(date["days"], sentence, article=False)
         else:
-            if modifier:
-                sentence.add(deictic(rng, modifier), "DEICTIC")
-            render_days(date["days"], sentence)
+            render_days(date["days"], sentence, article=article)
     elif kind == "weekdayRange":
         sentence.add("de", "RANGE_START")
         render_days([date["from"]], sentence, article=False)
@@ -284,14 +298,61 @@ def render_date(
         sentence.add(rng.choice(["a", "hasta"]), "RANGE_END")
         calendar(date["to"], sentence, style, numeric=False)
     elif kind == "relativeUnit":
-        unit = date["unit"]
-        if date.get("edge"):
-            sentence.add(EDGE_ES[date["edge"]], "EDGE")
-            sentence.add("de")
-        sentence.add(deictic(rng, date["modifier"], unit == "week"), "DEICTIC")
-        sentence.add(UNIT_WORDS[unit][0], "UNIT")
+        relative_unit(date, sentence, article=article)
     else:
         raise ValueError(f"No Spanish date renderer for {kind}")
+
+
+def relative_unit(
+    date: dict, sentence: Sentence, article: bool = True, heldout: bool = False
+) -> None:
+    rng = sentence.rng
+    unit, modifier = date["unit"], date["modifier"]
+    feminine = unit in FEMININE_UNITS
+    noun = UNIT_WORDS[unit][0]
+    if date.get("edge"):
+        if article:
+            sentence.add("a")
+        start, end = ("comienzos", "fines") if heldout else ("principios", "finales")
+        sentence.add(start if date["edge"] == "start" else end, "EDGE")
+        sentence.add("de" if modifier == "this" else "de la" if feminine else "del")
+        article = False
+    if modifier == "this":
+        sentence.add(deictic(rng, modifier, feminine), "DEICTIC")
+        sentence.add(noun, "UNIT")
+        return
+    if article:
+        sentence.add("la" if feminine else "el")
+    if modifier == "next" and not heldout and rng.random() < 0.5:
+        sentence.add(deictic(rng, modifier, feminine), "DEICTIC")
+        sentence.add(noun, "UNIT")
+        return
+    sentence.add(noun, "UNIT")
+    if modifier == "next" and not heldout:
+        sentence.add("que viene", "DEICTIC")
+    else:
+        sentence.add(deictic(rng, modifier, feminine), "DEICTIC")
+
+
+def date_article(date: dict) -> str | None:
+    kind = date["kind"]
+    if kind == "calendar":
+        return "el"
+    if kind == "weekday":
+        return None if date.get("modifier") == "this" else "el"
+    if kind == "relativeUnit" and not date.get("edge") and date["modifier"] != "this":
+        return "la" if date["unit"] in FEMININE_UNITS else "el"
+    return None
+
+
+def lead_into(date: dict, sentence: Sentence, word: str, label: str, style: int) -> None:
+    if not word.endswith(" de"):
+        sentence.add(word, label)
+        render_date(date, sentence, style)
+        return
+    sentence.add(word[:-3], label)
+    sentence.add({"el": "del", "la": "de la"}.get(date_article(date) or "", "de"))
+    render_date(date, sentence, style, article=False)
 
 
 def relative(clause: dict, sentence: Sentence, style: int) -> None:
@@ -304,13 +365,17 @@ def relative(clause: dict, sentence: Sentence, style: int) -> None:
     if prefix:
         sentence.add("dentro de" if direction == "after" else "hace", label)
     quantity_unit(sentence, [shift["unit"]], shift["amount"])
-    if not prefix:
+    if has_date and clause["date"]["kind"] != "now":
+        lead_into(
+            clause["date"],
+            sentence,
+            "después de" if direction == "after" else "antes de",
+            label,
+            style,
+        )
+    elif not prefix:
         if has_date:
-            word = (
-                "a partir de"
-                if clause["date"]["kind"] == "now"
-                else "después de" if direction == "after" else "antes de"
-            )
+            word = "a partir de"
         else:
             word = (
                 rng.choice(["después", "más tarde"])
@@ -322,7 +387,6 @@ def relative(clause: dict, sentence: Sentence, style: int) -> None:
         if clause["date"]["kind"] == "now":
             sentence.add("ahora", "NOW")
             return
-        render_date(clause["date"], sentence, style)
         if clause.get("time"):
             clock(clause["time"]["start"], sentence, style)
 
@@ -358,7 +422,7 @@ def render_general(clause: dict, sentence: Sentence, style: int) -> None:
             singular, plural = UNIT_WORDS[period]
             sentence.add(plural if rule["interval"] > 1 else singular, "UNIT")
             if rule.get("byDay"):
-                render_days(rule["byDay"], sentence)
+                render_days(rule["byDay"], sentence, habitual=True)
             if rule.get("byMonth"):
                 # Spanish is day first: "el doce de enero", never "el enero doce".
                 sentence.add("el", "O")
@@ -374,8 +438,13 @@ def render_general(clause: dict, sentence: Sentence, style: int) -> None:
             clock(clause["time"]["start"], sentence, style)
     if rule:
         if rule.get("start"):
-            sentence.add(rng.choice(["a partir de", "empezando"]), "BOUND_START")
-            render_date(rule["start"], sentence, style)
+            lead_into(
+                rule["start"],
+                sentence,
+                rng.choice(["a partir de", "empezando"]),
+                "BOUND_START",
+                style,
+            )
         if rule.get("until"):
             sentence.add("hasta", "BOUND_END")
             render_date(rule["until"], sentence, style)
@@ -411,16 +480,17 @@ def render(spec: semantic.Specification, sentence: Sentence, style: int) -> None
         elif family == "relative-day":
             sentence.add(REL_DAY_ES[clause["date"]["offset"]], "REL_DAY")
         elif family == "relative-unit":
-            date = clause["date"]
-            unit = date["unit"]
-            if date.get("edge"):
-                sentence.add(EDGE_ES[date["edge"]], "EDGE")
-                sentence.add("de")
-            sentence.add(deictic(rng, date["modifier"], unit == "week"), "DEICTIC")
-            sentence.add(UNIT_WORDS[unit][0], "UNIT")
+            relative_unit(clause["date"], sentence)
         elif family == "modified-group":
-            sentence.add(deictic(rng, clause["date"]["modifier"]), "DEICTIC")
-            sentence.add("fin de semana", "DAYGROUP")
+            modifier = clause["date"]["modifier"]
+            if modifier != "this":
+                sentence.add("el")
+            if modifier == "last":
+                sentence.add("fin de semana", "DAYGROUP")
+                sentence.add(deictic(rng, modifier), "DEICTIC")
+            else:
+                sentence.add(deictic(rng, modifier), "DEICTIC")
+                sentence.add("fin de semana", "DAYGROUP")
         elif family == "bounded-weekday":
             sentence.add("cada", "RECUR")
             sentence.add("día", "UNIT")
@@ -440,10 +510,12 @@ def render(spec: semantic.Specification, sentence: Sentence, style: int) -> None
             sentence.add(weekday_word(rng, DAY_CODES.index(rule["byDay"][0])), "WEEKDAY")
             sentence.add("de")
             if style % 2:
-                sentence.add(rng.choice(["cada", "todos los"]), "RECUR")
+                every = rng.choice(["cada", "todos los"])
+                sentence.add(every, "RECUR")
+                sentence.add("mes" if every == "cada" else "meses", "UNIT")
             else:
                 sentence.add("el", "O")
-            sentence.add("mes", "UNIT")
+                sentence.add("mes", "UNIT")
         elif family == "monthly-days":
             days = clause["recurrence"]["byMonthDay"]
             if style % 2:
@@ -463,11 +535,11 @@ def render(spec: semantic.Specification, sentence: Sentence, style: int) -> None
             days = recurrence["byDay"] if recurrence else clause["date"]["days"]
             if recurrence:
                 interval = recurrence["interval"]
-                sentence.add("cada", "RECUR")
+                sentence.add("cada" if interval > 1 else "todos", "RECUR")
                 if interval > 1:
                     quantity(sentence, interval)
                     sentence.add("semanas", "UNIT")
-            render_days(days, sentence)
+            render_days(days, sentence, habitual=bool(recurrence))
             window(clause["time"], sentence, style)
     if rng.random() < 0.15:
         sentence.in_expression = False
@@ -477,10 +549,10 @@ def render(spec: semantic.Specification, sentence: Sentence, style: int) -> None
 # ---------------------------------------------------------------------------
 # Unseen-frame renderer: the Spanish counterpart of generate.py's
 # render_heldout(). Same schedule families as render() above, but different
-# connectors and clause order (postposed modifiers, "hacia"/"sobre" for an
-# approximate clock, "a partir de"/"no antes de" bounds, inverted ranges) so a
-# heldout row never matches a shape render() can produce. Always carries a
-# RESERVED_ES prefix, mirroring natural.py's reserved=True behaviour.
+# connectors (postposed modifiers, "hacia"/"sobre" for an approximate clock,
+# "desde"/"como muy tarde" bounds, "desde ... hasta" ranges) so a heldout row
+# never matches a shape render() can produce. Always carries a RESERVED_ES
+# prefix, mirroring natural.py's reserved=True behaviour.
 # ---------------------------------------------------------------------------
 
 
@@ -495,36 +567,37 @@ def clock_heldout(value: dict, sentence: Sentence, style: int) -> None:
     if "part" in value:
         if value["part"] == "evening":
             value["part"] = "night"
-        sentence.add(lead)
+        sentence.add("hacia")
         sentence.add("la", "O")
         sentence.add(DAYPART_ES[value["part"]], "DAYPART")
         return
     hour, minute = value["hour"], value["minute"]
-    sentence.add(lead)
+    sentence.add("a" if "second" in value else lead)
     sentence.add("la" if hour % 24 == 1 else "las", "O")
     sentence.add(str(hour), "HOUR")
-    if minute:
+    if minute or "second" in value:
         sentence.add(":", separator="")
         sentence.add(f"{minute:02d}", "MINUTE", separator="")
+    if "second" in value:
+        sentence.add(":", separator="")
+        sentence.add(f"{value['second']:02d}", "SECOND", separator="")
 
 
 def window_heldout(time: dict, sentence: Sentence, style: int) -> None:
-    """End before start: "hasta las 5, no antes de las 9"."""
-    sentence.add("hasta", "RANGE_END")
-    clock_heldout(time["end"], sentence, style)
     sentence.add("desde", "RANGE_START")
-    clock_heldout(time["start"], sentence, style)
+    clock(time["start"], sentence, style, lead=False)
+    sentence.add("hasta", "RANGE_END")
+    clock(time["end"], sentence, style, lead=False)
 
 
 def calendar_heldout(date: dict, sentence: Sentence, style: int) -> None:
-    """Month-led, day postposed: "en enero, el 15" instead of "el 15 de enero"."""
     rng = sentence.rng
-    sentence.add("en")
-    sentence.add(month_word(rng, date["month"] - 1), "MONTH")
-    sentence.add(", el" if rng.random() < 0.5 else ", específicamente el")
+    sentence.add("el día", "O")
     sentence.add(dom_word(date["day"], rng), "DOM")
+    sentence.add("de")
+    sentence.add(month_word(rng, date["month"] - 1), "MONTH")
     if date.get("year"):
-        sentence.add("del año", "O")
+        sentence.add("de")
         sentence.add(str(date["year"]), "YEAR")
 
 
@@ -543,55 +616,49 @@ def render_date_heldout(date: dict, sentence: Sentence, style: int) -> None:
         elif modifier:
             sentence.add(deictic(rng, modifier), "DEICTIC")
     elif kind == "weekdayRange":
-        sentence.add("hasta", "RANGE_END")
-        render_days([date["to"]], sentence, article=False)
         sentence.add("desde", "RANGE_START")
-        render_days([date["from"]], sentence, article=False)
+        render_days([date["from"]], sentence)
+        sentence.add("hasta", "RANGE_END")
+        render_days([date["to"]], sentence)
     elif kind == "holiday":
         sentence.add(HOLIDAYS_ES[date["name"]], "HOLIDAY")
     elif kind == "calendar":
         calendar_heldout(date, sentence, style)
     elif kind == "calendarRange":
-        calendar(date["to"], sentence, style, numeric=False)
         sentence.add("desde", "RANGE_START")
         calendar(date["from"], sentence, style, numeric=False)
+        sentence.add("hasta", "RANGE_END")
+        calendar(date["to"], sentence, style, numeric=False)
     elif kind == "relativeUnit":
-        unit = date["unit"]
-        sentence.add(UNIT_WORDS[unit][0], "UNIT")
-        sentence.add(deictic(rng, date["modifier"], unit == "week"), "DEICTIC")
-        if date.get("edge"):
-            sentence.add(EDGE_ES[date["edge"]], "EDGE")
-            sentence.add("del", "O")
+        relative_unit(date, sentence, heldout=True)
     else:
         raise ValueError(f"No Spanish heldout date renderer for {kind}")
 
 
 def relative_heldout(clause: dict, sentence: Sentence, style: int) -> None:
-    rng = sentence.rng
     shift = clause["shift"]
     direction = shift["direction"]
     label = "DIR_AFTER" if direction == "after" else "DIR_BEFORE"
-    has_date = bool(clause.get("date"))
-    if has_date and clause["date"]["kind"] == "now":
-        sentence.add("ahora mismo", "NOW")
+    date = clause.get("date")
+    if date and date["kind"] == "now":
         quantity_unit(sentence, [shift["unit"]], shift["amount"])
+        sentence.add("a partir de", label)
+        sentence.add("ahora", "NOW")
         return
-    if has_date:
-        if direction == "after":
-            sentence.add("dentro de", label)
-            quantity_unit(sentence, [shift["unit"]], shift["amount"])
-            sentence.add("desde")
-        else:
-            sentence.add("con", "O")
-            quantity_unit(sentence, [shift["unit"]], shift["amount"])
-            sentence.add("antes de", label)
-        render_date(clause["date"], sentence, style)
+    if date:
+        quantity_unit(sentence, [shift["unit"]], shift["amount"])
+        lead_into(
+            date,
+            sentence,
+            "después de" if direction == "after" else "antes de",
+            label,
+            style,
+        )
         if clause.get("time"):
             clock_heldout(clause["time"]["start"], sentence, style)
-    else:
-        sentence.add("dentro de" if direction == "after" else "desde", label)
-        quantity_unit(sentence, [shift["unit"]], shift["amount"])
-
+        return
+    sentence.add("dentro de" if direction == "after" else "hace", label)
+    quantity_unit(sentence, [shift["unit"]], shift["amount"])
 
 def render_general_heldout(clause: dict, sentence: Sentence, style: int) -> None:
     rng = sentence.rng
@@ -624,40 +691,43 @@ def render_general_heldout(clause: dict, sentence: Sentence, style: int) -> None
                 "monthly": "month", "yearly": "year",
             }[rule["freq"]]
             singular, plural = UNIT_WORDS[period]
-            sentence.add("cada", "RECUR")
             if rule["interval"] > 1:
+                sentence.add("cada", "RECUR")
                 quantity(sentence, rule["interval"])
                 sentence.add(plural, "UNIT")
-            else:
-                sentence.add("una" if period in FEMININE_UNITS else "un", "NUM")
+            elif period == "hour":
+                sentence.add("cada", "RECUR")
                 sentence.add(singular, "UNIT")
+            else:
+                sentence.add("todas las" if period in FEMININE_UNITS else "todos los", "RECUR")
+                sentence.add(plural, "UNIT")
             if rule.get("byDay"):
-                render_days(rule["byDay"], sentence)
+                render_days(rule["byDay"], sentence, habitual=True)
             if rule.get("byMonth"):
                 sentence.add("en")
                 sentence.add(month_word(rng, rule["byMonth"][0] - 1), "MONTH")
                 sentence.add("el", "O")
                 quantity(sentence, rule["byMonthDay"][0], "DOM")
         if rule.get("start"):
-            render_date(rule["start"], sentence, style)
             sentence.add("desde", "BOUND_START")
+            render_date(rule["start"], sentence, style)
         if rule.get("until"):
+            sentence.add("como muy tarde", "BOUND_END")
             render_date(rule["until"], sentence, style)
-            sentence.add("no después de", "BOUND_END")
         if rule.get("count"):
             count = rule["count"]
             quantity(sentence, count)
             sentence.add("vez" if count == 1 else "veces", "COUNT")
-            sentence.add("por", "O")
         if rule.get("except"):
+            sentence.add("menos", "EXCEPT")
             render_date(rule["except"][0], sentence, style)
-            sentence.add("salvo", "EXCEPT")
     elif clause.get("date"):
         render_date_heldout(clause["date"], sentence, style)
     duration = clause.get("duration") or (rule or {}).get("span")
     if duration:
+        sentence.add("con una duración")
+        sentence.add("de", "DUR")
         quantity_unit(sentence, [duration["unit"]], duration["amount"])
-        sentence.add("en", "DUR")
 
 
 def render_heldout(spec: semantic.Specification, sentence: Sentence, style: int) -> None:
@@ -679,22 +749,23 @@ def render_heldout(spec: semantic.Specification, sentence: Sentence, style: int)
             sentence.add("justo", "O")
             sentence.add(REL_DAY_ES[clause["date"]["offset"]], "REL_DAY")
         elif family == "relative-unit":
-            date = clause["date"]
-            unit = date["unit"]
-            sentence.add(UNIT_WORDS[unit][0], "UNIT")
-            sentence.add(deictic(rng, date["modifier"], unit == "week"), "DEICTIC")
-            if date.get("edge"):
-                sentence.add(EDGE_ES[date["edge"]], "EDGE")
-                sentence.add("del", "O")
+            relative_unit(clause["date"], sentence, heldout=True)
         elif family == "modified-group":
-            sentence.add("fin de semana", "DAYGROUP")
-            sentence.add(deictic(rng, clause["date"]["modifier"]), "DEICTIC")
+            modifier = clause["date"]["modifier"]
+            if modifier == "this":
+                sentence.add(deictic(rng, modifier), "DEICTIC")
+                sentence.add("fin de semana", "DAYGROUP")
+            else:
+                sentence.add("el")
+                sentence.add("fin de semana", "DAYGROUP")
+                sentence.add(deictic(rng, modifier), "DEICTIC")
         elif family == "bounded-weekday":
             day = clause["recurrence"]["until"]["days"][0]
+            sentence.add("todos los", "RECUR")
+            sentence.add("días", "UNIT")
             sentence.add("hasta", "BOUND_END")
+            sentence.add("el")
             sentence.add(weekday_word(rng, DAY_CODES.index(day)), "WEEKDAY")
-            sentence.add(",", separator="")
-            sentence.add("todos los días", "RECUR")
         elif family == "weekday-points":
             day = clause["date"]["days"][0]
             clock_heldout({**clause["time"]["start"], "minute": 0}, sentence, style)
@@ -706,23 +777,24 @@ def render_heldout(spec: semantic.Specification, sentence: Sentence, style: int)
             sentence.add("el", "O")
             sentence.add("último" if position == -1 else ORD_MASC[position - 1], "ORD")
             sentence.add(weekday_word(rng, DAY_CODES.index(rule["byDay"][0])), "WEEKDAY")
-            sentence.add("de cada mes", "RECUR")
+            sentence.add("de")
+            sentence.add("cada", "RECUR")
+            sentence.add("mes", "UNIT")
         elif family == "monthly-days":
             days = clause["recurrence"]["byMonthDay"]
+            sentence.add("los días")
             for position, day in enumerate(days):
                 if position:
                     sentence.add("y", "JOIN")
                 sentence.add(dom_word(day, rng), "DOM")
-            sentence.add("de cada mes", "RECUR")
+            sentence.add("de")
+            sentence.add("cada", "RECUR")
+            sentence.add("mes", "UNIT")
         else:  # weekday-windows: window first, days and recurrence postposed
             recurrence = clause.get("recurrence")
             days = recurrence["byDay"] if recurrence else clause["date"]["days"]
             window_heldout(clause["time"], sentence, style)
-            sentence.add("el", "O")
-            for position, day in enumerate(days):
-                if position:
-                    sentence.add("y", "JOIN")
-                sentence.add(weekday_word(rng, DAY_CODES.index(day)), "WEEKDAY")
+            render_days(days, sentence, habitual=bool(recurrence))
             if recurrence:
                 sentence.add("cada", "RECUR")
                 if recurrence["interval"] > 1:

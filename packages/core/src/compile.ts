@@ -368,6 +368,19 @@ function compileDateAndTime(
   let openToken: Token | undefined;
   let dayPartClock: ParsedClock | undefined;
 
+  // "que viene": one modifier, two tokens.
+  const readModifier = (at: number): number => {
+    const start = at;
+    let phrase = fold(tokens[at].text.toLowerCase());
+    while (tokens[at + 1]?.label === Role.DEICTIC)
+      phrase += " " + fold(tokens[++at].text.toLowerCase());
+    modifier = Object.hasOwn(language.modifiers, phrase)
+      ? language.modifiers[phrase]
+      : undefined;
+    if (!modifier) fail(tokens[start], "unsupported", "Unknown date modifier.");
+    return at;
+  };
+
   for (let index = 0; index < tokens.length; index++) {
     const token = tokens[index];
     // "today's meeting" tokenizes as one word. Only a date role drops the
@@ -443,21 +456,15 @@ function compileDateAndTime(
         break;
       }
 
-      case Role.DEICTIC: {
-        // "que viene": one modifier, two tokens.
-        let phrase = word;
-        while (tokens[index + 1]?.label === Role.DEICTIC)
-          phrase += " " + fold(tokens[++index].text.toLowerCase());
-        modifier = Object.hasOwn(language.modifiers, phrase)
-          ? language.modifiers[phrase]
-          : undefined;
-        if (!modifier) fail(token, "unsupported", "Unknown date modifier.");
+      case Role.DEICTIC:
+        index = readModifier(index);
         break;
-      }
 
       case Role.UNIT: {
         const value = language.unit(word);
         if (!value) fail(token, "unsupported", "Unknown calendar unit.");
+        if (!modifier && tokens[index + 1]?.label === Role.DEICTIC)
+          index = readModifier(index + 1);
         const boundary =
           edge ??
           (language.endAbbreviations.has(word) ||
@@ -505,6 +512,8 @@ function compileDateAndTime(
           text += fold(tokens[++index].text.toLowerCase());
         const group = language.dayGroup(text);
         if (!group) fail(token, "unsupported", "Unknown day group.");
+        if (!modifier && tokens[index + 1]?.label === Role.DEICTIC)
+          index = readModifier(index + 1);
         clause.date = {
           kind: "dayGroup",
           group,
@@ -1471,7 +1480,11 @@ function splitExpressions(tokens: Token[], language: Language): Token[][] {
     if (
       language.deadlineWords.has(token.text.toLowerCase()) &&
       [Role.O, Role.GLUE].includes(token.label) &&
-      current.some((part) => [Role.RECUR, Role.FREQ].includes(part.label))
+      current.some((part) => [Role.RECUR, Role.FREQ].includes(part.label)) &&
+      tokens
+        .slice(index + 1)
+        .find((next) => next.kind !== 3 && next.label !== Role.GLUE)?.label !==
+        Role.O
     )
       token = { ...token, label: Role.RANGE_END };
 
@@ -1526,7 +1539,9 @@ function splitExpressions(tokens: Token[], language: Language): Token[][] {
       (isThisWord(lower(expression[0]), language) &&
         expression[1]?.label === Role.DAYPART) ||
       (language.approximately.has(lower(expression[0])) &&
-        expression[1]?.label === Role.NUM);
+        expression[1]?.label === Role.NUM) ||
+      (language.pluralArticles.has(lower(expression[0])) &&
+        expression[1]?.label === Role.WEEKDAY);
     while (
       expression[0] &&
       [Role.O, Role.GLUE, Role.JOIN].includes(expression[0].label) &&
@@ -1874,7 +1889,7 @@ export function compilePredictions(
   return splitExpressions(compactClock(tokens), language).map((expression) =>
     compileExpression(
       text,
-      numericDateOrder(expression, options.dateOrder ?? "MDY"),
+      numericDateOrder(expression, options.dateOrder ?? language.dateOrder),
       language,
     ),
   );

@@ -1145,3 +1145,22 @@ it("leaves a year alone when no clock opened the range", () => {
     clauses: [{ date: { kind: "calendar", year: 2026, month: 3, day: 4 } }],
   });
 });
+
+it("ignores a deadline word in later prose that bounds nothing", () => {
+  const text = "every day except Christmas we cannot leave until he arrives";
+  const schedule = compile(
+    text,
+    oracle(text, ["RECUR", "UNIT", "EXCEPT", "HOLIDAY"]),
+  )[0].schedule;
+  expect(schedule).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "daily",
+          interval: 1,
+          except: [{ kind: "holiday", name: "christmas" }],
+        },
+      },
+    ],
+  });
+});
