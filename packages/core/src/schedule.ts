@@ -57,13 +57,13 @@ export async function defineParser(options: ParserOptions = {}) {
 
   return {
     async parse(text: string, language?: Language): Promise<ParseResult> {
-      return assemble(text, await tagger.tag(text), language);
+      return assemble(text, await tagger.tag(text, language?.model), language);
     },
     async parseMany(
       texts: string[],
       language?: Language,
     ): Promise<ParseResult[]> {
-      const predictions = await tagger.tagMany(texts);
+      const predictions = await tagger.tagMany(texts, language?.model);
       return predictions.map((result, index) =>
         assemble(texts[index], result, language),
       );

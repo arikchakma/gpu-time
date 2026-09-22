@@ -2,6 +2,7 @@ import { tokenize } from "./tokenizer.js";
 import { LABELS, Role } from "./labels.js";
 import { inferCPU, type Predictions } from "./model/cpu.js";
 import { GPUModel } from "./model/gpu.js";
+import type { EncodedWeights } from "./model/decode.js";
 import type {
   ParserOptions,
   RawToken,
@@ -29,6 +30,7 @@ interface Job {
   tokenizeMs: number;
   batch: Batch;
   index: number;
+  model?: EncodedWeights;
 }
 
 interface Window {
@@ -77,27 +79,30 @@ export async function createTagger(
   const requested = options.backend ?? "auto";
   const pending: Job[] = [];
   let active: Job[] = [];
-  let gpu: GPUModel | undefined;
+  const gpus = new Map<EncodedWeights | undefined, GPUModel>();
   let gpuUnavailable: string | undefined;
   let scheduled = false;
   let running = false;
   let disposed = false;
-  if (requested === "webgpu") gpu = await GPUModel.create();
+  if (requested === "webgpu") gpus.set(undefined, await GPUModel.create());
 
   async function predict(
     windows: Window[],
     backend: "cpu" | "webgpu",
+    model?: EncodedWeights,
   ): Promise<Predictions[]> {
     if (windows.length === 0) return [];
     if (backend === "cpu")
-      return windows.map((window) => inferCPU(window.tokens));
+      return windows.map((window) => inferCPU(window.tokens, false, model));
+    let gpu = gpus.get(model);
     if (!gpu) {
-      const initialized = await GPUModel.create();
+      const initialized = await GPUModel.create({ model });
       if (disposed) {
         initialized.dispose();
         throw new Error("The parser is disposed.");
       }
       gpu = initialized;
+      gpus.set(model, gpu);
     }
     const predictions: Predictions[] = [];
     for (let start = 0; start < windows.length;) {
@@ -119,6 +124,19 @@ export async function createTagger(
   }
 
   async function process(jobs: Job[]): Promise<void> {
+    const groups = new Map<EncodedWeights | undefined, Job[]>();
+    for (const job of jobs) {
+      const group = groups.get(job.model);
+      if (group) group.push(job);
+      else groups.set(job.model, [job]);
+    }
+    for (const [model, group] of groups) await processGroup(group, model);
+  }
+
+  async function processGroup(
+    jobs: Job[],
+    model?: EncodedWeights,
+  ): Promise<void> {
     const windows = jobs.flatMap(windowsFor);
     const tokenCount = windows.reduce(
       (count, window) => count + window.tokens.length,
@@ -134,15 +152,15 @@ export async function createTagger(
     const started = performance.now();
     let predictions: Predictions[];
     try {
-      predictions = await predict(windows, backend);
+      predictions = await predict(windows, backend, model);
     } catch (error) {
       if (disposed) throw new Error("The parser is disposed.");
       if (backend === "cpu" || requested === "webgpu") throw error;
       gpuUnavailable = error instanceof Error ? error.message : String(error);
-      gpu?.dispose();
-      gpu = undefined;
+      for (const runtime of gpus.values()) runtime.dispose();
+      gpus.clear();
       backend = "cpu";
-      predictions = await predict(windows, "cpu");
+      predictions = await predict(windows, "cpu", model);
     }
     if (disposed) throw new Error("The parser is disposed.");
     if (
@@ -217,7 +235,10 @@ export async function createTagger(
     queueMicrotask(() => void flush());
   }
 
-  function tagMany(texts: string[]): Promise<TagResult[]> {
+  function tagMany(
+    texts: string[],
+    model?: EncodedWeights,
+  ): Promise<TagResult[]> {
     if (!texts.length) return Promise.resolve([]);
     if (disposed) return Promise.reject(new Error("The parser is disposed."));
     for (const text of texts) {
@@ -244,6 +265,7 @@ export async function createTagger(
           tokenizeMs: performance.now() - started,
           batch,
           index,
+          model,
         });
       });
       schedule();
@@ -251,15 +273,15 @@ export async function createTagger(
   }
 
   return {
-    tag(text: string): Promise<TagResult> {
-      return tagMany([text]).then((results) => results[0]);
+    tag(text: string, model?: EncodedWeights): Promise<TagResult> {
+      return tagMany([text], model).then((results) => results[0]);
     },
     tagMany,
     dispose(): void {
       if (disposed) return;
       disposed = true;
-      gpu?.dispose();
-      gpu = undefined;
+      for (const runtime of gpus.values()) runtime.dispose();
+      gpus.clear();
       for (const job of [...pending.splice(0), ...active])
         job.batch.reject(new Error("The parser is disposed."));
     },

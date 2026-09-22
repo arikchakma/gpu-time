@@ -36,7 +36,12 @@ execFileSync("node", [tsdownBin], {
   },
 });
 
-const entries = ["index.js", "schedule.js", "languages/es.js"];
+const entries = [
+  "index.js",
+  "schedule.js",
+  "languages/en.js",
+  "languages/es.js",
+];
 // Aggressive variable collapsing reduced bytes but slowed CPU inference in Chrome.
 for (const name of entries) {
   const path = `${outputDirectory}/${name}`;

@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { defineParser, detectLanguage, en } from "../src/index.ts";
 import es from "../src/languages/es.ts";
 import type { Language } from "../src/languages/language.ts";
+import { weights } from "../src/model/weights.gen.ts";
+import { shaderShape } from "../src/model/shader-source.ts";
 
 const context = { reference: "2026-09-16T12:00:00Z", timeZone: "UTC" };
 // A stand-in pack: only the code differs, so any routing error shows up as a
@@ -65,5 +67,26 @@ describe("automatic language selection", () => {
 
   it("never spends a decision when one language is loaded", () => {
     expect(detectLanguage("cualquier cosa", [en])).toBe(en);
+  });
+});
+
+describe("pack models", () => {
+  it("gives Spanish its own weight set and English the bundled one", () => {
+    expect(es.model).toBeDefined();
+    expect(es.model).not.toBe(weights);
+    expect(en.model).toBeUndefined();
+  });
+
+  it("keeps Spanish on the shapes the packaged shader is built from", () => {
+    expect(shaderShape(es.model!)).toBe(shaderShape(weights));
+  });
+
+  it("runs each pack against its own model in one parser", async () => {
+    const parser = await defineParser({ languages: [en, es] });
+    const spanish = await parser.parse("el lunes que viene a las 9", context);
+    const english = await parser.parse("next Monday at 9am", context);
+    expect(spanish.occurrences[0].start).toBe(english.occurrences[0].start);
+    expect(spanish.spans[0].text).toBe("lunes que viene a las 9");
+    expect(english.spans[0].text).toBe("next Monday at 9am");
   });
 });

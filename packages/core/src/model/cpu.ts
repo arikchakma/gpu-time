@@ -7,13 +7,7 @@ import { diagnostics, fullPrecision } from "./options.js";
 
 const hiddenSize = 32;
 const rowsPerToken = 17;
-const model: EncodedWeights = weights;
-const tensors = decodeWeights(model);
 const store = fullPrecision ? Math.fround : storeHalf;
-const featureMap =
-  model.featureRows === 324
-    ? Uint16Array.from({ length: 581 }, (_, row) => compactFeature(row))
-    : undefined;
 
 function compactFeature(row: number): number {
   if (row < 140) return row;
@@ -31,36 +25,59 @@ export interface Predictions {
   trace?: Record<string, Float32Array>;
 }
 
-function tensor(name: string): Float32Array {
-  const value = tensors.get(name);
-  if (!value) throw new Error(`Missing model tensor: ${name}`);
-  return value;
+function buildRuntime(model: EncodedWeights) {
+  const tensors = decodeWeights(model);
+  const tensor = (name: string): Float32Array => {
+    const value = tensors.get(name);
+    if (!value) throw new Error(`Missing model tensor: ${name}`);
+    return value;
+  };
+  return {
+    model,
+    roleClasses: model.roleClasses,
+    boundaryThreshold: model.boundaryThreshold ?? 0,
+    modelFeatureRows: model.featureRows,
+    featureMap:
+      model.featureRows === 324
+        ? Uint16Array.from({ length: 581 }, (_, row) => compactFeature(row))
+        : undefined,
+    embedding: tensor("embedding"),
+    encoderBias: tensor("encoder_bias"),
+    convolution: tensor("convolution"),
+    neighborWeights: tensor("neighbor_weights"),
+    scanLayers: Array.from({ length: model.layers ?? 1 }, (_, layer) => {
+      const suffix = layer === 0 ? "" : String(layer + 1);
+      return {
+        gateWeight: tensor(`gate${suffix}_weight`),
+        gateBias: tensor(`gate${suffix}_bias`),
+        candidateWeight: tensor(`candidate${suffix}_weight`),
+        candidateBias: tensor(`candidate${suffix}_bias`),
+        combineWeight: tensor(`combine${suffix}_weight`),
+        combineBias: tensor(`combine${suffix}_bias`),
+      };
+    }),
+    transition: model.transitions ? tensor("transition") : undefined,
+    globalWeight: tensor("global_weight"),
+    globalBias: tensor("global_bias"),
+    headGateWeight: tensor("head_gate_weight"),
+    headGateBias: tensor("head_gate_bias"),
+    headHiddenWeight: tensor("head_hidden_weight"),
+    headHiddenBias: tensor("head_hidden_bias"),
+    outputWeight: tensor("output_weight"),
+    outputBias: tensor("output_bias"),
+    scratch: undefined as Workspace | undefined,
+    embeddingCache: new Map<string, Float32Array>(),
+  };
 }
 
-const embedding = tensor("embedding");
-const encoderBias = tensor("encoder_bias");
-const convolution = tensor("convolution");
-const neighborWeights = tensor("neighbor_weights");
-const scanLayers = Array.from({ length: model.layers ?? 1 }, (_, layer) => {
-  const suffix = layer === 0 ? "" : String(layer + 1);
-  return {
-    gateWeight: tensor(`gate${suffix}_weight`),
-    gateBias: tensor(`gate${suffix}_bias`),
-    candidateWeight: tensor(`candidate${suffix}_weight`),
-    candidateBias: tensor(`candidate${suffix}_bias`),
-    combineWeight: tensor(`combine${suffix}_weight`),
-    combineBias: tensor(`combine${suffix}_bias`),
-  };
-});
-const transition = model.transitions ? tensor("transition") : undefined;
-const globalWeight = tensor("global_weight");
-const globalBias = tensor("global_bias");
-const headGateWeight = tensor("head_gate_weight");
-const headGateBias = tensor("head_gate_bias");
-const headHiddenWeight = tensor("head_hidden_weight");
-const headHiddenBias = tensor("head_hidden_bias");
-const outputWeight = tensor("output_weight");
-const outputBias = tensor("output_bias");
+export type ModelRuntime = ReturnType<typeof buildRuntime>;
+const runtimes = new WeakMap<EncodedWeights, ModelRuntime>();
+
+export function modelRuntime(model: EncodedWeights = weights): ModelRuntime {
+  let runtime = runtimes.get(model);
+  if (!runtime) runtimes.set(model, (runtime = buildRuntime(model)));
+  return runtime;
+}
 
 /** Viterbi over one stream's scored tokens. Confidence is the softmax of the
  * emission at the chosen label; the posterior marginal would need a second pass
@@ -167,7 +184,26 @@ function dot(
   return Math.fround(sum);
 }
 
-function createWorkspace(count: number) {
+interface Workspace {
+  count: number;
+  embedded: Float32Array;
+  encoded: Float32Array;
+  gate: Float32Array;
+  candidate: Float32Array;
+  forward: Float32Array;
+  backward: Float32Array;
+  combined: Float32Array;
+  previous: Int32Array;
+  next: Int32Array;
+  pooled: Float32Array;
+  context: Float32Array;
+  headGate: Float32Array;
+  headHidden: Float32Array;
+  output: Float32Array;
+  emissions?: Float32Array;
+}
+
+function createWorkspace(count: number, runtime: ModelRuntime): Workspace {
   return {
     count,
     embedded: new Float32Array(count * hiddenSize),
@@ -183,39 +219,64 @@ function createWorkspace(count: number) {
     context: new Float32Array(hiddenSize),
     headGate: new Float32Array(16),
     headHidden: new Float32Array(64),
-    output: new Float32Array(weights.roleClasses + 1),
-    emissions: transition
-      ? new Float32Array(count * weights.roleClasses)
+    output: new Float32Array(runtime.roleClasses + 1),
+    emissions: runtime.transition
+      ? new Float32Array(count * runtime.roleClasses)
       : undefined,
   };
 }
 
-let scratch: ReturnType<typeof createWorkspace> | undefined;
-function getWorkspace(count: number) {
+function getWorkspace(count: number, runtime: ModelRuntime): Workspace {
   // Inference is synchronous. Retain at most one normal 128-token window.
-  if (count > 128) return createWorkspace(count);
-  if (!scratch || scratch.count < count) scratch = createWorkspace(count);
-  return scratch;
+  if (count > 128) return createWorkspace(count, runtime);
+  if (!runtime.scratch || runtime.scratch.count < count)
+    runtime.scratch = createWorkspace(count, runtime);
+  return runtime.scratch;
 }
 
-export function inferCPU(tokens: RawToken[], debug = false): Predictions {
+export function inferCPU(
+  tokens: RawToken[],
+  debug = false,
+  model?: EncodedWeights,
+): Predictions {
   const rows = new Uint16Array(tokens.length * rowsPerToken).fill(
     580, // Canonical feature encoding; compact models remap these rows below.
   );
   tokens.forEach((token, index) =>
     rows.set(featureRows(token.features), index * rowsPerToken),
   );
-  return inferRows(rows, debug, tokens);
+  return inferRows(rows, debug, tokens, model);
 }
 
 /** Runs the trained network. This module contains no language or calendar rules. */
-const embeddingCache = new Map<string, Float32Array>();
-
 export function inferRows(
   rows: Uint16Array,
   debug = false,
   tokens?: RawToken[],
+  model?: EncodedWeights,
 ): Predictions {
+  const runtime = modelRuntime(model);
+  const {
+    roleClasses,
+    boundaryThreshold,
+    modelFeatureRows,
+    featureMap,
+    embeddingCache,
+    embedding,
+    encoderBias,
+    convolution,
+    neighborWeights,
+    scanLayers,
+    transition,
+    globalWeight,
+    globalBias,
+    headGateWeight,
+    headGateBias,
+    headHiddenWeight,
+    headHiddenBias,
+    outputWeight,
+    outputBias,
+  } = runtime;
   debug = diagnostics && debug;
   if (featureMap) rows = rows.map((row) => featureMap[row]);
   if (rows.length % rowsPerToken !== 0)
@@ -224,13 +285,13 @@ export function inferRows(
   const labels = new Uint8Array(count);
   const clauseStarts = new Uint8Array(count);
   const scores = new Float32Array(count);
-  const logits = debug
-    ? new Float32Array(count * weights.roleClasses)
-    : undefined;
+  const logits = debug ? new Float32Array(count * roleClasses) : undefined;
   const boundaryLogits = debug ? new Float32Array(count) : undefined;
   if (!count) return { labels, clauseStarts, scores, logits, boundaryLogits };
 
-  const workspace = debug ? createWorkspace(count) : getWorkspace(count);
+  const workspace = debug
+    ? createWorkspace(count, runtime)
+    : getWorkspace(count, runtime);
   const {
     embedded,
     encoded,
@@ -267,7 +328,7 @@ export function inferRows(
       let value = 0;
       for (let feature = 0; feature < rowsPerToken; feature++) {
         const row = rows[token * rowsPerToken + feature];
-        if (row < weights.featureRows)
+        if (row < modelFeatureRows)
           value = Math.fround(value + embedding[row * hiddenSize + channel]);
       }
       embedded[token * hiddenSize + channel] = store(value);
@@ -426,42 +487,34 @@ export function inferRows(
         value += headGate[input] * headHiddenWeight[channel * 80 + 64 + input];
       headHidden[channel] = Math.tanh(Math.fround(value));
     }
-    for (let label = 0; label <= weights.roleClasses; label++)
+    for (let label = 0; label <= roleClasses; label++)
       output[label] =
         outputBias[label] + dot(headHidden, 0, outputWeight, label, 64);
 
     let best = 0;
     let second = -Infinity;
-    for (let label = 1; label < weights.roleClasses; label++) {
+    for (let label = 1; label < roleClasses; label++) {
       if (output[label] > output[best]) {
         second = output[best];
         best = label;
       } else second = Math.max(second, output[label]);
     }
     let denominator = 0;
-    for (let label = 0; label < weights.roleClasses; label++)
+    for (let label = 0; label < roleClasses; label++)
       denominator += Math.exp(output[label] - output[best]);
     labels[token] = best;
-    clauseStarts[token] = Number(
-      output[weights.roleClasses] >= (model.boundaryThreshold ?? 0),
-    );
+    clauseStarts[token] = Number(output[roleClasses] >= boundaryThreshold);
     scores[token] = (1 - Math.exp(second - output[best])) / denominator;
-    logits?.set(
-      output.subarray(0, weights.roleClasses),
-      token * weights.roleClasses,
-    );
-    if (boundaryLogits) boundaryLogits[token] = output[weights.roleClasses];
-    emissions?.set(
-      output.subarray(0, weights.roleClasses),
-      token * weights.roleClasses,
-    );
+    logits?.set(output.subarray(0, roleClasses), token * roleClasses);
+    if (boundaryLogits) boundaryLogits[token] = output[roleClasses];
+    emissions?.set(output.subarray(0, roleClasses), token * roleClasses);
   }
 
   if (transition && emissions) {
     const { path, confidence } = viterbiDecode(
       emissions,
-      scored.map((token) => token * weights.roleClasses),
-      weights.roleClasses,
+      scored.map((token) => token * roleClasses),
+      roleClasses,
       transition,
     );
     scored.forEach((token, step) => {

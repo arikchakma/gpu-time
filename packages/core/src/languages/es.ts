@@ -1,6 +1,7 @@
 import type { DateSpec, Unit, Weekday } from "../types.js";
 import { weekdays } from "../lexicon.js";
 import { fold, type Language } from "./language.js";
+import { weights as model } from "../model/weights-es.gen.js";
 
 const DAY_NAMES = [
   "lunes",
@@ -234,6 +235,7 @@ const isSameTimeCue = (first: string, second: string) =>
   ["misma", "este", "esta"].includes(first) && second === "hora";
 
 const spanish: Language = {
+  model,
   code: "es",
   dateOrder: "DMY",
 

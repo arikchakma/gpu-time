@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm --filter gpu-time build && pnpm --filter gpu-time build:es && astro build",
+    "build": "pnpm --filter gpu-time build && astro build",
     "preview": "astro preview",
-    "check": "pnpm --filter gpu-time build && pnpm --filter gpu-time build:es && astro check",
+    "check": "pnpm --filter gpu-time build && astro check",
     "prepare:video": "bash scripts/prepare-video.sh",
     "prepare:thumbnail": "node scripts/prepare-thumbnail.mjs",
     "test:browser": "pnpm run build && node tests/first-load.mjs",

@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import type { Parser } from "gpu-time";
 import { demoDefault, format, kinds } from "../lib/demo";
 import { LanguageToggle, type Language } from "./LanguageToggle";
 import { Mark } from "./Mark";
 
 type Formatted = ReturnType<typeof format>;
-type Parser = Awaited<ReturnType<typeof import("gpu-time").defineParser>>;
 
 // The Spanish model is a preview: exported with --skip-gate, no gold corpus.
-// It ships as its own bundle because one build carries one weight set.
-const spanish = () => import("../../../../packages/core/dist-es/index.js");
-const spanishPack = () =>
-  import("../../../../packages/core/dist-es/languages/es.js");
+const spanishPack = () => import("gpu-time/languages/es");
 
 const spanishDefault = "el lunes que viene a las 9";
 
@@ -36,15 +33,10 @@ export function Demo({ initial }: { initial: Formatted }) {
   const seq = useRef(0);
 
   async function makeParser(backend: "cpu" | "webgpu") {
-    if (language === "es") {
-      const [{ defineParser }, pack] = await Promise.all([
-        spanish(),
-        spanishPack(),
-      ]);
-      return defineParser({ backend, languages: [pack.default] });
-    }
     const { defineParser } = await import("gpu-time");
-    return defineParser({ backend });
+    if (language !== "es") return defineParser({ backend });
+    const pack = await spanishPack();
+    return defineParser({ backend, languages: [pack.default] });
   }
 
   async function cpuParser() {

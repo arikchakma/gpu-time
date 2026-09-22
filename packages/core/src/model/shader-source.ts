@@ -35,10 +35,19 @@ export function buildShader(
     .map(([name, offset]) => `const ${name}: u32 = ${offset}u;`)
     .join("\n");
   return `${nativeHalf ? "enable f16;\n" : ""}${constants}
-const BOUNDARY_THRESHOLD: f32 = ${model.boundaryThreshold ?? 0};
 const COMPACT_FEATURES: bool = ${model.featureRows === 324};
 const SCAN_LAYERS: u32 = ${model.layers ?? 1}u;
 const ROLE_CLASSES: u32 = ${model.roleClasses}u;
 const OUTPUTS: u32 = ${model.roleClasses + 1}u;
 ${source.replaceAll("STATE_TYPE", nativeHalf ? "f16" : "f32").replace("ROUND_BODY", roundBody)}`;
+}
+
+export function shaderShape(model: EncodedWeights): string {
+  return JSON.stringify([
+    model.storage ?? "f16",
+    model.featureRows,
+    model.layers ?? 1,
+    model.roleClasses,
+    model.segments.map((segment) => [segment.name, segment.offset]),
+  ]);
 }

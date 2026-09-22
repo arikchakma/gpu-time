@@ -1,3 +1,4 @@
+import type { EncodedWeights } from "../model/decode.js";
 import type {
   DayPart,
   Modifier,
@@ -15,6 +16,7 @@ export interface Language {
   code: string;
   /** How a bare numeric date like 3/4 is read when nothing else settles it. */
   dateOrder: "MDY" | "DMY";
+  model?: EncodedWeights;
 
   weekday(text: string): Weekday | undefined;
   month(text: string): number | undefined;

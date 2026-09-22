@@ -28,6 +28,8 @@ try {
     "README.md",
     "dist/index.d.ts",
     "dist/index.js",
+    "dist/languages/en.d.ts",
+    "dist/languages/en.js",
     "dist/languages/es.d.ts",
     "dist/languages/es.js",
     "dist/schedule.d.ts",

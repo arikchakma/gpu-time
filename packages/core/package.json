@@ -13,6 +13,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./languages/en": {
+      "types": "./dist/languages/en.d.ts",
+      "import": "./dist/languages/en.js",
+      "default": "./dist/languages/en.js"
+    },
     "./languages/es": {
       "types": "./dist/languages/es.d.ts",
       "import": "./dist/languages/es.js",
@@ -25,7 +30,6 @@
   "sideEffects": false,
   "scripts": {
     "build": "node --experimental-strip-types scripts/build.ts --report-only",
-    "build:es": "node --experimental-strip-types scripts/build.ts --weights src/model/weights-es.gen.ts --outdir dist-es --report-only",
     "build:release": "node --experimental-strip-types scripts/build.ts",
     "prepack": "pnpm build",
     "release": "bumpp",

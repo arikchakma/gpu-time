@@ -21,6 +21,7 @@ const model = await inlineModel(import.meta.dirname, weights, weightsPath);
 const entries: Record<string, string>[] = [
   { index: "src/index.ts" },
   { schedule: "src/schedule.ts" },
+  { "languages/en": "src/languages/en.ts" },
   { "languages/es": "src/languages/es.ts" },
 ];
 

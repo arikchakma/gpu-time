@@ -180,6 +180,8 @@ export async function defineParser(options: ParserOptions = {}) {
   };
 }
 
+export type Parser = Awaited<ReturnType<typeof defineParser>>;
+
 let defaultParser: ReturnType<typeof defineParser> | undefined;
 export async function parse(
   text: string,
