@@ -167,6 +167,20 @@ describe("modifier after the unit", () => {
     });
   });
 
+  it("reads the small hours de la noche and de la madrugada as morning", () => {
+    const hour = (text: string, labels: string[]) =>
+      (
+        read(text, labels) as {
+          clauses: { time: { start: { hour: number } } }[];
+        }
+      ).clauses[0].time.start.hour;
+    const night = ["GLUE", "GLUE", "HOUR", "MERIDIEM", "MERIDIEM", "MERIDIEM"];
+    expect(hour("a las dos de la noche", night)).toBe(2);
+    expect(hour("a las once de la noche", night)).toBe(23);
+    expect(hour("a las seis de la noche", night)).toBe(18);
+    expect(hour("a las cinco de la madrugada", night)).toBe(5);
+  });
+
   it("reads justo ahora as now", () => {
     expect(read("justo ahora", ["NOW", "NOW"])).toEqual({
       clauses: [{ date: { kind: "now" } }],

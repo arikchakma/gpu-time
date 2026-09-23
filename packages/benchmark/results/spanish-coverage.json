@@ -1,0 +1,2283 @@
+{
+  "model": "5bec79ed58d00383b66748342dd6f18965ab28c76c93e1e798fe6cc26aa8262a",
+  "runtimeSha256": "4dc9689ee72ca82a00650267cb1d55642e6e61e328bf11f102e0a58471d53e01",
+  "sourceSha256": "7aac1158f9195981d49b8c34d9ffc8fa0851ccd7f00a2e12a83eed2c3a5ba1c4",
+  "runtime": "packages/core/dist",
+  "total": 72,
+  "correct": 49,
+  "accuracy": 0.6805555555555556,
+  "families": {
+    "casual": {
+      "correct": 18,
+      "total": 21
+    },
+    "month-name-little-endian": {
+      "correct": 11,
+      "total": 14
+    },
+    "slash": {
+      "correct": 1,
+      "total": 2
+    },
+    "time-exp": {
+      "correct": 9,
+      "total": 20
+    },
+    "time-units-within": {
+      "correct": 10,
+      "total": 15
+    }
+  },
+  "cases": [
+    {
+      "id": "spanish-001",
+      "family": "casual",
+      "text": "La fecha límite es hoy",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "hoy",
+      "occurrences": [
+        {
+          "start": "2012-08-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 19,
+          "end": 22,
+          "text": "hoy",
+          "confidence": 0.944491446018219
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-002",
+      "family": "casual",
+      "text": "La fecha límite es Mañana",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "Mañana",
+      "occurrences": [
+        {
+          "start": "2012-08-11T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-11",
+      "actual": [
+        {
+          "start": "2012-08-11T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 19,
+          "end": 25,
+          "text": "Mañana",
+          "confidence": 0.3173240125179291
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 19,
+          "end": 25,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-003",
+      "family": "casual",
+      "text": "La fecha límite es mañana",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T01:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [
+        {
+          "start": "2012-08-11T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-11",
+      "actual": [
+        {
+          "start": "2012-08-11T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 19,
+          "end": 25,
+          "text": "mañana",
+          "confidence": 0.3665427565574646
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 19,
+          "end": 25,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-004",
+      "family": "casual",
+      "text": "La fecha límite fue ayer de noche ",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "ayer de noche",
+      "occurrences": [
+        {
+          "start": "2012-08-09T21:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-09",
+      "actual": [
+        {
+          "start": "2012-08-09T21:00:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T00:00:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 20,
+          "end": 33,
+          "text": "ayer de noche",
+          "confidence": 0.17835640907287598
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 20,
+          "end": 24,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-005",
+      "family": "casual",
+      "text": "La fecha límite es hoy a las 5PM",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "hoy a las 5PM",
+      "occurrences": [
+        {
+          "start": "2012-08-10T05:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T05:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 19,
+          "end": 30,
+          "text": "hoy a las 5",
+          "confidence": 0.43536844849586487
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 29,
+          "end": 30,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 19,
+          "end": 22,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-006",
+      "family": "casual",
+      "text": "esta noche",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-01-01T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "esta noche",
+      "occurrences": [
+        {
+          "start": "2012-01-01T21:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-01-01",
+      "actual": [
+        {
+          "start": "2012-01-01T21:00:00+00:00",
+          "allDay": false,
+          "end": "2012-01-02T00:00:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 10,
+          "text": "esta noche",
+          "confidence": 0.7778342366218567
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "filler-ignored",
+          "message": "Ignored esta inside the expression.",
+          "start": 0,
+          "end": 4,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-007",
+      "family": "casual",
+      "text": "esta noche 8pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-01-01T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "esta noche 8pm",
+      "occurrences": [
+        {
+          "start": "2012-01-01T20:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-01-01",
+      "actual": [
+        {
+          "start": "2012-01-01T20:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "esta noche 8",
+          "confidence": 0.6756761074066162
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "filler-ignored",
+          "message": "Ignored esta inside the expression.",
+          "start": 0,
+          "end": 4,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-008",
+      "family": "casual",
+      "text": "esta noche a las 8",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-01-01T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "esta noche a las 8",
+      "occurrences": [
+        {
+          "start": "2012-01-01T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-01-01",
+      "actual": [
+        {
+          "start": "2012-01-01T00:00:00+00:00",
+          "allDay": false,
+          "open": "start",
+          "end": "2012-01-01T20:00:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 18,
+          "text": "esta noche a las 8",
+          "confidence": 0.35667669773101807
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "filler-ignored",
+          "message": "Ignored esta inside the expression.",
+          "start": 0,
+          "end": 4,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 4,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-009",
+      "family": "casual",
+      "text": "el mediodía",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2020-09-01T11:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [
+        {
+          "start": "2020-09-01T12:00:00+00:00"
+        }
+      ],
+      "chronoDate": "undefined-",
+      "actual": [
+        {
+          "start": "2020-09-01T12:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 3,
+          "end": 11,
+          "text": "mediodía",
+          "confidence": 0.9741982221603394
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-010",
+      "family": "casual",
+      "text": "la medianoche",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2020-09-01T11:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [
+        {
+          "start": "2020-09-02T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2020-09-02",
+      "actual": [
+        {
+          "start": "2020-09-02T00:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 3,
+          "end": 13,
+          "text": "medianoche",
+          "confidence": 0.9278304576873779
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-011",
+      "family": "casual",
+      "text": "nohoy",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-012",
+      "family": "casual",
+      "text": "hymañana",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-013",
+      "family": "casual",
+      "text": "xayer",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-014",
+      "family": "casual",
+      "text": "porhora",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-015",
+      "family": "casual",
+      "text": "ahoraxsd",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-016",
+      "family": "month-name-little-endian",
+      "text": "10 Agosto 2012",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 Agosto 2012",
+      "occurrences": [
+        {
+          "start": "2012-08-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "text": "10 Agosto 2012",
+          "confidence": 0.8786312341690063
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-017",
+      "family": "month-name-little-endian",
+      "text": "La fecha límite es el martes, 10 de enero",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "martes, 10 de enero",
+      "occurrences": [
+        {
+          "start": "2013-01-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2013-01-10",
+      "actual": [
+        {
+          "start": "2013-01-10T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 22,
+          "end": 41,
+          "text": "martes, 10 de enero",
+          "confidence": 0.7665175199508667
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-018",
+      "family": "month-name-little-endian",
+      "text": "La fecha límite es el miércoles, 10 de enero ",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "miércoles, 10 de enero",
+      "occurrences": [
+        {
+          "start": "2013-01-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2013-01-10",
+      "actual": [
+        {
+          "start": "2013-01-10T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 22,
+          "end": 44,
+          "text": "miércoles, 10 de enero",
+          "confidence": 0.7209784388542175
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-019",
+      "family": "month-name-little-endian",
+      "text": "10 de Agosto de 2012",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2010-02-01T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 de Agosto de 2012",
+      "occurrences": [
+        {
+          "start": "2012-08-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 20,
+          "text": "10 de Agosto de 2012",
+          "confidence": 0.9744244813919067
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-020",
+      "family": "month-name-little-endian",
+      "text": "10 - 22 Agosto 2012",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 - 22 Agosto 2012",
+      "occurrences": [
+        {
+          "start": "2012-08-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true,
+          "end": "2012-08-23T00:00:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 19,
+          "text": "10 - 22 Agosto 2012",
+          "confidence": 0.10876642167568207
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 2,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-021",
+      "family": "month-name-little-endian",
+      "text": "10 a 22 Agosto 2012",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 a 22 Agosto 2012",
+      "occurrences": [
+        {
+          "start": "2012-08-10T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true,
+          "end": "2012-08-23T00:00:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 19,
+          "text": "10 a 22 Agosto 2012",
+          "confidence": 0.6209495067596436
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-022",
+      "family": "month-name-little-endian",
+      "text": "10 Agosto - 12 Septiembre",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 Agosto - 12 Septiembre",
+      "occurrences": [
+        {
+          "start": "2012-08-10T12:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T12:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "text": "10 Agosto - 12",
+          "confidence": 0.27993959188461304
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 12,
+          "end": 14,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 2,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-023",
+      "family": "month-name-little-endian",
+      "text": "10 Agosto - 12 Septiembre 2013",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 Agosto - 12 Septiembre 2013",
+      "occurrences": [
+        {
+          "start": "2013-08-10T12:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2013-08-10",
+      "actual": [
+        {
+          "start": "2013-08-10T12:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 30,
+          "text": "10 Agosto - 12 Septiembre 2013",
+          "confidence": 0.3391445279121399
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 12,
+          "end": 14,
+          "severity": "warning"
+        },
+        {
+          "code": "filler-ignored",
+          "message": "Ignored Septiembre inside the expression.",
+          "start": 15,
+          "end": 25,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 2,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-024",
+      "family": "month-name-little-endian",
+      "text": "32 Agosto 2014",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Day of month must be between 1 and 31.",
+          "start": 0,
+          "end": 2,
+          "severity": "error"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-025",
+      "family": "month-name-little-endian",
+      "text": "29 Febrero 2014",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "resolution-error",
+          "severity": "error",
+          "message": "The expression names an invalid calendar date.",
+          "start": 0,
+          "end": 15
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-026",
+      "family": "month-name-little-endian",
+      "text": "32 Agosto",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "occurrences": [],
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Day of month must be between 1 and 31.",
+          "start": 0,
+          "end": 2,
+          "severity": "error"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-027",
+      "family": "slash",
+      "text": "Martes 9/2/2016",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "Martes 9/2/2016",
+      "occurrences": [
+        {
+          "start": "2016-02-09T00:00:00+00:00"
+        }
+      ],
+      "chronoDate": "2016-02-09",
+      "actual": [
+        {
+          "start": "2016-02-09T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 15,
+          "text": "Martes 9/2/2016",
+          "confidence": 0.7799317240715027
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-028",
+      "family": "time-exp",
+      "text": "8:10 - 12.32",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "8:10 - 12.32",
+      "occurrences": [
+        {
+          "start": "2012-08-10T08:10:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T08:10:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T12:32:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "8:10 - 12.32",
+          "confidence": 0.3763001561164856
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 0,
+          "end": 1,
+          "severity": "warning"
+        },
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 7,
+          "end": 9,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 1,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-029",
+      "family": "time-exp",
+      "text": "Algo pasó el 10 de Agosto de 2012 10:12:59 pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 de Agosto de 2012 10:12:59 pm",
+      "occurrences": [
+        {
+          "start": "2012-08-10T10:12:59+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T10:12:59+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 13,
+          "end": 42,
+          "text": "10 de Agosto de 2012 10:12:59",
+          "confidence": 0.7677823901176453
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 34,
+          "end": 36,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-030",
+      "family": "time-units-within",
+      "text": "en 5 minutos",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en 5 minutos",
+      "occurrences": [
+        {
+          "start": "2012-08-10T12:19:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T12:19:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "en 5 minutos",
+          "confidence": 0.9919998049736023
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-031",
+      "family": "time-units-within",
+      "text": "por 5 minutos",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "por 5 minutos",
+      "occurrences": [
+        {
+          "start": "2012-08-10T12:14:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T12:14:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T12:19:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 13,
+          "text": "por 5 minutos",
+          "confidence": 0.9852626323699951
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-032",
+      "family": "time-units-within",
+      "text": "en 1 hora",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en 1 hora",
+      "occurrences": [
+        {
+          "start": "2012-08-10T13:14:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T13:14:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "text": "en 1 hora",
+          "confidence": 0.9721497297286987
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-033",
+      "family": "time-units-within",
+      "text": "En 5 minutos me voy a casa",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "En 5 minutos",
+      "occurrences": [
+        {
+          "start": "2012-08-10T12:19:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T12:19:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "En 5 minutos",
+          "confidence": 0.9579706788063049
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-034",
+      "family": "time-units-within",
+      "text": "en dos semanas",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en dos semanas",
+      "occurrences": [
+        {
+          "start": "2012-08-24T12:14:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-24",
+      "actual": [
+        {
+          "start": "2012-08-24T12:14:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "text": "en dos semanas",
+          "confidence": 0.9750020503997803
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-035",
+      "family": "time-units-within",
+      "text": "dentro de un mes",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T07:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "dentro de un mes",
+      "occurrences": [
+        {
+          "start": "2012-09-10T07:14:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-09-10",
+      "actual": [
+        {
+          "start": "2012-09-10T07:14:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "text": "dentro de un mes",
+          "confidence": 0.9815053343772888
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-036",
+      "family": "time-units-within",
+      "text": "en un año",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en un año",
+      "occurrences": [
+        {
+          "start": "2013-08-10T12:14:00+00:00"
+        }
+      ],
+      "chronoDate": "2013-08-10",
+      "actual": [
+        {
+          "start": "2013-08-10T12:14:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "text": "en un año",
+          "confidence": 0.9930781722068787
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-037",
+      "family": "time-units-within",
+      "text": "dentro de un año",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "dentro de un año",
+      "occurrences": [
+        {
+          "start": "2013-08-10T12:14:00+00:00"
+        }
+      ],
+      "chronoDate": "2013-08-10",
+      "actual": [
+        {
+          "start": "2013-08-10T12:14:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "text": "dentro de un año",
+          "confidence": 0.9877708554267883
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-038",
+      "family": "time-units-within",
+      "text": "En 5 Minutos hay que mover un coche",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "En 5 Minutos",
+      "occurrences": [
+        {
+          "start": "2012-08-10T12:19:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T12:19:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "En 5 Minutos",
+          "confidence": 0.8879596590995789
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-039",
+      "family": "time-units-within",
+      "text": "En 5 minutos hay que mover un coche.",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "En 5 minutos",
+      "occurrences": [
+        {
+          "start": "2012-08-10T12:19:00+00:00"
+        }
+      ],
+      "chronoDate": "2012-08-10",
+      "actual": [
+        {
+          "start": "2012-08-10T12:19:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "text": "En 5 minutos",
+          "confidence": 0.8610330820083618
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-040",
+      "family": "casual",
+      "text": "La fecha límite fue esta mañana ",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "esta mañana",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2012-08-11T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 25,
+          "end": 31,
+          "text": "mañana",
+          "confidence": 0.1576947271823883
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 25,
+          "end": 31,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-041",
+      "family": "casual",
+      "text": "La fecha límite es ahora",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T08:09:10.011+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "ahora",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"La fecha límite es ahora\".",
+          "start": 0,
+          "end": 24
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-042",
+      "family": "casual",
+      "text": "La fecha límite fue ayer",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "ayer",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "unsupported",
+          "message": "Unknown day group.",
+          "start": 20,
+          "end": 24,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-043",
+      "family": "casual",
+      "text": "La fecha límite fue esta tarde ",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "esta tarde",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"La fecha límite fue esta tarde \".",
+          "start": 0,
+          "end": 31
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-044",
+      "family": "month-name-little-endian",
+      "text": "Dom 15Sep",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2013-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "Dom 15Sep",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Conflicting date specifications need separate clauses.",
+          "start": 0,
+          "end": 3,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-045",
+      "family": "month-name-little-endian",
+      "text": "DOM 15SEP",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2013-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "DOM 15SEP",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Conflicting date specifications need separate clauses.",
+          "start": 0,
+          "end": 3,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-046",
+      "family": "month-name-little-endian",
+      "text": "La fecha límite es 10 Agosto",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "10 Agosto",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"La fecha límite es 10 Agosto\".",
+          "start": 0,
+          "end": 28
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-047",
+      "family": "slash",
+      "text": "lunes 8/2/2016",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "lunes 8/2/2016",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Conflicting date specifications need separate clauses.",
+          "start": 0,
+          "end": 5,
+          "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 5,
+          "severity": "warning"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-048",
+      "family": "time-exp",
+      "text": "Estaremos a las 6.13 AM",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "las 6.13 AM",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-time",
+          "message": "A fractional clock needs past or to and an hour.",
+          "start": 18,
+          "end": 20,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-049",
+      "family": "time-exp",
+      "text": " de 6:30pm a 11:00pm ",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "de 6:30pm a 11:00pm",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "unlinked-times",
+          "message": "Two clocks need a range separator or separate clauses.",
+          "start": 13,
+          "end": 15,
+          "severity": "error"
+        },
+        {
+          "code": "filler-ignored",
+          "message": "Ignored pm inside the expression.",
+          "start": 8,
+          "end": 10,
+          "severity": "warning"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-050",
+      "family": "time-exp",
+      "text": "de 1pm a 3",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "de 1pm a 3",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "unlinked-times",
+          "message": "Two clocks need a range separator or separate clauses.",
+          "start": 9,
+          "end": 10,
+          "severity": "error"
+        },
+        {
+          "code": "filler-ignored",
+          "message": "Ignored pm inside the expression.",
+          "start": 4,
+          "end": 6,
+          "severity": "warning"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-051",
+      "family": "time-exp",
+      "text": "martes 5/1/2013 1115am",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "martes 5/1/2013 1115am",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Day of month must be between 1 and 31.",
+          "start": 16,
+          "end": 20,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-052",
+      "family": "time-exp",
+      "text": "miércoles 5/3/2013 1230pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "miércoles 5/3/2013 1230pm",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Day of month must be between 1 and 31.",
+          "start": 19,
+          "end": 23,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-053",
+      "family": "time-exp",
+      "text": "miércoles 5/15/2013 1030am",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "miércoles 5/15/2013 1030am",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Unknown month.",
+          "start": 12,
+          "end": 14,
+          "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 9,
+          "severity": "warning"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-054",
+      "family": "time-exp",
+      "text": "jueves 6/21/2013 2:30",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "jueves 6/21/2013 2:30",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Unknown month.",
+          "start": 9,
+          "end": 11,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-055",
+      "family": "time-exp",
+      "text": "martes 7/2/2013 1-230 pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "martes 7/2/2013 1-230 pm",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "A calendar date has more than one month.",
+          "start": 16,
+          "end": 17,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-056",
+      "family": "time-exp",
+      "text": "Lunes, 6/24/2013, 7:00pm - 8:30pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "Lunes, 6/24/2013, 7:00pm - 8:30pm",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Unknown month.",
+          "start": 9,
+          "end": 11,
+          "severity": "error"
+        },
+        {
+          "code": "filler-ignored",
+          "message": "Ignored pm inside the expression.",
+          "start": 22,
+          "end": 24,
+          "severity": "warning"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-057",
+      "family": "time-exp",
+      "text": "Miércoles, 3 Julio de 2013 a las 2pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "Miércoles, 3 Julio de 2013 a las 2pm",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "invalid-date",
+          "message": "Both ends of a calendar range need a day.",
+          "start": 0,
+          "end": 9,
+          "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 9,
+          "severity": "warning"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-058",
+      "family": "time-exp",
+      "text": "11.1pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "11.1pm",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "unlinked-times",
+          "message": "Two clocks need a range separator or separate clauses.",
+          "start": 3,
+          "end": 4,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-059",
+      "family": "time-units-within",
+      "text": "establecer un temporizador de 5 minutos",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "de 5 minutos",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "unsupported",
+          "message": "The expression has no date or time.",
+          "start": 27,
+          "end": 29,
+          "severity": "error"
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-060",
+      "family": "time-units-within",
+      "text": "En 5 segundos un auto se moverá",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T12:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "En 5 segundos",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"En 5 segundos un auto se moverá\".",
+          "start": 0,
+          "end": 31
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-061",
+      "family": "time-units-within",
+      "text": "en algunos meses",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-07-10T22:14:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en algunos meses",
+      "spanOnly": true,
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
+        {
+          "code": "no-expression",
+          "severity": "warning",
+          "message": "No time expression was recognized in \"en algunos meses\".",
+          "start": 0,
+          "end": 16
+        }
+      ],
+      "correct": false
+    },
+    {
+      "id": "spanish-062",
+      "family": "casual",
+      "text": "jueves",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "jueves",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2026-09-17T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "text": "jueves",
+          "confidence": 0.9997165203094482
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-063",
+      "family": "casual",
+      "text": "viernes",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "viernes",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2026-09-18T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 7,
+          "text": "viernes",
+          "confidence": 0.9989540576934814
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-064",
+      "family": "time-exp",
+      "text": "lunes 4/29/2013 630-930am",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "lunes 4/29/2013 630-930am",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2013-04-29T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 15,
+          "text": "lunes 4/29/2013",
+          "confidence": 0.43242794275283813
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 5,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-065",
+      "family": "time-exp",
+      "text": "domingo 5/6/2013  750am-910am",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "domingo 5/6/2013  750am-910am",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2013-06-05T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "text": "domingo 5/6/2013",
+          "confidence": 0.8578953742980957
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-066",
+      "family": "time-exp",
+      "text": "lunes 5/13/2013 630-930am",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "lunes 5/13/2013 630-930am",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2013-05-13T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 15,
+          "text": "lunes 5/13/2013",
+          "confidence": 0.8200602531433105
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-067",
+      "family": "time-exp",
+      "text": "6pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "6pm",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2026-09-17T06:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 1,
+          "text": "6",
+          "confidence": 0.9700791239738464
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 0,
+          "end": 1,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-068",
+      "family": "time-exp",
+      "text": "6 pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "6 pm",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2026-09-17T06:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 1,
+          "text": "6",
+          "confidence": 0.9329133033752441
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 0,
+          "end": 1,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-069",
+      "family": "time-exp",
+      "text": "7-10pm",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "7-10pm",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2026-10-07T00:00:00+00:00",
+          "allDay": true
+        }
+      ],
+      "spans": [
+        {
+          "start": 0,
+          "end": 4,
+          "text": "7-10",
+          "confidence": 0.9408656358718872
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
+    },
+    {
+      "id": "spanish-070",
+      "family": "time-exp",
+      "text": "las 12",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2026-09-16T12:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "las 12",
+      "spanOnly": true,
+      "actual": [
+        {
+          "start": "2026-09-16T12:00:00+00:00",
+          "allDay": false
+        }
+      ],
+      "spans": [
+        {
+          "start": 4,
+          "end": 6,
+          "text": "12",
+          "confidence": 0.9987661838531494
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 4,
+          "end": 6,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
+    },
+    {
+      "id": "spanish-071",
+      "family": "time-units-within",
+      "text": "Tenemos que hacer algo en 5 días.",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T00:00:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en 5 días",
+      "occurrences": [
+        {
+          "start": "2012-08-15T00:00:00+00:00"
+        }
+      ],
+      "actual": [
+        {
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": false,
+          "end": "2012-08-15T00:00:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 26,
+          "end": 32,
+          "text": "5 días",
+          "confidence": 0.974981963634491
+        }
+      ],
+      "diagnostics": [],
+      "correct": false
+    },
+    {
+      "id": "spanish-072",
+      "family": "time-units-within",
+      "text": "Tenemos que hacer algo en cinco días.",
+      "source": "chrono-node MIT, test/es",
+      "context": {
+        "reference": "2012-08-10T11:12:00+00:00",
+        "timeZone": "UTC"
+      },
+      "matched": "en cinco días",
+      "occurrences": [
+        {
+          "start": "2012-08-15T11:12:00+00:00"
+        }
+      ],
+      "actual": [
+        {
+          "start": "2012-08-10T11:12:00+00:00",
+          "allDay": false,
+          "end": "2012-08-15T11:12:00+00:00"
+        }
+      ],
+      "spans": [
+        {
+          "start": 26,
+          "end": 36,
+          "text": "cinco días",
+          "confidence": 0.7838309407234192
+        }
+      ],
+      "diagnostics": [],
+      "correct": false
+    }
+  ],
+  "scope": "Spanish phrases and expected answers drawn from chrono-node's test/es assertions, scored as occurrences or spans. This is targeted coverage, not general-language accuracy."
+}

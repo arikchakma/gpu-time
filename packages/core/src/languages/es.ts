@@ -266,6 +266,8 @@ const spanish: Language = {
     "pasado manana": 2,
     anteayer: -2,
     antier: -2,
+    "antes de ayer": -2,
+    anoche: -1,
   },
   dayParts: {
     manana: "morning",
@@ -323,8 +325,12 @@ const spanish: Language = {
     enlamanana: "am",
     enlatarde: "pm",
     enlanoche: "night",
+    delamadrugada: "am",
+    porlamadrugada: "am",
+    enlamadrugada: "am",
     enpunto: "o'clock",
   },
+  smallHoursAtNight: true,
   meridiemLead: new Set(["a"]),
   // "pico" names an unspecified few minutes past the hour, encoded as the
   // hour itself: "cuatro y pico" reads no more precisely than "four-ish".

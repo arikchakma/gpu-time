@@ -31,6 +31,25 @@ const { defineParser } = await import(
     : new URL("../../core/dist/schedule.js", import.meta.url).href
 );
 const parser = await defineParser({ backend: "cpu", tokens: true });
+const packRoot = dist
+  ? dirname(resolve(dist))
+  : join(packageRoot, "../core/dist");
+const pack =
+  argument("--language") === "es"
+    ? {
+        ...(await import(pathToFileURL(join(packRoot, "languages/es.js")).href))
+          .default,
+        ...(argument("--weights")
+          ? {
+              model: (
+                await import(
+                  pathToFileURL(resolve(argument("--weights")!)).href
+                )
+              ).weights,
+            }
+          : {}),
+      }
+    : undefined;
 // The generated corpora share the gold {text, schedule} shape.
 const directory = argument("--dir") ? resolve(argument("--dir")!) : gold;
 const sets = argument("--sets")?.split(",") ?? [
@@ -61,7 +80,7 @@ try {
       );
     const examples = [];
     for (const example of cases) {
-      const actual = await parser.parse(example.text);
+      const actual = await parser.parse(example.text, pack);
       examples.push({
         id: example.id,
         text: example.text,

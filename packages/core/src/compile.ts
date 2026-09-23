@@ -182,7 +182,9 @@ function readClock(
   }
   if (meridiem) {
     meridiem = resolveMeridiem(meridiem, language);
-    if (meridiem === "night") meridiem = hour === 12 ? "am" : "pm";
+    if (meridiem === "night")
+      meridiem =
+        hour === 12 || (language.smallHoursAtNight && hour < 5) ? "am" : "pm";
   }
 
   const endOfDay = hour === 24 && minute === 0 && (second ?? 0) === 0;

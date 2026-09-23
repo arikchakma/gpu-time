@@ -71,6 +71,7 @@ export interface Language {
    * rather than being special-cased in the compiler.
    */
   meridiemPhrases: Readonly<Record<string, "am" | "pm" | "o'clock" | "night">>;
+  smallHoursAtNight?: boolean;
   /** A MERIDIEM-role lead word that is harmless right before an hour, like "at". */
   meridiemLead: ReadonlySet<string>;
   /** Fraction word -> minutes, as in "half" -> 30, "quarter" -> 15. */

@@ -68,3 +68,5 @@
 {"id":"spanish-068","family":"time-exp","text":"6 pm","source":"chrono-node MIT, test/es","context":{"reference":"2026-09-16T12:00:00+00:00","timeZone":"UTC"},"matched":"6 pm","spanOnly":true}
 {"id":"spanish-069","family":"time-exp","text":"7-10pm","source":"chrono-node MIT, test/es","context":{"reference":"2026-09-16T12:00:00+00:00","timeZone":"UTC"},"matched":"7-10pm","spanOnly":true}
 {"id":"spanish-070","family":"time-exp","text":"las 12","source":"chrono-node MIT, test/es","context":{"reference":"2026-09-16T12:00:00+00:00","timeZone":"UTC"},"matched":"las 12","spanOnly":true}
+{"id": "spanish-071", "family": "time-units-within", "text": "Tenemos que hacer algo en 5 días.", "source": "chrono-node MIT, test/es", "context": {"reference": "2012-08-10T00:00:00+00:00", "timeZone": "UTC"}, "matched": "en 5 días", "occurrences": [{"start": "2012-08-15T00:00:00+00:00"}]}
+{"id": "spanish-072", "family": "time-units-within", "text": "Tenemos que hacer algo en cinco días.", "source": "chrono-node MIT, test/es", "context": {"reference": "2012-08-10T11:12:00+00:00", "timeZone": "UTC"}, "matched": "en cinco días", "occurrences": [{"start": "2012-08-15T11:12:00+00:00"}]}

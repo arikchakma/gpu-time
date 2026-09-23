@@ -1,7 +1,6 @@
 {
   "scope": "Known open Spanish gaps, by gold id. Shrink this list, never grow it.",
   "open": [
-    "spanish-040",
     "spanish-041",
     "spanish-042",
     "spanish-043",
@@ -22,6 +21,8 @@
     "spanish-058",
     "spanish-059",
     "spanish-060",
-    "spanish-061"
+    "spanish-061",
+    "spanish-071",
+    "spanish-072"
   ]
 }

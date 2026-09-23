@@ -23,5 +23,19 @@
   "pythonLabelMismatches": 0,
   "pythonBoundaryMismatches": 0,
   "recoveryCorrect": true,
-  "recoveries": 1
+  "recoveries": 1,
+  "spanish": {
+    "model": "5bec79ed58d00383b66748342dd6f18965ab28c76c93e1e798fe6cc26aa8262a",
+    "sequences": 4066,
+    "tokensCompared": 48951,
+    "maxError": 0.00000667572021484375,
+    "labelMismatches": 0,
+    "boundaryMismatches": 0,
+    "mismatches": [],
+    "packaged": {
+      "sequences": 1000,
+      "tokenMismatches": 0,
+      "scheduleMismatches": 0
+    }
+  }
 }
