@@ -1,18 +1,18 @@
 {
-  "checkpoint": "runs/es-v2/best.pt",
-  "checkpointSha256": "6df3348abf523f2ff081489af89c5b673281b2599b347ff20362442df9961acd",
-  "artifactSha256": "5bec79ed58d00383b66748342dd6f18965ab28c76c93e1e798fe6cc26aa8262a",
-  "exportSourceDirectory": "/private/tmp/claude-501/-Users-arikko-Developer-vibecode-gpu-time/e152b0e3-d733-4ba0-9d7d-f00ca080216a/scratchpad/es/weights-es.gen.ts.sources/5bec79ed58d00383b66748342dd6f18965ab28c76c93e1e798fe6cc26aa8262a/48eafa21392459caa929485787fddb308ef58132710cfd97a9567cedacdc01e9/source",
+  "checkpoint": "runs/es-v4d/epoch-32.pt",
+  "checkpointSha256": "2401027772b0fe8eb14e2a6d70df8ae4d8ad5170049427d974559e726ef7d8f6",
+  "artifactSha256": "40f3dd0da35d846bc2e6725497f8aa13f06decc85ea95a0fbcf6262ba5daae3b",
+  "exportSourceDirectory": "exports/40f3dd0da35d846bc2e6725497f8aa13f06decc85ea95a0fbcf6262ba5daae3b/c5f1ad754592b7369d333fd1f28f4a5856bfe1917fc87e226ec55979fae21c24/source",
   "exportSourceHashes": {
-    "training/export.py": "f942f5d5f12ce76eec8dc2d0faa718d6aeac8ee973a7fd65fdf4cf3aafe98bec",
+    "training/export.py": "f0e956d1cdd0b7b14235539f84d4d404f3feeb0d7a90e14e17bf344873720288",
     "training/calibrate.py": "a36888bf0f01f8b92b56d35c9d2417276a6bd896666402513ec60362e8d4ab74",
     "training/model.py": "311367991f360d1a862f933faf346ea94da36500a734c210f7744139f2b047de",
     "training/train.py": "bd09ae9eba5fd851f60e5c68c88aede0eadc749ef2a0843290acce277233ca39",
     "training/uv.lock": "e38fc9c47a173255a61427fa2aade8440a7f642a0e55a85ef1bba2ece4d0034f"
   },
-  "boundaryThreshold": 4.75,
+  "boundaryThreshold": 5.0,
   "calibration": {
-    "threshold": 4.75,
+    "threshold": 5.0,
     "criterion": "Maximize the worst clause-boundary F1 across same-frame validation and reordered development data. Ties choose the lower threshold. These sets were already used for development and model selection; this is not test-set calibration.",
     "grid": [
       {
@@ -20,15 +20,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.3057324840764331,
-            "truePositive": 24,
-            "falsePositive": 61,
-            "falseNegative": 48
+            "f1": 0.20833333333333334,
+            "truePositive": 20,
+            "falsePositive": 80,
+            "falseNegative": 72
           }
         }
       },
@@ -37,15 +37,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.32,
-            "truePositive": 24,
-            "falsePositive": 54,
-            "falseNegative": 48
+            "f1": 0.21164021164021163,
+            "truePositive": 20,
+            "falsePositive": 77,
+            "falseNegative": 72
           }
         }
       },
@@ -54,15 +54,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.32432432432432434,
-            "truePositive": 24,
-            "falsePositive": 52,
-            "falseNegative": 48
+            "f1": 0.21978021978021978,
+            "truePositive": 20,
+            "falsePositive": 70,
+            "falseNegative": 72
           }
         }
       },
@@ -71,15 +71,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.3333333333333333,
-            "truePositive": 24,
-            "falsePositive": 48,
-            "falseNegative": 48
+            "f1": 0.22857142857142856,
+            "truePositive": 20,
+            "falsePositive": 63,
+            "falseNegative": 72
           }
         }
       },
@@ -88,15 +88,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.3333333333333333,
-            "truePositive": 24,
-            "falsePositive": 48,
-            "falseNegative": 48
+            "f1": 0.23255813953488372,
+            "truePositive": 20,
+            "falsePositive": 60,
+            "falseNegative": 72
           }
         }
       },
@@ -105,15 +105,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.3380281690140845,
-            "truePositive": 24,
-            "falsePositive": 46,
-            "falseNegative": 48
+            "f1": 0.23952095808383234,
+            "truePositive": 20,
+            "falsePositive": 55,
+            "falseNegative": 72
           }
         }
       },
@@ -122,15 +122,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.34285714285714286,
-            "truePositive": 24,
-            "falsePositive": 44,
-            "falseNegative": 48
+            "f1": 0.24691358024691357,
+            "truePositive": 20,
+            "falsePositive": 50,
+            "falseNegative": 72
           }
         }
       },
@@ -139,15 +139,15 @@
         "metrics": {
           "validation": {
             "f1": 1.0,
-            "truePositive": 57,
+            "truePositive": 31,
             "falsePositive": 0,
             "falseNegative": 0
           },
           "heldoutDevelopment": {
-            "f1": 0.35036496350364965,
-            "truePositive": 24,
-            "falsePositive": 41,
-            "falseNegative": 48
+            "f1": 0.25316455696202533,
+            "truePositive": 20,
+            "falsePositive": 46,
+            "falseNegative": 72
           }
         }
       },
@@ -155,16 +155,16 @@
         "threshold": 2.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9836065573770492,
+            "truePositive": 30,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.3582089552238806,
-            "truePositive": 24,
-            "falsePositive": 38,
-            "falseNegative": 48
+            "f1": 0.2564102564102564,
+            "truePositive": 20,
+            "falsePositive": 44,
+            "falseNegative": 72
           }
         }
       },
@@ -172,16 +172,16 @@
         "threshold": 2.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9836065573770492,
+            "truePositive": 30,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.36923076923076925,
-            "truePositive": 24,
-            "falsePositive": 34,
-            "falseNegative": 48
+            "f1": 0.26666666666666666,
+            "truePositive": 20,
+            "falsePositive": 38,
+            "falseNegative": 72
           }
         }
       },
@@ -189,16 +189,16 @@
         "threshold": 2.5,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9836065573770492,
+            "truePositive": 30,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 1
           },
           "heldoutDevelopment": {
-            "f1": 0.375,
-            "truePositive": 24,
-            "falsePositive": 32,
-            "falseNegative": 48
+            "f1": 0.2702702702702703,
+            "truePositive": 20,
+            "falsePositive": 36,
+            "falseNegative": 72
           }
         }
       },
@@ -206,16 +206,16 @@
         "threshold": 2.75,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9666666666666667,
+            "truePositive": 29,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.384,
-            "truePositive": 24,
-            "falsePositive": 29,
-            "falseNegative": 48
+            "f1": 0.2777777777777778,
+            "truePositive": 20,
+            "falsePositive": 32,
+            "falseNegative": 72
           }
         }
       },
@@ -223,16 +223,16 @@
         "threshold": 3.0,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9666666666666667,
+            "truePositive": 29,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.39344262295081966,
-            "truePositive": 24,
+            "f1": 0.2898550724637681,
+            "truePositive": 20,
             "falsePositive": 26,
-            "falseNegative": 48
+            "falseNegative": 72
           }
         }
       },
@@ -240,16 +240,16 @@
         "threshold": 3.25,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9666666666666667,
+            "truePositive": 29,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 2
           },
           "heldoutDevelopment": {
-            "f1": 0.40336134453781514,
-            "truePositive": 24,
-            "falsePositive": 23,
-            "falseNegative": 48
+            "f1": 0.291970802919708,
+            "truePositive": 20,
+            "falsePositive": 25,
+            "falseNegative": 72
           }
         }
       },
@@ -257,16 +257,16 @@
         "threshold": 3.5,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9491525423728814,
+            "truePositive": 28,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 3
           },
           "heldoutDevelopment": {
-            "f1": 0.41025641025641024,
-            "truePositive": 24,
-            "falsePositive": 21,
-            "falseNegative": 48
+            "f1": 0.2962962962962963,
+            "truePositive": 20,
+            "falsePositive": 23,
+            "falseNegative": 72
           }
         }
       },
@@ -274,16 +274,16 @@
         "threshold": 3.75,
         "metrics": {
           "validation": {
-            "f1": 1.0,
-            "truePositive": 57,
+            "f1": 0.9310344827586207,
+            "truePositive": 27,
             "falsePositive": 0,
-            "falseNegative": 0
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.41379310344827586,
-            "truePositive": 24,
-            "falsePositive": 20,
-            "falseNegative": 48
+            "f1": 0.29850746268656714,
+            "truePositive": 20,
+            "falsePositive": 22,
+            "falseNegative": 72
           }
         }
       },
@@ -291,16 +291,16 @@
         "threshold": 4.0,
         "metrics": {
           "validation": {
-            "f1": 0.9911504424778761,
-            "truePositive": 56,
+            "f1": 0.9310344827586207,
+            "truePositive": 27,
             "falsePositive": 0,
-            "falseNegative": 1
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.41379310344827586,
-            "truePositive": 24,
-            "falsePositive": 20,
-            "falseNegative": 48
+            "f1": 0.2878787878787879,
+            "truePositive": 19,
+            "falsePositive": 21,
+            "falseNegative": 73
           }
         }
       },
@@ -308,16 +308,16 @@
         "threshold": 4.25,
         "metrics": {
           "validation": {
-            "f1": 0.972972972972973,
-            "truePositive": 54,
+            "f1": 0.9310344827586207,
+            "truePositive": 27,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.41739130434782606,
-            "truePositive": 24,
-            "falsePositive": 19,
-            "falseNegative": 48
+            "f1": 0.2900763358778626,
+            "truePositive": 19,
+            "falsePositive": 20,
+            "falseNegative": 73
           }
         }
       },
@@ -325,16 +325,16 @@
         "threshold": 4.5,
         "metrics": {
           "validation": {
-            "f1": 0.972972972972973,
-            "truePositive": 54,
+            "f1": 0.9310344827586207,
+            "truePositive": 27,
             "falsePositive": 0,
-            "falseNegative": 3
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.43243243243243246,
-            "truePositive": 24,
-            "falsePositive": 15,
-            "falseNegative": 48
+            "f1": 0.296875,
+            "truePositive": 19,
+            "falsePositive": 17,
+            "falseNegative": 73
           }
         }
       },
@@ -342,16 +342,16 @@
         "threshold": 4.75,
         "metrics": {
           "validation": {
-            "f1": 0.9636363636363636,
-            "truePositive": 53,
+            "f1": 0.9310344827586207,
+            "truePositive": 27,
             "falsePositive": 0,
             "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.43636363636363634,
-            "truePositive": 24,
-            "falsePositive": 14,
-            "falseNegative": 48
+            "f1": 0.296875,
+            "truePositive": 19,
+            "falsePositive": 17,
+            "falseNegative": 73
           }
         }
       },
@@ -359,29 +359,35 @@
         "threshold": 5.0,
         "metrics": {
           "validation": {
-            "f1": 0.9541284403669725,
-            "truePositive": 52,
+            "f1": 0.9310344827586207,
+            "truePositive": 27,
             "falsePositive": 0,
-            "falseNegative": 5
+            "falseNegative": 4
           },
           "heldoutDevelopment": {
-            "f1": 0.42990654205607476,
-            "truePositive": 23,
-            "falsePositive": 12,
-            "falseNegative": 49
+            "f1": 0.304,
+            "truePositive": 19,
+            "falsePositive": 14,
+            "falseNegative": 73
           }
         }
       }
     ]
   },
-  "epoch": 22,
-  "tokensSeenAtCheckpoint": 29042154,
+  "epoch": 32,
+  "tokensSeenAtCheckpoint": 35868914,
   "lineage": [
     {
-      "checkpoint": "runs/es-v2/best.pt",
-      "sha256": "6df3348abf523f2ff081489af89c5b673281b2599b347ff20362442df9961acd",
-      "epoch": 22,
-      "trainingTokens": 29042154
+      "checkpoint": "runs/es-v4d/epoch-32.pt",
+      "sha256": "2401027772b0fe8eb14e2a6d70df8ae4d8ad5170049427d974559e726ef7d8f6",
+      "epoch": 32,
+      "trainingTokens": 18961413
+    },
+    {
+      "checkpoint": "runs/es-v3f/epoch-30.pt",
+      "sha256": "f731ae54988e61407a64c803206e57233b7aeaadccf352ab2846f694018d8c81",
+      "epoch": 30,
+      "trainingTokens": 16907501
     }
   ],
   "parameters": 38745,
@@ -394,9 +400,9 @@
   },
   "logicalPackedBytes": 29059,
   "encodedCharacters": 38745,
-  "moduleBytes": 42003,
-  "moduleGzipBytes": 26945,
-  "moduleBrotliBytes": 24170,
+  "moduleBytes": 42006,
+  "moduleGzipBytes": 27053,
+  "moduleBrotliBytes": 24386,
   "labels": [
     "O",
     "NUM",
@@ -436,53 +442,1491 @@
   ],
   "metrics": {
     "validation": {
-      "tokens": 12263,
+      "tokens": 12534,
       "sequences": 1000,
-      "tokenAccuracy": 1.0,
-      "exactLabelAndBoundarySequence": 0.996,
+      "tokenAccuracy": 0.9992819530876017,
+      "exactLabelAndBoundarySequence": 0.988,
       "boundaryPrecision": 1.0,
-      "boundaryRecall": 0.9298245614035088,
-      "boundaryF1": 0.9636363636363636,
+      "boundaryRecall": 0.8709677419354839,
+      "boundaryF1": 0.9310344827586207,
       "boundaryCounts": {
-        "truePositive": 53,
+        "truePositive": 27,
         "falsePositive": 0,
         "falseNegative": 4
       }
     },
     "heldout": {
-      "tokens": 13088,
-      "sequences": 1000,
-      "tokenAccuracy": 0.8618581907090465,
-      "exactLabelAndBoundarySequence": 0.573,
-      "boundaryPrecision": 0.631578947368421,
-      "boundaryRecall": 0.3333333333333333,
-      "boundaryF1": 0.4363636363636364,
+      "tokens": 13611,
+      "sequences": 998,
+      "tokenAccuracy": 0.9512893982808023,
+      "exactLabelAndBoundarySequence": 0.6322645290581163,
+      "boundaryPrecision": 0.5757575757575758,
+      "boundaryRecall": 0.20652173913043478,
+      "boundaryF1": 0.304,
       "boundaryCounts": {
-        "truePositive": 24,
+        "truePositive": 19,
         "falsePositive": 14,
-        "falseNegative": 48
+        "falseNegative": 73
       }
     }
   },
   "corpora": {
-    "validation": "5e378fe6430c50c863d4f7152d38c1161c37ae1cf58d61181e2fef0a43223164",
-    "heldout": "6b2068d9a03804016a3d4e1cd3c89749105de975b7433ee1b7aeac6e24404cc0",
-    "reservedCarrier": null
+    "validation": "db35cbb636dafa1593ed3cb4a1b32013c7ba52c27d5e9a85a185da865035cb99",
+    "heldout": "ec4f9ad4fd780591e1d1558f3718be3a0de77c0355e6b984864a51c4b239ea5d",
+    "reservedCarrier": "2f689485a235de511ccbe23b6eb7994ec6d0a5aa2f6838255c8649f18fd720fc"
   },
   "promotion": {
-    "criterion": "skipped",
-    "accepted": true,
+    "criterion": "gold-schedule-accuracy",
+    "sets": [
+      "spanish-coverage",
+      "spanish-real",
+      "spanish-teacher"
+    ],
+    "candidate": {
+      "total": 423,
+      "correct": 386,
+      "sets": {
+        "spanish-real": {
+          "total": 179,
+          "correct": 164,
+          "sha256": "47528d2c6c5388746febb800e3f1069d25c92e2ef8e49d78d52a5c9b1f46967f",
+          "failures": [
+            "real-es-15525",
+            "real-es-4505",
+            "real-es-4318",
+            "real-es-9556",
+            "real-es-3310",
+            "real-es-3214",
+            "real-es-13159",
+            "real-es-6288",
+            "real-es-1327",
+            "real-es-8186",
+            "real-es-6030",
+            "real-es-1997",
+            "real-es-15555",
+            "real-es-9497",
+            "real-es-7366"
+          ],
+          "families": {
+            "calendar": {
+              "total": 6,
+              "correct": 5
+            },
+            "now": {
+              "total": 38,
+              "correct": 32
+            },
+            "relativeDay": {
+              "total": 50,
+              "correct": 48
+            },
+            "shift": {
+              "total": 42,
+              "correct": 39
+            },
+            "time": {
+              "total": 9,
+              "correct": 8
+            },
+            "weekday": {
+              "total": 34,
+              "correct": 32
+            }
+          }
+        },
+        "spanish-teacher": {
+          "total": 172,
+          "correct": 156,
+          "sha256": "39d24d9a212dcd7af83d921699b9f7d9a6242fdd8f552a0e45f0d18c3b176005",
+          "failures": [
+            "spanish-teacher-18",
+            "spanish-teacher-103",
+            "spanish-teacher-108",
+            "spanish-teacher-131",
+            "spanish-teacher-170",
+            "spanish-teacher-282",
+            "spanish-teacher-337",
+            "spanish-teacher-376",
+            "spanish-teacher-407",
+            "spanish-teacher-502",
+            "spanish-teacher-561",
+            "spanish-teacher-563",
+            "spanish-teacher-601",
+            "spanish-teacher-649",
+            "spanish-teacher-761",
+            "spanish-teacher-1192"
+          ],
+          "families": {
+            "bound": {
+              "total": 22,
+              "correct": 22
+            },
+            "clock": {
+              "total": 25,
+              "correct": 22
+            },
+            "day-part": {
+              "total": 17,
+              "correct": 14
+            },
+            "hace": {
+              "total": 22,
+              "correct": 22
+            },
+            "near-days": {
+              "total": 22,
+              "correct": 20
+            },
+            "none": {
+              "total": 19,
+              "correct": 14
+            },
+            "recurrence": {
+              "total": 22,
+              "correct": 22
+            },
+            "relative-unit": {
+              "total": 19,
+              "correct": 16
+            },
+            "trap": {
+              "total": 4,
+              "correct": 4
+            }
+          }
+        },
+        "spanish-coverage": {
+          "total": 72,
+          "correct": 66,
+          "sha256": "e5995d402b85e712bcbaebc1acb0282a93c3cb28e809869e5993a03a6ffc26b2",
+          "failures": [
+            "spanish-055",
+            "spanish-057",
+            "spanish-058",
+            "spanish-060",
+            "spanish-061",
+            "spanish-065"
+          ],
+          "families": {
+            "casual": {
+              "correct": 21,
+              "total": 21
+            },
+            "month-name-little-endian": {
+              "correct": 14,
+              "total": 14
+            },
+            "slash": {
+              "correct": 2,
+              "total": 2
+            },
+            "time-exp": {
+              "correct": 16,
+              "total": 20
+            },
+            "time-units-within": {
+              "correct": 13,
+              "total": 15
+            }
+          }
+        }
+      }
+    },
+    "baseline": {
+      "total": 423,
+      "correct": 380,
+      "sets": {
+        "spanish-real": {
+          "total": 179,
+          "correct": 167,
+          "sha256": "47528d2c6c5388746febb800e3f1069d25c92e2ef8e49d78d52a5c9b1f46967f",
+          "failures": [
+            "real-es-15525",
+            "real-es-4505",
+            "real-es-9556",
+            "real-es-12186",
+            "real-es-1327",
+            "real-es-8186",
+            "real-es-6030",
+            "real-es-1997",
+            "real-es-15555",
+            "real-es-9497",
+            "real-es-7366",
+            "real-es-13956"
+          ],
+          "families": {
+            "calendar": {
+              "total": 6,
+              "correct": 5
+            },
+            "now": {
+              "total": 38,
+              "correct": 36
+            },
+            "relativeDay": {
+              "total": 50,
+              "correct": 48
+            },
+            "shift": {
+              "total": 42,
+              "correct": 39
+            },
+            "time": {
+              "total": 9,
+              "correct": 7
+            },
+            "weekday": {
+              "total": 34,
+              "correct": 32
+            }
+          }
+        },
+        "spanish-teacher": {
+          "total": 172,
+          "correct": 148,
+          "sha256": "39d24d9a212dcd7af83d921699b9f7d9a6242fdd8f552a0e45f0d18c3b176005",
+          "failures": [
+            "spanish-teacher-18",
+            "spanish-teacher-103",
+            "spanish-teacher-108",
+            "spanish-teacher-109",
+            "spanish-teacher-131",
+            "spanish-teacher-170",
+            "spanish-teacher-337",
+            "spanish-teacher-376",
+            "spanish-teacher-407",
+            "spanish-teacher-416",
+            "spanish-teacher-494",
+            "spanish-teacher-502",
+            "spanish-teacher-510",
+            "spanish-teacher-561",
+            "spanish-teacher-563",
+            "spanish-teacher-601",
+            "spanish-teacher-649",
+            "spanish-teacher-761",
+            "spanish-teacher-1005",
+            "spanish-teacher-1057",
+            "spanish-teacher-1061",
+            "spanish-teacher-1105",
+            "spanish-teacher-1187",
+            "spanish-teacher-1192"
+          ],
+          "families": {
+            "bound": {
+              "total": 22,
+              "correct": 21
+            },
+            "clock": {
+              "total": 25,
+              "correct": 22
+            },
+            "day-part": {
+              "total": 17,
+              "correct": 14
+            },
+            "hace": {
+              "total": 22,
+              "correct": 21
+            },
+            "near-days": {
+              "total": 22,
+              "correct": 21
+            },
+            "none": {
+              "total": 19,
+              "correct": 8
+            },
+            "recurrence": {
+              "total": 22,
+              "correct": 21
+            },
+            "relative-unit": {
+              "total": 19,
+              "correct": 16
+            },
+            "trap": {
+              "total": 4,
+              "correct": 4
+            }
+          }
+        },
+        "spanish-coverage": {
+          "total": 72,
+          "correct": 65,
+          "sha256": "e5995d402b85e712bcbaebc1acb0282a93c3cb28e809869e5993a03a6ffc26b2",
+          "failures": [
+            "spanish-025",
+            "spanish-055",
+            "spanish-057",
+            "spanish-058",
+            "spanish-060",
+            "spanish-061",
+            "spanish-065"
+          ],
+          "families": {
+            "casual": {
+              "correct": 21,
+              "total": 21
+            },
+            "month-name-little-endian": {
+              "correct": 13,
+              "total": 14
+            },
+            "slash": {
+              "correct": 2,
+              "total": 2
+            },
+            "time-exp": {
+              "correct": 16,
+              "total": 20
+            },
+            "time-units-within": {
+              "correct": 13,
+              "total": 15
+            }
+          }
+        }
+      }
+    },
+    "improvement": 0.014184397163120567,
     "failures": [],
-    "synthetic": null
+    "warnings": [
+      "gold spanish-real: lost 5, gained 2",
+      "gold spanish-real/now: lost 4",
+      "gold spanish-teacher/near-days: lost 1"
+    ],
+    "accepted": true,
+    "missingSets": [],
+    "baselineIdentity": {
+      "report": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights-es.report.json",
+      "checkpoint": "runs/es-v3f/epoch-30.pt",
+      "checkpointSha256": "f731ae54988e61407a64c803206e57233b7aeaadccf352ab2846f694018d8c81",
+      "artifactSha256": "68abb02ff43bbe14d5fe5dd80e6b5e07504b6ed547b66d64ced750975d8ddb57",
+      "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights-es.gen.ts"
+    },
+    "synthetic": {
+      "blocking": true,
+      "note": "Regression gates for generated language coverage, not estimates of real-user accuracy. Scores use the deployed decoder and include filler labels.",
+      "gradedOn": "exact schedule through the built package",
+      "reserved": {
+        "corpus": {
+          "path": "data/synth/es-reserved.jsonl",
+          "sha256": "440d13ebb03897758401402ab50e3b80db352ee60ceec2e9240d1cabeb939671",
+          "featurizedSha256": "2f689485a235de511ccbe23b6eb7994ec6d0a5aa2f6838255c8649f18fd720fc",
+          "sequences": 998,
+          "families": 35
+        },
+        "answers": {
+          "total": 998,
+          "correct": 616,
+          "failures": [
+            "heldout-20260924-0",
+            "heldout-20260924-1",
+            "heldout-20260924-4",
+            "heldout-20260924-9",
+            "heldout-20260924-13",
+            "heldout-20260924-15",
+            "heldout-20260924-21",
+            "heldout-20260924-22",
+            "heldout-20260924-23",
+            "heldout-20260924-24",
+            "heldout-20260924-25",
+            "heldout-20260924-37",
+            "heldout-20260924-38",
+            "heldout-20260924-41",
+            "heldout-20260924-47",
+            "heldout-20260924-50",
+            "heldout-20260924-51",
+            "heldout-20260924-54",
+            "heldout-20260924-55",
+            "heldout-20260924-59",
+            "heldout-20260924-61",
+            "heldout-20260924-66",
+            "heldout-20260924-72",
+            "heldout-20260924-73",
+            "heldout-20260924-81",
+            "heldout-20260924-82",
+            "heldout-20260924-84",
+            "heldout-20260924-90",
+            "heldout-20260924-94",
+            "heldout-20260924-97",
+            "heldout-20260924-104",
+            "heldout-20260924-105",
+            "heldout-20260924-107",
+            "heldout-20260924-108",
+            "heldout-20260924-109",
+            "heldout-20260924-110",
+            "heldout-20260924-111",
+            "heldout-20260924-112",
+            "heldout-20260924-113",
+            "heldout-20260924-116",
+            "heldout-20260924-120",
+            "heldout-20260924-124",
+            "heldout-20260924-125",
+            "heldout-20260924-128",
+            "heldout-20260924-129",
+            "heldout-20260924-131",
+            "heldout-20260924-133",
+            "heldout-20260924-135",
+            "heldout-20260924-137",
+            "heldout-20260924-139",
+            "heldout-20260924-145",
+            "heldout-20260924-146",
+            "heldout-20260924-151",
+            "heldout-20260924-152",
+            "heldout-20260924-153",
+            "heldout-20260924-154",
+            "heldout-20260924-158",
+            "heldout-20260924-160",
+            "heldout-20260924-163",
+            "heldout-20260924-164",
+            "heldout-20260924-169",
+            "heldout-20260924-172",
+            "heldout-20260924-177",
+            "heldout-20260924-182",
+            "heldout-20260924-183",
+            "heldout-20260924-187",
+            "heldout-20260924-188",
+            "heldout-20260924-192",
+            "heldout-20260924-193",
+            "heldout-20260924-196",
+            "heldout-20260924-198",
+            "heldout-20260924-199",
+            "heldout-20260924-201",
+            "heldout-20260924-203",
+            "heldout-20260924-204",
+            "heldout-20260924-208",
+            "heldout-20260924-213",
+            "heldout-20260924-216",
+            "heldout-20260924-218",
+            "heldout-20260924-219",
+            "heldout-20260924-221",
+            "heldout-20260924-222",
+            "heldout-20260924-225",
+            "heldout-20260924-228",
+            "heldout-20260924-234",
+            "heldout-20260924-241",
+            "heldout-20260924-242",
+            "heldout-20260924-243",
+            "heldout-20260924-249",
+            "heldout-20260924-254",
+            "heldout-20260924-256",
+            "heldout-20260924-258",
+            "heldout-20260924-260",
+            "heldout-20260924-261",
+            "heldout-20260924-262",
+            "heldout-20260924-263",
+            "heldout-20260924-264",
+            "heldout-20260924-268",
+            "heldout-20260924-273",
+            "heldout-20260924-277",
+            "heldout-20260924-278",
+            "heldout-20260924-280",
+            "heldout-20260924-281",
+            "heldout-20260924-286",
+            "heldout-20260924-287",
+            "heldout-20260924-289",
+            "heldout-20260924-292",
+            "heldout-20260924-294",
+            "heldout-20260924-295",
+            "heldout-20260924-300",
+            "heldout-20260924-301",
+            "heldout-20260924-302",
+            "heldout-20260924-304",
+            "heldout-20260924-305",
+            "heldout-20260924-306",
+            "heldout-20260924-307",
+            "heldout-20260924-314",
+            "heldout-20260924-316",
+            "heldout-20260924-319",
+            "heldout-20260924-321",
+            "heldout-20260924-322",
+            "heldout-20260924-323",
+            "heldout-20260924-326",
+            "heldout-20260924-332",
+            "heldout-20260924-334",
+            "heldout-20260924-339",
+            "heldout-20260924-342",
+            "heldout-20260924-343",
+            "heldout-20260924-344",
+            "heldout-20260924-345",
+            "heldout-20260924-347",
+            "heldout-20260924-348",
+            "heldout-20260924-351",
+            "heldout-20260924-352",
+            "heldout-20260924-353",
+            "heldout-20260924-354",
+            "heldout-20260924-357",
+            "heldout-20260924-358",
+            "heldout-20260924-361",
+            "heldout-20260924-364",
+            "heldout-20260924-367",
+            "heldout-20260924-372",
+            "heldout-20260924-377",
+            "heldout-20260924-378",
+            "heldout-20260924-379",
+            "heldout-20260924-381",
+            "heldout-20260924-383",
+            "heldout-20260924-385",
+            "heldout-20260924-390",
+            "heldout-20260924-394",
+            "heldout-20260924-397",
+            "heldout-20260924-400",
+            "heldout-20260924-401",
+            "heldout-20260924-402",
+            "heldout-20260924-403",
+            "heldout-20260924-406",
+            "heldout-20260924-409",
+            "heldout-20260924-410",
+            "heldout-20260924-411",
+            "heldout-20260924-416",
+            "heldout-20260924-429",
+            "heldout-20260924-433",
+            "heldout-20260924-435",
+            "heldout-20260924-442",
+            "heldout-20260924-443",
+            "heldout-20260924-448",
+            "heldout-20260924-457",
+            "heldout-20260924-459",
+            "heldout-20260924-460",
+            "heldout-20260924-461",
+            "heldout-20260924-463",
+            "heldout-20260924-464",
+            "heldout-20260924-467",
+            "heldout-20260924-473",
+            "heldout-20260924-475",
+            "heldout-20260924-476",
+            "heldout-20260924-478",
+            "heldout-20260924-479",
+            "heldout-20260924-480",
+            "heldout-20260924-481",
+            "heldout-20260924-482",
+            "heldout-20260924-484",
+            "heldout-20260924-487",
+            "heldout-20260924-488",
+            "heldout-20260924-492",
+            "heldout-20260924-494",
+            "heldout-20260924-496",
+            "heldout-20260924-498",
+            "heldout-20260924-499",
+            "heldout-20260924-502",
+            "heldout-20260924-503",
+            "heldout-20260924-508",
+            "heldout-20260924-510",
+            "heldout-20260924-511",
+            "heldout-20260924-513",
+            "heldout-20260924-514",
+            "heldout-20260924-515",
+            "heldout-20260924-516",
+            "heldout-20260924-517",
+            "heldout-20260924-520",
+            "heldout-20260924-523",
+            "heldout-20260924-524",
+            "heldout-20260924-525",
+            "heldout-20260924-526",
+            "heldout-20260924-529",
+            "heldout-20260924-531",
+            "heldout-20260924-535",
+            "heldout-20260924-537",
+            "heldout-20260924-538",
+            "heldout-20260924-539",
+            "heldout-20260924-546",
+            "heldout-20260924-553",
+            "heldout-20260924-559",
+            "heldout-20260924-560",
+            "heldout-20260924-562",
+            "heldout-20260924-571",
+            "heldout-20260924-573",
+            "heldout-20260924-574",
+            "heldout-20260924-579",
+            "heldout-20260924-580",
+            "heldout-20260924-585",
+            "heldout-20260924-586",
+            "heldout-20260924-588",
+            "heldout-20260924-592",
+            "heldout-20260924-595",
+            "heldout-20260924-596",
+            "heldout-20260924-600",
+            "heldout-20260924-601",
+            "heldout-20260924-603",
+            "heldout-20260924-606",
+            "heldout-20260924-607",
+            "heldout-20260924-608",
+            "heldout-20260924-610",
+            "heldout-20260924-614",
+            "heldout-20260924-621",
+            "heldout-20260924-623",
+            "heldout-20260924-624",
+            "heldout-20260924-625",
+            "heldout-20260924-626",
+            "heldout-20260924-627",
+            "heldout-20260924-628",
+            "heldout-20260924-630",
+            "heldout-20260924-636",
+            "heldout-20260924-637",
+            "heldout-20260924-640",
+            "heldout-20260924-641",
+            "heldout-20260924-642",
+            "heldout-20260924-643",
+            "heldout-20260924-648",
+            "heldout-20260924-649",
+            "heldout-20260924-650",
+            "heldout-20260924-652",
+            "heldout-20260924-653",
+            "heldout-20260924-654",
+            "heldout-20260924-657",
+            "heldout-20260924-658",
+            "heldout-20260924-663",
+            "heldout-20260924-670",
+            "heldout-20260924-674",
+            "heldout-20260924-676",
+            "heldout-20260924-680",
+            "heldout-20260924-681",
+            "heldout-20260924-683",
+            "heldout-20260924-686",
+            "heldout-20260924-688",
+            "heldout-20260924-689",
+            "heldout-20260924-690",
+            "heldout-20260924-693",
+            "heldout-20260924-694",
+            "heldout-20260924-695",
+            "heldout-20260924-696",
+            "heldout-20260924-697",
+            "heldout-20260924-699",
+            "heldout-20260924-705",
+            "heldout-20260924-710",
+            "heldout-20260924-711",
+            "heldout-20260924-714",
+            "heldout-20260924-715",
+            "heldout-20260924-719",
+            "heldout-20260924-721",
+            "heldout-20260924-722",
+            "heldout-20260924-724",
+            "heldout-20260924-725",
+            "heldout-20260924-726",
+            "heldout-20260924-727",
+            "heldout-20260924-730",
+            "heldout-20260924-731",
+            "heldout-20260924-732",
+            "heldout-20260924-733",
+            "heldout-20260924-734",
+            "heldout-20260924-736",
+            "heldout-20260924-738",
+            "heldout-20260924-744",
+            "heldout-20260924-747",
+            "heldout-20260924-749",
+            "heldout-20260924-750",
+            "heldout-20260924-751",
+            "heldout-20260924-752",
+            "heldout-20260924-758",
+            "heldout-20260924-759",
+            "heldout-20260924-760",
+            "heldout-20260924-764",
+            "heldout-20260924-767",
+            "heldout-20260924-772",
+            "heldout-20260924-774",
+            "heldout-20260924-777",
+            "heldout-20260924-779",
+            "heldout-20260924-781",
+            "heldout-20260924-784",
+            "heldout-20260924-791",
+            "heldout-20260924-793",
+            "heldout-20260924-794",
+            "heldout-20260924-800",
+            "heldout-20260924-801",
+            "heldout-20260924-807",
+            "heldout-20260924-808",
+            "heldout-20260924-810",
+            "heldout-20260924-812",
+            "heldout-20260924-818",
+            "heldout-20260924-820",
+            "heldout-20260924-821",
+            "heldout-20260924-822",
+            "heldout-20260924-827",
+            "heldout-20260924-832",
+            "heldout-20260924-836",
+            "heldout-20260924-842",
+            "heldout-20260924-847",
+            "heldout-20260924-848",
+            "heldout-20260924-852",
+            "heldout-20260924-853",
+            "heldout-20260924-854",
+            "heldout-20260924-857",
+            "heldout-20260924-858",
+            "heldout-20260924-860",
+            "heldout-20260924-869",
+            "heldout-20260924-873",
+            "heldout-20260924-874",
+            "heldout-20260924-877",
+            "heldout-20260924-878",
+            "heldout-20260924-879",
+            "heldout-20260924-881",
+            "heldout-20260924-883",
+            "heldout-20260924-885",
+            "heldout-20260924-887",
+            "heldout-20260924-888",
+            "heldout-20260924-891",
+            "heldout-20260924-893",
+            "heldout-20260924-904",
+            "heldout-20260924-905",
+            "heldout-20260924-907",
+            "heldout-20260924-910",
+            "heldout-20260924-912",
+            "heldout-20260924-913",
+            "heldout-20260924-921",
+            "heldout-20260924-922",
+            "heldout-20260924-924",
+            "heldout-20260924-925",
+            "heldout-20260924-926",
+            "heldout-20260924-927",
+            "heldout-20260924-935",
+            "heldout-20260924-942",
+            "heldout-20260924-945",
+            "heldout-20260924-946",
+            "heldout-20260924-948",
+            "heldout-20260924-950",
+            "heldout-20260924-952",
+            "heldout-20260924-953",
+            "heldout-20260924-955",
+            "heldout-20260924-960",
+            "heldout-20260924-963",
+            "heldout-20260924-965",
+            "heldout-20260924-969",
+            "heldout-20260924-970",
+            "heldout-20260924-974",
+            "heldout-20260924-975",
+            "heldout-20260924-976",
+            "heldout-20260924-977",
+            "heldout-20260924-982",
+            "heldout-20260924-985",
+            "heldout-20260924-989",
+            "heldout-20260924-997",
+            "heldout-20260924-999"
+          ]
+        },
+        "answersBaseline": {
+          "total": 998,
+          "correct": 604,
+          "failures": [
+            "heldout-20260924-0",
+            "heldout-20260924-1",
+            "heldout-20260924-4",
+            "heldout-20260924-9",
+            "heldout-20260924-11",
+            "heldout-20260924-13",
+            "heldout-20260924-15",
+            "heldout-20260924-21",
+            "heldout-20260924-22",
+            "heldout-20260924-23",
+            "heldout-20260924-24",
+            "heldout-20260924-25",
+            "heldout-20260924-30",
+            "heldout-20260924-37",
+            "heldout-20260924-38",
+            "heldout-20260924-41",
+            "heldout-20260924-47",
+            "heldout-20260924-50",
+            "heldout-20260924-51",
+            "heldout-20260924-55",
+            "heldout-20260924-59",
+            "heldout-20260924-61",
+            "heldout-20260924-66",
+            "heldout-20260924-72",
+            "heldout-20260924-73",
+            "heldout-20260924-79",
+            "heldout-20260924-81",
+            "heldout-20260924-82",
+            "heldout-20260924-84",
+            "heldout-20260924-90",
+            "heldout-20260924-94",
+            "heldout-20260924-97",
+            "heldout-20260924-104",
+            "heldout-20260924-105",
+            "heldout-20260924-107",
+            "heldout-20260924-108",
+            "heldout-20260924-109",
+            "heldout-20260924-110",
+            "heldout-20260924-111",
+            "heldout-20260924-112",
+            "heldout-20260924-113",
+            "heldout-20260924-116",
+            "heldout-20260924-120",
+            "heldout-20260924-124",
+            "heldout-20260924-125",
+            "heldout-20260924-128",
+            "heldout-20260924-129",
+            "heldout-20260924-131",
+            "heldout-20260924-133",
+            "heldout-20260924-137",
+            "heldout-20260924-139",
+            "heldout-20260924-145",
+            "heldout-20260924-146",
+            "heldout-20260924-151",
+            "heldout-20260924-152",
+            "heldout-20260924-153",
+            "heldout-20260924-154",
+            "heldout-20260924-158",
+            "heldout-20260924-160",
+            "heldout-20260924-163",
+            "heldout-20260924-164",
+            "heldout-20260924-169",
+            "heldout-20260924-172",
+            "heldout-20260924-177",
+            "heldout-20260924-182",
+            "heldout-20260924-183",
+            "heldout-20260924-187",
+            "heldout-20260924-188",
+            "heldout-20260924-192",
+            "heldout-20260924-198",
+            "heldout-20260924-199",
+            "heldout-20260924-201",
+            "heldout-20260924-203",
+            "heldout-20260924-204",
+            "heldout-20260924-208",
+            "heldout-20260924-213",
+            "heldout-20260924-216",
+            "heldout-20260924-218",
+            "heldout-20260924-219",
+            "heldout-20260924-221",
+            "heldout-20260924-222",
+            "heldout-20260924-225",
+            "heldout-20260924-228",
+            "heldout-20260924-231",
+            "heldout-20260924-234",
+            "heldout-20260924-241",
+            "heldout-20260924-242",
+            "heldout-20260924-243",
+            "heldout-20260924-249",
+            "heldout-20260924-254",
+            "heldout-20260924-256",
+            "heldout-20260924-258",
+            "heldout-20260924-260",
+            "heldout-20260924-261",
+            "heldout-20260924-262",
+            "heldout-20260924-263",
+            "heldout-20260924-264",
+            "heldout-20260924-268",
+            "heldout-20260924-273",
+            "heldout-20260924-277",
+            "heldout-20260924-278",
+            "heldout-20260924-280",
+            "heldout-20260924-281",
+            "heldout-20260924-284",
+            "heldout-20260924-286",
+            "heldout-20260924-287",
+            "heldout-20260924-289",
+            "heldout-20260924-292",
+            "heldout-20260924-294",
+            "heldout-20260924-295",
+            "heldout-20260924-300",
+            "heldout-20260924-301",
+            "heldout-20260924-302",
+            "heldout-20260924-304",
+            "heldout-20260924-305",
+            "heldout-20260924-306",
+            "heldout-20260924-307",
+            "heldout-20260924-314",
+            "heldout-20260924-319",
+            "heldout-20260924-321",
+            "heldout-20260924-322",
+            "heldout-20260924-323",
+            "heldout-20260924-326",
+            "heldout-20260924-332",
+            "heldout-20260924-334",
+            "heldout-20260924-342",
+            "heldout-20260924-343",
+            "heldout-20260924-344",
+            "heldout-20260924-345",
+            "heldout-20260924-347",
+            "heldout-20260924-348",
+            "heldout-20260924-351",
+            "heldout-20260924-352",
+            "heldout-20260924-353",
+            "heldout-20260924-354",
+            "heldout-20260924-357",
+            "heldout-20260924-358",
+            "heldout-20260924-361",
+            "heldout-20260924-364",
+            "heldout-20260924-367",
+            "heldout-20260924-372",
+            "heldout-20260924-377",
+            "heldout-20260924-378",
+            "heldout-20260924-379",
+            "heldout-20260924-381",
+            "heldout-20260924-382",
+            "heldout-20260924-383",
+            "heldout-20260924-385",
+            "heldout-20260924-390",
+            "heldout-20260924-394",
+            "heldout-20260924-397",
+            "heldout-20260924-400",
+            "heldout-20260924-401",
+            "heldout-20260924-402",
+            "heldout-20260924-403",
+            "heldout-20260924-406",
+            "heldout-20260924-409",
+            "heldout-20260924-410",
+            "heldout-20260924-411",
+            "heldout-20260924-416",
+            "heldout-20260924-421",
+            "heldout-20260924-429",
+            "heldout-20260924-433",
+            "heldout-20260924-435",
+            "heldout-20260924-442",
+            "heldout-20260924-443",
+            "heldout-20260924-448",
+            "heldout-20260924-457",
+            "heldout-20260924-459",
+            "heldout-20260924-460",
+            "heldout-20260924-461",
+            "heldout-20260924-463",
+            "heldout-20260924-464",
+            "heldout-20260924-467",
+            "heldout-20260924-473",
+            "heldout-20260924-475",
+            "heldout-20260924-476",
+            "heldout-20260924-478",
+            "heldout-20260924-479",
+            "heldout-20260924-480",
+            "heldout-20260924-481",
+            "heldout-20260924-482",
+            "heldout-20260924-484",
+            "heldout-20260924-487",
+            "heldout-20260924-488",
+            "heldout-20260924-492",
+            "heldout-20260924-494",
+            "heldout-20260924-496",
+            "heldout-20260924-498",
+            "heldout-20260924-499",
+            "heldout-20260924-502",
+            "heldout-20260924-503",
+            "heldout-20260924-510",
+            "heldout-20260924-511",
+            "heldout-20260924-513",
+            "heldout-20260924-514",
+            "heldout-20260924-516",
+            "heldout-20260924-517",
+            "heldout-20260924-520",
+            "heldout-20260924-523",
+            "heldout-20260924-524",
+            "heldout-20260924-525",
+            "heldout-20260924-526",
+            "heldout-20260924-527",
+            "heldout-20260924-529",
+            "heldout-20260924-531",
+            "heldout-20260924-535",
+            "heldout-20260924-537",
+            "heldout-20260924-538",
+            "heldout-20260924-539",
+            "heldout-20260924-545",
+            "heldout-20260924-546",
+            "heldout-20260924-553",
+            "heldout-20260924-554",
+            "heldout-20260924-559",
+            "heldout-20260924-560",
+            "heldout-20260924-562",
+            "heldout-20260924-571",
+            "heldout-20260924-573",
+            "heldout-20260924-574",
+            "heldout-20260924-575",
+            "heldout-20260924-579",
+            "heldout-20260924-580",
+            "heldout-20260924-583",
+            "heldout-20260924-585",
+            "heldout-20260924-586",
+            "heldout-20260924-587",
+            "heldout-20260924-588",
+            "heldout-20260924-592",
+            "heldout-20260924-595",
+            "heldout-20260924-596",
+            "heldout-20260924-600",
+            "heldout-20260924-601",
+            "heldout-20260924-603",
+            "heldout-20260924-606",
+            "heldout-20260924-607",
+            "heldout-20260924-608",
+            "heldout-20260924-614",
+            "heldout-20260924-618",
+            "heldout-20260924-619",
+            "heldout-20260924-621",
+            "heldout-20260924-623",
+            "heldout-20260924-624",
+            "heldout-20260924-625",
+            "heldout-20260924-626",
+            "heldout-20260924-627",
+            "heldout-20260924-628",
+            "heldout-20260924-630",
+            "heldout-20260924-636",
+            "heldout-20260924-637",
+            "heldout-20260924-640",
+            "heldout-20260924-641",
+            "heldout-20260924-642",
+            "heldout-20260924-643",
+            "heldout-20260924-648",
+            "heldout-20260924-649",
+            "heldout-20260924-652",
+            "heldout-20260924-653",
+            "heldout-20260924-654",
+            "heldout-20260924-657",
+            "heldout-20260924-658",
+            "heldout-20260924-663",
+            "heldout-20260924-670",
+            "heldout-20260924-674",
+            "heldout-20260924-676",
+            "heldout-20260924-680",
+            "heldout-20260924-681",
+            "heldout-20260924-683",
+            "heldout-20260924-686",
+            "heldout-20260924-688",
+            "heldout-20260924-689",
+            "heldout-20260924-690",
+            "heldout-20260924-693",
+            "heldout-20260924-694",
+            "heldout-20260924-695",
+            "heldout-20260924-696",
+            "heldout-20260924-697",
+            "heldout-20260924-699",
+            "heldout-20260924-710",
+            "heldout-20260924-711",
+            "heldout-20260924-714",
+            "heldout-20260924-715",
+            "heldout-20260924-719",
+            "heldout-20260924-721",
+            "heldout-20260924-722",
+            "heldout-20260924-724",
+            "heldout-20260924-725",
+            "heldout-20260924-726",
+            "heldout-20260924-727",
+            "heldout-20260924-730",
+            "heldout-20260924-731",
+            "heldout-20260924-732",
+            "heldout-20260924-733",
+            "heldout-20260924-734",
+            "heldout-20260924-736",
+            "heldout-20260924-738",
+            "heldout-20260924-741",
+            "heldout-20260924-744",
+            "heldout-20260924-747",
+            "heldout-20260924-749",
+            "heldout-20260924-750",
+            "heldout-20260924-751",
+            "heldout-20260924-752",
+            "heldout-20260924-758",
+            "heldout-20260924-759",
+            "heldout-20260924-760",
+            "heldout-20260924-764",
+            "heldout-20260924-772",
+            "heldout-20260924-774",
+            "heldout-20260924-775",
+            "heldout-20260924-777",
+            "heldout-20260924-779",
+            "heldout-20260924-781",
+            "heldout-20260924-784",
+            "heldout-20260924-786",
+            "heldout-20260924-791",
+            "heldout-20260924-793",
+            "heldout-20260924-794",
+            "heldout-20260924-800",
+            "heldout-20260924-801",
+            "heldout-20260924-802",
+            "heldout-20260924-803",
+            "heldout-20260924-807",
+            "heldout-20260924-808",
+            "heldout-20260924-810",
+            "heldout-20260924-812",
+            "heldout-20260924-818",
+            "heldout-20260924-820",
+            "heldout-20260924-821",
+            "heldout-20260924-822",
+            "heldout-20260924-827",
+            "heldout-20260924-832",
+            "heldout-20260924-836",
+            "heldout-20260924-842",
+            "heldout-20260924-845",
+            "heldout-20260924-847",
+            "heldout-20260924-848",
+            "heldout-20260924-852",
+            "heldout-20260924-853",
+            "heldout-20260924-854",
+            "heldout-20260924-857",
+            "heldout-20260924-858",
+            "heldout-20260924-860",
+            "heldout-20260924-869",
+            "heldout-20260924-873",
+            "heldout-20260924-874",
+            "heldout-20260924-877",
+            "heldout-20260924-878",
+            "heldout-20260924-879",
+            "heldout-20260924-880",
+            "heldout-20260924-881",
+            "heldout-20260924-883",
+            "heldout-20260924-885",
+            "heldout-20260924-887",
+            "heldout-20260924-888",
+            "heldout-20260924-891",
+            "heldout-20260924-893",
+            "heldout-20260924-904",
+            "heldout-20260924-905",
+            "heldout-20260924-907",
+            "heldout-20260924-910",
+            "heldout-20260924-911",
+            "heldout-20260924-912",
+            "heldout-20260924-913",
+            "heldout-20260924-921",
+            "heldout-20260924-922",
+            "heldout-20260924-924",
+            "heldout-20260924-925",
+            "heldout-20260924-926",
+            "heldout-20260924-927",
+            "heldout-20260924-935",
+            "heldout-20260924-942",
+            "heldout-20260924-945",
+            "heldout-20260924-946",
+            "heldout-20260924-948",
+            "heldout-20260924-950",
+            "heldout-20260924-952",
+            "heldout-20260924-953",
+            "heldout-20260924-955",
+            "heldout-20260924-960",
+            "heldout-20260924-963",
+            "heldout-20260924-965",
+            "heldout-20260924-969",
+            "heldout-20260924-970",
+            "heldout-20260924-974",
+            "heldout-20260924-975",
+            "heldout-20260924-976",
+            "heldout-20260924-977",
+            "heldout-20260924-982",
+            "heldout-20260924-985",
+            "heldout-20260924-989",
+            "heldout-20260924-992",
+            "heldout-20260924-997",
+            "heldout-20260924-999"
+          ]
+        },
+        "labels": {
+          "candidate": {
+            "boundaryThreshold": 5.0,
+            "total": 998,
+            "correct": 638,
+            "families": {
+              "es-natural-approx-clock": {
+                "total": 26,
+                "correct": 26
+              },
+              "es-natural-chat-terse": {
+                "total": 35,
+                "correct": 35
+              },
+              "es-natural-deadline-carrier": {
+                "total": 23,
+                "correct": 23
+              },
+              "es-natural-holiday-exception": {
+                "total": 25,
+                "correct": 25
+              },
+              "es-natural-plural-weekday": {
+                "total": 28,
+                "correct": 28
+              },
+              "es-natural-range-carrier": {
+                "total": 31,
+                "correct": 31
+              },
+              "es-natural-relative-idiom": {
+                "total": 29,
+                "correct": 28
+              },
+              "es-natural-window-idiom": {
+                "total": 28,
+                "correct": 28
+              },
+              "es-negative": {
+                "total": 157,
+                "correct": 157
+              },
+              "es-semantic-anchored-relative": {
+                "total": 31,
+                "correct": 8
+              },
+              "es-semantic-bounded-weekday": {
+                "total": 28,
+                "correct": 17
+              },
+              "es-semantic-calendar": {
+                "total": 26,
+                "correct": 8
+              },
+              "es-semantic-clock": {
+                "total": 25,
+                "correct": 5
+              },
+              "es-semantic-date-range": {
+                "total": 14,
+                "correct": 7
+              },
+              "es-semantic-day-group": {
+                "total": 21,
+                "correct": 7
+              },
+              "es-semantic-day-part": {
+                "total": 25,
+                "correct": 9
+              },
+              "es-semantic-duration": {
+                "total": 29,
+                "correct": 10
+              },
+              "es-semantic-exceptions": {
+                "total": 19,
+                "correct": 6
+              },
+              "es-semantic-frequency-count": {
+                "total": 29,
+                "correct": 5
+              },
+              "es-semantic-holiday": {
+                "total": 20,
+                "correct": 14
+              },
+              "es-semantic-modified-group": {
+                "total": 18,
+                "correct": 14
+              },
+              "es-semantic-monthly-days": {
+                "total": 31,
+                "correct": 7
+              },
+              "es-semantic-monthly-ordinal": {
+                "total": 18,
+                "correct": 14
+              },
+              "es-semantic-now": {
+                "total": 24,
+                "correct": 19
+              },
+              "es-semantic-recurrence": {
+                "total": 29,
+                "correct": 10
+              },
+              "es-semantic-recurrence-bounds": {
+                "total": 26,
+                "correct": 7
+              },
+              "es-semantic-relative": {
+                "total": 19,
+                "correct": 17
+              },
+              "es-semantic-relative-day": {
+                "total": 30,
+                "correct": 5
+              },
+              "es-semantic-relative-unit": {
+                "total": 25,
+                "correct": 10
+              },
+              "es-semantic-time-window": {
+                "total": 17,
+                "correct": 17
+              },
+              "es-semantic-weekday": {
+                "total": 30,
+                "correct": 12
+              },
+              "es-semantic-weekday-points": {
+                "total": 23,
+                "correct": 6
+              },
+              "es-semantic-weekday-range": {
+                "total": 19,
+                "correct": 13
+              },
+              "es-semantic-weekday-windows": {
+                "total": 26,
+                "correct": 4
+              },
+              "es-semantic-yearly": {
+                "total": 14,
+                "correct": 6
+              }
+            }
+          },
+          "baseline": {
+            "boundaryThreshold": 2.75,
+            "total": 998,
+            "correct": 633,
+            "families": {
+              "es-natural-approx-clock": {
+                "total": 26,
+                "correct": 26
+              },
+              "es-natural-chat-terse": {
+                "total": 35,
+                "correct": 35
+              },
+              "es-natural-deadline-carrier": {
+                "total": 23,
+                "correct": 23
+              },
+              "es-natural-holiday-exception": {
+                "total": 25,
+                "correct": 25
+              },
+              "es-natural-plural-weekday": {
+                "total": 28,
+                "correct": 28
+              },
+              "es-natural-range-carrier": {
+                "total": 31,
+                "correct": 31
+              },
+              "es-natural-relative-idiom": {
+                "total": 29,
+                "correct": 28
+              },
+              "es-natural-window-idiom": {
+                "total": 28,
+                "correct": 28
+              },
+              "es-negative": {
+                "total": 157,
+                "correct": 157
+              },
+              "es-semantic-anchored-relative": {
+                "total": 31,
+                "correct": 8
+              },
+              "es-semantic-bounded-weekday": {
+                "total": 28,
+                "correct": 18
+              },
+              "es-semantic-calendar": {
+                "total": 26,
+                "correct": 8
+              },
+              "es-semantic-clock": {
+                "total": 25,
+                "correct": 5
+              },
+              "es-semantic-date-range": {
+                "total": 14,
+                "correct": 7
+              },
+              "es-semantic-day-group": {
+                "total": 21,
+                "correct": 7
+              },
+              "es-semantic-day-part": {
+                "total": 25,
+                "correct": 9
+              },
+              "es-semantic-duration": {
+                "total": 29,
+                "correct": 9
+              },
+              "es-semantic-exceptions": {
+                "total": 19,
+                "correct": 6
+              },
+              "es-semantic-frequency-count": {
+                "total": 29,
+                "correct": 5
+              },
+              "es-semantic-holiday": {
+                "total": 20,
+                "correct": 14
+              },
+              "es-semantic-modified-group": {
+                "total": 18,
+                "correct": 14
+              },
+              "es-semantic-monthly-days": {
+                "total": 31,
+                "correct": 7
+              },
+              "es-semantic-monthly-ordinal": {
+                "total": 18,
+                "correct": 15
+              },
+              "es-semantic-now": {
+                "total": 24,
+                "correct": 21
+              },
+              "es-semantic-recurrence": {
+                "total": 29,
+                "correct": 10
+              },
+              "es-semantic-recurrence-bounds": {
+                "total": 26,
+                "correct": 6
+              },
+              "es-semantic-relative": {
+                "total": 19,
+                "correct": 17
+              },
+              "es-semantic-relative-day": {
+                "total": 30,
+                "correct": 5
+              },
+              "es-semantic-relative-unit": {
+                "total": 25,
+                "correct": 10
+              },
+              "es-semantic-time-window": {
+                "total": 17,
+                "correct": 16
+              },
+              "es-semantic-weekday": {
+                "total": 30,
+                "correct": 12
+              },
+              "es-semantic-weekday-points": {
+                "total": 23,
+                "correct": 6
+              },
+              "es-semantic-weekday-range": {
+                "total": 19,
+                "correct": 10
+              },
+              "es-semantic-weekday-windows": {
+                "total": 26,
+                "correct": 4
+              },
+              "es-semantic-yearly": {
+                "total": 14,
+                "correct": 3
+              }
+            },
+            "report": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights-es.report.json",
+            "checkpoint": "runs/es-v3f/epoch-30.pt",
+            "checkpointSha256": "f731ae54988e61407a64c803206e57233b7aeaadccf352ab2846f694018d8c81",
+            "artifactSha256": "68abb02ff43bbe14d5fe5dd80e6b5e07504b6ed547b66d64ced750975d8ddb57",
+            "artifact": "/Users/arikko/Developer/vibecode/gpu-time/packages/core/src/model/weights-es.gen.ts"
+          }
+        },
+        "accepted": true,
+        "guard": {
+          "passed": true,
+          "reason": null,
+          "warning": null,
+          "support": 998,
+          "delta": -0.012024048096192385,
+          "fixed": 24,
+          "broke": 12
+        }
+      }
+    },
+    "description": "Exact schedules must not regress in any gold set or family. Reserved-carrier exact decoded labels and boundaries must improve, or tie an already perfect baseline, without a family regression. Bare expressions must not regress. Both models are measured on the same frozen corpora in this run; stored scores are never reused."
   },
   "scope": "Exact decoded int6 weights, sequential CPU PyTorch inference with the deployed role decoder and recorded intermediate precision. Training uses the mathematically equivalent parallel affine scan. Heldout metrics share the development split used by calibrate(). Promotion requires reserved-carrier improvement or a perfect-baseline tie, with no family regression, preserved bare expressions, and no gold set or family regression through the built parser. These are development checks, not real-user accuracy. Browser parity is a separate gate.",
   "parity": {
-    "prefix": "/private/tmp/claude-501/-Users-arikko-Developer-vibecode-gpu-time/e152b0e3-d733-4ba0-9d7d-f00ca080216a/scratchpad/es/weights-es.gen.parity",
+    "prefix": "active/es/parity",
     "sequences": 512,
-    "tokens": 11458,
+    "tokens": 12343,
     "rowsPerToken": 17,
     "rolesPerToken": 40,
-    "boundaryThreshold": 4.75,
+    "boundaryThreshold": 5.0,
     "layers": 2,
     "transitions": true
   }

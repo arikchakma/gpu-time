@@ -5,6 +5,8 @@ import { inferRows } from "../src/model/cpu.js";
 import { roundHalfFallback } from "../src/model/half.js";
 import { metadata, weights } from "../src/model/weights.gen.js";
 import { LABELS } from "../src/labels.js";
+import type { EncodedWeights } from "../src/model/decode.js";
+import es from "../src/languages/es.js";
 
 const activePath = (name: string) =>
   `${import.meta.dirname}/../../training/active/${name}`;
@@ -22,18 +24,18 @@ function bytes(path: string): ArrayBuffer {
   );
 }
 
-it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
-  const rows = new Uint16Array(bytes(activePath("parity.rows.bin")));
-  const offsets = new Uint32Array(bytes(activePath("parity.offsets.bin")));
-  const expected = new Float32Array(bytes(activePath("parity.logits.bin")));
+function compare(prefix: string, model: EncodedWeights = weights) {
+  const rows = new Uint16Array(bytes(activePath(`${prefix}.rows.bin`)));
+  const offsets = new Uint32Array(bytes(activePath(`${prefix}.offsets.bin`)));
+  const expected = new Float32Array(bytes(activePath(`${prefix}.logits.bin`)));
   const boundaries = new Float32Array(
-    bytes(activePath("parity.boundaries.bin")),
+    bytes(activePath(`${prefix}.boundaries.bin`)),
   );
   // Fixtures written before role transitions shipped carry no decoded labels;
   // for those the emission argmax is what PyTorch predicted.
-  const roles = weights.roleClasses;
-  const decoded = existsSync(activePath("parity.labels.bin"))
-    ? new Uint8Array(bytes(activePath("parity.labels.bin")))
+  const roles = model.roleClasses;
+  const decoded = existsSync(activePath(`${prefix}.labels.bin`))
+    ? new Uint8Array(bytes(activePath(`${prefix}.labels.bin`)))
     : undefined;
   let maxError = 0;
   let labelMismatches = 0;
@@ -41,7 +43,12 @@ it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
   for (let sequence = 0; sequence < offsets.length - 1; sequence++) {
     const start = offsets[sequence];
     const end = offsets[sequence + 1];
-    const result = inferRows(rows.subarray(start * 17, end * 17), true);
+    const result = inferRows(
+      rows.subarray(start * 17, end * 17),
+      true,
+      undefined,
+      model,
+    );
     for (let token = start; token < end; token++) {
       if (rows[token * 17] === 3) continue;
       const local = token - start;
@@ -62,7 +69,7 @@ it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
       );
       boundaryMismatches += Number(
         result.clauseStarts[local] !==
-          Number(boundaries[token] >= weights.boundaryThreshold),
+          Number(boundaries[token] >= (model.boundaryThreshold ?? 0)),
       );
       maxError = Math.max(
         maxError,
@@ -70,6 +77,18 @@ it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
       );
     }
   }
+  return {
+    sequences: offsets.length - 1,
+    tokens: offsets.at(-1),
+    labelMismatches,
+    boundaryMismatches,
+    maxError,
+  };
+}
+
+it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
+  const { sequences, tokens, labelMismatches, boundaryMismatches, maxError } =
+    compare("parity");
   expect({ labelMismatches, boundaryMismatches, maxError }).toEqual({
     labelMismatches: 0,
     boundaryMismatches: 0,
@@ -84,8 +103,8 @@ it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
             readFileSync(`${import.meta.dirname}/../src/model/weights.gen.ts`),
           )
           .digest("hex"),
-        sequences: offsets.length - 1,
-        tokens: offsets.at(-1),
+        sequences,
+        tokens,
         labelMismatches,
         boundaryMismatches,
         maxError,
@@ -94,6 +113,18 @@ it("matches the exported PyTorch predictions on 512 held-out sequences", () => {
       2,
     ) + "\n",
   );
+  expect(maxError).toBeLessThan(0.001);
+});
+
+it("matches the exported PyTorch predictions for the Spanish model", () => {
+  const { labelMismatches, boundaryMismatches, maxError } = compare(
+    "es/parity",
+    es.model!,
+  );
+  expect({ labelMismatches, boundaryMismatches }).toEqual({
+    labelMismatches: 0,
+    boundaryMismatches: 0,
+  });
   expect(maxError).toBeLessThan(0.001);
 });
 

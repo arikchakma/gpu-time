@@ -1,30 +1,30 @@
 {
-  "model": "5bec79ed58d00383b66748342dd6f18965ab28c76c93e1e798fe6cc26aa8262a",
-  "runtimeSha256": "4dc9689ee72ca82a00650267cb1d55642e6e61e328bf11f102e0a58471d53e01",
-  "sourceSha256": "7aac1158f9195981d49b8c34d9ffc8fa0851ccd7f00a2e12a83eed2c3a5ba1c4",
+  "model": "40f3dd0da35d846bc2e6725497f8aa13f06decc85ea95a0fbcf6262ba5daae3b",
+  "runtimeSha256": "5bb7240848ece7a0334635a81d5204def8eb77c9cc9207d2666b8a328cb05b79",
+  "sourceSha256": "e5995d402b85e712bcbaebc1acb0282a93c3cb28e809869e5993a03a6ffc26b2",
   "runtime": "packages/core/dist",
   "total": 72,
-  "correct": 49,
-  "accuracy": 0.6805555555555556,
+  "correct": 66,
+  "accuracy": 0.9166666666666666,
   "families": {
     "casual": {
-      "correct": 18,
+      "correct": 21,
       "total": 21
     },
     "month-name-little-endian": {
-      "correct": 11,
+      "correct": 14,
       "total": 14
     },
     "slash": {
-      "correct": 1,
+      "correct": 2,
       "total": 2
     },
     "time-exp": {
-      "correct": 9,
+      "correct": 16,
       "total": 20
     },
     "time-units-within": {
-      "correct": 10,
+      "correct": 13,
       "total": 15
     }
   },
@@ -56,7 +56,7 @@
           "start": 19,
           "end": 22,
           "text": "hoy",
-          "confidence": 0.944491446018219
+          "confidence": 0.998948872089386
         }
       ],
       "diagnostics": [],
@@ -89,18 +89,10 @@
           "start": 19,
           "end": 25,
           "text": "Mañana",
-          "confidence": 0.3173240125179291
+          "confidence": 0.9977924227714539
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 19,
-          "end": 25,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -129,18 +121,10 @@
           "start": 19,
           "end": 25,
           "text": "mañana",
-          "confidence": 0.3665427565574646
+          "confidence": 0.9978436827659607
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 19,
-          "end": 25,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -171,18 +155,10 @@
           "start": 20,
           "end": 33,
           "text": "ayer de noche",
-          "confidence": 0.17835640907287598
+          "confidence": 0.8668453693389893
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 20,
-          "end": 24,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -197,40 +173,25 @@
       "matched": "hoy a las 5PM",
       "occurrences": [
         {
-          "start": "2012-08-10T05:00:00+00:00"
+          "start": "2012-08-10T17:00:00+00:00"
         }
       ],
       "chronoDate": "2012-08-10",
       "actual": [
         {
-          "start": "2012-08-10T05:00:00+00:00",
+          "start": "2012-08-10T17:00:00+00:00",
           "allDay": false
         }
       ],
       "spans": [
         {
           "start": 19,
-          "end": 30,
-          "text": "hoy a las 5",
-          "confidence": 0.43536844849586487
+          "end": 32,
+          "text": "hoy a las 5PM",
+          "confidence": 0.9601520895957947
         }
       ],
-      "diagnostics": [
-        {
-          "code": "ambiguous-meridiem",
-          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-          "start": 29,
-          "end": 30,
-          "severity": "warning"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 19,
-          "end": 22,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -261,18 +222,10 @@
           "start": 0,
           "end": 10,
           "text": "esta noche",
-          "confidence": 0.7778342366218567
+          "confidence": 0.9484931826591492
         }
       ],
-      "diagnostics": [
-        {
-          "code": "filler-ignored",
-          "message": "Ignored esta inside the expression.",
-          "start": 0,
-          "end": 4,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -300,15 +253,15 @@
       "spans": [
         {
           "start": 0,
-          "end": 12,
-          "text": "esta noche 8",
-          "confidence": 0.6756761074066162
+          "end": 14,
+          "text": "esta noche 8pm",
+          "confidence": 0.2615955173969269
         }
       ],
       "diagnostics": [
         {
-          "code": "filler-ignored",
-          "message": "Ignored esta inside the expression.",
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
           "start": 0,
           "end": 4,
           "severity": "warning"
@@ -328,16 +281,14 @@
       "matched": "esta noche a las 8",
       "occurrences": [
         {
-          "start": "2012-01-01T00:00:00+00:00"
+          "start": "2012-01-01T20:00:00+00:00"
         }
       ],
       "chronoDate": "2012-01-01",
       "actual": [
         {
-          "start": "2012-01-01T00:00:00+00:00",
-          "allDay": false,
-          "open": "start",
-          "end": "2012-01-01T20:00:00+00:00"
+          "start": "2012-01-01T20:00:00+00:00",
+          "allDay": false
         }
       ],
       "spans": [
@@ -345,17 +296,10 @@
           "start": 0,
           "end": 18,
           "text": "esta noche a las 8",
-          "confidence": 0.35667669773101807
+          "confidence": 0.2220986783504486
         }
       ],
       "diagnostics": [
-        {
-          "code": "filler-ignored",
-          "message": "Ignored esta inside the expression.",
-          "start": 0,
-          "end": 4,
-          "severity": "warning"
-        },
         {
           "code": "low-confidence",
           "message": "The model is uncertain about this expression.",
@@ -392,7 +336,7 @@
           "start": 3,
           "end": 11,
           "text": "mediodía",
-          "confidence": 0.9741982221603394
+          "confidence": 0.8744886517524719
         }
       ],
       "diagnostics": [],
@@ -424,7 +368,7 @@
           "start": 3,
           "end": 13,
           "text": "medianoche",
-          "confidence": 0.9278304576873779
+          "confidence": 0.9739364981651306
         }
       ],
       "diagnostics": [],
@@ -532,7 +476,7 @@
           "start": 0,
           "end": 14,
           "text": "10 Agosto 2012",
-          "confidence": 0.8786312341690063
+          "confidence": 0.7860588431358337
         }
       ],
       "diagnostics": [],
@@ -565,10 +509,18 @@
           "start": 22,
           "end": 41,
           "text": "martes, 10 de enero",
-          "confidence": 0.7665175199508667
+          "confidence": 0.41489526629447937
         }
       ],
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 22,
+          "end": 28,
+          "severity": "warning"
+        }
+      ],
       "correct": true
     },
     {
@@ -598,7 +550,7 @@
           "start": 22,
           "end": 44,
           "text": "miércoles, 10 de enero",
-          "confidence": 0.7209784388542175
+          "confidence": 0.5244945883750916
         }
       ],
       "diagnostics": [],
@@ -631,7 +583,7 @@
           "start": 0,
           "end": 20,
           "text": "10 de Agosto de 2012",
-          "confidence": 0.9744244813919067
+          "confidence": 0.977431058883667
         }
       ],
       "diagnostics": [],
@@ -665,18 +617,10 @@
           "start": 0,
           "end": 19,
           "text": "10 - 22 Agosto 2012",
-          "confidence": 0.10876642167568207
+          "confidence": 0.873803436756134
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 2,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -707,7 +651,7 @@
           "start": 0,
           "end": 19,
           "text": "10 a 22 Agosto 2012",
-          "confidence": 0.6209495067596436
+          "confidence": 0.8349154591560364
         }
       ],
       "diagnostics": [],
@@ -725,40 +669,26 @@
       "matched": "10 Agosto - 12 Septiembre",
       "occurrences": [
         {
-          "start": "2012-08-10T12:00:00+00:00"
+          "start": "2012-08-10T00:00:00+00:00"
         }
       ],
       "chronoDate": "2012-08-10",
       "actual": [
         {
-          "start": "2012-08-10T12:00:00+00:00",
-          "allDay": false
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true,
+          "end": "2012-09-13T00:00:00+00:00"
         }
       ],
       "spans": [
         {
           "start": 0,
-          "end": 14,
-          "text": "10 Agosto - 12",
-          "confidence": 0.27993959188461304
+          "end": 25,
+          "text": "10 Agosto - 12 Septiembre",
+          "confidence": 0.6112454533576965
         }
       ],
-      "diagnostics": [
-        {
-          "code": "ambiguous-meridiem",
-          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-          "start": 12,
-          "end": 14,
-          "severity": "warning"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 2,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -773,14 +703,15 @@
       "matched": "10 Agosto - 12 Septiembre 2013",
       "occurrences": [
         {
-          "start": "2013-08-10T12:00:00+00:00"
+          "start": "2013-08-10T00:00:00+00:00"
         }
       ],
       "chronoDate": "2013-08-10",
       "actual": [
         {
-          "start": "2013-08-10T12:00:00+00:00",
-          "allDay": false
+          "start": "2013-08-10T00:00:00+00:00",
+          "allDay": true,
+          "end": "2013-09-13T00:00:00+00:00"
         }
       ],
       "spans": [
@@ -788,24 +719,10 @@
           "start": 0,
           "end": 30,
           "text": "10 Agosto - 12 Septiembre 2013",
-          "confidence": 0.3391445279121399
+          "confidence": 0.2721695005893707
         }
       ],
       "diagnostics": [
-        {
-          "code": "ambiguous-meridiem",
-          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-          "start": 12,
-          "end": 14,
-          "severity": "warning"
-        },
-        {
-          "code": "filler-ignored",
-          "message": "Ignored Septiembre inside the expression.",
-          "start": 15,
-          "end": 25,
-          "severity": "warning"
-        },
         {
           "code": "low-confidence",
           "message": "The model is uncertain about this expression.",
@@ -852,6 +769,13 @@
       "actual": [],
       "spans": [],
       "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 2,
+          "severity": "warning"
+        },
         {
           "code": "resolution-error",
           "severity": "error",
@@ -912,7 +836,7 @@
           "start": 0,
           "end": 15,
           "text": "Martes 9/2/2016",
-          "confidence": 0.7799317240715027
+          "confidence": 0.9875602722167969
         }
       ],
       "diagnostics": [],
@@ -946,7 +870,7 @@
           "start": 0,
           "end": 12,
           "text": "8:10 - 12.32",
-          "confidence": 0.3763001561164856
+          "confidence": 0.7774902582168579
         }
       ],
       "diagnostics": [
@@ -962,13 +886,6 @@
           "message": "No AM/PM marker; interpreted as a 24-hour clock.",
           "start": 7,
           "end": 9,
-          "severity": "warning"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 1,
           "severity": "warning"
         }
       ],
@@ -986,33 +903,25 @@
       "matched": "10 de Agosto de 2012 10:12:59 pm",
       "occurrences": [
         {
-          "start": "2012-08-10T10:12:59+00:00"
+          "start": "2012-08-10T22:12:59+00:00"
         }
       ],
       "chronoDate": "2012-08-10",
       "actual": [
         {
-          "start": "2012-08-10T10:12:59+00:00",
+          "start": "2012-08-10T22:12:59+00:00",
           "allDay": false
         }
       ],
       "spans": [
         {
           "start": 13,
-          "end": 42,
-          "text": "10 de Agosto de 2012 10:12:59",
-          "confidence": 0.7677823901176453
+          "end": 45,
+          "text": "10 de Agosto de 2012 10:12:59 pm",
+          "confidence": 0.7155929803848267
         }
       ],
-      "diagnostics": [
-        {
-          "code": "ambiguous-meridiem",
-          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-          "start": 34,
-          "end": 36,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -1042,7 +951,7 @@
           "start": 0,
           "end": 12,
           "text": "en 5 minutos",
-          "confidence": 0.9919998049736023
+          "confidence": 0.9843323230743408
         }
       ],
       "diagnostics": [],
@@ -1076,7 +985,7 @@
           "start": 0,
           "end": 13,
           "text": "por 5 minutos",
-          "confidence": 0.9852626323699951
+          "confidence": 0.9646661877632141
         }
       ],
       "diagnostics": [],
@@ -1109,7 +1018,7 @@
           "start": 0,
           "end": 9,
           "text": "en 1 hora",
-          "confidence": 0.9721497297286987
+          "confidence": 0.9620480537414551
         }
       ],
       "diagnostics": [],
@@ -1142,7 +1051,7 @@
           "start": 0,
           "end": 12,
           "text": "En 5 minutos",
-          "confidence": 0.9579706788063049
+          "confidence": 0.9886373281478882
         }
       ],
       "diagnostics": [],
@@ -1175,7 +1084,7 @@
           "start": 0,
           "end": 14,
           "text": "en dos semanas",
-          "confidence": 0.9750020503997803
+          "confidence": 0.9289926886558533
         }
       ],
       "diagnostics": [],
@@ -1208,7 +1117,7 @@
           "start": 0,
           "end": 16,
           "text": "dentro de un mes",
-          "confidence": 0.9815053343772888
+          "confidence": 0.7391024231910706
         }
       ],
       "diagnostics": [],
@@ -1241,7 +1150,7 @@
           "start": 0,
           "end": 9,
           "text": "en un año",
-          "confidence": 0.9930781722068787
+          "confidence": 0.9232157468795776
         }
       ],
       "diagnostics": [],
@@ -1274,7 +1183,7 @@
           "start": 0,
           "end": 16,
           "text": "dentro de un año",
-          "confidence": 0.9877708554267883
+          "confidence": 0.8389425873756409
         }
       ],
       "diagnostics": [],
@@ -1307,7 +1216,7 @@
           "start": 0,
           "end": 12,
           "text": "En 5 Minutos",
-          "confidence": 0.8879596590995789
+          "confidence": 0.9870156049728394
         }
       ],
       "diagnostics": [],
@@ -1340,7 +1249,7 @@
           "start": 0,
           "end": 12,
           "text": "En 5 minutos",
-          "confidence": 0.8610330820083618
+          "confidence": 0.9883549809455872
         }
       ],
       "diagnostics": [],
@@ -1359,27 +1268,20 @@
       "spanOnly": true,
       "actual": [
         {
-          "start": "2012-08-11T00:00:00+00:00",
-          "allDay": true
+          "start": "2012-08-10T06:00:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T12:00:00+00:00"
         }
       ],
       "spans": [
         {
-          "start": 25,
+          "start": 20,
           "end": 31,
-          "text": "mañana",
-          "confidence": 0.1576947271823883
+          "text": "esta mañana",
+          "confidence": 0.9735284447669983
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 25,
-          "end": 31,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -1393,18 +1295,22 @@
       },
       "matched": "ahora",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"La fecha límite es ahora\".",
-          "start": 0,
-          "end": 24
+          "start": "2012-08-10T08:09:10+00:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 19,
+          "end": 24,
+          "text": "ahora",
+          "confidence": 0.9848114252090454
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-042",
@@ -1417,18 +1323,22 @@
       },
       "matched": "ayer",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "unsupported",
-          "message": "Unknown day group.",
-          "start": 20,
-          "end": 24,
-          "severity": "error"
+          "start": "2012-08-09T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 20,
+          "end": 24,
+          "text": "ayer",
+          "confidence": 0.9988334774971008
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-043",
@@ -1441,18 +1351,23 @@
       },
       "matched": "esta tarde",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"La fecha límite fue esta tarde \".",
-          "start": 0,
-          "end": 31
+          "start": "2012-08-10T12:00:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T17:00:00+00:00"
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 20,
+          "end": 30,
+          "text": "esta tarde",
+          "confidence": 0.7817482352256775
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-044",
@@ -1465,18 +1380,22 @@
       },
       "matched": "Dom 15Sep",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Conflicting date specifications need separate clauses.",
-          "start": 0,
-          "end": 3,
-          "severity": "error"
+          "start": "2013-09-15T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "text": "Dom 15Sep",
+          "confidence": 0.9883992671966553
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-045",
@@ -1489,18 +1408,22 @@
       },
       "matched": "DOM 15SEP",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Conflicting date specifications need separate clauses.",
-          "start": 0,
-          "end": 3,
-          "severity": "error"
+          "start": "2013-09-15T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 9,
+          "text": "DOM 15SEP",
+          "confidence": 0.9849677085876465
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-046",
@@ -1513,18 +1436,22 @@
       },
       "matched": "10 Agosto",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "no-expression",
-          "severity": "warning",
-          "message": "No time expression was recognized in \"La fecha límite es 10 Agosto\".",
-          "start": 0,
-          "end": 28
+          "start": "2012-08-10T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 19,
+          "end": 28,
+          "text": "10 Agosto",
+          "confidence": 0.842833399772644
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-047",
@@ -1537,25 +1464,22 @@
       },
       "matched": "lunes 8/2/2016",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Conflicting date specifications need separate clauses.",
-          "start": 0,
-          "end": 5,
-          "severity": "error"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 5,
-          "severity": "warning"
+          "start": "2016-02-08T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "text": "lunes 8/2/2016",
+          "confidence": 0.9882605671882629
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-048",
@@ -1568,18 +1492,30 @@
       },
       "matched": "las 6.13 AM",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-time",
-          "message": "A fractional clock needs past or to and an hour.",
-          "start": 18,
-          "end": 20,
-          "severity": "error"
+          "start": "2012-08-10T06:13:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 16,
+          "end": 23,
+          "text": "6.13 AM",
+          "confidence": 0.40379491448402405
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 16,
+          "end": 17,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "spanish-049",
@@ -1592,25 +1528,23 @@
       },
       "matched": "de 6:30pm a 11:00pm",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "unlinked-times",
-          "message": "Two clocks need a range separator or separate clauses.",
-          "start": 13,
-          "end": 15,
-          "severity": "error"
-        },
-        {
-          "code": "filler-ignored",
-          "message": "Ignored pm inside the expression.",
-          "start": 8,
-          "end": 10,
-          "severity": "warning"
+          "start": "2012-08-10T18:30:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T23:00:00+00:00"
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 1,
+          "end": 20,
+          "text": "de 6:30pm a 11:00pm",
+          "confidence": 0.943422257900238
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-050",
@@ -1623,25 +1557,23 @@
       },
       "matched": "de 1pm a 3",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "unlinked-times",
-          "message": "Two clocks need a range separator or separate clauses.",
-          "start": 9,
-          "end": 10,
-          "severity": "error"
-        },
-        {
-          "code": "filler-ignored",
-          "message": "Ignored pm inside the expression.",
-          "start": 4,
-          "end": 6,
-          "severity": "warning"
+          "start": "2012-08-10T13:00:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T15:00:00+00:00"
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 10,
+          "text": "de 1pm a 3",
+          "confidence": 0.9908025860786438
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-051",
@@ -1654,18 +1586,22 @@
       },
       "matched": "martes 5/1/2013 1115am",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Day of month must be between 1 and 31.",
-          "start": 16,
-          "end": 20,
-          "severity": "error"
+          "start": "1115-01-05T00:00:00+00:00",
+          "allDay": true
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 20,
+          "text": "martes 5/1/2013 1115",
+          "confidence": 0.6943764686584473
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-052",
@@ -1678,18 +1614,22 @@
       },
       "matched": "miércoles 5/3/2013 1230pm",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Day of month must be between 1 and 31.",
-          "start": 19,
-          "end": 23,
-          "severity": "error"
+          "start": "2013-03-05T12:30:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 25,
+          "text": "miércoles 5/3/2013 1230pm",
+          "confidence": 0.7798838019371033
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-053",
@@ -1702,25 +1642,22 @@
       },
       "matched": "miércoles 5/15/2013 1030am",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Unknown month.",
-          "start": 12,
-          "end": 14,
-          "severity": "error"
-        },
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 9,
-          "severity": "warning"
+          "start": "2013-05-15T10:30:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 26,
+          "text": "miércoles 5/15/2013 1030am",
+          "confidence": 0.6645364165306091
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-054",
@@ -1733,18 +1670,30 @@
       },
       "matched": "jueves 6/21/2013 2:30",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Unknown month.",
-          "start": 9,
-          "end": 11,
-          "severity": "error"
+          "start": "2013-06-21T02:30:00+00:00",
+          "allDay": false
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 21,
+          "text": "jueves 6/21/2013 2:30",
+          "confidence": 0.9510197043418884
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "ambiguous-meridiem",
+          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
+          "start": 17,
+          "end": 18,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "spanish-055",
@@ -1762,10 +1711,17 @@
       "diagnostics": [
         {
           "code": "invalid-date",
-          "message": "A calendar date has more than one month.",
+          "message": "Multiple dates need a range or recurrence.",
           "start": 16,
           "end": 17,
           "severity": "error"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 0,
+          "end": 6,
+          "severity": "warning"
         }
       ],
       "correct": false
@@ -1781,25 +1737,23 @@
       },
       "matched": "Lunes, 6/24/2013, 7:00pm - 8:30pm",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "invalid-date",
-          "message": "Unknown month.",
-          "start": 9,
-          "end": 11,
-          "severity": "error"
-        },
-        {
-          "code": "filler-ignored",
-          "message": "Ignored pm inside the expression.",
-          "start": 22,
-          "end": 24,
-          "severity": "warning"
+          "start": "2013-06-24T19:00:00+00:00",
+          "allDay": false,
+          "end": "2013-06-24T20:30:00+00:00"
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 0,
+          "end": 33,
+          "text": "Lunes, 6/24/2013, 7:00pm - 8:30pm",
+          "confidence": 0.5350089073181152
+        }
+      ],
+      "diagnostics": [],
+      "correct": true
     },
     {
       "id": "spanish-057",
@@ -1867,18 +1821,31 @@
       },
       "matched": "de 5 minutos",
       "spanOnly": true,
-      "actual": [],
-      "spans": [],
-      "diagnostics": [
+      "actual": [
         {
-          "code": "unsupported",
-          "message": "The expression has no date or time.",
-          "start": 27,
-          "end": 29,
-          "severity": "error"
+          "start": "2012-08-10T12:14:00+00:00",
+          "allDay": false,
+          "end": "2012-08-10T12:19:00+00:00"
         }
       ],
-      "correct": false
+      "spans": [
+        {
+          "start": 27,
+          "end": 39,
+          "text": "de 5 minutos",
+          "confidence": 0.31774380803108215
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
+          "start": 27,
+          "end": 29,
+          "severity": "warning"
+        }
+      ],
+      "correct": true
     },
     {
       "id": "spanish-060",
@@ -1950,7 +1917,7 @@
           "start": 0,
           "end": 6,
           "text": "jueves",
-          "confidence": 0.9997165203094482
+          "confidence": 0.9949588179588318
         }
       ],
       "diagnostics": [],
@@ -1978,7 +1945,7 @@
           "start": 0,
           "end": 7,
           "text": "viernes",
-          "confidence": 0.9989540576934814
+          "confidence": 0.9952458143234253
         }
       ],
       "diagnostics": [],
@@ -2006,18 +1973,10 @@
           "start": 0,
           "end": 15,
           "text": "lunes 4/29/2013",
-          "confidence": 0.43242794275283813
+          "confidence": 0.8964794874191284
         }
       ],
-      "diagnostics": [
-        {
-          "code": "low-confidence",
-          "message": "The model is uncertain about this expression.",
-          "start": 0,
-          "end": 5,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -2031,22 +1990,32 @@
       },
       "matched": "domingo 5/6/2013  750am-910am",
       "spanOnly": true,
-      "actual": [
+      "actual": [],
+      "spans": [],
+      "diagnostics": [
         {
-          "start": "2013-06-05T00:00:00+00:00",
-          "allDay": true
-        }
-      ],
-      "spans": [
+          "code": "incomplete-range",
+          "message": "A range needs an end value.",
+          "start": 23,
+          "end": 24,
+          "severity": "error"
+        },
         {
+          "code": "filler-ignored",
+          "message": "Ignored 750 inside the expression.",
+          "start": 18,
+          "end": 21,
+          "severity": "warning"
+        },
+        {
+          "code": "low-confidence",
+          "message": "The model is uncertain about this expression.",
           "start": 0,
-          "end": 16,
-          "text": "domingo 5/6/2013",
-          "confidence": 0.8578953742980957
+          "end": 7,
+          "severity": "warning"
         }
       ],
-      "diagnostics": [],
-      "correct": true
+      "correct": false
     },
     {
       "id": "spanish-066",
@@ -2070,7 +2039,7 @@
           "start": 0,
           "end": 15,
           "text": "lunes 5/13/2013",
-          "confidence": 0.8200602531433105
+          "confidence": 0.9137641191482544
         }
       ],
       "diagnostics": [],
@@ -2089,27 +2058,19 @@
       "spanOnly": true,
       "actual": [
         {
-          "start": "2026-09-17T06:00:00+00:00",
+          "start": "2026-09-16T18:00:00+00:00",
           "allDay": false
         }
       ],
       "spans": [
         {
           "start": 0,
-          "end": 1,
-          "text": "6",
-          "confidence": 0.9700791239738464
+          "end": 3,
+          "text": "6pm",
+          "confidence": 0.9954783916473389
         }
       ],
-      "diagnostics": [
-        {
-          "code": "ambiguous-meridiem",
-          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-          "start": 0,
-          "end": 1,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -2125,27 +2086,19 @@
       "spanOnly": true,
       "actual": [
         {
-          "start": "2026-09-17T06:00:00+00:00",
+          "start": "2026-09-16T18:00:00+00:00",
           "allDay": false
         }
       ],
       "spans": [
         {
           "start": 0,
-          "end": 1,
-          "text": "6",
-          "confidence": 0.9329133033752441
+          "end": 4,
+          "text": "6 pm",
+          "confidence": 0.9973620176315308
         }
       ],
-      "diagnostics": [
-        {
-          "code": "ambiguous-meridiem",
-          "message": "No AM/PM marker; interpreted as a 24-hour clock.",
-          "start": 0,
-          "end": 1,
-          "severity": "warning"
-        }
-      ],
+      "diagnostics": [],
       "correct": true
     },
     {
@@ -2161,16 +2114,17 @@
       "spanOnly": true,
       "actual": [
         {
-          "start": "2026-10-07T00:00:00+00:00",
-          "allDay": true
+          "start": "2026-09-16T19:00:00+00:00",
+          "allDay": false,
+          "end": "2026-09-16T22:00:00+00:00"
         }
       ],
       "spans": [
         {
           "start": 0,
-          "end": 4,
-          "text": "7-10",
-          "confidence": 0.9408656358718872
+          "end": 6,
+          "text": "7-10pm",
+          "confidence": 0.6135500073432922
         }
       ],
       "diagnostics": [],
@@ -2198,7 +2152,7 @@
           "start": 4,
           "end": 6,
           "text": "12",
-          "confidence": 0.9987661838531494
+          "confidence": 0.9940838813781738
         }
       ],
       "diagnostics": [
@@ -2229,21 +2183,20 @@
       ],
       "actual": [
         {
-          "start": "2012-08-10T00:00:00+00:00",
-          "allDay": false,
-          "end": "2012-08-15T00:00:00+00:00"
+          "start": "2012-08-15T00:00:00+00:00",
+          "allDay": false
         }
       ],
       "spans": [
         {
-          "start": 26,
+          "start": 23,
           "end": 32,
-          "text": "5 días",
-          "confidence": 0.974981963634491
+          "text": "en 5 días",
+          "confidence": 0.9898610711097717
         }
       ],
       "diagnostics": [],
-      "correct": false
+      "correct": true
     },
     {
       "id": "spanish-072",
@@ -2262,21 +2215,20 @@
       ],
       "actual": [
         {
-          "start": "2012-08-10T11:12:00+00:00",
-          "allDay": false,
-          "end": "2012-08-15T11:12:00+00:00"
+          "start": "2012-08-15T11:12:00+00:00",
+          "allDay": false
         }
       ],
       "spans": [
         {
-          "start": 26,
+          "start": 23,
           "end": 36,
-          "text": "cinco días",
-          "confidence": 0.7838309407234192
+          "text": "en cinco días",
+          "confidence": 0.9536911845207214
         }
       ],
       "diagnostics": [],
-      "correct": false
+      "correct": true
     }
   ],
   "scope": "Spanish phrases and expected answers drawn from chrono-node's test/es assertions, scored as occurrences or spans. This is targeted coverage, not general-language accuracy."

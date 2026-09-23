@@ -158,7 +158,9 @@ def clock(value: dict, sentence: Sentence, style: int, lead: bool = True) -> Non
     rng = sentence.rng
     if "named" in value:
         if lead:
-            sentence.add("a")
+            sentence.add(
+                rng.choice(["a", "a", "al" if value["named"] == "noon" else "a la"])
+            )
         sentence.add(NAMED_ES[value["named"]], "TIME_NAMED")
         return
     if "part" in value:
@@ -183,6 +185,17 @@ def clock(value: dict, sentence: Sentence, style: int, lead: bool = True) -> Non
         sentence.add(":", separator="")
         sentence.add("45", "MINUTE", separator="")
         sentence.add("de la mañana", "MERIDIEM")
+        return
+    if "second" not in value and rng.random() < 0.2:
+        display = hour % 12 or 12
+        if lead:
+            sentence.add("a")
+            sentence.add("la" if display == 1 else "las", "O")
+        sentence.add(str(display), "HOUR")
+        if minute:
+            sentence.add(":", separator="")
+            sentence.add(f"{minute:02d}", "MINUTE", separator="")
+        sentence.add(meridiem_marker(rng, hour), "MERIDIEM", separator=rng.choice(["", " "]))
         return
     digital = style % 2 == 0 or "second" in value
     if digital:
@@ -219,7 +232,37 @@ def clock(value: dict, sentence: Sentence, style: int, lead: bool = True) -> Non
     sentence.add(f"de la {period}", "MERIDIEM")
 
 
+def meridiem_marker(rng: random.Random, hour: int) -> str:
+    return rng.choice(["pm", "p. m.", "PM", "p.m."] if hour >= 12 else ["am", "a. m.", "AM", "a.m."])
+
+
+def digits(value: dict, sentence: Sentence) -> None:
+    sentence.add(str(value["hour"]), "HOUR")
+    sentence.add(sentence.rng.choice([":", ":", "."]), separator="")
+    sentence.add(f"{value['minute']:02d}", "MINUTE", separator="")
+
+
 def window(time: dict, sentence: Sentence, style: int) -> None:
+    plain = all("hour" in time[key] and "second" not in time[key] for key in ("start", "end"))
+    if plain and sentence.rng.random() < 0.25:
+        start, end = time["start"], time["end"]
+        shared = (start["hour"] >= 12) == (end["hour"] >= 12) and 0 < start[
+            "hour"
+        ] % 12 < end["hour"] % 12
+        if shared and sentence.rng.random() < 0.5:
+            for position, value in enumerate((start, end)):
+                if position:
+                    sentence.add("-", "RANGE_END", separator=sentence.rng.choice(["", " "]))
+                sentence.add(str(value["hour"] % 12), "HOUR", separator=" " if not position else sentence.rng.choice(["", " "]))
+                if value["minute"]:
+                    sentence.add(":", separator="")
+                    sentence.add(f"{value['minute']:02d}", "MINUTE", separator="")
+            sentence.add(meridiem_marker(sentence.rng, end["hour"]), "MERIDIEM", separator="")
+            return
+        digits(start, sentence)
+        sentence.add("-", "RANGE_END")
+        digits(end, sentence)
+        return
     between = style % 2 == 1
     sentence.add("entre" if between else "de", "RANGE_START")
     clock(time["start"], sentence, style, lead=False)
@@ -249,11 +292,14 @@ def calendar(
                 sentence.add(sep, separator="")
             sentence.add(str(value), label, separator="" if index else " ")
         return
+    terse = rng.random() < 0.3
     sentence.add(dom_word(day, rng), "DOM")
-    sentence.add("de")
+    if not terse:
+        sentence.add("de")
     sentence.add(month_word(rng, month - 1), "MONTH")
     if year:
-        sentence.add("de")
+        if not terse and rng.random() < 0.7:
+            sentence.add("de")
         sentence.add(str(year), "YEAR")
 
 
@@ -294,9 +340,29 @@ def render_date(
     elif kind == "calendar":
         calendar(date, sentence, style, article=article)
     elif kind == "calendarRange":
-        calendar(date["from"], sentence, style, numeric=False)
-        sentence.add(rng.choice(["a", "hasta"]), "RANGE_END")
-        calendar(date["to"], sentence, style, numeric=False)
+        start, end = date["from"], date["to"]
+        if (
+            start["month"] == end["month"]
+            and start.get("year") == end.get("year")
+            and rng.random() < 0.5
+        ):
+            spelled = rng.random() < 0.5
+            if spelled:
+                sentence.add("del", "RANGE_START")
+            sentence.add(dom_word(start["day"], rng), "DOM")
+            sentence.add("al" if spelled else rng.choice(["-", "a"]), "RANGE_END")
+            sentence.add(dom_word(end["day"], rng), "DOM")
+            if spelled or rng.random() < 0.5:
+                sentence.add("de")
+            sentence.add(month_word(rng, start["month"] - 1), "MONTH")
+            if start.get("year"):
+                if spelled or rng.random() < 0.5:
+                    sentence.add("de")
+                sentence.add(str(start["year"]), "YEAR")
+        else:
+            calendar(start, sentence, style, numeric=False)
+            sentence.add(rng.choice(["a", "hasta", "-"]), "RANGE_END")
+            calendar(end, sentence, style, numeric=False)
     elif kind == "relativeUnit":
         relative_unit(date, sentence, article=article)
     else:

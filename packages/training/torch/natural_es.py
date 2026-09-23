@@ -67,27 +67,22 @@ def _plural_weekday(s, r) -> dict:
 
 def _approx_clock(s, r) -> dict:
     """"a eso de las 3" / "a las tres y pico": never the hacia/sobre reading."""
-    hour = r.randint(1, 12)
+    started = r.randint(0, 23)
+    hour = started % 12 or 12
     word = "una" if hour == 1 else r.choice([str(hour), spanish.NUMBERS_ES[hour]])
     s.add("a", "O")
     if r.random() < 0.5:
         s.add("eso de", "O")
     s.add("la" if hour == 1 else "las", "O")
     s.add(word, "HOUR")
-    # No period marker: the compiler reads the bare spoken hour literally.
-    started = hour
     if r.random() < 0.4:
         s.add("y pico", "CLOCK_OFFSET")
     if r.random() < 0.6:
-        period = r.choice(["mañana", "tarde", "noche"])
+        period = "mañana" if 5 <= started < 12 else "tarde" if 12 <= started < 20 else "noche"
         s.add(f"de la {period}", "MERIDIEM")
-        if period == "mañana":
-            started = hour % 12
-        elif period == "tarde":
-            started = hour % 12 + 12
-        else:
-            # "noche" is pm, except spoken 12 flips to am (midnight convention).
-            started = 0 if hour == 12 else hour % 12 + 12
+    else:
+        # No period marker: the compiler reads the bare spoken hour literally.
+        started = hour
     return {"time": {"start": {"hour": started, "minute": 0}}}
 
 
