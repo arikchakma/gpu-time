@@ -49,29 +49,41 @@ The timing numbers in `packages/benchmark/results/summary.json` were recorded fo
 
 ## Spanish model
 
-`gpu-time/languages/es` embeds its own model, checkpoint `runs/es-v4d/epoch-32`. It has the same shapes as the English model: 38,745 parameters, two scan layers, and 6-bit weights. The weights pack to 24,386 Brotli bytes, and the whole Spanish pack is 25,767. Every score lives in `packages/core/src/model/weights-es.report.json`, the only place to read them from.
+`gpu-time/languages/es` embeds its own model, checkpoint `runs/es-v8a/epoch-36`. It has the same shapes as the English model: 38,745 parameters, two scan layers, and 6-bit weights. The weights pack to 23,772 Brotli bytes, and the whole Spanish pack is 25,162. Every score lives in `packages/core/src/model/weights-es.report.json`, the only place to read them from.
 
 Training data:
 
 - Generated. `spanish.py` and `natural_es.py` write Spanish phrasing, 20,000 rows per epoch.
 - Harvested. A Tatoeba sentence enters when chrono-node's Spanish parser finds exactly one date, agrees with gpu-time on it, and the compiler produces the same schedule from the whole sentence. This gives 2,664 training rows.
-- Written. Sonnet teachers labelled 1,317 real Tatoeba sentences by `data/teacher/label-sheet.es.md`, and the compiler checked every row. 271 of them hold no calendar time, such as "hoy por hoy", "llegar tarde" or "buenas noches", so the model learns when to stay quiet. Each row is repeated four times.
+- Written. Sonnet teachers labelled 9,739 real Spanish rows by `data/teacher/label-sheet.es.md`, and the compiler checked every row. 1,992 of them hold no calendar time, so the model learns when to stay quiet. Each row is repeated four times. The rows come from three sources:
+  - 2,930 Tatoeba sentences (CC BY 2.0 FR), mostly picked where the model and chrono disagreed.
+  - 2,725 voice-assistant commands from Amazon MASSIVE, es-ES train split (CC BY 4.0).
+  - 4,084 commands from Facebook MTOP, Spanish train split (CC BY-SA 4.0).
+- Audits. A row is dropped when it leaves a real date word unlabelled. A MASSIVE or MTOP row is also dropped when the teacher's answer disagrees with the dataset's own time slots: a time where the dataset marks none, no time where it marks one, or a marked time left unlabelled.
 
 The shipped checkpoint scores:
 
-- Real Tatoeba holdout: 164 of 179 exact schedules. Training never saw these sentences.
-- Teacher holdout: 156 of 172. Training never saw these sentences either.
-- Chrono's Spanish test phrases: 66 of 72, with 6 known gaps.
-- Generated reserved carriers: 616 of 998. These forms are kept out of training on purpose, so the score catches regressions and is not accuracy.
-- Token accuracy: 99.93% on validation and 95.13% on heldout.
+- Real Tatoeba holdout: 172 of 179 exact schedules. Training never saw these sentences.
+- Teacher holdout: 163 of 172.
+- First fresh set (`spanish-fresh`): 199 of 226.
+- MASSIVE dev split: 538 of 568.
+- MTOP eval split: 625 of 670.
+- Chrono's Spanish test phrases: 69 of 72, with 3 known gaps.
+- Generated reserved carriers: 663 of 998. These forms are kept out of training on purpose, so the score catches regressions and is not accuracy.
+- Token accuracy: 99.94% on validation and 94.93% on heldout.
 
-The three gold sets above also chose the checkpoint, so they read a little high. `data/gold/spanish-fresh.jsonl` holds 227 more teacher-labelled sentences that no choice ever used. The shipped model scores 173 of 227 on it: 41 of 60 sentences with no time and 132 of 167 with one. Run `node --experimental-strip-types src/evaluate-model.ts --language es --dir ../training/data/gold --sets spanish-fresh` in `packages/benchmark` to measure it. Once a later choice uses this set, it stops being fresh.
+Training never saw any of these sets, but they all helped choose the checkpoint, so they read a little high. Two sets no choice ever used:
+
+- `data/gold/spanish-massive-test.jsonl`, the MASSIVE test split: 724 of 780. It stays quiet on 278 of 289 commands with no time and gets 446 of 491 with one.
+- `data/gold/spanish-fresh2.jsonl`, 239 Tatoeba sentences: 226 of 239.
+
+Run `node --experimental-strip-types src/evaluate-model.ts --language es --dir ../training/data/gold --sets spanish-massive-test,spanish-fresh2` in `packages/benchmark` to measure them. Once a later choice uses a set, it stops being fresh.
 
 Spanish limitations:
 
-- The model still finds a time in some sentences that have none: a goodbye "¡Hasta mañana!", "hoy por hoy", and general facts such as "el lunes es el día que viene después del domingo".
-- A bare "ahora" at the end of a sentence ("hazlo ahora") is sometimes missed.
-- Compact three-digit clocks (`750am`) are unsupported, as in English.
+- The model still finds a time in some sentences that have none: "hoy por hoy", "hoy en día", a goodbye "hasta mañana", general facts such as "el lunes es el día que viene después del domingo", and "la mañana" as a noun.
+- The compiler has no words yet for "último" as last ("la última semana"), "media hora", spoken years ("dos mil diecisiete"), counts of dates ("los próximos tres domingos"), minute-level repeats ("cada cinco minutos"), or Easter. Teachers dropped those rows, so the model has not learned them.
+- An ambiguous numeric date is read day first, because Spanish writes the day first. A US-style `5/1/2013` means 5 January, while `4/29/2013` can only be 29 April and reads that way.
 - Parity: 512 fixtures compare the int6 inference against PyTorch, and `pnpm test:browser` compares 5,070 Spanish sequences in real WebGPU.
 
 ## Limitations

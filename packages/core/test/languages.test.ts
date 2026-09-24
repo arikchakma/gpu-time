@@ -187,6 +187,58 @@ describe("modifier after the unit", () => {
     });
   });
 
+  it("reads spoken minutes after y and menos", () => {
+    const clock = (hour: number, minute: number) => ({
+      clauses: [{ time: { start: { hour, minute } } }],
+    });
+    const spoken = ["GLUE", "GLUE", "HOUR", "GLUE", "CLOCK_OFFSET"];
+    expect(read("a las diez y veinte", spoken)).toEqual(clock(10, 20));
+    expect(read("a las ocho menos diez", spoken)).toEqual(clock(7, 50));
+    expect(
+      read("a las diez y veintiocho de la noche", [
+        ...spoken,
+        "MERIDIEM",
+        "MERIDIEM",
+        "MERIDIEM",
+      ]),
+    ).toEqual(clock(22, 28));
+    expect(
+      read("a las seis y treinta y cinco", [...spoken, "GLUE", "CLOCK_OFFSET"]),
+    ).toEqual(clock(6, 35));
+  });
+
+  it("splits a three-digit compact clock", () => {
+    expect(read("a las 630am", ["GLUE", "GLUE", "HOUR", "MERIDIEM"])).toEqual({
+      clauses: [{ time: { start: { hour: 6, minute: 30 } } }],
+    });
+  });
+
+  it("joins a spoken day of the month across y", () => {
+    expect(
+      read("el treinta y uno de diciembre", [
+        "O",
+        "DOM",
+        "DOM",
+        "DOM",
+        "GLUE",
+        "MONTH",
+      ]),
+    ).toEqual({
+      clauses: [{ date: { kind: "calendar", day: 31, month: 12 } }],
+    });
+  });
+
+  it("repeats a plural day part every day", () => {
+    expect(read("por las mañanas", ["O", "O", "DAYPART"])).toEqual({
+      clauses: [
+        {
+          time: { start: { part: "morning" } },
+          recurrence: { freq: "daily", interval: 1 },
+        },
+      ],
+    });
+  });
+
   it("keeps a plural edge in front", () => {
     expect(
       read("a principios del año pasado", [

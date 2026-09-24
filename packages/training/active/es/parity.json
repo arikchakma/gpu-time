@@ -1,7 +1,7 @@
 {
   "prefix": "active/es/parity",
   "sequences": 512,
-  "tokens": 12343,
+  "tokens": 11704,
   "rowsPerToken": 17,
   "rolesPerToken": 40,
   "boundaryThreshold": 5.0,

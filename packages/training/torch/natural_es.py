@@ -28,7 +28,7 @@ FAMILIES = [
 ]
 # The two texting-register families keep their own short shape; no carrier
 # prose glued on either side.
-TERSE_FAMILIES = {"chat-terse", "range-carrier"}
+TERSE_FAMILIES = {"chat-terse", "range-carrier", "dated-clock"}
 
 
 def _time(r: random.Random, hour: int | None = None) -> dict:
@@ -206,6 +206,56 @@ def _range_carrier(s, r) -> dict:
     }
 
 
+def _dated_clock(s, r) -> dict:
+    """A calendar entry: "martes 5/1/2013 1115am" / "lunes 29/4/2013 630-930am"."""
+    date = {
+        "kind": "calendar",
+        "day": r.randint(1, 28),
+        "month": r.randint(1, 12),
+        "year": r.randint(2000, 2030),
+    }
+    if r.random() < 0.7:
+        s.add(r.choice(spanish.DAYS_ES), "WEEKDAY")
+        if r.random() < 0.4:
+            s.add(",", separator="")
+    spanish.calendar(date, s, 0, article=False, numeric=True)
+    if r.random() < 0.4:
+        s.add(",", separator="")
+    half = 12 if r.random() < 0.5 else 0
+    colon = r.random() < 0.5
+
+    def clock(value: dict, separator: str = " ") -> None:
+        display = value["hour"] % 12
+        if colon:
+            s.add(str(display), "HOUR", separator)
+            s.add(":", separator="")
+            s.add(f"{value['minute']:02d}", "MINUTE", separator="")
+            return
+        text = f"{display}{value['minute']:02d}" if value["minute"] else str(display)
+        s.add(text, "HOUR", separator)
+
+    def marker(value: dict) -> None:
+        s.add(spanish.meridiem_marker(r, value["hour"]), "MERIDIEM", separator=r.choice(["", " "]) if colon else "")
+
+    start = {"hour": r.randint(1, 9) + half, "minute": r.choice([0, 15, 30, 45])}
+    if r.random() < 0.5:
+        clock(start)
+        marker(start)
+        return {"date": date, "time": {"start": start}}
+    end = {
+        "hour": r.randint(start["hour"] + 1, 11 + half),
+        "minute": r.choice([0, 15, 30, 45]),
+    }
+    spaced = colon and r.random() < 0.5
+    clock(start)
+    if spaced:
+        marker(start)
+    s.add("-", "RANGE_END", separator=" " if spaced else "")
+    clock(end, separator=" " if spaced else "")
+    marker(end)
+    return {"date": date, "time": {"start": start, "end": end}}
+
+
 BUILDERS = {
     "plural-weekday": _plural_weekday,
     "approx-clock": _approx_clock,
@@ -215,12 +265,13 @@ BUILDERS = {
     "holiday-exception": _holiday_exception,
     "chat-terse": _chat_terse,
     "range-carrier": _range_carrier,
+    "dated-clock": _dated_clock,
 }
 
 
 def render(s) -> Specification:
     r = s.rng
-    family = r.choice(FAMILIES)
+    family = "dated-clock" if r.random() < 0.03 else r.choice(FAMILIES)
     if family not in TERSE_FAMILIES and r.random() < 0.4:
         s.add(spanish.prefix_es(r))
     s.clause()

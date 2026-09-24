@@ -45,7 +45,13 @@ def targets() -> dict:
     }
 
 
-SPANISH_SETS = ("spanish-real", "spanish-teacher")
+SPANISH_SETS = (
+    "spanish-real",
+    "spanish-teacher",
+    "spanish-fresh",
+    "spanish-massive-dev",
+    "spanish-mtop-dev",
+)
 # Hand-authored, not rendered by the training generators. Sets seeded from the
 # grammar (labels, grammar, grammar-variations) measure the generator against
 # itself and stay out of the gate.

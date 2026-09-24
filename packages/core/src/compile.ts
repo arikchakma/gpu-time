@@ -40,6 +40,13 @@ function lookup<T>(
 ): T | undefined {
   return Object.hasOwn(table, key) ? table[key] : undefined;
 }
+const dayPart = (word: string, language: Language) =>
+  lookup(language.dayParts, word) ??
+  (word.endsWith("s")
+    ? lookup(language.dayParts, word.slice(0, -1))
+    : undefined);
+const spokenMinute = (value: number) =>
+  Number.isInteger(value) && value > 0 && value < 60 ? value : undefined;
 const sameTimePair = (
   first: Token | undefined,
   second: Token | undefined,
@@ -119,10 +126,12 @@ function readClock(
   // A bare four-digit clock: "1150" is 11:15 and "0930" is 09:30. The model
   // decides the token is an hour; the compiler only splits the digits.
   const compact = /^([01]\d|2[0-3])([0-5]\d)$/.exec(token.text);
-  let hour = compact
-    ? Number(compact[1])
+  const short = compact ? null : /^([1-9])([0-5]\d)$/.exec(token.text);
+  const digits = compact ?? short;
+  let hour = digits
+    ? Number(digits[1])
     : language.number(token.text.toLowerCase());
-  let minute = compact ? Number(compact[2]) : 0;
+  let minute = digits ? Number(digits[2]) : 0;
   let second: number | undefined;
   let meridiem: string | undefined;
   let next = index + 1;
@@ -130,7 +139,7 @@ function readClock(
   // Minutes are always two digits: "9.30pm" and "9:05" are clocks, while
   // "9.5 hours" and the ratio "2:3" are not.
   const separated =
-    !compact &&
+    !digits &&
     (tokens[next]?.text === ":"
       ? tokens[next + 1]?.label === Role.MINUTE &&
         /^\d{2}$/.test(tokens[next + 1]?.text ?? "")
@@ -162,16 +171,34 @@ function readClock(
       language.clockDirections,
       fold(tokens[next]?.text.toLowerCase() ?? ""),
     );
-    const offset =
+    let offset =
       tokens[next + 1]?.label === Role.CLOCK_OFFSET
-        ? lookup(
+        ? (lookup(
             language.clockFractions,
             fold(tokens[next + 1].text.toLowerCase()),
-          )
+          ) ?? spokenMinute(language.number(tokens[next + 1].text)))
         : undefined;
+    let width = 2;
+    const ones = tokens[next + 3];
+    if (
+      offset !== undefined &&
+      ones?.label === Role.CLOCK_OFFSET &&
+      lookup(
+        language.clockDirections,
+        fold(tokens[next + 2]?.text.toLowerCase() ?? ""),
+      ) === "past"
+    ) {
+      const combined = spokenMinute(
+        language.compoundOrdinal(tokens[next + 1].text, ones.text),
+      );
+      if (combined !== undefined) {
+        offset = combined;
+        width = 4;
+      }
+    }
     if (direction && offset !== undefined) {
       pendingFraction = { direction, offset };
-      next += 2;
+      next += width;
     }
   }
 
@@ -575,9 +602,7 @@ function compileDateAndTime(
       }
 
       case Role.DAYPART: {
-        const part = Object.hasOwn(language.dayParts, word)
-          ? language.dayParts[word]
-          : undefined;
+        const part = dayPart(word, language);
         if (!part) fail(token, "unsupported", "Unknown day part.");
         // "last night" names a day. Without this the modifier is dropped and
         // the day part lands on today. A weekday already consumed it.
@@ -622,8 +647,13 @@ function compileDateAndTime(
       case Role.DOM: {
         let value = language.number(word);
         // "twenty-first" arrives as separate tokens, optionally hyphenated.
-        const onesIndex =
-          tokens[index + 1]?.text === "-" ? index + 2 : index + 1;
+        const joined =
+          tokens[index + 1]?.text === "-" ||
+          lookup(
+            language.clockDirections,
+            fold(tokens[index + 1]?.text.toLowerCase() ?? ""),
+          ) === "past";
+        const onesIndex = joined ? index + 2 : index + 1;
         const ones = tokens[onesIndex];
         if (ones) {
           const combined = language.compoundOrdinal(word, ones.text);
@@ -1117,6 +1147,13 @@ function compileClause(
   // so the article carries the plural instead ("los lunes").
   const pluralDayGroup = selectors.some((token, index) => {
     if (token.label === Role.DAYGROUP) return /s$/i.test(token.text);
+    if (token.label === Role.DAYPART) {
+      const word = fold(lower(token));
+      return (
+        !Object.hasOwn(language.dayParts, word) &&
+        dayPart(word, language) !== undefined
+      );
+    }
     if (token.label !== Role.WEEKDAY) return false;
     if (language.isPluralWeekday(token.text)) return true;
     for (let lead = index - 1; lead >= 0; lead--) {
@@ -1846,7 +1883,8 @@ function compactClock(input: Token[]): Token[] {
   // Microsoft Recognizers reads "1140 a.m." by.
   for (let index = 0; index + 1 < result.length; index++) {
     const token = result[index];
-    if (token.label !== Role.O || !clock(token)) continue;
+    if (token.label !== Role.O) continue;
+    if (!clock(token) && !/^[1-9][0-5]\d$/.test(token.text)) continue;
     if (result[index + 1].label !== Role.MERIDIEM) continue;
     result[index] = { ...token, label: Role.HOUR };
   }

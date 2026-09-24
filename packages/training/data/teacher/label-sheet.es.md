@@ -66,3 +66,16 @@ never from what compiles. If you cannot express the meaning, return
    skip the other.
 7. **Do not invent.** Vague words ("pronto", "luego", "algún día", "un rato")
    are `"none"`.
+8. **A lone "ahora" is always now.** "Hazlo ahora", "ahora es tarde", "¿qué
+   haremos ahora?" all label `ahora` NOW. Only the fixed phrases in rule 4
+   ("por ahora", "hasta ahora", "desde ahora", "ahora bien"...) are `"none"`.
+   "hoy día" means nowadays, like "hoy en día": `"none"`.
+9. **A day part is always a day part.** "por la mañana", "en la tarde", "de
+   noche" label DAYPART even in a habit or a general sentence ("Tom se levanta
+   temprano por la mañana"). A greeting ("buenos días", "¡buen fin de
+   semana!") is still `"none"`.
+10. **Months and weekends.** "en agosto", "ya es abril" label the month:
+    `{"date":{"kind":"calendar","month":8}}`. "el próximo abril" is
+    `{"date":{"kind":"calendarPeriod","month":4,"modifier":"next"}}`. "los
+    fines de semana" is a habit:
+    `{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA","SU"]}}`.

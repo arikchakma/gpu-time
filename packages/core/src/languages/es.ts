@@ -83,6 +83,8 @@ const NUMBER_WORDS: Record<string, number> = {
   veintiocho: 28,
   veintinueve: 29,
   treinta: 30,
+  cuarenta: 40,
+  cincuenta: 50,
   // Ordinals: 1st-5th match the "primer"/"tercer" apocope used before a noun.
   primero: 1,
   primer: 1,
@@ -96,7 +98,11 @@ const NUMBER_WORDS: Record<string, number> = {
   ultimo: -1,
   ultima: -1,
 };
-const TENS_WORDS: Record<string, number> = { treinta: 30 };
+const TENS_WORDS: Record<string, number> = {
+  treinta: 30,
+  cuarenta: 40,
+  cincuenta: 50,
+};
 
 const HOLIDAYS: Record<string, Extract<DateSpec, { kind: "holiday" }>["name"]> =
   {
@@ -167,6 +173,7 @@ const timeWords = new Set([
   "noche",
   "cada",
   "diario",
+  "diaria",
   "semanal",
   "quincenal",
   "mensual",
@@ -290,6 +297,7 @@ const spanish: Language = {
   },
   frequencyWords: {
     diario: "daily",
+    diaria: "daily",
     semanal: "weekly",
     quincenal: "weekly",
     mensual: "monthly",

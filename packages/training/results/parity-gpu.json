@@ -25,10 +25,10 @@
   "recoveryCorrect": true,
   "recoveries": 1,
   "spanish": {
-    "model": "40f3dd0da35d846bc2e6725497f8aa13f06decc85ea95a0fbcf6262ba5daae3b",
+    "model": "1b72da99ea41354a602ef96a40f824cbdc56bc4d1bd27120d10d880934f2aa86",
     "sequences": 5070,
     "tokensCompared": 60913,
-    "maxError": 0.00000762939453125,
+    "maxError": 0.000011444091796875,
     "labelMismatches": 0,
     "boundaryMismatches": 0,
     "mismatches": [],

@@ -186,15 +186,22 @@ def clock(value: dict, sentence: Sentence, style: int, lead: bool = True) -> Non
         sentence.add("45", "MINUTE", separator="")
         sentence.add("de la mañana", "MERIDIEM")
         return
-    if "second" not in value and rng.random() < 0.2:
+    if rng.random() < 0.2:
         display = hour % 12 or 12
+        second = value.get("second")
         if lead:
             sentence.add("a")
             sentence.add("la" if display == 1 else "las", "O")
-        sentence.add(str(display), "HOUR")
-        if minute:
-            sentence.add(":", separator="")
-            sentence.add(f"{minute:02d}", "MINUTE", separator="")
+        if minute and second is None and rng.random() < 0.3:
+            sentence.add(f"{display}{minute:02d}", "HOUR")
+        else:
+            sentence.add(str(display), "HOUR")
+            if minute or second is not None:
+                sentence.add(":", separator="")
+                sentence.add(f"{minute:02d}", "MINUTE", separator="")
+            if second is not None:
+                sentence.add(":", separator="")
+                sentence.add(f"{second:02d}", "SECOND", separator="")
         sentence.add(meridiem_marker(rng, hour), "MERIDIEM", separator=rng.choice(["", " "]))
         return
     digital = style % 2 == 0 or "second" in value
@@ -501,7 +508,13 @@ def render_general(clause: dict, sentence: Sentence, style: int) -> None:
         if clause["time"].get("end"):
             window(clause["time"], sentence, style)
         else:
-            clock(clause["time"]["start"], sentence, style)
+            dated = (clause.get("date") or {}).get("kind") == "calendar"
+            clock(
+                clause["time"]["start"],
+                sentence,
+                style,
+                lead=not (dated and rng.random() < 0.3),
+            )
     if rule:
         if rule.get("start"):
             lead_into(
