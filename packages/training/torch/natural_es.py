@@ -256,6 +256,99 @@ def _dated_clock(s, r) -> dict:
     return {"date": date, "time": {"start": start, "end": end}}
 
 
+def _counted_days(s, r) -> dict:
+    """A counted weekly series: "los próximos tres domingos a las diez"."""
+    day = r.randrange(7)
+    count = r.randint(2, 6)
+    s.add("los", "GLUE")
+    s.add(r.choice(["próximos", "siguientes"]), "DEICTIC")
+    s.add(spanish.NUMBERS_ES[count] if r.random() < 0.6 else str(count), "NUM")
+    s.add(spanish.DAYS_ES[day] + ("s" if day >= 5 else ""), "WEEKDAY")
+    clause = {
+        "recurrence": {
+            "freq": "weekly",
+            "interval": 1,
+            "count": count,
+            "byDay": [spanish.DAY_CODES[day]],
+        }
+    }
+    if r.random() < 0.5:
+        time = _time(r, r.randint(7, 21))
+        spanish.clock(time, s, r.randrange(4))
+        clause["time"] = {"start": time}
+    return clause
+
+
+ONES_ES = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"]
+TEENS_ES = [
+    "diez", "once", "doce", "trece", "catorce", "quince",
+    "dieciséis", "diecisiete", "dieciocho", "diecinueve",
+]
+TWENTIES_ES = [
+    "veinte", "veintiuno", "veintidós", "veintitrés", "veinticuatro",
+    "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve",
+]
+TENS_ES = {3: "treinta", 4: "cuarenta", 5: "cincuenta", 6: "sesenta", 7: "setenta", 8: "ochenta", 9: "noventa"}
+
+
+def spoken_year(year: int) -> list[str]:
+    words = ["dos", "mil"] if year >= 2000 else ["mil", "novecientos"]
+    rest = year % 100
+    if rest >= 30:
+        words.append(TENS_ES[rest // 10])
+        if rest % 10:
+            words += ["y", ONES_ES[rest % 10]]
+    elif rest >= 20:
+        words.append(TWENTIES_ES[rest - 20])
+    elif rest >= 10:
+        words.append(TEENS_ES[rest - 10])
+    elif rest:
+        words.append(ONES_ES[rest])
+    return words
+
+
+HOLIDAY_WORDS_ES = [
+    (["navidad"], "christmas"),
+    (["nochebuena"], "christmas-eve"),
+    (["nochevieja"], "new-years-eve"),
+    (["año", "nuevo"], "new-year"),
+    (["pascua"], "easter"),
+    (["halloween"], "halloween"),
+]
+
+
+def _edge_or_holiday_year(s, r) -> dict:
+    """ "el último día del mes" / "navidad de 2027" / "pascua de dos mil dieciocho"."""
+    if r.random() < 0.5:
+        unit = r.choice(["month", "year", "week"])
+        s.add("el", "O")
+        s.add(r.choice(["último", "ultimo"]), "EDGE")
+        s.add("día", "O")
+        if unit == "week":
+            s.add("de", "GLUE")
+            s.add("la", "GLUE")
+            s.add("semana", "UNIT")
+        else:
+            s.add("del", "GLUE")
+            s.add("mes" if unit == "month" else "año", "UNIT")
+        return {"date": {"kind": "relativeUnit", "unit": unit, "modifier": "this", "edge": "end"}}
+    words, name = r.choice(HOLIDAY_WORDS_ES)
+    if r.random() < 0.4:
+        s.add("el" if name in ("new-year", "halloween") else "la", "O")
+    for word in words:
+        s.add(word, "HOLIDAY")
+    if r.random() < 0.3:
+        return {"date": {"kind": "holiday", "name": name}}
+    year = r.randint(1990, 2035)
+    s.add(r.choice(["de", "del"]) if r.random() < 0.8 else "en", "GLUE")
+    if r.random() < 0.5:
+        s.add(str(year), "YEAR")
+    else:
+        for word in spoken_year(year):
+            s.add(word, "YEAR")
+    return {"date": {"kind": "holiday", "name": name, "year": year}}
+
+
 BUILDERS = {
     "plural-weekday": _plural_weekday,
     "approx-clock": _approx_clock,
@@ -266,12 +359,23 @@ BUILDERS = {
     "chat-terse": _chat_terse,
     "range-carrier": _range_carrier,
     "dated-clock": _dated_clock,
+    "counted-days": _counted_days,
+    "edge-holiday-year": _edge_or_holiday_year,
 }
 
 
 def render(s) -> Specification:
     r = s.rng
-    family = "dated-clock" if r.random() < 0.03 else r.choice(FAMILIES)
+    roll = r.random()
+    family = (
+        "dated-clock"
+        if roll < 0.03
+        else "counted-days"
+        if roll < 0.05
+        else "edge-holiday-year"
+        if roll < 0.07
+        else r.choice(FAMILIES)
+    )
     if family not in TERSE_FAMILIES and r.random() < 0.4:
         s.add(spanish.prefix_es(r))
     s.clause()

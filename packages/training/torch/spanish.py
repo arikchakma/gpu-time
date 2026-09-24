@@ -1133,10 +1133,35 @@ def terminator_es(rng: random.Random, text: str) -> str:
     return rng.choice([".", ".", ".", "!", "?"])
 
 
+def _idiom_es(rng: random.Random) -> str:
+    """Time words that name no time: "hoy por hoy", a goodbye, a general fact."""
+    pool = [text for text in borrowed_es() if text[:1].isalpha()]
+    body = rng.choice(pool) if pool else "la vida es así."
+    body = body[0].lower() + body[1:]
+    day = rng.randrange(7)
+    clause = body[0].upper() + body[1:].rstrip(".!?")
+    return rng.choice(
+        [
+            f"Hoy por hoy, {body}",
+            f"Hoy en día {body}",
+            f"{clause} hoy en día.",
+            f"{clause} hoy por hoy.",
+            f"Fue una mañana {rng.choice(['fría', 'tranquila', 'larga', 'preciosa'])}.",
+            rng.choice(["¡Hasta mañana!", "Buenas noches y hasta mañana.", "Bueno, hasta mañana.", "Adiós, hasta mañana."]),
+            f"El {DAYS_ES[day]} viene después del {DAYS_ES[day - 1]}.",
+            f"El {DAYS_ES[day]} es el día que viene después del {DAYS_ES[day - 1]}.",
+            f"La mañana {rng.choice(['estaba', 'era', 'fue'])} {rng.choice(['clara', 'fría', 'tranquila', 'gris', 'larga'])}.",
+            f"Se hizo rico de la noche a la mañana y {body}",
+        ]
+    )
+
+
 def sentence_es(rng: random.Random) -> str:
     """A negative row's whole text: no time expression, every token labelled O."""
     while True:
-        if rng.random() < 0.15:
+        if rng.random() < 0.2:
+            text = _idiom_es(rng)
+        elif rng.random() < 0.15:
             text = _numeric_es(rng)
         else:
             pool = borrowed_es()

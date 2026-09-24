@@ -25,6 +25,8 @@ export interface Language {
   number(text: string): number;
   /** Tens word plus ones ordinal, as in "twenty-first". NaN when unsupported. */
   compoundOrdinal(tens: string, ones: string): number;
+  /** A number spelled over several words, as in "dos mil diecisiete". */
+  spokenNumber?(words: string[]): number;
   /** Cheap check that input mentions time at all, for the no-expression hint. */
   mentionsTime(text: string): boolean;
   /**

@@ -85,6 +85,11 @@ const NUMBER_WORDS: Record<string, number> = {
   treinta: 30,
   cuarenta: 40,
   cincuenta: 50,
+  sesenta: 60,
+  setenta: 70,
+  ochenta: 80,
+  noventa: 90,
+  media: 0.5,
   // Ordinals: 1st-5th match the "primer"/"tercer" apocope used before a noun.
   primero: 1,
   primer: 1,
@@ -102,6 +107,22 @@ const TENS_WORDS: Record<string, number> = {
   treinta: 30,
   cuarenta: 40,
   cincuenta: 50,
+  sesenta: 60,
+  setenta: 70,
+  ochenta: 80,
+  noventa: 90,
+};
+const HUNDREDS: Record<string, number> = {
+  cien: 100,
+  ciento: 100,
+  doscientos: 200,
+  trescientos: 300,
+  cuatrocientos: 400,
+  quinientos: 500,
+  seiscientos: 600,
+  setecientos: 700,
+  ochocientos: 800,
+  novecientos: 900,
 };
 
 const HOLIDAYS: Record<string, Extract<DateSpec, { kind: "holiday" }>["name"]> =
@@ -112,6 +133,10 @@ const HOLIDAYS: Record<string, Extract<DateSpec, { kind: "holiday" }>["name"]> =
     nochevieja: "new-years-eve",
     halloween: "halloween",
     sanvalentin: "valentines",
+    pascua: "easter",
+    pascuas: "easter",
+    domingodepascua: "easter",
+    domingoderesurreccion: "easter",
   };
 
 function key(text: string): string {
@@ -147,6 +172,24 @@ function number(text: string): number {
   const word = key(text);
   if (Object.hasOwn(NUMBER_WORDS, word)) return NUMBER_WORDS[word];
   return /^-?\d+$/.test(text) ? Number(text) : NaN;
+}
+
+function spokenNumber(words: string[]): number {
+  let total = 0;
+  let current = 0;
+  for (const word of words.map(key)) {
+    if (word === "y") continue;
+    if (word === "mil") {
+      total += (current || 1) * 1000;
+      current = 0;
+    } else if (Object.hasOwn(HUNDREDS, word)) current += HUNDREDS[word];
+    else {
+      const value = number(word);
+      if (!Number.isInteger(value) || value < 0) return NaN;
+      current += value;
+    }
+  }
+  return total + current;
 }
 
 function compoundOrdinal(tens: string, ones: string): number {
@@ -253,6 +296,7 @@ const spanish: Language = {
   unit,
   number,
   compoundOrdinal,
+  spokenNumber,
   mentionsTime,
   // Only the full name pluralizes; "lun" stays an abbreviation.
   isPluralWeekday: (text) =>
@@ -289,19 +333,28 @@ const spanish: Language = {
     esta: "this",
     proximo: "next",
     proxima: "next",
+    proximos: "next",
+    proximas: "next",
     "que viene": "next",
     siguiente: "next",
+    siguientes: "next",
     pasado: "last",
     pasada: "last",
     anterior: "last",
+    ultimo: "last",
+    ultima: "last",
   },
   frequencyWords: {
     diario: "daily",
     diaria: "daily",
+    diariamente: "daily",
     semanal: "weekly",
+    semanalmente: "weekly",
     quincenal: "weekly",
     mensual: "monthly",
+    mensualmente: "monthly",
     anual: "yearly",
+    anualmente: "yearly",
   },
   frequencyIntervals: {
     quincenal: 2,
@@ -320,6 +373,8 @@ const spanish: Language = {
     finales: "end",
     fin: "end",
     fines: "end",
+    ultimo: "end",
+    ultima: "end",
   },
   endAbbreviations: new Set(),
   timeNamed: { mediodia: "noon", medianoche: "midnight" },

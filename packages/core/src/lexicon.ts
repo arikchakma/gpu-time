@@ -244,6 +244,8 @@ export const holidayNames: Record<
 > = {
   christmas: "christmas",
   christmaseve: "christmas-eve",
+  easter: "easter",
+  eastersunday: "easter",
   newyear: "new-year",
   newyearsday: "new-year",
   newyearseve: "new-years-eve",

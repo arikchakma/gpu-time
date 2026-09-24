@@ -207,6 +207,92 @@ describe("modifier after the unit", () => {
     ).toEqual(clock(6, 35));
   });
 
+  it("reads último, media hora, spoken years and counted weekdays", () => {
+    expect(read("la última semana", ["O", "DEICTIC", "UNIT"])).toEqual({
+      clauses: [
+        { date: { kind: "relativeUnit", unit: "week", modifier: "last" } },
+      ],
+    });
+    expect(read("en media hora", ["DIR_AFTER", "NUM", "UNIT"])).toEqual({
+      clauses: [{ shift: { amount: 0.5, unit: "hour", direction: "after" } }],
+    });
+    expect(
+      read("en mil novecientos noventa y cinco", [
+        "O",
+        "YEAR",
+        "YEAR",
+        "YEAR",
+        "YEAR",
+        "YEAR",
+      ]),
+    ).toEqual({ clauses: [{ date: { kind: "calendar", year: 1995 } }] });
+    expect(
+      read("los próximos tres domingos", ["GLUE", "DEICTIC", "NUM", "WEEKDAY"]),
+    ).toEqual({
+      clauses: [
+        {
+          recurrence: { freq: "weekly", interval: 1, count: 3, byDay: ["SU"] },
+        },
+      ],
+    });
+    expect(read("cada cinco minutos", ["RECUR", "NUM", "UNIT"])).toEqual({
+      clauses: [{ recurrence: { freq: "minutely", interval: 5 } }],
+    });
+    expect(read("en pascua", ["O", "HOLIDAY"])).toEqual({
+      clauses: [{ date: { kind: "holiday", name: "easter" } }],
+    });
+  });
+
+  it("reads a counted weekday, a last day, a holiday year and seconds", () => {
+    expect(
+      read("tres domingos a las diez", [
+        "NUM",
+        "WEEKDAY",
+        "GLUE",
+        "GLUE",
+        "HOUR",
+      ]),
+    ).toEqual({
+      clauses: [
+        {
+          time: { start: { hour: 10, minute: 0 } },
+          recurrence: { freq: "weekly", interval: 1, count: 3, byDay: ["SU"] },
+        },
+      ],
+    });
+    expect(read("cada tres domingos", ["RECUR", "NUM", "WEEKDAY"])).toEqual({
+      clauses: [{ recurrence: { freq: "weekly", interval: 3, byDay: ["SU"] } }],
+    });
+    expect(
+      read("el último día del mes", ["O", "EDGE", "O", "GLUE", "UNIT"]),
+    ).toEqual({
+      clauses: [
+        {
+          date: {
+            kind: "relativeUnit",
+            unit: "month",
+            modifier: "this",
+            edge: "end",
+          },
+        },
+      ],
+    });
+    expect(
+      read("pascua de dos mil dieciocho", [
+        "HOLIDAY",
+        "GLUE",
+        "YEAR",
+        "YEAR",
+        "YEAR",
+      ]),
+    ).toEqual({
+      clauses: [{ date: { kind: "holiday", name: "easter", year: 2018 } }],
+    });
+    expect(read("cada 30 segundos", ["RECUR", "NUM", "UNIT"])).toEqual({
+      clauses: [{ recurrence: { freq: "secondly", interval: 30 } }],
+    });
+  });
+
   it("splits a three-digit compact clock", () => {
     expect(read("a las 630am", ["GLUE", "GLUE", "HOUR", "MERIDIEM"])).toEqual({
       clauses: [{ time: { start: { hour: 6, minute: 30 } } }],

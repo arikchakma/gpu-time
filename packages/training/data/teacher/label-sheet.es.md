@@ -79,3 +79,29 @@ never from what compiles. If you cannot express the meaning, return
     `{"date":{"kind":"calendarPeriod","month":4,"modifier":"next"}}`. "los
     fines de semana" is a habit:
     `{"recurrence":{"freq":"weekly","interval":1,"byDay":["SA","SU"]}}`.
+11. **Forms added later.** These compile now; use exactly these labels.
+    - "la última semana": `última`/DEICTIC `semana`/UNIT, schedule
+      `{"date":{"kind":"relativeUnit","unit":"week","modifier":"last"}}`.
+    - "en media hora": `en`/DIR_AFTER `media`/NUM `hora`/UNIT, schedule
+      `{"shift":{"amount":0.5,"unit":"hour","direction":"after"}}`.
+    - "dos mil diecisiete": every word of the year YEAR, including `y`, schedule
+      `{"date":{"kind":"calendar","year":2017}}`.
+    - "los próximos tres domingos": `los`/GLUE `próximos`/DEICTIC `tres`/NUM
+      `domingos`/WEEKDAY, schedule
+      `{"recurrence":{"freq":"weekly","interval":1,"count":3,"byDay":["SU"]}}`.
+    - "cada cinco minutos": `cada`/RECUR `cinco`/NUM `minutos`/UNIT, schedule
+      `{"recurrence":{"freq":"minutely","interval":5}}`.
+    - "pascua", "domingo de resurrección": every word HOLIDAY, schedule
+      `{"date":{"kind":"holiday","name":"easter"}}`.
+    - "alarma diaria", "diariamente": `diaria`/FREQ, schedule
+      `{"recurrence":{"freq":"daily","interval":1}}`.
+    - "el último día del mes": `último`/EDGE, `día` O, `del`/GLUE, `mes`/UNIT,
+      schedule
+      `{"date":{"kind":"relativeUnit","unit":"month","modifier":"this","edge":"end"}}`.
+    - "pascua de dos mil dieciocho", "navidad de 2027": the holiday words
+      HOLIDAY, `de`/GLUE, every year word YEAR, schedule
+      `{"date":{"kind":"holiday","name":"easter","year":2018}}`.
+    - "cada 30 segundos": `cada`/RECUR `30`/NUM `segundos`/UNIT, schedule
+      `{"recurrence":{"freq":"secondly","interval":30}}`.
+    - "tres domingos" without "cada" counts them:
+      `{"recurrence":{"freq":"weekly","interval":1,"count":3,"byDay":["SU"]}}`.

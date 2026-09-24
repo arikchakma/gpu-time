@@ -56,6 +56,8 @@ const isThisWord = (text: string, language: Language) =>
   lookup(language.modifiers, fold(text.toLowerCase())) === "this";
 
 const unitFrequencies: Partial<Record<Unit, Recurrence["freq"]>> = {
+  second: "secondly",
+  minute: "minutely",
   hour: "hourly",
   day: "daily",
   week: "weekly",
@@ -498,7 +500,9 @@ function compileDateAndTime(
           edge ??
           (language.endAbbreviations.has(word) ||
           tokens.some(
-            (part) => language.edges[fold(part.text.toLowerCase())] === "end",
+            (part) =>
+              part.label !== Role.DEICTIC &&
+              language.edges[fold(part.text.toLowerCase())] === "end",
           )
             ? "end"
             : undefined);
@@ -683,7 +687,20 @@ function compileDateAndTime(
       }
 
       case Role.YEAR: {
-        const value = language.number(word);
+        let value = language.number(word);
+        if (!/^\d+$/.test(word) && language.spokenNumber) {
+          let last = index;
+          for (let next = index + 1; next < tokens.length; next++) {
+            if (tokens[next].label === Role.YEAR) last = next;
+            else if (lower(tokens[next]) !== "y") break;
+          }
+          if (last > index) {
+            value = language.spokenNumber(
+              tokens.slice(index, last + 1).map((part) => part.text),
+            );
+            index = last;
+          }
+        }
         if (!Number.isInteger(value) || value < 1 || value > 9999)
           fail(token, "invalid-date", "Year is out of range.");
         // Two-digit years pivot at 69, the POSIX strptime rule.
@@ -815,6 +832,17 @@ function compileDateAndTime(
         days: selected,
         ...(modifier ? { modifier } : {}),
       };
+  }
+  if (
+    clause.date?.kind === "holiday" &&
+    calendar &&
+    !calendarEnd &&
+    calendar.month === undefined &&
+    calendar.day === undefined &&
+    calendar.year !== undefined
+  ) {
+    clause.date = { ...clause.date, year: calendar.year };
+    calendar = undefined;
   }
   if (calendar) {
     delete clause.recurrence;
@@ -1162,6 +1190,20 @@ function compileClause(
     }
     return false;
   });
+  const spoken = selectors.filter((token) => token.kind !== 3);
+  const countedIndex = spoken.findIndex(
+    (token, index) =>
+      token.label === Role.NUM &&
+      spoken[index + 1]?.label === Role.WEEKDAY &&
+      spoken
+        .slice(0, index)
+        .some(
+          (lead) =>
+            lead.label === Role.DEICTIC &&
+            lookup(language.modifiers, fold(lower(lead))) === "next",
+        ),
+  );
+  const counted = countedIndex < 0 ? undefined : spoken[countedIndex];
   // The weekly default belongs to a weekday. "every morning" repeats once a day
   // and "every May" once a year, so a lone day part or month sets its own period.
   const alone = (label: Role) =>
@@ -1188,6 +1230,7 @@ function compileClause(
   let recurrence: Recurrence | undefined =
     selectors.some((token) => token.label === Role.RECUR) ||
     implicitOrdinal ||
+    counted ||
     (pluralDayGroup && !selectors.some((token) => token.label === Role.DEICTIC))
       ? { freq: period, interval: 1 }
       : undefined;
@@ -1363,6 +1406,15 @@ function compileClause(
       continue;
     }
 
+    if (counted && token === counted) {
+      const count = language.number(token.text);
+      if (!Number.isInteger(count) || count < 1)
+        fail(token, "invalid-count", "Occurrence count must be positive.");
+      recurrence!.count = count;
+      continue;
+    }
+    if (counted && token.label === Role.DEICTIC) continue;
+
     const isWeekdayInterval =
       token.label === Role.NUM &&
       [Role.WEEKDAY, Role.DAYGROUP, Role.UNIT].includes(
@@ -1377,7 +1429,12 @@ function compileClause(
           "Recurrence interval must be positive.",
         );
       }
-      recurrence.interval = interval;
+      if (
+        tokens[index + 1]?.label === Role.WEEKDAY &&
+        !selectors.some((part) => part.label === Role.RECUR)
+      )
+        recurrence.count = interval;
+      else recurrence.interval = interval;
       continue;
     }
 

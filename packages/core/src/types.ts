@@ -52,7 +52,9 @@ export type DateSpec =
         | "halloween"
         | "valentines"
         | "july-4th"
-        | "thanksgiving";
+        | "thanksgiving"
+        | "easter";
+      year?: number;
     };
 export type DayPart = "morning" | "afternoon" | "evening" | "night";
 export type ClockTime =
@@ -88,7 +90,14 @@ export interface Duration {
   unit: Unit;
 }
 export interface Recurrence {
-  freq: "hourly" | "daily" | "weekly" | "monthly" | "yearly";
+  freq:
+    | "secondly"
+    | "minutely"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly";
   interval: number;
   byDay?: Weekday[];
   byMonthDay?: number[];
