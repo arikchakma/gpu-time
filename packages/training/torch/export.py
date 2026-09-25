@@ -55,7 +55,15 @@ SPANISH_SETS = (
 # Hand-authored, not rendered by the training generators. Sets seeded from the
 # grammar (labels, grammar, grammar-variations) measure the generator against
 # itself and stay out of the gate.
-GOLD_SETS = ("chat", "prose", "user-cases", "negatives", "adversarial")
+GOLD_SETS = (
+    "chat",
+    "prose",
+    "user-cases",
+    "negatives",
+    "adversarial",
+    "english-massive-dev",
+    "english-mtop-dev",
+)
 GATE_CRITERION = (
     "Exact schedules must not regress in any gold set or family. Reserved-carrier "
     "exact decoded labels and boundaries must improve, or tie an already perfect "

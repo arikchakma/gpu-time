@@ -184,7 +184,7 @@ export function month(text: string): number | undefined {
 }
 
 export function unit(text: string): Unit | undefined {
-  const word = text.toLowerCase();
+  const word = text.toLowerCase().replace(/['’]s$/, "");
   const abbreviation = Object.hasOwn(unitAbbreviations, word)
     ? unitAbbreviations[word]
     : undefined;

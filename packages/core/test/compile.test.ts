@@ -1164,3 +1164,16 @@ it("ignores a deadline word in later prose that bounds nothing", () => {
     ],
   });
 });
+
+it("reads a possessive relative day or unit", () => {
+  const schedule = (text: string, labels: Label[]) =>
+    compile(text, oracle(text, labels))[0].schedule;
+  expect(schedule("tomorrows dinner", ["REL_DAY", "O"])).toEqual({
+    clauses: [{ date: { kind: "relativeDay", offset: 1 } }],
+  });
+  expect(schedule("next week's lunch", ["DEICTIC", "UNIT", "O"])).toEqual({
+    clauses: [
+      { date: { kind: "relativeUnit", unit: "week", modifier: "next" } },
+    ],
+  });
+});

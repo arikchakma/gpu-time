@@ -461,6 +461,11 @@ function compileDateAndTime(
         let phrase = word;
         while (tokens[index + 1]?.label === Role.REL_DAY)
           phrase += " " + fold(tokens[++index].text.toLowerCase());
+        if (
+          !Object.hasOwn(language.relativeDays, phrase) &&
+          Object.hasOwn(language.relativeDays, phrase.replace(/['’]?s$/, ""))
+        )
+          phrase = phrase.replace(/['’]?s$/, "");
         if (!Object.hasOwn(language.relativeDays, phrase))
           fail(token, "unsupported", "Unknown relative day.");
         clause.date = {

@@ -34,11 +34,15 @@ const parser = await defineParser({ backend: "cpu", tokens: true });
 const packRoot = dist
   ? dirname(resolve(dist))
   : join(packageRoot, "../core/dist");
+const code = argument("--language") ?? "en";
 const pack =
-  argument("--language") === "es"
+  code === "es" || argument("--weights")
     ? {
-        ...(await import(pathToFileURL(join(packRoot, "languages/es.js")).href))
-          .default,
+        ...(
+          await import(
+            pathToFileURL(join(packRoot, `languages/${code}.js`)).href
+          )
+        ).default,
         ...(argument("--weights")
           ? {
               model: (
