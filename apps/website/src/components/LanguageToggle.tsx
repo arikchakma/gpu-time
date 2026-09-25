@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { clsx } from "cn";
 
 export type Language = "en" | "es";
 
@@ -24,7 +24,7 @@ export function LanguageToggle(props: LanguageToggleProps) {
           type="button"
           aria-pressed={value === language}
           onClick={() => onChange(language)}
-          className={cn(
+          className={clsx(
             "rounded-md px-2 py-0.5 text-label font-medium uppercase transition-colors",
             value === language
               ? "bg-neutral-900 text-white"
