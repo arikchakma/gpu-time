@@ -26,10 +26,44 @@ BENCH = ROOT.parent / "benchmark"
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 SHIPPED = CORE / "src/model/weights.gen.ts"
 GOLD = ROOT / "data/gold"
+def targets() -> dict:
+    return {
+        "en": {
+            "weights": SHIPPED,
+            "report": ROOT / "active/export-report.json",
+            "parity": ROOT / "active/parity",
+            "reserved": ROOT / "data/synth/natural-reserved.jsonl",
+            "bare": ROOT / "data/synth/natural-bare.jsonl",
+        },
+        "es": {
+            "weights": CORE / "src/model/weights-es.gen.ts",
+            "report": CORE / "src/model/weights-es.report.json",
+            "parity": ROOT / "active/es/parity",
+            "reserved": ROOT / "data/synth/es-reserved.jsonl",
+            "bare": None,
+        },
+    }
+
+
+SPANISH_SETS = (
+    "spanish-real",
+    "spanish-teacher",
+    "spanish-fresh",
+    "spanish-massive-dev",
+    "spanish-mtop-dev",
+)
 # Hand-authored, not rendered by the training generators. Sets seeded from the
 # grammar (labels, grammar, grammar-variations) measure the generator against
 # itself and stay out of the gate.
-GOLD_SETS = ("chat", "prose", "user-cases", "negatives", "adversarial")
+GOLD_SETS = (
+    "chat",
+    "prose",
+    "user-cases",
+    "negatives",
+    "adversarial",
+    "english-massive-dev",
+    "english-mtop-dev",
+)
 GATE_CRITERION = (
     "Exact schedules must not regress in any gold set or family. Reserved-carrier "
     "exact decoded labels and boundaries must improve, or tie an already perfect "
@@ -117,9 +151,22 @@ def artifact_model(artifact: dict) -> TimeTagger:
     return model
 
 
+PREAMBLE = "export const weights = "
+METADATA_PREAMBLE = "export const metadata = "
+
+
+def read_object(text: str, preamble: str) -> dict:
+    start = text.index(preamble) + len(preamble)
+    return json.loads(text[start : text.index(" as const;", start)])
+
+
 def read_artifact(path: Path) -> dict:
     text = path.read_text()
-    return json.loads(text[text.index("{") : text.rindex("}") + 1])
+    artifact = read_object(text, PREAMBLE)
+    metadata = read_object(text, METADATA_PREAMBLE)
+    for segment in artifact["segments"]:
+        segment["shape"] = metadata["shapes"][segment["name"]]
+    return {**metadata, **artifact}
 
 
 def digest(path: Path) -> str:
@@ -412,6 +459,150 @@ def answer_scores(built: Path, sets: list[str], directory: Path) -> dict:
         }
 
 
+def shipped_language(destination: Path) -> str | None:
+    return next(
+        (
+            code
+            for code, target in targets().items()
+            if destination.resolve() == target["weights"].resolve()
+        ),
+        None,
+    )
+
+
+def summarize(results: list[dict]) -> dict:
+    return {
+        result["name"]: {
+            "total": result["total"],
+            "correct": result["correct"],
+            "sha256": result["sha256"],
+            "failures": [
+                example["id"] for example in result["examples"] if not example["correct"]
+            ],
+            "families": {
+                family: {
+                    "total": sum(
+                        example.get("family", result["name"]) == family
+                        for example in result["examples"]
+                    ),
+                    "correct": sum(
+                        example["correct"]
+                        and example.get("family", result["name"]) == family
+                        for example in result["examples"]
+                    ),
+                }
+                for family in sorted(
+                    {example.get("family", result["name"]) for example in result["examples"]}
+                )
+            },
+        }
+        for result in results
+    }
+
+
+def build_dist(scratch: Path, weights_module: Path | None = None) -> Path:
+    subprocess.run(
+        [
+            "node",
+            "--experimental-strip-types",
+            str(CORE / "scripts/build.ts"),
+            *(["--weights", str(weights_module)] if weights_module else []),
+            "--outdir",
+            str(scratch / "dist"),
+            "--report-only",
+        ],
+        cwd=CORE,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
+    return scratch / "dist"
+
+
+def spanish_scores(weights_module: Path, dist: Path, sets: list[str]) -> dict:
+    with tempfile.TemporaryDirectory() as out:
+        measured = Path(out) / "sets.json"
+        subprocess.run(
+            [
+                "node",
+                "--experimental-strip-types",
+                str(BENCH / "src/evaluate-model.ts"),
+                "--dist",
+                str(dist / "schedule.js"),
+                "--language",
+                "es",
+                "--weights",
+                str(weights_module),
+                "--dir",
+                str(GOLD),
+                "--sets",
+                ",".join(sets),
+                "--out",
+                str(measured),
+            ],
+            cwd=BENCH,
+            check=True,
+            stdout=subprocess.DEVNULL,
+        )
+        scores = summarize(json.loads(measured.read_text())["results"])
+        coverage = Path(out) / "coverage.json"
+        subprocess.run(
+            [
+                "node",
+                "--experimental-strip-types",
+                str(BENCH / "src/evaluate-spanish.ts"),
+                "--dist",
+                str(dist),
+                "--model-report",
+                str(targets()["es"]["report"]),
+                "--weights",
+                str(weights_module),
+                "--out",
+                str(coverage),
+            ],
+            cwd=BENCH,
+            check=True,
+            stdout=subprocess.DEVNULL,
+        )
+        measured = json.loads(coverage.read_text())
+        scores["spanish-coverage"] = {
+            "total": measured["total"],
+            "correct": measured["correct"],
+            "sha256": measured["sourceSha256"],
+            "failures": [case["id"] for case in measured["cases"] if not case["correct"]],
+            "families": measured["families"],
+        }
+        return scores
+
+
+def spanish_answers(weights_module: Path, dist: Path, corpus: Path) -> dict:
+    with tempfile.TemporaryDirectory() as out:
+        measured = Path(out) / "answers.json"
+        subprocess.run(
+            [
+                "node",
+                "--experimental-strip-types",
+                str(BENCH / "src/evaluate-model.ts"),
+                "--dist",
+                str(dist / "schedule.js"),
+                "--language",
+                "es",
+                "--weights",
+                str(weights_module),
+                "--dir",
+                str(corpus.parent),
+                "--sets",
+                corpus.stem,
+                "--out",
+                str(measured),
+            ],
+            cwd=BENCH,
+            check=True,
+            stdout=subprocess.DEVNULL,
+        )
+        result = summarize(json.loads(measured.read_text())["results"])[corpus.stem]
+        return {corpus.stem: {key: result[key] for key in ("total", "correct", "failures")}}
+
+
 def gold_scores(weights_module: Path, scratch: Path, sets: list[str]) -> dict:
     """Exact-schedule accuracy of one weights module on the hand-authored sets.
 
@@ -419,22 +610,8 @@ def gold_scores(weights_module: Path, scratch: Path, sets: list[str]) -> dict:
     scored through the parser users receive, not through core's sources.
     """
     scratch.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [
-            "node",
-            "--experimental-strip-types",
-            str(CORE / "scripts/build.ts"),
-            "--weights",
-            str(weights_module),
-            "--outdir",
-            str(scratch / "dist"),
-            # Size is a separate gate; do not fail promotion on the byte budget.
-            "--report-only",
-        ],
-        cwd=CORE,
-        check=True,
-        stdout=subprocess.DEVNULL,
-    )
+    # Size is a separate gate; do not fail promotion on the byte budget.
+    build_dist(scratch, weights_module)
     measured = scratch / "gold.json"
     subprocess.run(
         [
@@ -452,36 +629,7 @@ def gold_scores(weights_module: Path, scratch: Path, sets: list[str]) -> dict:
         check=True,
         stdout=subprocess.DEVNULL,
     )
-    return {
-        result["name"]: {
-            "total": result["total"],
-            "correct": result["correct"],
-            "sha256": result["sha256"],
-            "failures": [
-                example["id"]
-                for example in result["examples"]
-                if not example["correct"]
-            ],
-            "families": {
-                family: {
-                    "total": sum(
-                        example.get("family", result["name"]) == family
-                        for example in result["examples"]
-                    ),
-                    "correct": sum(
-                        example["correct"]
-                        and example.get("family", result["name"]) == family
-                        for example in result["examples"]
-                    ),
-                }
-                for family in sorted({
-                    example.get("family", result["name"])
-                    for example in result["examples"]
-                })
-            },
-        }
-        for result in json.loads(measured.read_text())["results"]
-    }
+    return summarize(json.loads(measured.read_text())["results"])
 
 
 def gate(
@@ -489,11 +637,13 @@ def gate(
     threshold: float,
     source: str,
     reserved: Path,
-    bare: Path,
+    bare: Path | None,
     baseline_report: Path,
+    language: str = "en",
 ):
+    shipped = targets()[language]["weights"]
     for corpus_path, flag in ((reserved, "--reserved"), (bare, "--bare")):
-        if not corpus_path.exists():
+        if corpus_path is not None and not corpus_path.exists():
             raise FileNotFoundError(
                 f"{corpus_path} is missing; run check-natural.py {flag} to build it."
             )
@@ -509,24 +659,27 @@ def gate(
             "checkpoint": previous["checkpoint"],
             "checkpointSha256": previous["checkpointSha256"],
             "artifactSha256": previous["artifactSha256"],
-            "artifact": portable(SHIPPED),
+            "artifact": portable(shipped),
         }
-        if not SHIPPED.exists() or digest(SHIPPED) != previous["artifactSha256"]:
+        if not shipped.exists() or digest(shipped) != previous["artifactSha256"]:
             failures.append("shipped weights do not match the pinned baseline")
         else:
-            artifact = read_artifact(SHIPPED)
+            artifact = read_artifact(shipped)
 
     corpus, candidate, baseline = score_corpus(
         reserved, "reserved", reference, threshold, artifact
     )
     if baseline:
         baseline.update(pinned)
-    bare_corpus, bare_candidate, bare_baseline = score_corpus(
-        bare, "bare", reference, threshold, artifact
+    bare_corpus, bare_candidate, bare_baseline = (
+        score_corpus(bare, "bare", reference, threshold, artifact)
+        if bare is not None
+        else (None, None, None)
     )
 
-    sets = [name for name in GOLD_SETS if (GOLD / f"{name}.jsonl").exists()]
-    for name in GOLD_SETS:
+    expected = SPANISH_SETS if language == "es" else GOLD_SETS
+    sets = [name for name in expected if (GOLD / f"{name}.jsonl").exists()]
+    for name in expected:
         if name not in sets:
             failures.append(f"missing gold set: {name}")
     with tempfile.TemporaryDirectory() as scratch:
@@ -534,25 +687,32 @@ def gate(
         module = scratch / "candidate/weights.gen.ts"
         module.parent.mkdir(parents=True, exist_ok=True)
         module.write_text(source)
-        gold_candidate = (
-            gold_scores(module, scratch / "candidate", sets) if sets else {}
-        )
-        gold_baseline = (
-            gold_scores(SHIPPED, scratch / "baseline", sets)
-            if sets and artifact
-            else None
-        )
-        # Graded on the schedule users receive; token labels only warn.
-        generated = [reserved.stem, bare.stem]
-        answers = answer_scores(scratch / "candidate", generated, reserved.parent)
-        answers_before = (
-            answer_scores(scratch / "baseline", generated, reserved.parent)
-            if sets and artifact
-            else None
-        )
+        if language == "es":
+            dist = build_dist(scratch / "package")
+            gold_candidate = spanish_scores(module, dist, sets)
+            gold_baseline = spanish_scores(shipped, dist, sets) if artifact else None
+            answers = spanish_answers(module, dist, reserved)
+            answers_before = spanish_answers(shipped, dist, reserved) if artifact else None
+        else:
+            gold_candidate = (
+                gold_scores(module, scratch / "candidate", sets) if sets else {}
+            )
+            gold_baseline = (
+                gold_scores(shipped, scratch / "baseline", sets)
+                if sets and artifact
+                else None
+            )
+            # Graded on the schedule users receive; token labels only warn.
+            generated = [reserved.stem, bare.stem]
+            answers = answer_scores(scratch / "candidate", generated, reserved.parent)
+            answers_before = (
+                answer_scores(scratch / "baseline", generated, reserved.parent)
+                if sets and artifact
+                else None
+            )
 
     decision = decide(gold_candidate, gold_baseline, failures)
-    decision["missingSets"] = [name for name in GOLD_SETS if name not in sets]
+    decision["missingSets"] = [name for name in expected if name not in sets]
     if pinned:
         decision["baselineIdentity"] = pinned
     # Carrier-rich sentences cannot expose an over-splitting regression on terse
@@ -567,14 +727,16 @@ def gate(
             "answersBaseline": (answers_before or {}).get(reserved.stem),
             "labels": {"candidate": candidate, "baseline": baseline},
         },
-        "bare": {
+    }
+    if bare is not None:
+        decision["synthetic"]["bare"] = {
             "corpus": bare_corpus,
             "answers": answers.get(bare.stem),
             "answersBaseline": (answers_before or {}).get(bare.stem),
             "labels": {"candidate": bare_candidate, "baseline": bare_baseline},
-        },
-    }
-    for name, stem in (("reserved", reserved.stem), ("bare", bare.stem)):
+        }
+    corpora = [("reserved", reserved.stem)] + ([("bare", bare.stem)] if bare else [])
+    for name, stem in corpora:
         result = decision["synthetic"][name]
         now, before = result["answers"], result["answersBaseline"]
         if now is None:
@@ -622,15 +784,17 @@ def parity_texts(data: Path, prefix: Path):
 
 def protected_output(path: Path) -> bool:
     path = path.resolve()
-    return path == SHIPPED.resolve() or any(
+    return shipped_language(path) is not None or any(
         path.is_relative_to((ROOT / name).resolve()) for name in ("active", "exports")
     )
 
 
 def validate_outputs(destination: Path, report: Path, parity: Path | None):
-    if destination.resolve() == SHIPPED.resolve():
-        if report.resolve() != (ROOT / "active/export-report.json").resolve() or (
-            parity is None or parity.resolve() != (ROOT / "active/parity").resolve()
+    language = shipped_language(destination)
+    if language:
+        target = targets()[language]
+        if report.resolve() != target["report"].resolve() or (
+            parity is None or parity.resolve() != target["parity"].resolve()
         ):
             raise ValueError("Shipped exports require the active report and parity destinations.")
     else:
@@ -664,13 +828,14 @@ def snapshot(destination: Path, artifact_hash: str, derived: bool):
     source_hash = hashlib.sha256(
         json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()
+    shipped = shipped_language(destination) is not None
     parent = (
         ROOT / "exports"
-        if destination.resolve() == SHIPPED.resolve()
+        if shipped
         else destination.with_name(f"{destination.name}.sources")
     )
     directory = parent / artifact_hash / source_hash / "source"
-    if destination.resolve() != SHIPPED.resolve() and protected_output(directory):
+    if not shipped and protected_output(directory):
         raise ValueError("Candidate source snapshots must stay outside active export history.")
     if directory.exists():
         for name, content in contents.items():
@@ -695,12 +860,13 @@ def export(
     report_path: Path,
     parity_prefix: Path | None,
     reserved: Path,
-    bare: Path,
+    bare: Path | None,
     baseline_report: Path,
     force: bool,
     skip_gate: bool = False,
+    language: str = "en",
 ):
-    if skip_gate and destination.resolve() == SHIPPED.resolve():
+    if skip_gate and shipped_language(destination):
         raise SystemExit("--skip-gate cannot write the shipped weights module.")
     validate_outputs(destination, report_path, parity_prefix)
     torch.set_num_threads(4)
@@ -773,29 +939,42 @@ def export(
     )
     threshold = calibration["threshold"]
 
+    # Two exports: the bundler drops what the runtime never reads. One object
+    # ships the labels and every tensor shape.
     artifact = {
-        "version": 1,
-        "hidden": 32,
         "featureRows": reference.feature_rows,
         "storage": storage,
         "roleClasses": ROLE_CLASSES,
         "boundaryThreshold": threshold,
         **options,
+        "q": wire["q"],
+        "segments": [
+            {key: value for key, value in segment.items() if key != "shape"}
+            for segment in segments
+        ],
+    }
+    metadata = {
+        "version": 1,
+        "hidden": 32,
         "labels": labels,
-        **wire,
+        "shapes": {segment["name"]: segment["shape"] for segment in segments},
     }
     # Built before the gate: the gold sets are scored through a package built
     # from this exact module.
     source = (
-        "// Generated by training/export.py. The encoded string is model data, not source logic.\nexport const weights = "
+        "// Generated by training/export.py. The encoded string is model data, not source logic.\n"
+        + PREAMBLE
         + json.dumps(artifact, separators=(",", ":"))
+        + " as const;\n"
+        + METADATA_PREAMBLE
+        + json.dumps(metadata, separators=(",", ":"))
         + " as const;\n"
     )
 
     promotion = (
         {"criterion": "skipped", "accepted": True, "failures": [], "synthetic": None}
         if skip_gate
-        else gate(reference, threshold, source, reserved, bare, baseline_report)
+        else gate(reference, threshold, source, reserved, bare, baseline_report, language)
     )
     if not promotion["accepted"]:
         if not force:
@@ -921,18 +1100,13 @@ def export(
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", type=Path, required=True)
-    parser.add_argument("--out", type=Path, default=SHIPPED)
+    parser.add_argument("--language", choices=["en", "es"], default="en")
+    parser.add_argument("--out", type=Path)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--parity", type=Path)
-    parser.add_argument(
-        "--reserved", type=Path, default=ROOT / "data/synth/natural-reserved.jsonl"
-    )
-    parser.add_argument(
-        "--bare", type=Path, default=ROOT / "data/synth/natural-bare.jsonl"
-    )
-    parser.add_argument(
-        "--baseline", type=Path, default=ROOT / "active/export-report.json"
-    )
+    parser.add_argument("--reserved", type=Path)
+    parser.add_argument("--bare", type=Path)
+    parser.add_argument("--baseline", type=Path)
     parser.add_argument("--force", action="store_true")
     parser.add_argument(
         "--skip-gate",
@@ -940,23 +1114,24 @@ def main(argv=None):
         help="Skip promotion scoring. Refused when --out is the shipped module.",
     )
     args = parser.parse_args(argv)
-    shipped = args.out.resolve() == SHIPPED.resolve()
+    target = targets()[args.language]
+    out = args.out or target["weights"]
+    shipped = shipped_language(out) is not None
     report = args.report or (
-        ROOT / "active/export-report.json" if shipped else args.out.with_suffix(".report.json")
+        target["report"] if shipped else out.with_suffix(".report.json")
     )
-    parity = args.parity or (
-        ROOT / "active/parity" if shipped else args.out.with_suffix(".parity")
-    )
+    parity = args.parity or (target["parity"] if shipped else out.with_suffix(".parity"))
     export(
         args.checkpoint,
-        args.out,
+        out,
         report,
         parity,
-        args.reserved,
-        args.bare,
-        args.baseline,
+        args.reserved or target["reserved"],
+        args.bare or target["bare"],
+        args.baseline or target["report"],
         args.force,
         args.skip_gate,
+        args.language,
     )
 
 

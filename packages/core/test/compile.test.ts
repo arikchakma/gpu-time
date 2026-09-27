@@ -1097,8 +1097,9 @@ it("rejects a four-digit run that is not a clock", () => {
 
 it("keeps a separated clock reading its own minute token", () => {
   const text = "11:15";
-  expect(compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0].schedule)
-    .toEqual({ clauses: [{ time: { start: { hour: 11, minute: 15 } } }] });
+  expect(
+    compile(text, oracle(text, ["HOUR", "O", "MINUTE"]))[0].schedule,
+  ).toEqual({ clauses: [{ time: { start: { hour: 11, minute: 15 } } }] });
 });
 
 it("repairs a compact clock range the model read as a date", () => {
@@ -1131,8 +1132,10 @@ it("reads a four-digit clock that only a meridiem marks", () => {
 
 it("leaves a year alone when no clock opened the range", () => {
   const years = "2026-2027";
-  const schedule = compile(years, oracle(years, ["YEAR", "RANGE_END", "YEAR"]))[0]
-    .schedule;
+  const schedule = compile(
+    years,
+    oracle(years, ["YEAR", "RANGE_END", "YEAR"]),
+  )[0].schedule;
   expect(JSON.stringify(schedule ?? {})).not.toContain("hour");
   const iso = "2026-03-04";
   expect(
@@ -1140,5 +1143,37 @@ it("leaves a year alone when no clock opened the range", () => {
       .schedule,
   ).toEqual({
     clauses: [{ date: { kind: "calendar", year: 2026, month: 3, day: 4 } }],
+  });
+});
+
+it("ignores a deadline word in later prose that bounds nothing", () => {
+  const text = "every day except Christmas we cannot leave until he arrives";
+  const schedule = compile(
+    text,
+    oracle(text, ["RECUR", "UNIT", "EXCEPT", "HOLIDAY"]),
+  )[0].schedule;
+  expect(schedule).toEqual({
+    clauses: [
+      {
+        recurrence: {
+          freq: "daily",
+          interval: 1,
+          except: [{ kind: "holiday", name: "christmas" }],
+        },
+      },
+    ],
+  });
+});
+
+it("reads a possessive relative day or unit", () => {
+  const schedule = (text: string, labels: Label[]) =>
+    compile(text, oracle(text, labels))[0].schedule;
+  expect(schedule("tomorrows dinner", ["REL_DAY", "O"])).toEqual({
+    clauses: [{ date: { kind: "relativeDay", offset: 1 } }],
+  });
+  expect(schedule("next week's lunch", ["DEICTIC", "UNIT", "O"])).toEqual({
+    clauses: [
+      { date: { kind: "relativeUnit", unit: "week", modifier: "next" } },
+    ],
   });
 });

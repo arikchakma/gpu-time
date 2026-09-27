@@ -18,6 +18,7 @@
     "@tailwindcss/vite": "^4.1.0",
     "@vercel/analytics": "^2.0.1",
     "astro": "^7.3.2",
+    "cn": "^0.3.0",
     "gpu-time": "workspace:*",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

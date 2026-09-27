@@ -20,21 +20,21 @@ try {
       { cwd: packageRoot, encoding: "utf8" },
     ),
   );
-  // Assert the exact shipped file list. Emitted declarations can reference a
-  // sibling that the prune step removed, which typechecks as `any` for any
-  // consumer using skipLibCheck; only a contents check catches that.
+  // Each entry bundles its own declarations, so a stray internal .d.ts here
+  // means something leaked out of an entry point.
   const shipped = packed[0].files.map((entry: { path: string }) => entry.path);
   const expected = [
     "LICENSE",
     "README.md",
     "dist/index.d.ts",
     "dist/index.js",
-    "dist/labels.d.ts",
-    "dist/resolve.d.ts",
+    "dist/languages/en.d.ts",
+    "dist/languages/en.js",
+    "dist/languages/es.d.ts",
+    "dist/languages/es.js",
     "dist/schedule.d.ts",
     "dist/schedule.js",
     "dist/size.json",
-    "dist/types.d.ts",
     "package.json",
   ];
   const actual = [...shipped].sort();

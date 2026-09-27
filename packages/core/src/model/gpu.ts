@@ -1,4 +1,5 @@
 import { shader } from "./shader.js";
+import { shaderShape } from "./shader-source.js";
 import { diagnostics, fullPrecision } from "./options.js";
 import { weights } from "./weights.gen.js";
 import { decodeWeights, type EncodedWeights } from "./decode.js";
@@ -12,15 +13,9 @@ interface BufferSlot {
   buffer: GPUBuffer;
   capacity: number;
 }
-const model: ModelWeights = weights;
-const roles = model.roleClasses;
-const outputs = roles + 1;
 // ponytail: Viterbi runs here over the emissions the kernel already produces,
 // not in WGSL. A workgroup-resident 40x40 chain would need a fifth state stage
 // and a second pass; upgrade if the extra readback ever shows up in a profile.
-const chain = model.transitions
-  ? decodeWeights(model).get("transition")!
-  : undefined;
 
 export class GPUModel {
   readonly stats = { submissions: 0, recoveries: 0 };
@@ -36,12 +31,28 @@ export class GPUModel {
   private lost = false;
   private queue: Promise<unknown> = Promise.resolve();
 
-  private constructor(private emulateF16: boolean) {}
+  private readonly roles: number;
+  private readonly outputs: number;
+  private readonly chain?: Float32Array;
+
+  private constructor(
+    private emulateF16: boolean,
+    readonly model: ModelWeights,
+  ) {
+    this.roles = model.roleClasses;
+    this.outputs = this.roles + 1;
+    this.chain = model.transitions
+      ? decodeWeights(model).get("transition")!
+      : undefined;
+  }
 
   static async create(
-    options: { emulateF16?: boolean } = {},
+    options: { emulateF16?: boolean; model?: ModelWeights } = {},
   ): Promise<GPUModel> {
-    const runtime = new GPUModel(options.emulateF16 ?? false);
+    const runtime = new GPUModel(
+      options.emulateF16 ?? false,
+      options.model ?? weights,
+    );
     await runtime.initialize();
     return runtime;
   }
@@ -63,7 +74,11 @@ export class GPUModel {
       if (this.closed) {
         throw new Error("The GPU model is disposed.");
       }
-      const code = shader(nativeHalf);
+      if (shaderShape(this.model) !== shaderShape(weights))
+        throw new Error(
+          "The language model does not match the bundled tensor shapes.",
+        );
+      const code = shader(nativeHalf, this.model);
       const module = device.createShaderModule({ code });
       const compilation = await module.getCompilationInfo();
       const errors = compilation.messages.filter(
@@ -82,9 +97,9 @@ export class GPUModel {
         compute: { module, entryPoint: "classify" },
       });
       if (this.closed) throw new Error("The GPU model is disposed.");
-      const decoded = decodeWeights(model);
-      const values = new Float32Array(model.q.length);
-      for (const segment of model.segments)
+      const decoded = decodeWeights(this.model);
+      const values = new Float32Array(this.model.q.length);
+      for (const segment of this.model.segments)
         values.set(decoded.get(segment.name)!, segment.offset);
       const weightBuffer = device.createBuffer({
         size: values.byteLength,
@@ -191,8 +206,8 @@ export class GPUModel {
     const packedBytes = Math.ceil(count / 4) * 4;
     const scoreBytes = count * 4;
     // Viterbi needs every emission, so a chained model always reads them back.
-    const wantLogits = debug || chain !== undefined;
-    const debugBytes = wantLogits ? count * outputs * 4 : 4;
+    const wantLogits = debug || this.chain !== undefined;
+    const debugBytes = wantLogits ? count * this.outputs * 4 : 4;
     const stateSize = count * 32 * 4 * this.stateBytes;
     const sizes = [
       features.byteLength,
@@ -261,11 +276,14 @@ export class GPUModel {
 
     device.queue.writeBuffer(buffers[0], 0, features);
     device.queue.writeBuffer(buffers[1], 0, streamTable);
-    device.queue.writeBuffer(
-      buffers[2],
-      0,
-      Uint32Array.of(count, streams.length, Number(wantLogits), 0),
-    );
+    const parameters = new ArrayBuffer(16);
+    new Uint32Array(parameters, 0, 3).set([
+      count,
+      streams.length,
+      Number(wantLogits),
+    ]);
+    new Float32Array(parameters, 12, 1)[0] = this.model.boundaryThreshold ?? 0;
+    device.queue.writeBuffer(buffers[2], 0, parameters);
     const encoder = device.createCommandEncoder();
     encoder.clearBuffer(buffers[5], 0, packedBytes);
     const pass = encoder.beginComputePass();
@@ -299,7 +317,11 @@ export class GPUModel {
       const packed = new Uint8Array(mapped, 0, count);
       const margins = new Float32Array(mapped, packedBytes, count);
       const rawLogits = wantLogits
-        ? new Float32Array(mapped, packedBytes + scoreBytes, count * outputs)
+        ? new Float32Array(
+            mapped,
+            packedBytes + scoreBytes,
+            count * this.outputs,
+          )
         : undefined;
       offset = 0;
       return inputs.map((tokens) => {
@@ -307,7 +329,7 @@ export class GPUModel {
         const clauseStarts = new Uint8Array(tokens.length);
         const scores = margins.slice(offset, offset + tokens.length);
         const logits = debug
-          ? new Float32Array(tokens.length * roles)
+          ? new Float32Array(tokens.length * this.roles)
           : undefined;
         const boundaryLogits = debug
           ? new Float32Array(tokens.length)
@@ -317,25 +339,25 @@ export class GPUModel {
           labels[token] = packed[offset + token] & 63;
           clauseStarts[token] = packed[offset + token] >>> 7;
           if (rawLogits && tokens[token].kind !== 3) {
-            scored.push((offset + token) * outputs);
+            scored.push((offset + token) * this.outputs);
             logits?.set(
               rawLogits.subarray(
-                (offset + token) * outputs,
-                (offset + token) * outputs + roles,
+                (offset + token) * this.outputs,
+                (offset + token) * this.outputs + this.roles,
               ),
-              token * roles,
+              token * this.roles,
             );
             if (boundaryLogits)
               boundaryLogits[token] =
-                rawLogits[(offset + token) * outputs + roles];
+                rawLogits[(offset + token) * this.outputs + this.roles];
           }
         }
-        if (chain && rawLogits) {
+        if (this.chain && rawLogits) {
           const { path, confidence } = viterbiDecode(
             rawLogits,
             scored,
-            roles,
-            chain,
+            this.roles,
+            this.chain,
           );
           let step = 0;
           for (let token = 0; token < tokens.length; token++)

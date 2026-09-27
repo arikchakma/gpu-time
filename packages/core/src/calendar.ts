@@ -34,7 +34,25 @@ const holidays = {
   valentines: [2, 14],
   "july-4th": [7, 4],
   thanksgiving: { month: 11, day: "TH", ordinal: 4 },
+  easter: "computus",
 } as const;
+
+function easter(year: number): [number, number] {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31);
+  return [month, ((h + l - 7 * m + 114) % 31) + 1];
+}
 
 export function weekBeginning(
   date: Civil,
@@ -233,17 +251,23 @@ export function resolveDates(
     case "holiday": {
       const entry = holidays[spec.name];
       const inYear = (year: number): Civil =>
-        "ordinal" in entry
-          ? resolveDates(
-              {
-                kind: "ordinalWeekday",
-                ...entry,
-                of: { kind: "calendar", year, month: entry.month },
-              },
+        entry === "computus"
+          ? calendarDate(
+              { year, month: easter(year)[0], day: easter(year)[1] },
               reference,
-              options,
-            )[0].start
-          : calendarDate({ year, month: entry[0], day: entry[1] }, reference);
+            )
+          : "ordinal" in entry
+            ? resolveDates(
+                {
+                  kind: "ordinalWeekday",
+                  ...entry,
+                  of: { kind: "calendar", year, month: entry.month },
+                },
+                reference,
+                options,
+              )[0].start
+            : calendarDate({ year, month: entry[0], day: entry[1] }, reference);
+      if (spec.year !== undefined) return [{ start: inYear(spec.year) }];
       let date = inYear(reference.year);
       if (utc(date) < utc(today)) date = inYear(reference.year + 1);
       return [{ start: date }];

@@ -3,7 +3,7 @@ struct Parameters {
   tokenCount: u32,
   streamCount: u32,
   debug: u32,
-  padding: u32,
+  boundaryThreshold: f32,
 }
 struct Stream { start: u32, count: u32 }
 
@@ -221,7 +221,7 @@ fn classify(@builtin(workgroup_id) group: vec3<u32>, @builtin(local_invocation_i
         }
         var denominator = 0.0;
         for (var label = 0u; label < ROLE_CLASSES; label++) { denominator += exp(output[label] - output[best]); }
-        let code = best | select(0u, 128u, output[ROLE_CLASSES] >= BOUNDARY_THRESHOLD);
+        let code = best | select(0u, 128u, output[ROLE_CLASSES] >= parameters.boundaryThreshold);
         atomicOr(&packedLabels[token / 4u], code << ((token & 3u) * 8u));
         scores[token] = (1.0 - exp(second - output[best])) / denominator;
       } else { scores[token] = 0.0; }

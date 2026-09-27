@@ -231,7 +231,12 @@ def featurize_real(real: Path, directory: Path) -> Dataset:
 
 
 def prepare(
-    split: str, count: int, seed: int, directory: Path, real: Path | None = None
+    split: str,
+    count: int,
+    seed: int,
+    directory: Path,
+    real: Path | None = None,
+    language: str = "en",
 ) -> Dataset:
     prefix = directory / split
     command = [
@@ -249,6 +254,8 @@ def prepare(
         split,
         "--out",
         f"{prefix}.jsonl",
+        "--language",
+        language,
     ]
     # Evaluation splits are drawn first and fixed; every training epoch avoids them.
     for name in ("heldout", "validation"):
@@ -276,6 +283,11 @@ def main():
     parser.add_argument("--seed", type=int, default=20260909)
     parser.add_argument("--qat-start", type=int, default=14)
     parser.add_argument("--run", default="main")
+    parser.add_argument(
+        "--language",
+        default="en",
+        help="Which generator language to train on. Data lives per language.",
+    )
     parser.add_argument(
         "--init",
         type=Path,
@@ -352,9 +364,19 @@ def main():
         ),
         flush=True,
     )
-    heldout = prepare("heldout", args.eval_samples, args.seed + 2, directory)
-    validation = prepare("validation", args.eval_samples, args.seed + 1, directory)
-    training = prepare("train", args.samples, args.seed, directory, args.real)
+    heldout = prepare(
+        "heldout", args.eval_samples, args.seed + 2, directory, language=args.language
+    )
+    validation = prepare(
+        "validation",
+        args.eval_samples,
+        args.seed + 1,
+        directory,
+        language=args.language,
+    )
+    training = prepare(
+        "train", args.samples, args.seed, directory, args.real, args.language
+    )
     seen = set(training.manifest["fingerprints"])
     for name, split in (("held-out", heldout), ("validation", validation)):
         if seen & set(split.manifest["fingerprints"]):
@@ -482,7 +504,12 @@ def main():
     for epoch in range(args.epochs):
         if epoch > 0 and args.fresh_each_epoch:
             training = prepare(
-                "train", args.samples, args.seed + epoch * 101, directory, args.real
+                "train",
+                args.samples,
+                args.seed + epoch * 101,
+                directory,
+                args.real,
+                args.language,
             )
         model.train()
         model.qat = epoch >= args.qat_start

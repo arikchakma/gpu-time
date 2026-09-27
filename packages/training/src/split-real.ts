@@ -49,6 +49,7 @@ const SOURCES = [
   "measurement",
   "shorthand",
   "compact-clock",
+  "commands",
 ];
 const authored = join(training, "data/teacher");
 // Written or teacher-labelled rather than harvested, so they live in a tracked
@@ -62,10 +63,12 @@ const authoredSources = new Set([
   "measurement",
   "shorthand",
   "compact-clock",
+  "commands",
 ]);
 // 824 authored rows against 76,000 harvested ones teach nothing at 1:1. Measured
 // at 4 copies, which fixed "every may" and held every gate. 1 and 2 are untried.
 const authoredCopies = Number(argument("--authored-copies") ?? 4);
+const commandCopies = Number(argument("--command-copies") ?? 0);
 // Mention replacement is built by augment-mentions.ts but left out by default:
 // measured at 2,509 rows it fixed "last night" and cost 4 pooled gold cases.
 // Dai and Adel report the same shape, gains shrinking as the corpus grows.
@@ -78,6 +81,46 @@ const STRONG =
 
 type Span = { start: number; end: number; label: string };
 type Row = { text: string; source?: string; spans: Span[] };
+
+const QUESTION_WORDS = new Set([
+  "what",
+  "when",
+  "where",
+  "who",
+  "why",
+  "how",
+  "which",
+  "is",
+  "are",
+  "do",
+  "does",
+  "did",
+  "can",
+  "could",
+  "will",
+  "would",
+  "should",
+  "am",
+  "was",
+  "were",
+  "have",
+  "has",
+]);
+const asSentence = (row: Row): Row => {
+  const text = row.text.trimEnd();
+  if (!text || /[.?!]$/.test(text)) return row;
+  const mark = QUESTION_WORDS.has(text.split(/\s+/)[0]!.toLowerCase())
+    ? "?"
+    : ".";
+  return {
+    ...row,
+    text: text[0]!.toUpperCase() + text.slice(1) + mark,
+    spans: [
+      ...row.spans,
+      { start: text.length, end: text.length + 1, label: "O" } as Span,
+    ],
+  };
+};
 
 const phrase = (row: Row) =>
   row.spans
@@ -124,10 +167,19 @@ for (const source of SOURCES) {
     .map((line) => ({ ...JSON.parse(line), source }) as Row);
   for (
     let round = 0;
-    round < (authoredSources.has(source) ? authoredCopies : 1);
+    round <
+    (source === "commands"
+      ? commandCopies
+      : authoredSources.has(source)
+        ? authoredCopies
+        : 1);
     round++
   )
-    rows.push(...parsed);
+    rows.push(
+      ...(source === "commands" && round % 2 === 1
+        ? parsed.map(asSentence)
+        : parsed),
+    );
 }
 
 // A sentence the duration rule claims must not also appear labelled as a time.

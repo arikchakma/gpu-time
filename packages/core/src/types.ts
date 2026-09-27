@@ -1,4 +1,5 @@
 import type { Label, Role } from "./labels.js";
+import type { Language } from "./languages/language.js";
 export type { Label };
 export type Weekday = "MO" | "TU" | "WE" | "TH" | "FR" | "SA" | "SU";
 export type Unit =
@@ -51,7 +52,9 @@ export type DateSpec =
         | "halloween"
         | "valentines"
         | "july-4th"
-        | "thanksgiving";
+        | "thanksgiving"
+        | "easter";
+      year?: number;
     };
 export type DayPart = "morning" | "afternoon" | "evening" | "night";
 export type ClockTime =
@@ -87,7 +90,14 @@ export interface Duration {
   unit: Unit;
 }
 export interface Recurrence {
-  freq: "hourly" | "daily" | "weekly" | "monthly" | "yearly";
+  freq:
+    | "secondly"
+    | "minutely"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly";
   interval: number;
   byDay?: Weekday[];
   byMonthDay?: number[];
@@ -155,6 +165,8 @@ export interface ParserOptions {
   tokens?: boolean;
   /** Ambiguous numeric dates only; defaults to MDY. Named months and year-first dates are unchanged. */
   dateOrder?: "MDY" | "DMY";
+  /** Vocabulary pack the compiler reads; defaults to English. */
+  language?: Language;
 }
 export interface ResolveOptions {
   reference: string;

@@ -16,6 +16,7 @@
     "fetch:recognizers": "node --experimental-strip-types src/fetch-recognizers.ts",
     "test": "pnpm --filter gpu-time build && vitest run",
     "evaluate:english": "node --experimental-strip-types src/evaluate-english.ts",
+    "evaluate:spanish": "node --experimental-strip-types src/evaluate-spanish.ts",
     "evaluate:compatibility": "pnpm --filter gpu-time build && node --experimental-strip-types src/evaluate-compatibility.ts",
     "test:compatibility": "pnpm run evaluate:compatibility --floor",
     "test:recognizers": "pnpm --filter gpu-time build && node --experimental-strip-types src/external.ts --floor"

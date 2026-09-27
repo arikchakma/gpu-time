@@ -44,8 +44,14 @@ function hash(text: string): number {
   return value >>> 0;
 }
 
+// Accents are spelling, not structure: "miércoles" must read as a word, not as
+// punctuation. ASCII folds to itself, so English features never move.
+function fold(text: string): string {
+  return text.normalize("NFD").replace(/\p{M}+/gu, "");
+}
+
 function characterClass(character: string): number {
-  const code = character.toLowerCase().charCodeAt(0);
+  const code = fold(character).toLowerCase().charCodeAt(0);
 
   if (code >= 97 && code <= 122) return code - 97;
   if (code >= 48 && code <= 57) return code - 48 + 26;
@@ -107,7 +113,7 @@ function shape(word: string): TokenShape {
   const lengthBucket = lengthBuckets.findIndex(
     (upperBound) => word.length <= upperBound,
   );
-  const hasUppercase = /[A-Z]/.test(word);
+  const hasUppercase = /\p{Lu}/u.test(word);
   const result: TokenShape = {
     kind,
     identity:
@@ -118,13 +124,16 @@ function shape(word: string): TokenShape {
         ((hash(folded) & 255) << 17) |
         (numberBucket(word, kind) << 25)) >>>
       0,
-    hash: hash(folded.replace(/[aeiou]/g, "")) & 127,
+    // Folded so an accented vowel still counts as one. The word hash above
+    // stays unfolded, keeping "ñ" apart from "n".
+    hash: hash(fold(folded).replace(/[aeiou]/g, "")) & 127,
     flags:
       Number(hasUppercase) |
       (Number(hasUppercase && word === word.toUpperCase()) << 1) |
       (Number(/\d/.test(word)) << 2),
     punctuation: punctuationClass(word),
-    ordinal: /^(st|nd|rd|th)$/.test(folded),
+    // "º"/"ª" are the Romance ordinal marks, the counterpart of "st"/"nd".
+    ordinal: /^(st|nd|rd|th|º|ª)$/.test(folded),
   };
   // Bound both the entry count and retained word length. Context and predictions
   // are never cached: the same word can mean something different elsewhere.

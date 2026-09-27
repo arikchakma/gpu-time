@@ -55,6 +55,27 @@ if (existsSync(fixturePath)) {
     .map((line) => JSON.parse(line).text as string)
     .slice(0, 10_000);
 }
+const spanishReport = JSON.parse(
+  await readFile(
+    `${workspaceRoot}/packages/core/src/model/weights-es.report.json`,
+    "utf8",
+  ),
+);
+const spanishSources = [
+  `${trainingRoot}/data/gold/spanish-coverage.jsonl`,
+  `${trainingRoot}/data/synth/es-check/heldout.jsonl`,
+  `${trainingRoot}/data/synth/es-check/train.jsonl`,
+];
+const spanishTexts: string[] = [];
+for (const path of spanishSources) {
+  if (!existsSync(path)) continue;
+  spanishTexts.push(
+    ...(await readFile(path, "utf8"))
+      .trim()
+      .split("\n")
+      .map((line) => JSON.parse(line).text as string),
+  );
+}
 const server = await createServer({
   configFile: false,
   root: workspaceRoot,
@@ -264,6 +285,138 @@ try {
     },
     texts.slice(0, 1000),
   );
+  const spanish = await page.evaluate(async (texts) => {
+    const root = "/packages/core/src";
+    const { GPUModel } = await import(root + "/model/gpu.ts");
+    const { inferCPU } = await import(root + "/model/cpu.ts");
+    const { tokenize } = await import(root + "/tokenizer.ts");
+    const { default: language } = await import(root + "/languages/es.ts");
+    const roles = language.model.roleClasses;
+    const inputs: RawToken[][] = texts
+      .map((text): RawToken[] => tokenize(text))
+      .filter((tokens) => tokens.length > 0 && tokens.length <= 128);
+    const gpu = await GPUModel.create({ model: language.model });
+    let maxError = 0;
+    let labelMismatches = 0;
+    let boundaryMismatches = 0;
+    let tokensCompared = 0;
+    const mismatches = [];
+    try {
+      for (let start = 0; start < inputs.length; start += 128) {
+        const batch = inputs.slice(start, start + 128);
+        const actual = await gpu.inferMany(batch, true);
+        for (let index = 0; index < batch.length; index++) {
+          const cpu = inferCPU(batch[index], true, language.model);
+          const prediction = actual[index];
+          for (let token = 0; token < batch[index].length; token++) {
+            if (batch[index][token].kind === 3) continue;
+            tokensCompared++;
+            const labelMismatch =
+              cpu.labels[token] !== prediction.labels[token];
+            const boundaryMismatch =
+              cpu.clauseStarts[token] !== prediction.clauseStarts[token];
+            labelMismatches += Number(labelMismatch);
+            boundaryMismatches += Number(boundaryMismatch);
+            if ((labelMismatch || boundaryMismatch) && mismatches.length < 5)
+              mismatches.push({
+                sequence: start + index,
+                token,
+                text: batch[index][token].text,
+                cpuLabel: cpu.labels[token],
+                gpuLabel: prediction.labels[token],
+              });
+            for (let label = 0; label < roles; label++)
+              maxError = Math.max(
+                maxError,
+                Math.abs(
+                  prediction.logits[token * roles + label] -
+                    cpu.logits[token * roles + label],
+                ),
+              );
+            maxError = Math.max(
+              maxError,
+              Math.abs(
+                prediction.boundaryLogits[token] - cpu.boundaryLogits[token],
+              ),
+            );
+          }
+        }
+      }
+      return {
+        sequences: inputs.length,
+        tokensCompared,
+        maxError,
+        labelMismatches,
+        boundaryMismatches,
+        mismatches,
+      };
+    } finally {
+      gpu.dispose();
+    }
+  }, spanishTexts);
+  const spanishPackaged = await page.evaluate(
+    async (texts) => {
+      const sourcePath = "/packages/core/src/schedule.ts";
+      const packagePath = "/packages/core/dist/schedule.js";
+      const sourcePack = "/packages/core/src/languages/es.ts";
+      const packagedPack = "/packages/core/dist/languages/es.js";
+      const { default: sourceLanguage } = await import(sourcePack);
+      const { default: packagedLanguage } = await import(packagedPack);
+      const cpu = await (
+        await import(sourcePath)
+      ).defineParser({ backend: "cpu", tokens: true });
+      const gpu = await (
+        await import(packagePath)
+      ).defineParser({ backend: "webgpu", tokens: true });
+      let tokenMismatches = 0;
+      let scheduleMismatches = 0;
+      try {
+        const [expected, actual] = await Promise.all([
+          cpu.parseMany(texts, sourceLanguage),
+          gpu.parseMany(texts, packagedLanguage),
+        ]);
+        for (let index = 0; index < texts.length; index++) {
+          const a = expected[index];
+          const b = actual[index];
+          if (b.backend !== "webgpu")
+            throw new Error("Packaged inference did not use WebGPU");
+          if (a.tokens.length !== b.tokens.length)
+            throw new Error("Packaged tokenizer changed token count");
+          for (let token = 0; token < a.tokens.length; token++) {
+            const left = a.tokens[token];
+            const right = b.tokens[token];
+            tokenMismatches += Number(
+              left.start !== right.start ||
+                left.end !== right.end ||
+                left.label !== right.label ||
+                left.clauseStart !== right.clauseStart,
+            );
+          }
+          scheduleMismatches += Number(
+            JSON.stringify(
+              a.expressions.map(
+                (value: { schedule: unknown }) => value.schedule,
+              ),
+            ) !==
+              JSON.stringify(
+                b.expressions.map(
+                  (value: { schedule: unknown }) => value.schedule,
+                ),
+              ),
+          );
+        }
+      } finally {
+        cpu.dispose();
+        gpu.dispose();
+      }
+      if (tokenMismatches || scheduleMismatches)
+        throw new Error(
+          `Spanish packaged shader parity failed: ${tokenMismatches} token and ${scheduleMismatches} schedule mismatches`,
+        );
+      return { sequences: texts.length, tokenMismatches, scheduleMismatches };
+    },
+    spanishTexts.slice(0, 1000),
+  );
   await writeFile(
     `${trainingRoot}/results/parity-gpu.json`,
     JSON.stringify(
@@ -273,6 +426,16 @@ try {
         lifecycle,
         packaged,
         ...result,
+        spanish: {
+          model: spanishReport.artifactSha256,
+          sequences: spanish.sequences,
+          tokensCompared: spanish.tokensCompared,
+          maxError: spanish.maxError,
+          labelMismatches: spanish.labelMismatches,
+          boundaryMismatches: spanish.boundaryMismatches,
+          mismatches: spanish.mismatches,
+          packaged: spanishPackaged,
+        },
       },
       null,
       2,
@@ -281,6 +444,16 @@ try {
   console.log(JSON.stringify(result, null, 2));
   console.log("WebGPU lifecycle:", lifecycle);
   console.log("Packaged shader:", packaged);
+  console.log("Spanish GPU parity:", spanish);
+  console.log("Spanish packaged shader:", spanishPackaged);
+  if (
+    spanish.labelMismatches ||
+    spanish.boundaryMismatches ||
+    spanish.maxError > 0.001
+  )
+    throw new Error(
+      `Spanish GPU parity failed: ${spanish.labelMismatches} label and ${spanish.boundaryMismatches} boundary mismatches, max error ${spanish.maxError}; see packages/training/results/parity-gpu.json`,
+    );
   if (
     result.sequences < 10_000 ||
     result.labelMismatches ||

@@ -85,9 +85,10 @@ it(
     }
     // Captured from the original tokenizer before the performance refactor,
     // then recaptured when a four-digit clock joined the zero-padded number
-    // bucket. Only change it with a feature change the model retrains on.
+    // bucket, and again when accent folding landed. Only change it with a
+    // feature change the model retrains on.
     expect(hash.digest("hex")).toBe(
-      "3a8ee1eea95c4bd16bb29181f5382b42864797c686f40f5e4ceacf646af3c9c3",
+      "071cc7200237965872b535ccfb6849fa5bab4d863a783a916d639693aa8cab7a",
     );
   },
 );

@@ -17,6 +17,8 @@ from signature import fingerprint
 import semantic
 import background
 import natural
+import natural_es
+import spanish
 from semantic import month_word, weekday_word
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -92,7 +94,13 @@ CLAUSE_OPENERS = frozenset(
 
 
 class Sentence:
-    def __init__(self, rng: random.Random, augment: float | bool = True):
+    def __init__(
+        self,
+        rng: random.Random,
+        augment: float | bool = True,
+        connectors: frozenset[str] | None = None,
+        fillers: tuple[str, ...] = ("the", "at", "on", "of"),
+    ):
         self.rng = rng
         # A probability scale, not a switch: the natural tier wants less casing
         # and whitespace noise than the terse tier, and check-natural wants none.
@@ -102,6 +110,8 @@ class Sentence:
         self.clauses = 0
         self.pending_clause = False
         self.in_expression = False
+        self.connectors = connectors if connectors is not None else background.CONNECTORS
+        self.fillers = fillers
 
     def _trim_carrier_connector(self) -> None:
         """Drop a carrier's dangling preposition before a clause supplies one.
@@ -114,7 +124,7 @@ class Sentence:
             return
         stripped = self.text.rstrip()
         parts = stripped.rsplit(" ", 1)
-        if len(parts) != 2 or parts[1].lower() not in background.CONNECTORS:
+        if len(parts) != 2 or parts[1].lower() not in self.connectors:
             return
         span = self.spans[-1]
         self.text = parts[0]
@@ -133,18 +143,15 @@ class Sentence:
             if (
                 words
                 and tail
-                and words[0] in background.CONNECTORS
-                and tail[-1].lower() in background.CONNECTORS
+                and words[0] in self.connectors
+                and tail[-1].lower() in self.connectors
             ):
                 words = words[1:]
                 if not words:
                     return
                 text = " ".join(words)
         if label == "O" and self.in_expression:
-            if (
-                text in ("the", "at", "on", "of")
-                and self.rng.random() < 0.3 * self.augment
-            ):
+            if text in self.fillers and self.rng.random() < 0.3 * self.augment:
                 return
             if text == "on the" and self.rng.random() < self.augment:
                 text = self.rng.choice(["on", "the", "on the"])
@@ -895,9 +902,125 @@ def render_heldout(family: int, rng: random.Random) -> Sentence:
     return sentence
 
 
-def generate(
+NEGATIVE_SHARE_ES = 0.15  # matches English family 23's weight (24/163 of generate()).
+# Mirrors English, which spends ~58% of its non-negative rows on natural.py,
+# terse, and the old family renderer, against ~42% on semantic.py.
+NATURAL_SHARE_ES = 0.58
+
+
+def generate_es(
     path: Path, count: int, seed: int, split: str, exclude: list[Path] | None = None
 ) -> dict:
+    """Spanish corpus: a natural-phrasing tier, semantic families, and negatives.
+
+    Mirrors generate()'s English shape: natural_es.render() and
+    spanish.render() each carry their own prefix, and this loop adds a tail,
+    an occasional second sentence, a terminator, and a negatives family with
+    no time expression at all -- the same job background.py and family 23 do
+    for English.
+    """
+    rng = random.Random(seed)
+    variants = list(range(9))
+    families = Counter()
+    span_counts = Counter()
+    templates = set()
+    signatures = set()
+    reserved = {key for one in exclude or [] for key in json.loads(one.read_text())}
+    rejected = 0
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w") as output:
+        index = 0
+        while index < count:
+            spec = None
+            sentence = Sentence(
+                rng, connectors=spanish.SPANISH_CONNECTORS, fillers=spanish.SPANISH_DROPPABLE
+            )
+            if rng.random() < NEGATIVE_SHARE_ES:
+                sentence.add(spanish.sentence_es(rng))
+                template = "es-negative"
+                family = "negative"
+            else:
+                # 0.55 of the non-negative rows, which lands near a 50%
+                # unseen-frame share once the negatives count in.
+                unseen = split == "heldout" and rng.random() < 0.55
+                if unseen:
+                    style = rng.choice(variants)
+                    spec = semantic.sample(rng)
+                    spanish.render_heldout(spec, sentence, style)
+                    template = f"es-semantic-{spec.family}/heldout-reordered"
+                elif rng.random() < NATURAL_SHARE_ES:
+                    spec = natural_es.render(sentence)
+                    template = f"es-natural-{spec.family}/train"
+                else:
+                    style = rng.choice(variants)
+                    spec = semantic.sample(rng)
+                    spanish.render(spec, sentence, style)
+                    template = f"es-semantic-{spec.family}/surface-{style}"
+                family = spec.family
+                if sentence.clauses and rng.random() < 0.45:
+                    sentence.in_expression = False
+                    sentence.add(spanish.suffix_es(rng))
+                if sentence.clauses and rng.random() < 0.12:
+                    sentence.in_expression = False
+                    sentence.add(spanish.sentence_es(rng))
+            ends_expression = bool(sentence.spans) and sentence.spans[-1]["label"] != "O"
+            if sentence.text[-1:] not in ".!?)\"" and rng.random() < (
+                0.7 if ends_expression else 0.4
+            ):
+                sentence.in_expression = False
+                sentence.add(spanish.terminator_es(rng, sentence.text), separator="")
+            row = {
+                "id": f"{split}-{seed}-{index}",
+                "template": template,
+                "text": sentence.text,
+                "spans": sentence.spans,
+            }
+            if spec:
+                row["schedule"] = spec.schedule
+            key = fingerprint(row)
+            if key in reserved:
+                rejected += 1
+                continue
+            row["fingerprint"] = key
+            signatures.add(key)
+            index += 1
+            output.write(
+                json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
+            )
+            families[family] += 1
+            span_counts.update(span["label"] for span in sentence.spans)
+            templates.add(template)
+    path.with_suffix(".fingerprints.json").write_text(json.dumps(sorted(signatures)))
+    prose = spanish.borrowed_es()
+    return {
+        "structuralFingerprints": len(signatures),
+        "rejectedReservedFrames": rejected,
+        "generatorSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "language": "es",
+        "negativeShare": NEGATIVE_SHARE_ES,
+        "borrowedProseEs": len(prose),
+        "borrowedProseEsSha256": (
+            hashlib.sha256(spanish.PROSE_ES.read_bytes()).hexdigest() if prose else None
+        ),
+        "sequences": count,
+        "seed": seed,
+        "split": split,
+        "templates": sorted(templates),
+        "families": dict(families),
+        "spanCounts": dict(span_counts),
+    }
+
+
+def generate(
+    path: Path,
+    count: int,
+    seed: int,
+    split: str,
+    exclude: list[Path] | None = None,
+    language: str = "en",
+) -> dict:
+    if language == "es":
+        return generate_es(path, count, seed, split, exclude)
     rng = random.Random(seed)
     variants = [9] if split == "heldout" else list(range(9))
     families = Counter()
@@ -1048,8 +1171,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--out", type=Path, default=ROOT / "data/synth/train.jsonl"
     )
+    parser.add_argument("--language", choices=["en", "es"], default="en")
     args = parser.parse_args()
-    report = generate(args.out, args.count, args.seed, args.split, args.exclude)
+    report = generate(
+        args.out, args.count, args.seed, args.split, args.exclude, args.language
+    )
     args.out.with_suffix(".manifest.json").write_text(
         json.dumps(report, indent=2) + "\n"
     )

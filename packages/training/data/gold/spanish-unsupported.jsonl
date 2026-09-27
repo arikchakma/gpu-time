@@ -1,0 +1,3 @@
+{"id": "spanish-unsupported-1", "family": "month-name-little-endian", "text": "10 Agosto 234 AC", "source": "chrono-node MIT, test/es", "reason": "era markers are not supported"}
+{"id": "spanish-unsupported-2", "family": "month-name-little-endian", "text": "10 Agosto 88 d. C.", "source": "chrono-node MIT, test/es", "reason": "era markers are not supported"}
+{"id": "spanish-unsupported-3", "family": "month-name-little-endian", "text": "12 de julio a las 19:00", "source": "chrono-node MIT, test/es", "reason": "chrono keeps a past date, we read the next one"}

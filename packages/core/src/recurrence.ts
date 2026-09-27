@@ -109,6 +109,14 @@ function matches(
   const hours = hoursForRule(rule);
   if (hours && !hours.includes(date.hour)) return false;
 
+  if (rule.freq === "secondly") {
+    const seconds = Math.round((utc(date) - utc(anchor)) / 1000);
+    return seconds % rule.interval === 0;
+  }
+  if (rule.freq === "minutely") {
+    const minutes = Math.round((utc(date) - utc(anchor)) / 60_000);
+    return minutes % rule.interval === 0;
+  }
   if (rule.freq === "hourly") {
     const hours = Math.round((utc(date) - utc(anchor)) / 3_600_000);
     return hours % rule.interval === 0;
@@ -215,8 +223,20 @@ export function expandRecurrence(
     ? resolveDates(rule.start, localReference, options)[0]
     : undefined;
   const requested = requestedPeriod?.start ?? localReference;
+  const secondly = rule.freq === "secondly";
+  const minutely = rule.freq === "minutely";
   const generatedClock =
-    rule.freq === "hourly" || hoursForRule(rule) !== undefined;
+    secondly ||
+    minutely ||
+    rule.freq === "hourly" ||
+    hoursForRule(rule) !== undefined;
+  const stepUnit = secondly
+    ? "second"
+    : minutely
+      ? "minute"
+      : generatedClock
+        ? "hour"
+        : "day";
   if (rule.freq === "daily" && rule.timesPer !== undefined && clause.time) {
     throw new RangeError(
       "A daily frequency count needs distinct times; it cannot share one fixed clock.",
@@ -228,8 +248,18 @@ export function expandRecurrence(
       : reference;
   if (rule.start?.kind === "calendarRange")
     requestedInstant = Math.max(requestedInstant, reference);
-  const stepsPerDay = generatedClock ? 24 : 1;
-  let beginning = rule.freq === "hourly" ? requested : startOfDay(requested);
+  const stepsPerDay = secondly
+    ? 86_400
+    : minutely
+      ? 1440
+      : generatedClock
+        ? 24
+        : 1;
+  let beginning = secondly
+    ? requested
+    : minutely || rule.freq === "hourly"
+      ? { ...requested, second: 0 }
+      : startOfDay(requested);
   if (generatedClock && clause.time) {
     const seconds = resolveTime(clause.time, options).start;
     beginning = {
@@ -274,8 +304,9 @@ export function expandRecurrence(
       ? dayNumber(weekBeginning(beginning, options.weekStart))
       : 0;
 
-  for (let offset = 0; offset < 366 * 8 * stepsPerDay; offset++) {
-    const date = addCivil(beginning, offset, generatedClock ? "hour" : "day");
+  const seekDays = stepsPerDay > 24 ? 32 : 366 * 8;
+  for (let offset = 0; offset < seekDays * stepsPerDay; offset++) {
+    const date = addCivil(beginning, offset, stepUnit);
     if (!matches(date, beginning, seedRule, beginningWeek) || isExcluded(date))
       continue;
     const occurrence = candidate(clause, date, context, generatedClock);
@@ -311,7 +342,7 @@ export function expandRecurrence(
       : 1;
   let offset = 0;
   for (; offset < scanLimit; offset += step) {
-    const date = addCivil(anchor, offset, generatedClock ? "hour" : "day");
+    const date = addCivil(anchor, offset, stepUnit);
     if (dayNumber(date) > lastDay) break;
     if (!matches(date, anchor, rule, anchorWeek)) continue;
 
@@ -345,8 +376,7 @@ export function expandRecurrence(
 
   if (
     offset >= scanLimit &&
-    dayNumber(addCivil(anchor, offset, generatedClock ? "hour" : "day")) <=
-      lastDay
+    dayNumber(addCivil(anchor, offset, stepUnit)) <= lastDay
   )
     throw new RangeError(
       "The recurrence exceeded the 100000-day search limit. Use a narrower horizon or a later start.",

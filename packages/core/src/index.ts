@@ -1,7 +1,9 @@
 import { defineParser as defineScheduleParser } from "./schedule.js";
 import { createResolver } from "./resolve.js";
 import { civil, instant } from "./zoned.js";
-import { mentionsTime } from "./lexicon.js";
+import english from "./languages/en.js";
+import { detectLanguage } from "./languages/detect.js";
+import type { Language } from "./languages/language.js";
 import type {
   Diagnostic,
   Occurrence,
@@ -10,10 +12,16 @@ import type {
   ParseResult as ScheduleResult,
 } from "./types.js";
 
-export type ParseContext = ResolveOptions;
-export type ParserOptions = Pick<ModelOptions, "backend" | "dateOrder">;
+/** A pack code loaded by `defineParser`. Omitted, the text decides. */
+export type ParseContext = ResolveOptions & { language?: string };
+export type ParserOptions = Pick<ModelOptions, "backend" | "dateOrder"> & {
+  languages?: Language[];
+};
 export type TimeRange = Omit<Occurrence, "clause">;
 export type { Diagnostic } from "./types.js";
+export type { Language } from "./languages/language.js";
+export { default as en } from "./languages/en.js";
+export { detectLanguage } from "./languages/detect.js";
 
 /** Character offsets of a resolved expression. Role names stay internal. */
 export interface TimeSpan {
@@ -36,6 +44,21 @@ export interface ParseResult {
 
 export async function defineParser(options: ParserOptions = {}) {
   const parser = await defineScheduleParser(options);
+  const languages = options.languages?.length ? options.languages : [english];
+
+  // Text that fits both packs equally falls back to the first, not a coin flip.
+  function select(code: string | undefined, text: string): Language {
+    if (code === undefined)
+      return detectLanguage(text, languages) ?? languages[0];
+    const found = languages.find((language) => language.code === code);
+    if (!found)
+      throw new RangeError(
+        `Language ${JSON.stringify(code)} is not loaded. Loaded: ${languages
+          .map((language) => language.code)
+          .join(", ")}.`,
+      );
+    return found;
+  }
 
   function validate(context: ParseContext): number {
     // Context belongs to calendar resolution and never enters the model.
@@ -57,6 +80,7 @@ export async function defineParser(options: ParserOptions = {}) {
     resolveSchedule: ReturnType<typeof createResolver>,
     limit: number,
     text: string,
+    language: Language,
   ): ParseResult {
     const started = performance.now();
     const occurrences: TimeRange[] = [];
@@ -66,7 +90,7 @@ export async function defineParser(options: ParserOptions = {}) {
       (expression) => expression.diagnostics,
     );
     let truncated = false;
-    if (!parsed.expressions.length && mentionsTime(text))
+    if (!parsed.expressions.length && language.mentionsTime(text))
       diagnostics.push({
         code: "no-expression",
         severity: "warning",
@@ -130,11 +154,13 @@ export async function defineParser(options: ParserOptions = {}) {
   return {
     async parse(text: string, context: ParseContext): Promise<ParseResult> {
       const limit = validate(context);
+      const language = select(context.language, text);
       return finish(
-        await parser.parse(text),
+        await parser.parse(text, language),
         createResolver(context),
         limit,
         text,
+        language,
       );
     },
     async parseMany(
@@ -143,15 +169,18 @@ export async function defineParser(options: ParserOptions = {}) {
     ): Promise<ParseResult[]> {
       if (!texts.length) return [];
       const limit = validate(context);
-      const parsed = await parser.parseMany(texts);
+      const language = select(context.language, texts.join("\n"));
+      const parsed = await parser.parseMany(texts, language);
       const resolveSchedule = createResolver(context);
       return parsed.map((result, index) =>
-        finish(result, resolveSchedule, limit, texts[index]),
+        finish(result, resolveSchedule, limit, texts[index], language),
       );
     },
     dispose: parser.dispose,
   };
 }
+
+export type Parser = Awaited<ReturnType<typeof defineParser>>;
 
 let defaultParser: ReturnType<typeof defineParser> | undefined;
 export async function parse(

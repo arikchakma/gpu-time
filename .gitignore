@@ -16,6 +16,7 @@ packages/training/data/real/
 packages/training/data/downloads/
 packages/training/*.npz
 packages/training/active/*.npz
+packages/training/active/es/*.npz
 packages/training/runs/*
 !packages/training/runs/natural-language-final/
 !packages/training/runs/terse-f32/

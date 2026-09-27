@@ -1137,6 +1137,70 @@ it("shifts by elapsed seconds", () => {
   });
 });
 
+it("resolves easter by the Gregorian computus", () => {
+  const schedule: Schedule = {
+    clauses: [{ date: { kind: "holiday", name: "easter" } }],
+  };
+  expect(
+    resolve(schedule, { ...options, reference: "2026-12-01T12:00:00+06:00" })
+      .occurrences[0],
+  ).toMatchObject({ start: "2027-03-28T00:00:00+06:00", allDay: true });
+  expect(
+    resolve(schedule, { ...options, reference: "2027-12-01T12:00:00+06:00" })
+      .occurrences[0],
+  ).toMatchObject({ start: "2028-04-16T00:00:00+06:00", allDay: true });
+});
+
+it("repeats every few minutes from the reference", () => {
+  const result = resolve(
+    { clauses: [{ recurrence: { freq: "minutely", interval: 5 } }] },
+    { ...options, limit: 3 },
+  );
+  expect(result.occurrences.map((occurrence) => occurrence.start)).toEqual([
+    "2026-09-09T12:00:00+06:00",
+    "2026-09-09T12:05:00+06:00",
+    "2026-09-09T12:10:00+06:00",
+  ]);
+  expect(result.rrules[0]).toContain("FREQ=MINUTELY;INTERVAL=5");
+});
+
+it("resolves a holiday in the year it names", () => {
+  const result = resolve(
+    { clauses: [{ date: { kind: "holiday", name: "easter", year: 2018 } }] },
+    options,
+  );
+  expect(result.occurrences[0]).toMatchObject({
+    start: "2018-04-01T00:00:00+06:00",
+    allDay: true,
+  });
+});
+
+it("repeats every few seconds from the reference", () => {
+  const result = resolve(
+    { clauses: [{ recurrence: { freq: "secondly", interval: 30 } }] },
+    { ...options, limit: 3 },
+  );
+  expect(result.occurrences.map((occurrence) => occurrence.start)).toEqual([
+    "2026-09-09T12:00:00+06:00",
+    "2026-09-09T12:00:30+06:00",
+    "2026-09-09T12:01:00+06:00",
+  ]);
+});
+
+it("stops a counted weekday series after its count", () => {
+  const result = resolve(
+    {
+      clauses: [
+        {
+          recurrence: { freq: "weekly", interval: 1, count: 3, byDay: ["SU"] },
+        },
+      ],
+    },
+    { ...options, limit: 10 },
+  );
+  expect(result.occurrences).toHaveLength(3);
+});
+
 it("resolves thanksgiving as the fourth Thursday of November", () => {
   const schedule: Schedule = {
     clauses: [{ date: { kind: "holiday", name: "thanksgiving" } }],

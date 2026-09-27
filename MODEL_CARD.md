@@ -14,7 +14,7 @@ Timezone is not a model role. TypeScript resolves calendar arithmetic, daylight 
 
 The model turns short English time expressions into dates, ranges, and recurrence rules in the browser. It fits reminder fields, schedule forms, and command bars.
 
-It is not suitable for parsing documents or extracting dates from long prose. It is also not suitable for legal or medical scheduling, billing, compliance, or any decision where a wrong date has real consequences. It supports English only and has no language detection.
+It is not suitable for parsing documents or extracting dates from long prose. It is also not suitable for legal or medical scheduling, billing, compliance, or any decision where a wrong date has real consequences. It supports English and Spanish. Each language pack carries its own model, and the caller chooses the language. There is no language detection.
 
 ## Training data
 
@@ -47,6 +47,45 @@ Parity is a separate gate. 512 fixtures compare decoded int6 inference against P
 
 The timing numbers in `packages/benchmark/results/summary.json` were recorded for an earlier checkpoint. Other parsers return different structures, so that comparison measures time, not capability.
 
+## Spanish model
+
+`gpu-time/languages/es` embeds its own model, checkpoint `runs/es-v10c/epoch-37`. It has the same shapes as the English model: 38,745 parameters, two scan layers, and 6-bit weights. The weights pack to 23,180 Brotli bytes, and the whole Spanish pack is 24,861. Every score lives in `packages/core/src/model/weights-es.report.json`, the only place to read them from.
+
+Training data:
+
+- Generated. `spanish.py` and `natural_es.py` write Spanish phrasing, 30,000 rows per epoch. One in five negative rows wraps a real sentence in an idiom that names no time, such as "hoy por hoy" or a goodbye "hasta mañana", because Tatoeba holds only a handful of each.
+- Harvested. A Tatoeba sentence enters when chrono-node's Spanish parser finds exactly one date, agrees with gpu-time on it, and the compiler produces the same schedule from the whole sentence. This gives 2,664 training rows.
+- Written. Sonnet teachers labelled 9,831 real Spanish rows by `data/teacher/label-sheet.es.md`, and the compiler checked every row. 1,992 of them hold no calendar time, so the model learns when to stay quiet. Each row is repeated four times. The rows come from three sources:
+  - 2,930 Tatoeba sentences (CC BY 2.0 FR), mostly picked where the model and chrono disagreed.
+  - 2,772 voice-assistant commands from Amazon MASSIVE, es-ES train split (CC BY 4.0).
+  - 4,129 commands from Facebook MTOP, Spanish train split (CC BY-SA 4.0).
+- Audits. A row is dropped when it leaves a real date word unlabelled. A MASSIVE or MTOP row is also dropped when the teacher's answer disagrees with the dataset's own time slots: a time where the dataset marks none, no time where it marks one, or a marked time left unlabelled.
+
+The shipped checkpoint scores:
+
+- Real Tatoeba holdout: 173 of 179 exact schedules. Training never saw these sentences.
+- Teacher holdout: 165 of 172.
+- First fresh set (`spanish-fresh`): 208 of 226.
+- MASSIVE dev split: 551 of 582.
+- MTOP eval split: 640 of 675.
+- Chrono's Spanish test phrases: 69 of 72, with 3 known gaps.
+- Generated reserved carriers: 667 of 998. These forms are kept out of training on purpose, so the score catches regressions and is not accuracy.
+- Token accuracy: 99.91% on validation and 95.18% on heldout.
+
+Training never saw any of these sets, but they all helped choose the checkpoint, so they read a little high. Two sets no choice ever used:
+
+- `data/gold/spanish-massive-test.jsonl`, the MASSIVE test split: 741 of 787. It stays quiet on 280 of 290 commands with no time and gets 461 of 497 with one.
+- `data/gold/spanish-fresh2.jsonl`, 239 Tatoeba sentences: 229 of 239.
+
+Run `node --experimental-strip-types src/evaluate-model.ts --language es --dir ../training/data/gold --sets spanish-massive-test,spanish-fresh2` in `packages/benchmark` to measure them. Once a later choice uses a set, it stops being fresh.
+
+Spanish limitations:
+
+- The compiler reads "el último día del mes" and a holiday with a spoken year ("pascua de dos mil dieciocho"), but the shipped model does not label them yet. A model trained on them lost 5 of 788 on the MASSIVE test split, so it was not promoted. "navidad de 2027", with digits, works.
+- A holiday after an article ("la pascua") can read as a day part.
+- An ambiguous numeric date is read day first, because Spanish writes the day first. A US-style `5/1/2013` means 5 January, while `4/29/2013` can only be 29 April and reads that way.
+- Parity: 512 fixtures compare the int6 inference against PyTorch, and `pnpm test:browser` compares 5,070 Spanish sequences in real WebGPU.
+
 ## Limitations
 
 - "in N units" meaning elapsed time reads as future time. "He ran a quarter mile in four minutes" returns a time. Four negatives fail this way.
@@ -57,7 +96,7 @@ The timing numbers in `packages/benchmark/results/summary.json` were recorded fo
 - The em dash is unsupported and `13:20—15:50` returns nothing. The en dash works, on a weaker feature path.
 - A cold start learns the corpus better than a warm start, at a price. Measured on 15 September 2026, a cold run answered 26 of the 37 reported failures against a warm run's 15. It also dropped the Chrono comparison from 74 to 67, which fails `pnpm test`. Nobody has repeated that measurement on the current corpus.
 - Accuracy on real user phrasing is unmeasured.
-- English only. Other languages can return a wrong result with no diagnostic.
+- English and Spanish only. Other languages can return a wrong result with no diagnostic.
 - Vague expressions (`ASAP`, `after work`, `soon`) get no clock value by design.
 - An ambiguous numeric date follows the caller's `dateOrder`, which defaults to `MDY`. `03/04/2027` is ambiguous and `21/04/2016` is not.
 - The seed spread is about 1.85 points. Treat any smaller single-run difference as noise.

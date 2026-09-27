@@ -8,6 +8,7 @@ import { compile } from "../../core/src/compile.ts";
 import { LABELS, type Label } from "../../core/src/labels.ts";
 import { tokenize } from "../../core/src/tokenizer.ts";
 import type { Schedule, Token } from "../../core/src/types.ts";
+import spanish from "../../core/src/languages/es.ts";
 
 const argument = (name: string) => {
   const index = process.argv.indexOf(name);
@@ -139,7 +140,11 @@ if (process.argv.includes("--verify")) {
       }));
       let expressions;
       try {
-        expressions = compile(proposal.text, tokens);
+        expressions = compile(
+          proposal.text,
+          tokens,
+          argument("--language") === "es" ? { language: spanish } : {},
+        );
       } catch {
         tally.noSchedule++;
         continue;

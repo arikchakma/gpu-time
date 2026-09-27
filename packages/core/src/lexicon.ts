@@ -184,7 +184,7 @@ export function month(text: string): number | undefined {
 }
 
 export function unit(text: string): Unit | undefined {
-  const word = text.toLowerCase();
+  const word = text.toLowerCase().replace(/['’]s$/, "");
   const abbreviation = Object.hasOwn(unitAbbreviations, word)
     ? unitAbbreviations[word]
     : undefined;
@@ -244,6 +244,8 @@ export const holidayNames: Record<
 > = {
   christmas: "christmas",
   christmaseve: "christmas-eve",
+  easter: "easter",
+  eastersunday: "easter",
   newyear: "new-year",
   newyearsday: "new-year",
   newyearseve: "new-years-eve",

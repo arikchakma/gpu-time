@@ -1,7 +1,107 @@
 {
-  "source": "data/synth/semantic-checks.jsonl",
-  "total": 5000,
-  "correct": 5000,
-  "failures": [],
+  "source": "../../../../../../../private/tmp/claude-501/-Users-arikko-Developer-vibecode-gpu-time/4b721a63-e0f8-4119-a8b4-ba2ddf7a0dd4/scratchpad/es_verify.jsonl",
+  "total": 3000,
+  "correct": 2999,
+  "failures": [
+    {
+      "id": "train-90210-844",
+      "template": "es-semantic-exceptions/surface-3",
+      "text": "revisa esto: por favor actualizar el expediente cada\tDía salvo\tel  miércoles\tpara nuestro equipo\tHasta el más pequeño detalle lo irritaba.",
+      "spans": [
+        {
+          "start": 0,
+          "end": 47,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 48,
+          "end": 52,
+          "label": "RECUR",
+          "clauseStart": false
+        },
+        {
+          "start": 53,
+          "end": 56,
+          "label": "UNIT",
+          "clauseStart": false
+        },
+        {
+          "start": 57,
+          "end": 62,
+          "label": "EXCEPT",
+          "clauseStart": false
+        },
+        {
+          "start": 63,
+          "end": 65,
+          "label": "GLUE",
+          "clauseStart": false
+        },
+        {
+          "start": 67,
+          "end": 76,
+          "label": "WEEKDAY",
+          "clauseStart": false
+        },
+        {
+          "start": 77,
+          "end": 96,
+          "label": "O",
+          "clauseStart": false
+        },
+        {
+          "start": 97,
+          "end": 138,
+          "label": "O",
+          "clauseStart": false
+        }
+      ],
+      "schedule": {
+        "clauses": [
+          {
+            "recurrence": {
+              "freq": "daily",
+              "interval": 1,
+              "except": [
+                {
+                  "kind": "weekday",
+                  "days": [
+                    "WE"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "fingerprint": "d290f92357e93b22fad9b340a0d27065b83b73a86cf9f295e369c5a2ff1d4c33",
+      "actual": [
+        {
+          "start": 48,
+          "end": 102,
+          "text": "cada\tDía salvo\tel  miércoles\tpara nuestro equipo\tHasta",
+          "confidence": 1,
+          "schedule": null,
+          "diagnostics": [
+            {
+              "code": "invalid-bound",
+              "message": "A bound needs a date.",
+              "start": 97,
+              "end": 102,
+              "severity": "error"
+            },
+            {
+              "code": "filler-ignored",
+              "message": "Ignored nuestro equipo inside the expression.",
+              "start": 82,
+              "end": 96,
+              "severity": "warning"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "scope": "Compiler equality using independently sampled ASTs and renderer slot labels. This validates training supervision, not neural prediction accuracy."
 }
