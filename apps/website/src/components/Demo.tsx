@@ -141,10 +141,10 @@ export function Demo({ initial }: { initial: Formatted }) {
             Try It Out
           </span>
           <div className="flex items-center gap-3">
-            <span className="text-label text-neutral-400">
+            <span className="text-label text-neutral-400 tracking-tight">
               {language === "es"
                 ? "Detectado · vista previa"
-                : "Detected automatically"}
+                : "Detected Automatically"}
             </span>
             <LanguageToggle value={language} onChange={pickLanguage} />
           </div>
